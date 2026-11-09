@@ -214,7 +214,11 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .ch-mark{display:grid;gap:var(--s-1);align-content:start;position:sticky;top:calc(var(--header-h) + var(--s-5));align-self:start}
 .ch-years{font-family:var(--display);font-size:32px;font-weight:600;line-height:1.05;color:var(--gold);font-variant-numeric:lining-nums tabular-nums}
 .ch-place{font-size:15px;color:var(--muted)}
-.ch-body{display:grid;gap:var(--s-4);max-width:var(--measure);min-width:0}
+.ch-photo{margin:var(--s-4) 0 0;display:grid;gap:var(--s-2);width:100%}
+.ch-photo .mat{background:var(--surface);padding:var(--s-3);border:1px solid var(--line);outline:1px solid var(--rule);outline-offset:calc(var(--s-1) * -1)}
+.ch-photo img{display:block;width:100%;height:auto}
+.ch-photo figcaption{font-size:13px;line-height:1.45;color:var(--muted)}
+.ch-body{display:grid;gap:var(--s-4);align-content:start;max-width:var(--measure);min-width:0}
 .ch-body h3{font-size:32px}
 .insight{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding-block:var(--s-6);margin-bottom:var(--s-8);display:grid;gap:var(--s-4)}
 .insight h3{font-size:36px}
@@ -329,6 +333,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .bio,.about,.usa-grid,.conc-intro,.lineages{grid-template-columns:minmax(0,1fr);gap:var(--s-6)}
   .chapter{grid-template-columns:minmax(0,1fr);gap:var(--s-3)}
   .ch-mark{position:static;display:flex;gap:var(--s-3);align-items:baseline;flex-wrap:wrap}
+  .ch-photo{order:3;width:min(240px,60vw)}
   .editions{position:static}
   .raichman{grid-template-columns:minmax(0,1fr);gap:var(--s-4)}
   .explore-grid{grid-template-columns:minmax(0,1fr)}
