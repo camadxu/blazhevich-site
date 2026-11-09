@@ -1,0 +1,61 @@
+name: "Тест: сборка и публикация deploy/test"
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "TEST-RESULTS.json"
+      - ".gitignore"
+      - ".gitattributes"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-test
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Загрузка репозитория
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Дата сборки
+        id: date
+        run: echo "date=$(date +%F)" >> "$GITHUB_OUTPUT"
+
+      # Сначала публичная сборка: test_v3.py проверяет воспроизводимость именно публичной версии
+      - name: Публичная сборка (для проверок)
+        run: python build.py --release --domain https://blazhevich.tech --lastmod "${{ steps.date.outputs.date }}"
+
+      - name: Проверки сайта
+        env:
+          BLZ_DOMAIN: https://blazhevich.tech
+          BLZ_LASTMOD: ${{ steps.date.outputs.date }}
+        run: |
+          python tools/check_site.py
+          python tools/test_v3.py
+
+      # Для тестового сайта финальная сборка — черновик: noindex + плашка «не опубликовано»
+      - name: Черновая сборка (публикуемая версия для теста)
+        run: python build.py
+
+      - name: Контрольная проверка черновика
+        run: python tools/check_site.py
+
+      - name: Публикация ветки deploy/test
+        env:
+          ARTIFACT_BRANCH: deploy/test
+          COMMIT_MSG: "Тестовая сборка (черновик, noindex)"
+        run: bash .github/scripts/publish-artifact.sh "$ARTIFACT_BRANCH" "$COMMIT_MSG"

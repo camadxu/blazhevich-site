@@ -1,0 +1,53 @@
+name: "ПРОДАКШЕН: публикация deploy/prod (вручную)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      lastmod:
+        description: "Дата редакции для sitemap lastmod (YYYY-MM-DD); пусто = сегодня"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Загрузка репозитория
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Дата сборки
+        id: date
+        run: echo "date=$(date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Публичная сборка для blazhevich.tech
+        env:
+          LASTMOD: ${{ inputs.lastmod || steps.date.outputs.date }}
+        run: python build.py --release --domain https://blazhevich.tech --lastmod "$LASTMOD"
+
+      - name: Проверки сайта
+        env:
+          BLZ_DOMAIN: https://blazhevich.tech
+          BLZ_LASTMOD: ${{ inputs.lastmod || steps.date.outputs.date }}
+        run: |
+          python tools/check_site.py
+          python tools/test_v3.py
+
+      - name: Публикация ветки deploy/prod
+        env:
+          ARTIFACT_BRANCH: deploy/prod
+          COMMIT_MSG: "Публичная сборка blazhevich.tech"
+        run: bash .github/scripts/publish-artifact.sh "$ARTIFACT_BRANCH" "$COMMIT_MSG"
