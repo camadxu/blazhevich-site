@@ -39,10 +39,11 @@ for pg in ['schools.html','en/index.html']:
  assert all('id="person-'+n+'"' in s for n in ['blazhevich','shcherbinin','batashev','turusin','ladilov'])
  assert s.count('id="v3-source-')==4
  assert s.count('class="provisional"')==3
-# Первый экран показывает подлинную фотографию 1903 года (общественное достояние) с подписью-источником, а не ИИ-портрет.
-for pg,cap in [('index.html','Фотография 1903 года с автографом.'),('en/index.html','Photograph of 1903 with his signature.')]:
+assert 'ИИ-реконструкция, не историческое фото.' in (ROOT/'site/index.html').read_text()
+assert 'AI reconstruction, not a historical photograph.' in (ROOT/'site/en/index.html').read_text()
+for pg in ['index.html','en/index.html']:
  s=(ROOT/'site'/pg).read_text()
- assert 'blazhevich-1903.webp' in s and cap in s and 'blazhevich-portrait' not in s
+ assert all(f in s for f in ['conservatory-1940s.webp','bolshoi-1905.webp','goznak-moscow.webp'])
 def digest():return {str(p.relative_to(ROOT/'site')):hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'site').rglob('*') if p.is_file()}
 # Аргументы пересборки берутся из окружения, чтобы проверку можно было запускать
 # сразу после сборки с теми же параметрами (по умолчанию — параметры релиза v3).

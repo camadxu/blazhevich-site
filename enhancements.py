@@ -68,7 +68,9 @@ def apply():
   if en:
    s=s.replace('</main>',people_section(True)+'</main>')
    s=s.replace('Перейти к содержимому','Skip to content')
-  # Hero portrait is the 1903 photograph (public domain); its caption lives in src/*/hero markup.
+  # Explicit visible caption, keep original provenance wording unchanged.
+  caption='AI reconstruction, not a historical photograph.' if en else 'ИИ-реконструкция, не историческое фото.'
+  s=s.replace('<p class="credit">',f'<p class="credit"><strong>{caption}</strong> ',1)
   p.write_text(s)
  p=out/'schools.html';s=p.read_text();s=s.replace('</main>',people_section()+'</main>');p.write_text(s)
  # Styling additions inherit the existing palette and typography.
