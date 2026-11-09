@@ -394,7 +394,51 @@ footer{border-top:1px solid var(--line);padding-block:30px 44px;color:var(--mute
 .lang{border:1px solid var(--line);border-radius:999px;padding:6px 12px!important;margin-left:6px;font-weight:600}
 @media(max-width:820px){.explore-grid{grid-template-columns:1fr}}
 </style>
-<style>.people-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:28px 0}.person-v3{padding:24px;border:1px solid var(--line);border-radius:16px}.person-v3 dt{font-weight:600;margin-top:14px}.person-v3 dd{margin:4px 0;overflow-wrap:anywhere}.lineage-v3 li{margin:12px 0;padding:10px;border-left:3px solid var(--brass)}.lineage-v3 .provisional{border-left-style:dashed}.extra-tools-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}.extra-tools-v3 label{display:grid;gap:8px}.extra-tools-v3 select{width:100%;max-width:100%;padding:12px;background:#181534;color:#efe9dd;border:1px solid #6a6080;border-radius:8px}a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f3d28a;outline-offset:4px}[hidden]{display:none!important}@media(max-width:620px){.people-v3,.extra-tools-v3{grid-template-columns:1fr}.person-v3{padding:18px}}</style></head>
+<style>.people-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:28px 0}.person-v3{padding:24px;border:1px solid var(--line);border-radius:16px}.person-v3 dt{font-weight:600;margin-top:14px}.person-v3 dd{margin:4px 0;overflow-wrap:anywhere}.lineage-v3 li{margin:12px 0;padding:10px;border-left:3px solid var(--brass)}.lineage-v3 .provisional{border-left-style:dashed}.extra-tools-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}.extra-tools-v3 label{display:grid;gap:8px}.extra-tools-v3 select{width:100%;max-width:100%;padding:12px;background:#181534;color:#efe9dd;border:1px solid #6a6080;border-radius:8px}a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f3d28a;outline-offset:4px}[hidden]{display:none!important}@media(max-width:620px){.people-v3,.extra-tools-v3{grid-template-columns:1fr}.person-v3{padding:18px}}</style><style id="classicism">
+/* ===== Классицизм/ампир: «музейное паспарту» — светлая тема по живописному референсу ===== */
+:root{
+  color-scheme:light;
+  --night:#f5efe0;      /* фон-паспарту, кремовый */
+  --velvet:#fbf7ee;     /* поверхности */
+  --velvet-2:#f1e9d6;
+  --violet:#3d6136;     /* ссылки — глубокая зелень парка */
+  --brass:#9a7423;      /* золото песчаника */
+  --brass-hi:#6f5416;
+  --ink:#26301f;        /* текст — тёмная зелень */
+  --muted:#5c6b52;
+  --line:#d9c9a3;
+}
+body{-webkit-font-smoothing:antialiased}
+body::before{background:var(--night)}
+::selection{background:#9a7423;color:#f5efe0}
+.draft{background:#ece2c8;color:#5c5136}
+nav a:hover{color:var(--ink);background:#efe7d2}
+.btn-ghost{background:rgba(217,169,78,.05)}
+.btn-ghost:hover{border-color:var(--violet);background:rgba(61,97,54,.08)}
+input:hover,select:hover{border-color:#b9a671}
+input:focus,select:focus{border-color:var(--brass);box-shadow:0 0 0 4px rgba(154,116,35,.18)}
+.card::before{background:radial-gradient(260px circle at var(--x) var(--y),rgba(201,164,94,.20),transparent 70%)}
+.card:hover{border-color:#b9a671;box-shadow:0 18px 40px rgba(90,62,40,.14)}
+.explore-card:hover{border-color:#b9a671}
+.listen{color:var(--ink);background:radial-gradient(80% 140% at 100% 0%,rgba(201,164,94,.22),transparent 60%),linear-gradient(135deg,#f7f1de,#efe6cc)}
+.insight{border-color:#d9c9a3;background:radial-gradient(70% 120% at 0% 0%,rgba(201,164,94,.15),transparent 60%),linear-gradient(150deg,#f7f1de,#f1e9d6)}
+.raichman{border-color:#d9c9a3;background:radial-gradient(60% 120% at 0% 0%,rgba(46,74,42,.07),transparent 60%),linear-gradient(150deg,#f7f1de,#f1e9d6)}
+.wm-text{color:#6f5416;text-shadow:none}
+.eyebrow{color:#6f5416}
+.brand{color:#6f5416}
+.brand span{color:#9a7423}
+.tbn-lie{filter:drop-shadow(0 6px 10px rgba(90,62,40,.30))}
+.st-ok{background:rgba(61,97,54,.12);color:#3d6136}
+.st-no{background:rgba(154,116,35,.16);color:#6f5416}
+.extra-tools-v3 select{background:#fbf7ee;color:#26301f;border-color:#c9b98d}
+a:focus-visible,select:focus-visible,input:focus-visible{outline-color:#9a7423}
+.sources li:target{background:rgba(201,164,94,.22)}
+.conc tbody tr:hover td{background:rgba(201,164,94,.10)}
+.totop{color:#6f5416}
+.wordmark{border-block-color:rgba(154,116,35,.85)}
+.hero::after{background:linear-gradient(transparent,var(--night))}
+@media(max-width:620px){.city img{opacity:1;filter:brightness(1.06) contrast(1.02) saturate(1.05)}}
+</style></head>
 <body>
 <a class="skip" href="#main">Перейти к содержимому</a>
 <header id="top-bar"><div class="wrap bar">
