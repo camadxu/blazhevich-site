@@ -1,58 +1,36 @@
 <section id="hero" class="hero" aria-labelledby="hero-title">
-  <div class="city" aria-hidden="true"><img class="city-l" src="assets/conservatory-1940s.webp" width="1100" height="588" alt=""><img class="city-r" src="assets/bolshoi-1905.webp" width="1100" height="615" alt=""></div>
-  <div class="wrap">
-    <figure class="portrait" style="margin-block:0">
-      <img src="assets/blazhevich-portrait.webp" srcset="assets/blazhevich-portrait-683.webp 683w, assets/blazhevich-portrait.webp 1024w" sizes="(max-width:620px) 82vw, 400px" width="1024" height="1536" fetchpriority="high" alt="Artistic portrait of Vladislav Blazhevich in an early 20th-century suit, with a drawing of a tenor trombone beside him">
-    </figure>
+  <div class="wrap hero-grid">
     <div class="hero-copy">
-      <svg class="tbn-lie" viewBox="20 20 950 250" aria-hidden="true" focusable="false"><defs><linearGradient id="brass" x1="0" x2="1"><stop offset="0" stop-color="#5e4422"/><stop offset=".4" stop-color="#e6c88a"/><stop offset=".6" stop-color="#a98446"/><stop offset="1" stop-color="#4e3920"/></linearGradient><linearGradient id="bellfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a94e" stop-opacity=".05"/><stop offset="1" stop-color="#f3d28a" stop-opacity=".32"/></linearGradient><linearGradient id="nickel" x1="0" x2="1"><stop offset="0" stop-color="#6a5638"/><stop offset=".5" stop-color="#e2c993"/><stop offset="1" stop-color="#5f4c30"/></linearGradient></defs><g transform="translate(0,300) rotate(-90)">
-<g fill="none" stroke-linecap="round" stroke-linejoin="round">
-<!-- раструб -->
-<path d="M174 420 C172 470 150 520 92 566 L268 566 C210 520 188 470 186 420 Z" fill="url(#bellfill)" stroke="url(#brass)" stroke-width="3"/>
-<ellipse cx="180" cy="566" rx="88" ry="9" fill="#2a1d0c" fill-opacity=".55" stroke="url(#brass)" stroke-width="4"/>
-<!-- трубка раструба, крона, шейка -->
-<path d="M180 420 V70 A40 40 0 0 0 100 70 V330" stroke="url(#brass)" stroke-width="11"/>
-<!-- квартвентиль: ротор и петля -->
-<path d="M100 250 C126 250 128 232 128 210 V120 A14 14 0 0 0 100 120" stroke="url(#brass)" stroke-width="8"/>
-<circle cx="100" cy="262" r="11" fill="#5a3b12" stroke="url(#brass)" stroke-width="4"/>
-<!-- распорки раструба -->
-<path d="M100 170 H180 M100 318 H180" stroke="url(#nickel)" stroke-width="4"/>
-<!-- кулиса: две строго параллельные трубки и изгиб -->
-<path d="M60 330 V940 A20 20 0 0 0 100 940 V330" stroke="url(#brass)" stroke-width="11"/>
-<path d="M60 330 V560 M100 330 V560" stroke="url(#nickel)" stroke-width="13" stroke-opacity=".9"/>
-<path d="M60 368 H100 M60 452 H100" stroke="url(#nickel)" stroke-width="7"/>
-<path d="M54 556 H66 M94 556 H106 M54 920 H66 M94 920 H106" stroke="url(#nickel)" stroke-width="5"/>
-<!-- мундштук -->
-<path d="M60 330 V296" stroke="url(#nickel)" stroke-width="5"/>
-<path d="M50 282 Q60 300 70 282 Z" fill="url(#nickel)" stroke="url(#nickel)" stroke-width="2"/>
-</g></g></svg>
-      <h1 id="hero-title" class="wordmark"><span class="wm-text">Blazhevich</span></h1>
+      <h1 id="hero-title"><span class="h1-name">Vladislav Blazhevich</span><span class="h1-dates">1881–1942</span></h1>
       <p class="lead">Vladislav Blazhevich (1881–1942): the life, the music and the method books behind the “Clef Studies.” Sources, scores and recordings for brass players.</p>
       <div class="cta"><a class="btn btn-brass" href="#scores">Find scores</a><a class="btn btn-ghost" href="#listen">Listen</a></div>
-      <p class="credit">Portrait: AI-generated artistic image based on a 1903 photograph; the trombone is a decorative drawing. Background: Great Hall of the Moscow Conservatory (1940s) and the Bolshoi Theatre (c. 1905), Wikimedia Commons, public domain.</p>
     </div>
+    <figure class="portrait">
+      <div class="mat"><img src="assets/blazhevich-1903.webp" srcset="assets/blazhevich-1903-560.webp 560w, assets/blazhevich-1903.webp 900w" sizes="(max-width:820px) 72vw, 380px" width="900" height="1327" fetchpriority="high" alt="Vladislav Blazhevich in 1903, a photograph with his signature and the date"></div>
+      <figcaption class="credit">Photograph of 1903 with his signature. Photographer unknown, public domain, Wikimedia Commons.</figcaption>
+    </figure>
   </div>
 </section>
 
 <section id="scores" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">For practice and performance</div><h2>Works and scores</h2><p>A starting selection, not a complete catalogue. Links lead to libraries and descriptions; no third-party score files are hosted here.</p></div>
+  <div class="section-head reveal"><h2>Works and scores</h2><div class="eyebrow">For practice and performance</div><p>A starting selection, not a complete catalogue. Links lead to libraries and descriptions; no third-party score files are hosted here.</p></div>
   <div class="tools">
     <label for="search">Search by title<input id="search" type="search" placeholder="e.g. legato or tuba" autocomplete="off"></label>
     <label for="instrument">Instrument<select id="instrument"><option value="all">All instruments</option><option value="trombone">Trombone</option><option value="tuba">Tuba</option></select></label>
   </div>
   <p class="note count" id="count" role="status" aria-live="polite" data-tpl="Showing {n} of {t}">10 items</p>
   <div class="grid" id="catalog">
-    <article class="card" data-instrument="trombone"><div class="tag">Trombone · clefs</div><h3>School for Trombone in Clefs (Clef Studies)</h3><p>His best-known work in the US. American editions by Raichman (1948), Ostrander and Hunsberger. The current East-West urtext follows the 1939 Russian edition.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">History of the editions ↗</a></article>
-    <article class="card" data-instrument="trombone"><div class="tag">Trombone · concertos</div><h3>Trombone concertos</h3><p>Thirteen concertos written for his conservatory students, most in the 1920s. Many were not published in his lifetime. Caleb Lambert recorded the first four.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Recording project ↗</a></article>
-    <article class="card" data-instrument="trombone"><div class="tag">Trombone · method</div><h3>School for the Slide Trombone</h3><p>His 1936 method for beginners, with piano accompaniment. Described in the Moscow Conservatory’s history of its brass department.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone"><div class="tag">Trombone · legato</div><h3>School of Legato Development</h3><p>Listed among his teaching works by the Moscow Conservatory. Dates of the editions differ between sources.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone"><div class="tag">Two trombones · ensemble</div><h3>Concert Duets</h3><p>38 duets for two trombones, written for ensemble and orchestral readiness.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone"><div class="tag">Trombone · exercises</div><h3>Sequences</h3><p>26 melodic exercises in various rhythms and clefs. Current US edition with Michael Mulcahy (East-West, 2008).</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba"><div class="tag">Tuba · etudes</div><h3>70 Studies for BB♭ Tuba</h3><p>Robert King edition, Alphonse Leduc, two volumes. Adapted by Blazhevich from his trombone material.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">IMSLP catalogue ↗</a></article>
-    <article class="card" data-instrument="tuba"><div class="tag">Tuba · method</div><h3>Tuba School, Part 1</h3><p>Score entry in the classON library. Access and terms of use are set by the library.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Library (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba"><div class="tag">Tuba · etudes</div><h3>Tuba School, Part 2</h3><p>Etudes, pages 29–47, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Library (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba"><div class="tag">Tuba · etudes</div><h3>Tuba School, Part 2</h3><p>Etudes, pages 48–66, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Library (Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>School for Trombone in Clefs (Clef Studies)</h3><div class="tag">Trombone, clefs</div><p>His best-known work in the US. American editions by Raichman (1948), Ostrander and Hunsberger. The current East-West urtext follows the 1939 Russian edition.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">History of the editions ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>Trombone concertos</h3><div class="tag">Trombone, concertos</div><p>Thirteen concertos written for his conservatory students, most in the 1920s. Many were not published in his lifetime. Caleb Lambert recorded the first four.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Recording project ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>School for the Slide Trombone</h3><div class="tag">Trombone, method</div><p>His 1936 method for beginners, with piano accompaniment. Described in the Moscow Conservatory’s history of its brass department.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>School of Legato Development</h3><div class="tag">Trombone, legato</div><p>Listed among his teaching works by the Moscow Conservatory. Dates of the editions differ between sources.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>Concert Duets</h3><div class="tag">Two trombones, ensemble</div><p>38 duets for two trombones, written for ensemble and orchestral readiness.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>Sequences</h3><div class="tag">Trombone, exercises</div><p>26 melodic exercises in various rhythms and clefs. Current US edition with Michael Mulcahy (East-West, 2008).</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>70 Studies for BB♭ Tuba</h3><div class="tag">Tuba, etudes</div><p>Robert King edition, Alphonse Leduc, two volumes. Adapted by Blazhevich from his trombone material.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">IMSLP catalogue ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>Tuba School, Part 1</h3><div class="tag">Tuba, method</div><p>Score entry in the classON library. Access and terms of use are set by the library.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Library (Russian) ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 29–47, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Library (Russian) ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 48–66, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Library (Russian) ↗</a></article>
   </div>
   <p id="empty" class="empty" hidden>Nothing found. Try another title or choose all instruments.</p>
   <noscript><p class="note">Search needs JavaScript. All items and links are listed above.</p></noscript>
@@ -60,7 +38,7 @@
 
 <section id="listen" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">Live sound</div><h2>Listen</h2></div>
+  <div class="section-head reveal"><h2>Listen</h2><div class="eyebrow">Live sound</div></div>
   <div class="listen reveal">
     <div>
       <h3>Caleb Lambert’s recordings</h3>
@@ -74,7 +52,7 @@
 
 <section id="biography" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">A life in music · 1881–1942</div><h2>How Blazhevich became Blazhevich</h2><p>From an orphan on a poor Smolensk farm to a professor at the Moscow Conservatory whose etudes are still assigned at American universities.</p></div>
+  <div class="section-head reveal"><h2>How Blazhevich became Blazhevich</h2><div class="eyebrow">A life in music · 1881–1942</div><p>From an orphan on a poor Smolensk farm to a professor at the Moscow Conservatory whose etudes are still assigned at American universities.</p></div>
 
   <div class="facts reveal" role="list">
     <div role="listitem"><b>3 (15) August 1881</b><span>born at the Tregubovka farm, Smolensk Governorate</span></div>
@@ -120,8 +98,8 @@
   </div>
 
   <aside class="insight reveal" aria-labelledby="insight-title">
-    <div class="eyebrow">Editorial summary of the sources</div>
     <h3 id="insight-title">What made him who he was</h3>
+    <div class="eyebrow">Editorial summary of the sources</div>
     <ul>
       <li><b>Character.</b> Orphaned early and raised in poverty, he learned to rely only on himself. Colleagues saw this as the basis of his success.</li>
       <li><b>Early practice.</b> From the age of twelve he played every day in military bands, first on euphonium, then on trombone.</li>
@@ -169,7 +147,7 @@
 
 <section id="usa" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">Recognition overseas</div><h2>Blazhevich in America</h2></div>
+  <div class="section-head reveal"><h2>Blazhevich in America</h2><div class="eyebrow">Recognition overseas</div></div>
   <div class="usa-grid">
     <div class="usa-text reveal">
       <h3 id="raichman">Jacob Raichman, the bridge</h3>
@@ -193,7 +171,7 @@
 
 <section id="schools" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">Teacher → pupil</div><h2>Two Russian trombone schools</h2><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
+  <div class="section-head reveal"><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
 
   <div class="lineages">
     <div class="lineage reveal" aria-labelledby="moscow-line">
@@ -279,7 +257,7 @@
 
 <section id="concertos" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">Solo repertoire</div><h2>Thirteen trombone concertos</h2><p>Written for his students, they are played without breaks between movements, with piano interludes linking them. Blazhevich modelled them on Ferdinand David’s Concertino, which he called the most successful work for trombone.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p></div>
+  <div class="section-head reveal"><h2>Thirteen trombone concertos</h2><div class="eyebrow">Solo repertoire</div><p>Written for his students, they are played without breaks between movements, with piano interludes linking them. Blazhevich modelled them on Ferdinand David’s Concertino, which he called the most successful work for trombone.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p></div>
   <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Concertos">
     <table class="conc">
       <thead><tr><th scope="col">No.</th><th scope="col">Key</th><th scope="col">Date</th><th scope="col">Publication history</th></tr></thead>
@@ -305,12 +283,12 @@
 
 <section id="about" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><div class="eyebrow">Transparency and sources</div><h2>About this project</h2></div>
+  <div class="section-head reveal"><h2>About this project</h2><div class="eyebrow">Transparency and sources</div></div>
   <div class="about">
     <div class="reveal">
       <p>An independent project about the life, music and teaching legacy of Vladislav Blazhevich. It does not represent the Moscow Conservatory, the libraries or the performers it links to. The Russian version is the primary one; this English page follows it. Bracketed source numbers here match the English list below, not the Russian one.</p>
       <p><a class="btn btn-ghost" href="../index.html">Русская версия →</a></p>
-      <p class="note">The portrait is an AI-generated artistic image based on a 1903 photograph of Blazhevich (<a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain), toned to match the archive photographs. It is not a historical photograph. The trombone resting on the title is a drawing made for the site.</p>
+      <p class="note">The portrait on the opening screen is a historical photograph of Blazhevich from 1903, with his signature (<a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain; source on Commons: A. G. Kharlamov, ITA Journal, vol. 36, no. 3, 2008, pp. 30–34). It is shown in a single sepia tone to match the page; nothing in the image has been added or removed.</p>
     </div>
     <div class="reveal">
       <h3>Sources</h3>
