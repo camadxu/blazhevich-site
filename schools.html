@@ -94,9 +94,6 @@ strong,b{font-weight:600}
 /* ---------- Header ---------- */
 header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
 header.scrolled{border-bottom-color:var(--line)}
-/* home: the first screen is bare, the bar slides in once it is scrolled past; without JS it simply stays */
-.js header.home{position:fixed;left:0;right:0;transform:translateY(-100%);transition:transform .45s var(--ease),border-color .3s}
-.js header.home.scrolled,.js header.home:focus-within{transform:none}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-2) var(--s-6);min-height:var(--header-h);flex-wrap:wrap}
 .brand{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-block:var(--s-2)}
 .brand:hover{color:var(--accent)}
@@ -108,35 +105,41 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .lang{margin-left:var(--s-2);border:1px solid var(--field);border-radius:var(--radius);padding:var(--s-1) var(--s-3)!important;font-weight:600;color:var(--ink)!important}
 .lang:hover{background:var(--surface)}
 
-/* ---------- Hero: the portrait before the three Moscow addresses ---------- */
-.hero{position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-8);text-align:center}
-/* two equal views meet on the axis behind the figure and run off the top and sides of the window */
-.city{position:absolute;z-index:-1;top:-13svh;left:50%;transform:translateX(-50%);width:max(130vw,190svh);display:flex;justify-content:center;pointer-events:none}
-.city img{display:block;width:54%;height:auto;max-width:none;flex:none;animation:hero-fade 1.6s ease both}
-.city-b{margin-left:-8%}
+/* ---------- Hero: one screen. The figure stands close, the two houses far off across a sunlit square ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.hero{--horizon:66svh;position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-6);text-align:center;
+  /* one sun for the whole scene: high on the left, warming the sky and the paper */
+  background:radial-gradient(120% 90% at 16% -10%,#fff8e6 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),#ece1c8 calc(var(--horizon) + 5svh),var(--paper) 100%)}
+/* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
+.hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
+  background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
+  -webkit-mask-image:linear-gradient(transparent,#000 10%,transparent 62%);mask-image:linear-gradient(transparent,#000 10%,transparent 62%)}
+/* both views stand on the horizon, small and hazy with distance, lit by the same light */
+.city{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--horizon);pointer-events:none}
+.city img{position:absolute;bottom:-9.2%;width:clamp(300px,38vw,660px);height:auto;max-width:none;opacity:.8;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);animation:hero-fade 1.6s ease both}
+.city-c{right:calc(50% + clamp(90px,12vw,220px))}
+.city-b{left:calc(50% + clamp(90px,12vw,220px))}
 .hero-stage{display:grid;justify-items:center}
 /* bust crop: the box shows the top of the full-length file and the chest melts into the paper */
-.portrait{margin:0;width:clamp(260px,60svh,560px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);animation:hero-rise 1.1s var(--ease) both}
+.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
 .portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}
-.hero-copy{display:grid;justify-items:center;gap:var(--s-4);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
-.hero-copy>*{animation:hero-rise .9s var(--ease) .45s both}
-.hero-copy>.lead{animation-delay:.6s}
-.hero-copy>.cta{animation-delay:.75s}
-.hero-copy>.hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(14px,1.3vw,18px);letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
+.hero-copy{display:grid;justify-items:center;gap:var(--s-5);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
+.hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
-@keyframes hero-fade{from{opacity:0;scale:1.04}}
+.hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:rgb(244 238 225/.72);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
+/* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
+.hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
+.hero-menu:not(:popover-open){display:none}
+.hero-menu:popover-open{display:grid;width:min(92vw,400px)}
+.hero-menu::backdrop{background:rgb(42 33 24/.28)}
+.hero-menu a{display:block;padding:var(--s-3);font-family:var(--display);font-size:28px;font-weight:500;line-height:1.15;color:var(--ink);text-decoration:none}
+.hero-menu a+a{border-top:1px solid var(--line)}
+.hero-menu a:hover{color:var(--accent)}
+@keyframes hero-fade{from{opacity:0}}
 @keyframes hero-rise{from{opacity:0;translate:0 24px}}
 @keyframes hero-gather{from{opacity:0;letter-spacing:.9em}}
-@supports (animation-timeline:scroll()){
-  /* the buildings leave slower than the figure */
-  .city{animation:hero-drift linear both;animation-timeline:scroll(root);animation-range:0 100svh}
-  @keyframes hero-drift{to{translate:0 14svh}}
-}
-#hero-title{display:grid;gap:var(--s-2);justify-items:center}
-.h1-name{font-size:clamp(44px,5.2vw,76px);font-weight:500;line-height:1.02;letter-spacing:-.01em}
-.h1-dates{font-size:clamp(22px,2.2vw,30px);font-weight:500;color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
-.lead{font-size:var(--t-lead);color:var(--muted);max-width:52ch}
-.cta{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s-3);margin-top:var(--s-1)}
 .credit{font-size:var(--t-small);color:var(--muted);line-height:1.5;max-width:var(--measure);margin-top:var(--s-3)}
 
 /* ---------- Buttons ---------- */
@@ -356,9 +359,12 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 }
 @media(max-width:620px){
   body{font-size:16px}
-  .hero{padding-block:var(--s-3) var(--s-7)}
-  .city{width:190vw;top:-2svh}
-  .portrait{width:88vw}
+  .hero{--horizon:58svh;padding-block:var(--s-3) var(--s-5)}
+  .hero-copy{margin-top:var(--s-2)}
+  .city img{width:64vw}
+  .city-c{right:calc(50% + 4vw)}
+  .city-b{left:calc(50% + 4vw)}
+  .portrait{width:min(92vw,62svh)}
   .btn{padding:0 var(--s-4);font-size:14px}
   .about h3{font-size:24px}
   section.block{padding-block:var(--s-8)}
@@ -424,7 +430,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 <a class="skip" href="#main">Перейти к содержимому</a>
 <header id="top-bar"><div class="wrap bar">
   <a href="index.html" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>
-  <nav aria-label="Основная навигация"><a href="index.html">Ноты</a><a href="index.html">Слушать</a><a href="biography.html">Биография</a><a href="usa.html">В США</a><a href="schools.html">Школы</a><a href="concertos.html">Концерты</a><a href="about.html">О проекте</a><a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a></nav>
+  <nav aria-label="Основная навигация"><a href="scores.html">Ноты</a><a href="listen.html">Слушать</a><a href="biography.html">Биография</a><a href="usa.html">В США</a><a href="schools.html">Школы</a><a href="concertos.html">Концерты</a><a href="about.html">О проекте</a><a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a></nav>
 </div></header>
 <main id="main">
 <section id="schools" class="block"><div class="wrap">
@@ -450,7 +456,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
           <span class="node-years">1881–1942</span>
           <b>Владислав Михайлович Блажевич</b>
           <p>Учился у Борка в 1900–1905 годах, профессор консерватории с 1920 года. Его школы и этюды стали учебной основой для следующих поколений.</p>
-          <span class="pupils">Ученики: В. А. Щербинин, Б. П. Григорьев, К. Г. Морейнис, Г. М. Воронин, а также <a href="#raichman">Я. Райхман</a> (какое-то время)</span>
+          <span class="pupils">Ученики: В. А. Щербинин, Б. П. Григорьев, К. Г. Морейнис, Г. М. Воронин, а также <a href="usa.html#raichman">Я. Райхман</a> (какое-то время)</span>
         </li>
         <li class="node">
           <span class="node-years">1896–1963</span>
@@ -484,7 +490,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
           <span class="node-years">1877–1933</span>
           <b>Пётр Наумович Волков</b>
           <p>Первый тромбон оркестра Мариинского театра (1899–1933), где играл вместе с Рейхе; профессор консерватории (1917–1933). В 1911 году у него окончил консерваторию Яков Райхман, а в начале 1930-х на рабфаке учились Козлов и Коршунов. Умер 22 февраля 1933 года; класс принял Рейхе (доцент с 1933, и. о. профессора с 1935).<sup class="ref"><a href="about.html#s4">[4]</a><a href="about.html#s5">[5]</a></sup> Отчество и даты исправлены по энциклопедии Петербургской консерватории; прежде на сайте ошибочно стояло «Николаевич, умер около 1935».</p>
-          <span class="pupils">Ученики: <a href="#raichman">Я. А. Райхман</a> (выпуск 1911 года), А. А. Козлов и Н. С. Коршунов (рабфак), И. А. Гершкович и др.</span>
+          <span class="pupils">Ученики: <a href="usa.html#raichman">Я. А. Райхман</a> (выпуск 1911 года), А. А. Козлов и Н. С. Коршунов (рабфак), И. А. Гершкович и др.</span>
         </li>
         <li class="node">
           <span class="node-years">1878–1946</span>
@@ -518,47 +524,9 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 
   <p class="note reveal school-note"><b>Наблюдение редакции:</b> Москву начал прусский тромбонист Христофор Борк. Петербург — австриец Франц Тюрнер (с 1870), за ним его ученик Пётр Волков и немец Евгений Рейхе из Дрездена. Ветви переплелись: петербургский выпускник Райхман занимался у москвича Блажевича и увёз его ноты в Америку, а ленинградец Венгловский через полвека переслал туда же его концерты.</p>
 
-  <article class="raichman reveal" id="raichman" aria-labelledby="raichman-title">
-    <div class="r-head">
-      <h3 id="raichman-title">Яков Абрамович Райхман (Jacob Raichman)</h3>
-      <div class="eyebrow">Петербург → Москва → Бостон</div>
-      <span class="node-years">1892–1982</span>
-    </div>
-    <div class="r-body">
-      <p><b>Детство.</b> Родился в Витебске, ныне Беларусь. В детстве играл на виолончели. Его отец был капельмейстером в русской армии и посоветовал сыну перейти на тромбон.<sup class="ref"><a href="about.html#s4">[4]</a></sup></p>
-      <p><b>Учёба в Петербурге.</b> Райхман окончил Петербургскую консерваторию в 1911 году в классе П. Н. Волкова. Надпись на футляре его тромбона гласит: «Премия имени Шуберта Я. А. Райхману, окончившему С.-Петербургскую консерваторию по классу П. Н. Волкова, 1911». Сам серебрёный инструмент работы немецкого мастера Хеккеля был выпускной наградой.<sup class="ref"><a href="about.html#s4">[4]</a></sup></p>
-      <p><b>Москва.</b> Затем он переехал в Москву, играл в оркестре Большого театра, познакомился с Блажевичем и какое-то время у него занимался. Скрипач Артур Штильман называет Райхмана «выдающимся тромбонистом» дореволюционного Большого театра.<sup class="ref"><a href="about.html#s4">[4]</a><a href="about.html#s9">[9]</a></sup></p>
-      <p><b>Путь в Америку.</b> Сергей Кусевицкий, сам бывший контрабасист Большого театра, взял Райхмана в Бостонский симфонический оркестр, по словам дочери, даже без прослушивания. Квота на въезд из России в США была исчерпана, поэтому в январе 1927 года Райхман приехал из Гаваны на пароходе «Орисаба». Позже из-за трудностей с документами ему пришлось вернуться на Кубу, и в декабре 1929 года он въехал снова, уже с женой Терезой и трёхмесячной дочерью Ириной. Гражданином США он стал в 1937 году. Часто он подписывался именем Jacques.<sup class="ref"><a href="about.html#s4">[4]</a></sup></p>
-      <p><b>Бостон.</b> В сезоне 1927–1928 года Райхман был четвёртым из пяти тромбонистов, в 1928 году стал солистом наравне с французом Жоаннесом Рошю, а в 1929-м получил прибавку, тогда как Рошю жалованье урезали. После отъезда Рошю в 1930 году Райхман был первым тромбоном до 1955 года, его преемником стал Уильям Гибсон. Он солировал в «Болеро» Равеля в записях 1937 года (с Бостонским поп-оркестром) и 1947 года.<sup class="ref"><a href="about.html#s4">[4]</a></sup></p>
-      <p><b>Кусевицкий.</b> В Библиотеке Конгресса хранятся четыре его письма Кусевицкому на русском языке. Три письма 1930 года касаются визы, а письмо 1945 года он закончил словами «оставаясь навсегда преданным Вам».<sup class="ref"><a href="about.html#s4">[4]</a></sup></p>
-      <p><b>Мост для Блажевича.</b> В 1948 году Райхман издал школу Блажевича в ключах под названием «Clef Studies for Trombone». Его архив, переданный семьёй в Бостонский университет, по сообщению Харламова, частично погиб при протечке.<sup class="ref"><a href="about.html#s3">[3]</a><a href="about.html#s4">[4]</a></sup></p>
-    </div>
-  </article>
+  <p class="note reveal">Биография Якова Райхмана, который связал обе школы с Америкой, — в разделе <a href="usa.html#raichman">«Блажевич в Америке»</a>. Подробные биографии московских педагогов и их учеников — в <a href="moscow.html">московском досье</a>, петербургских и ленинградских — в <a href="leningrad.html">ленинградском сборнике</a>.</p>
 </div></section>
-
-<section class="wrap" id="teachers-and-pupils" style="padding-top:48px;padding-bottom:48px">
-<h2>От Блажевича к следующему поколению</h2>
-<p>Историю школы можно проследить через конкретные связи между педагогами и учениками. Московская консерватория называет Владимира Щербинина и Бориса Григорьева среди воспитанников Владислава Блажевича. <a href="#research-source-1">[Р1]</a></p>
-<h3>Владислав Михайлович Блажевич</h3>
-<p>По истории кафедры Московской консерватории, Блажевич учился у Христофора Борка в 1900–1905 годах, а в 1920 году был приглашён вести класс тромбона и тубы. Его педагогическое наследие связано не только с учениками, но и с созданием учебного репертуара: школ, этюдов, дуэтов и секвенций. <a href="#research-source-1">[Р1]</a></p>
-<h3>Владимир Арнольдович Щербинин</h3>
-<p>Ученик Блажевича и педагог следующего поколения московских исполнителей. Эта преемственность подтверждается историей кафедры и официальной биографией Виктора Баташёва, в которой Щербинин указан его учителем. <a href="#research-source-1">[Р1]</a> <a href="#research-source-2">[Р2]</a></p>
-<h3>Виктор Борисович Баташёв</h3>
-<p>Окончил Московскую консерваторию в 1960 году в классе Щербинина. Согласно официальной биографии, получил I премию конкурса в Женеве в 1958 году и III премию «Пражской весны» в 1962 году; в 1959–2001 годах был солистом Большого симфонического оркестра. Начало преподавания в консерватории источник относит к 1963 году, с перерывом, профессорское звание — к 1995 году. <a href="#research-source-2">[Р2]</a></p>
-<h3>Константин Михайлович Ладилов</h3>
-<p>В очерке «Щербинин Владимир Арнольдович и его ученики» Ладилов назван солистом Государственного симфонического оркестра СССР в 1957–1983 годах. Очерк объединяет воспоминания, биографические сведения и архивные материалы; эти даты пока приводятся по нему, без независимой архивной сверки. <a href="#research-source-3">[Р3]</a></p>
-<h3>Михаил Николаевич Турусин</h3>
-<p>Тот же очерк относит Турусина к ученикам Щербинина и связывает его исполнительскую деятельность с оркестрами Большого театра и Большим симфоническим оркестром. Подробная хронология требует отдельной сверки; здесь не приводятся непроверенные даты работы. <a href="#research-source-3">[Р3]</a></p>
-<h3>Другие имена для продолжения исследования</h3>
-<p>Борис Григорьев представлен в истории кафедры как ученик Блажевича. В очерке о Щербинине рассматриваются также Николай Миронов, Мамед Зейналов и Михаил Измалков. Эти имена расширяют круг исследования, но не заменяют отдельных проверенных биографий. <a href="#research-source-1">[Р1]</a> <a href="#research-source-3">[Р3]</a></p>
-<h3>Источники дополнения</h3>
-<ol>
-<li id="research-source-1">[Р1] <a href="https://www.mosconsv.ru/ru/groups/11202">Московская консерватория: история кафедры медных духовых и ударных инструментов</a>. Прочитан исторический раздел.</li>
-<li id="research-source-2">[Р2] <a href="https://www.mosconsv.ru/ru/person/9085">Московская консерватория: Виктор Борисович Баташёв</a>. Прочитана биография. Настоящее время в исходной странице не используется здесь как подтверждение текущего места работы.</li>
-<li id="research-source-3">[Р3] <a href="https://tuba.org.ru/scherbinin.pdf">«Щербинин Владимир Арнольдович и его ученики»</a>, PDF на tuba.org.ru. Прочитаны относящиеся к карточкам текстовые фрагменты; изображения архивных документов отдельно не сверялись. Мемуарные свидетельства не приравниваются к независимому архивному подтверждению.</li>
-</ol>
-</section>
-<section id="people-v3" class="block"><div class="wrap"><h2>Педагоги и ученики: биографические карточки</h2><p>Очерк объединяет воспоминания, биографии и воспроизведения архивных материалов. Его сведения приводятся с атрибуцией, а не как независимо проверенные архивные факты.</p><div class="people-v3"><article class="person-v3" id="person-blazhevich"><h3>Владислав Михайлович Блажевич</h3><p>Vladislav Mikhailovich Blazhevich</p><dl><dt>Даты</dt><dd>Преподавание в МГК: 1920–1942; смерть в 1942 подтверждена МГК. <a href="#v3-source-4">[4]</a></dd><dt>Обучение и педагог</dt><dd>1900–1905, Московская консерватория, класс Х. Борка. <a href="#v3-source-1">[1]</a></dd><dt>Деятельность и сочинения</dt><dd>Преподаватель тромбона и тубы; автор школ, концертных дуэтов и секвенций. <a href="#v3-source-1">[1]</a></dd><dt>Ученики</dt><dd>Владимир Щербинин, Борис Григорьев. <a href="#v3-source-1">[1]</a></dd><dt>Дополнительные сведения</dt><dd>Не перечисленные здесь сочинения, редакции, ученики и отдельные записи в этом дополнении не проверены; это не означает их отсутствия.</dd><dt>Изображения и проверка</dt><dd>Новый портрет в карточке не публикуется. Сверка — по текстам источников; архивные факсимиле не проверены. Дата редакционной проверки указана в отчёте проекта.</dd></dl></article><article class="person-v3" id="person-shcherbinin"><h3>Владимир Арнольдович Щербинин</h3><p>Vladimir Arnoldovich Shcherbinin</p><dl><dt>Даты</dt><dd>18 января 1896 — 5 июня 1963, по очерку. <a href="#v3-source-3">[3]</a></dd><dt>Обучение и педагог</dt><dd>Ученик Блажевича. Очерк различает версии окончания обучения: 1930 и экстерном 1947; объяснение расхождения не доказано. <a href="#v3-source-3">[3]</a></dd><dt>Деятельность</dt><dd>По очерку: солист Большого театра в 1926–1944; преподаватель МГК. <a href="#v3-source-3">[3]</a></dd><dt>Ученики</dt><dd>Баташёв — по официальной биографии МГК; другие связи показаны отдельно ниже. <a href="#v3-source-2">[2]</a></dd><dt>Дополнительные сведения</dt><dd>Не перечисленные здесь сочинения, редакции, ученики и отдельные записи в этом дополнении не проверены; это не означает их отсутствия.</dd><dt>Изображения и проверка</dt><dd>Новый портрет в карточке не публикуется. Сверка — по текстам источников; архивные факсимиле не проверены. Дата редакционной проверки указана в отчёте проекта.</dd></dl></article><article class="person-v3" id="person-batashev"><h3>Виктор Борисович Баташёв</h3><p>Viktor Borisovich Batashev</p><dl><dt>Даты и написание</dt><dd>В очерке: 7 июня 1937; встречается написание «Баташов». Независимая сверка даты рождения не выполнена. <a href="#v3-source-3">[3]</a></dd><dt>Обучение и педагог</dt><dd>Училище 1956; Московская консерватория 1960, класс Щербинина. <a href="#v3-source-2">[2]</a></dd><dt>Работа и достижения</dt><dd>БСО 1959–2001; Женева 1958, I премия; Прага 1962, III премия. Преподавание с 1963 с перерывом; профессор с 1995. <a href="#v3-source-2">[2]</a></dd><dt>Ученики и записи</dt><dd>МГК называет Мажорина и Шарова; биография сообщает о записях в Фонде радио и на «Мелодии». <a href="#v3-source-2">[2]</a></dd><dt>Дополнительные сведения</dt><dd>Не перечисленные здесь сочинения, редакции, ученики и отдельные записи в этом дополнении не проверены; это не означает их отсутствия.</dd><dt>Изображения и проверка</dt><dd>Новый портрет в карточке не публикуется. Сверка — по текстам источников; архивные факсимиле не проверены. Дата редакционной проверки указана в отчёте проекта.</dd></dl></article><article class="person-v3" id="person-turusin"><h3>Михаил Николаевич Турусин</h3><p>Mikhail Nikolaevich Turusin</p><dl><dt>Даты</dt><dd>1924 год рождения указан в воспроизведённом архивном заголовке очерка; оригинал дела не сверялся. <a href="#v3-source-3">[3]</a></dd><dt>Обучение и педагог</dt><dd>По биографическому приложению: училище 1944–1947; МГК 1947–1952, класс Щербинина. <a href="#v3-source-3">[3]</a></dd><dt>Работа</dt><dd>По приложению: Большой театр 1948–1959 и 1963–1975; оркестр радио и телевидения 1960–1963. <a href="#v3-source-3">[3]</a></dd><dt>Педагогика и достижения</dt><dd>По приложению: МГК с 1965; I премии фестивалей в Будапеште 1949 и Берлине 1951. <a href="#v3-source-3">[3]</a></dd><dt>Дополнительные сведения</dt><dd>Не перечисленные здесь сочинения, редакции, ученики и отдельные записи в этом дополнении не проверены; это не означает их отсутствия.</dd><dt>Изображения и проверка</dt><dd>Новый портрет в карточке не публикуется. Сверка — по текстам источников; архивные факсимиле не проверены. Дата редакционной проверки указана в отчёте проекта.</dd></dl></article><article class="person-v3" id="person-ladilov"><h3>Константин Михайлович Ладилов</h3><p>Konstantin Mikhailovich Ladilov</p><dl><dt>Даты</dt><dd>9 февраля 1927 — 13 февраля 1983, по биографическому приложению очерка. <a href="#v3-source-3">[3]</a></dd><dt>Обучение и педагог</dt><dd>По приложению: Горьковская консерватория 1952, класс Щербинина; аспирантура МГК 1956. <a href="#v3-source-3">[3]</a></dd><dt>Работа</dt><dd>По приложению: солист Госоркестра СССР 1957–1983; преподавание в Гнесинском институте с 1964. <a href="#v3-source-3">[3]</a></dd><dt>Достижения</dt><dd>По приложению: I премия фестиваля в Бухаресте, 1953. <a href="#v3-source-3">[3]</a></dd><dt>Дополнительные сведения</dt><dd>Не перечисленные здесь сочинения, редакции, ученики и отдельные записи в этом дополнении не проверены; это не означает их отсутствия.</dd><dt>Изображения и проверка</dt><dd>Новый портрет в карточке не публикуется. Сверка — по текстам источников; архивные факсимиле не проверены. Дата редакционной проверки указана в отчёте проекта.</dd></dl></article></div><h3>Связи «педагог → ученик»</h3><ul class="lineage-v3"><li class="documented">Борк → Блажевич — источник учреждения <a href="#v3-source-1">[1]</a></li><li class="documented">Блажевич → Щербинин — источник учреждения <a href="#v3-source-1">[1]</a></li><li class="documented">Блажевич → Григорьев — источник учреждения <a href="#v3-source-1">[1]</a></li><li class="documented">Щербинин → Баташёв — источник учреждения <a href="#v3-source-2">[2]</a></li><li class="provisional">Щербинин → Ладилов — по очерку; независимая сверка впереди <a href="#v3-source-3">[3]</a></li><li class="provisional">Щербинин → Турусин — по очерку; независимая сверка впереди <a href="#v3-source-3">[3]</a></li><li class="provisional">Щербинин → Миронов — по очерку; независимая сверка впереди <a href="#v3-source-3">[3]</a></li><li class="documented">Щербинин → Лебедев — источник учреждения <a href="#v3-source-1">[1]</a></li><li class="documented">Григорьев → Досадин — источник учреждения <a href="#v3-source-1">[1]</a></li><li class="documented">Баташёв → Мажорин — источник учреждения <a href="#v3-source-2">[2]</a></li><li class="documented">Баташёв → Шаров — источник учреждения <a href="#v3-source-2">[2]</a></li></ul><p>Рёбра обозначают обучение, а не совместную работу или частные консультации. Пунктир отмечает связи, приведённые только по очерку.</p><h3>Источники карточек</h3><ol><li id="v3-source-1"><a href="https://www.mosconsv.ru/ru/groups/11202">МГК: история кафедры</a></li><li id="v3-source-2"><a href="https://www.mosconsv.ru/ru/person/9085">МГК: Виктор Баташёв</a></li><li id="v3-source-3"><a href="https://tuba.org.ru/scherbinin.pdf">Очерк о Щербинине и учениках</a></li><li id="v3-source-4"><a href="https://www.mosconsv.ru/ru/eventdet/124387">МГК: Блажевич — профессор</a></li></ol></div></section></main>
+</main>
 <footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a><span>Владислав Блажевич, Vladislav Blazhevich</span><a href="en/index.html" hreflang="en" lang="en">English</a></div></footer>
 <button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>
 <script>
@@ -584,7 +552,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop');
-  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>(bar.classList.contains('home')?innerHeight*.6:10));totop.classList.toggle('show',y>700)};
+  if(!bar)return; /* главная: один экран, шапки нет */
+  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700)};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];

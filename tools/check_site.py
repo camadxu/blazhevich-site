@@ -4,7 +4,7 @@
   python3 tools/check_site.py путь/к/site
 
 Что проверяется:
-  • все 7 страниц на месте;
+  • все страницы на месте;
   • каждая внутренняя ссылка (href/src/srcset и url() в fonts.css) ведёт на существующий файл,
     а ссылка с #якорем — на существующий id в целевой странице;
   • нет повторяющихся id на странице, у каждой страницы ровно один <h1>;
@@ -17,7 +17,8 @@ import pathlib, re, sys
 from html.parser import HTMLParser
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
-PAGES = ['index.html', 'biography.html', 'usa.html', 'schools.html', 'moscow.html', 'leningrad.html', 'concertos.html', 'about.html', 'en/index.html']
+PAGES = ['index.html', 'scores.html', 'listen.html', 'biography.html', 'usa.html', 'schools.html', 'moscow.html', 'leningrad.html', 'concertos.html', 'about.html',
+         'en/index.html'] + [f'en/{k}.html' for k in ('scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about')]
 errors, external = [], set()
 
 class P(HTMLParser):
