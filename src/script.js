@@ -1,5 +1,6 @@
 'use strict';
 (function(){
+  document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Каталог: поиск и фильтр */
@@ -16,8 +17,6 @@
   }
   if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
 
-  /* Свет на карточках за курсором */
-  for(const c of cards){c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px')})}
 
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop');
@@ -42,26 +41,4 @@
     }
   }
 
-  if(reduce || matchMedia('(max-width: 620px), (pointer: coarse)').matches) return;
-  const hero=document.getElementById('hero'); if(!hero) return;
-  const img=hero.querySelector('.portrait img');
-
-  /* Луч света следует за курсором, лёгкий параллакс портрета */
-  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');hero.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%')});
-  hero.addEventListener('pointerleave',()=>{hero.style.setProperty('--mx','50%');hero.style.setProperty('--my','38%')});
-  addEventListener('scroll',()=>{const y=Math.min(scrollY,900);img.style.setProperty('--py',(y*.12).toFixed(1)+'px')},{passive:true});
-
-  /* Пылинки в луче прожектора */
-  const cv=document.getElementById('motes'); if(!cv) return; const ctx=cv.getContext('2d');
-  let W=0,H=0,dpr=1,motes=[],running=true;
-  function size(){dpr=Math.min(devicePixelRatio||1,2);W=hero.clientWidth;H=hero.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(Math.min(70,W/18));motes=Array.from({length:n},()=>spawn(true))}
-  function spawn(any){return{x:W/2+(Math.random()-.5)*Math.min(W,760)*.8,y:any?Math.random()*H:H+10,r:Math.random()*1.6+.4,v:Math.random()*.25+.08,d:Math.random()*Math.PI*2,a:Math.random()*.5+.15}}
-  function tick(t){if(!running)return;ctx.clearRect(0,0,W,H);
-    for(const m of motes){m.y-=m.v;m.x+=Math.sin(t/2400+m.d)*.15;if(m.y<-10)Object.assign(m,spawn(false));
-      const tw=.6+.4*Math.sin(t/900+m.d);ctx.beginPath();ctx.arc(m.x,m.y,m.r,0,6.283);ctx.fillStyle=`rgba(243,210,138,${(m.a*tw).toFixed(3)})`;ctx.fill()}
-    requestAnimationFrame(tick)}
-  size(); addEventListener('resize',size);
-  new IntersectionObserver(([e])=>{const was=running;running=e.isIntersecting;if(running&&!was)requestAnimationFrame(tick)}).observe(hero);
-  requestAnimationFrame(tick);
 })();

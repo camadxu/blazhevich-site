@@ -12,7 +12,7 @@ class Cards(HTMLParser):
   if self.current is not None:self.current['textContent']+=s+' '
  def handle_endtag(self,t):
   if t=='article':self.current=None
-script=(ROOT/'src/script.js').read_text();chunk=script[script.index('  const search='):script.index('  /* Свет')]
+script=(ROOT/'src/script.js').read_text();chunk=script[script.index('  const search='):script.index('  /* Шапка')]
 results=[]
 for page in ['index.html','en/index.html']:
  p=Cards();s=(ROOT/'site'/page).read_text();p.feed(s);assert len(p.cards)==10
@@ -39,8 +39,12 @@ for pg in ['schools.html','en/index.html']:
  assert all('id="person-'+n+'"' in s for n in ['blazhevich','shcherbinin','batashev','turusin','ladilov'])
  assert s.count('id="v3-source-')==4
  assert s.count('class="provisional"')==3
-assert 'ИИ-реконструкция, не историческое фото.' in (ROOT/'site/index.html').read_text()
-assert 'AI reconstruction, not a historical photograph.' in (ROOT/'site/en/index.html').read_text()
+# Происхождение портрета (ИИ) и источники фото указаны на странице «О проекте» и в английской версии.
+assert 'созданное с помощью ИИ' in (ROOT/'site/about.html').read_text()
+assert 'AI-generated' in (ROOT/'site/en/index.html').read_text()
+for pg in ['index.html','en/index.html']:
+ s=(ROOT/'site'/pg).read_text()
+ assert all(f in s for f in ['conservatory-1940s.webp','bolshoi-1905.webp','goznak-moscow.webp'])
 def digest():return {str(p.relative_to(ROOT/'site')):hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'site').rglob('*') if p.is_file()}
 # Аргументы пересборки берутся из окружения, чтобы проверку можно было запускать
 # сразу после сборки с теми же параметрами (по умолчанию — параметры релиза v3).

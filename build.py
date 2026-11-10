@@ -39,26 +39,13 @@ if a.release and not DOM:
 
 CSS = (SRC / 'style.css').read_text()
 JS = (SRC / 'script.js').read_text()
-EXTRA_CSS = """
-.crumb{display:inline-flex;gap:8px;align-items:center;font-size:14px;color:var(--muted);text-decoration:none;margin-bottom:18px}
-.crumb:hover{color:var(--brass-hi)}
-.page-title{font-size:clamp(40px,6vw,68px);letter-spacing:-.01em}
-.explore-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.explore-card{position:relative;display:grid;gap:10px;padding:28px 28px 56px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,var(--velvet-2),var(--velvet));text-decoration:none;color:var(--muted);transition:transform .25s,border-color .25s}
-.explore-card b{font-family:var(--display);font-size:30px;font-weight:600;line-height:1.1;color:var(--ink)}
-.explore-card .eyebrow{margin:0}
-.explore-card i{position:absolute;right:26px;bottom:20px;font-style:normal;font-size:22px;color:var(--brass);transition:transform .25s}
-.explore-card:hover{transform:translateY(-3px);border-color:#6a5590}
-.explore-card:hover i{transform:translateX(4px)}
-.lang{border:1px solid var(--line);border-radius:999px;padding:6px 12px!important;margin-left:6px;font-weight:600}
-@media(max-width:820px){.explore-grid{grid-template-columns:1fr}}
-"""
+EXTRA_CSS = ""  # всё оформление в src/style.css
 CSS = CSS + EXTRA_CSS
 
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-                '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600;1,700&family=Onest:wght@400;500;600&family=Kaushan+Script&family=Old+Standard+TT:wght@400;700&display=swap">')
-FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c0915'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-weight='700' font-size='40' fill='%23d9a94e'%3EB%3C/text%3E%3C/svg%3E\">")
+                '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;600&display=swap">')
+FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4eee1'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
 
 def sec(name, lang='ru'):
     return (SRC / lang / f'{name}.html').read_text()
@@ -108,10 +95,10 @@ def header(nav_html, lang_link, home):
             f'  <nav aria-label="Основная навигация">{nav_html}{lang_link}</nav>\n</div></header>\n')
 
 FOOTER_RU = ('<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a>'
-             '<span>Владислав Блажевич · Vladislav Blazhevich · <a href="en/index.html">English</a></span></div></footer>\n'
+             '<span>Владислав Блажевич, Vladislav Blazhevich</span><a href="en/index.html" hreflang="en" lang="en">English</a></div></footer>\n'
              '<button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>\n')
 FOOTER_EN = ('<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a>'
-             '<span>Vladislav Blazhevich · Владислав Блажевич · <a href="../index.html">Русский</a></span></div></footer>\n'
+             '<span>Vladislav Blazhevich, Владислав Блажевич</span><a href="../index.html" hreflang="ru" lang="ru">Русский</a></div></footer>\n'
              '<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>\n')
 
 def head(title, desc, path, lang, prefix, fonts):
@@ -120,7 +107,7 @@ def head(title, desc, path, lang, prefix, fonts):
     m = [f'<title>{title}</title>',
          f'<meta name="description" content="{desc}">',
          f'<meta name="robots" content="{"index,follow" if a.release else "noindex,nofollow"}">',
-         '<meta name="theme-color" content="#0c0915">', FAVICON,
+         '<meta name="theme-color" content="#f4eee1">', FAVICON,
          '<meta property="og:type" content="website">',
          f'<meta property="og:locale" content="{"ru_RU" if lang == "ru" else "en_US"}">',
          '<meta property="og:site_name" content="Blazhevich">',
@@ -197,7 +184,7 @@ if a.release:
 one = ''.join(sec(s_) for s_ in ['hero', 'scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about'])
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
 art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-       '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#0c0915">\n' + FAVICON + '\n' + FONTS_GOOGLE
+       '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#f4eee1">\n' + FAVICON + '\n' + FONTS_GOOGLE
        + f'\n<style>\n{CSS}</style>\n\n'
        + header(nav, '', '#hero').replace('href="#hero" class="brand"', 'href="#hero" class="brand"')
        + f'<main id="main">\n{one}</main>\n'

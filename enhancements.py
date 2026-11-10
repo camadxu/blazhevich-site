@@ -68,15 +68,13 @@ def apply():
   if en:
    s=s.replace('</main>',people_section(True)+'</main>')
    s=s.replace('Перейти к содержимому','Skip to content')
-  # Explicit visible caption, keep original provenance wording unchanged.
-  caption='AI reconstruction, not a historical photograph.' if en else 'ИИ-реконструкция, не историческое фото.'
-  s=s.replace('<p class="credit">',f'<p class="credit"><strong>{caption}</strong> ',1)
+  # The hero carries no caption by the owner's choice; the portrait's AI origin and the photo credits live on the About page.
   p.write_text(s)
  p=out/'schools.html';s=p.read_text();s=s.replace('</main>',people_section()+'</main>');p.write_text(s)
  # Styling additions inherit the existing palette and typography.
- css='''<style>.people-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:28px 0}.person-v3{padding:24px;border:1px solid var(--line);border-radius:16px}.person-v3 dt{font-weight:600;margin-top:14px}.person-v3 dd{margin:4px 0;overflow-wrap:anywhere}.lineage-v3 li{margin:12px 0;padding:10px;border-left:3px solid var(--brass)}.lineage-v3 .provisional{border-left-style:dashed}.extra-tools-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}.extra-tools-v3 label{display:grid;gap:8px}.extra-tools-v3 select{width:100%;max-width:100%;padding:12px;background:#181534;color:#efe9dd;border:1px solid #6a6080;border-radius:8px}a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f3d28a;outline-offset:4px}[hidden]{display:none!important}@media(max-width:620px){.people-v3,.extra-tools-v3{grid-template-columns:1fr}.person-v3{padding:18px}}</style>'''
+ css=''  # styles for these additions live in src/style.css
  for page in out.rglob('*.html'):
   text=page.read_text();page.write_text(text.replace('</head>',css+'</head>',1))
  # Standalone error page; activation on hosting requires verified server config.
- (out/'404.html').write_text('''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Страница не найдена — Blazhevich</title><style>body{max-width:48rem;margin:10vh auto;padding:24px;background:#0c0915;color:#eee;font:18px/1.6 system-ui}a{color:#f3d28a}</style></head><body><main><h1>Страница не найдена / Page not found</h1><p>Проверьте адрес или вернитесь к каталогу.</p><a href="/">Главная / Home</a> · <a href="/#scores">Ноты / Scores</a> · <a href="/en/">English</a></main></body></html>''')
+ (out/'404.html').write_text('''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Страница не найдена — Blazhevich</title><style>body{max-width:48rem;margin:10vh auto;padding:24px;background:#f4eee1;color:#2a2118;font:18px/1.6 system-ui}a{color:#24426b}</style></head><body><main><h1>Страница не найдена / Page not found</h1><p>Проверьте адрес или вернитесь к каталогу.</p><a href="/">Главная / Home</a> · <a href="/#scores">Ноты / Scores</a> · <a href="/en/">English</a></main></body></html>''')
 if __name__=='__main__':apply()
