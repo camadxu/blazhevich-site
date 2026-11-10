@@ -96,9 +96,6 @@ strong,b{font-weight:600}
 /* ---------- Header ---------- */
 header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
 header.scrolled{border-bottom-color:var(--line)}
-/* home: the first screen is bare, the bar slides in once it is scrolled past; without JS it simply stays */
-.js header.home{position:fixed;left:0;right:0;transform:translateY(-100%);transition:transform .45s var(--ease),border-color .3s}
-.js header.home.scrolled,.js header.home:focus-within{transform:none}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-2) var(--s-6);min-height:var(--header-h);flex-wrap:wrap}
 .brand{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-block:var(--s-2)}
 .brand:hover{color:var(--accent)}
@@ -110,35 +107,41 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .lang{margin-left:var(--s-2);border:1px solid var(--field);border-radius:var(--radius);padding:var(--s-1) var(--s-3)!important;font-weight:600;color:var(--ink)!important}
 .lang:hover{background:var(--surface)}
 
-/* ---------- Hero: the portrait before the three Moscow addresses ---------- */
-.hero{position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-8);text-align:center}
-/* two equal views meet on the axis behind the figure and run off the top and sides of the window */
-.city{position:absolute;z-index:-1;top:-13svh;left:50%;transform:translateX(-50%);width:max(130vw,190svh);display:flex;justify-content:center;pointer-events:none}
-.city img{display:block;width:54%;height:auto;max-width:none;flex:none;animation:hero-fade 1.6s ease both}
-.city-b{margin-left:-8%}
+/* ---------- Hero: one screen. The figure stands close, the two houses far off across a sunlit square ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.hero{--horizon:66svh;position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-6);text-align:center;
+  /* one sun for the whole scene: high on the left, warming the sky and the paper */
+  background:radial-gradient(120% 90% at 16% -10%,#fff8e6 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),#ece1c8 calc(var(--horizon) + 5svh),var(--paper) 100%)}
+/* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
+.hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
+  background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
+  -webkit-mask-image:linear-gradient(transparent,#000 10%,transparent 62%);mask-image:linear-gradient(transparent,#000 10%,transparent 62%)}
+/* both views stand on the horizon, small and hazy with distance, lit by the same light */
+.city{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--horizon);pointer-events:none}
+.city img{position:absolute;bottom:-9.2%;width:clamp(300px,38vw,660px);height:auto;max-width:none;opacity:.8;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);animation:hero-fade 1.6s ease both}
+.city-c{right:calc(50% + clamp(90px,12vw,220px))}
+.city-b{left:calc(50% + clamp(90px,12vw,220px))}
 .hero-stage{display:grid;justify-items:center}
 /* bust crop: the box shows the top of the full-length file and the chest melts into the paper */
-.portrait{margin:0;width:clamp(260px,60svh,560px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);animation:hero-rise 1.1s var(--ease) both}
+.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
 .portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}
-.hero-copy{display:grid;justify-items:center;gap:var(--s-4);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
-.hero-copy>*{animation:hero-rise .9s var(--ease) .45s both}
-.hero-copy>.lead{animation-delay:.6s}
-.hero-copy>.cta{animation-delay:.75s}
-.hero-copy>.hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(14px,1.3vw,18px);letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
+.hero-copy{display:grid;justify-items:center;gap:var(--s-5);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
+.hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
-@keyframes hero-fade{from{opacity:0;scale:1.04}}
+.hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:rgb(244 238 225/.72);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
+/* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
+.hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
+.hero-menu:not(:popover-open){display:none}
+.hero-menu:popover-open{display:grid;width:min(92vw,400px)}
+.hero-menu::backdrop{background:rgb(42 33 24/.28)}
+.hero-menu a{display:block;padding:var(--s-3);font-family:var(--display);font-size:28px;font-weight:500;line-height:1.15;color:var(--ink);text-decoration:none}
+.hero-menu a+a{border-top:1px solid var(--line)}
+.hero-menu a:hover{color:var(--accent)}
+@keyframes hero-fade{from{opacity:0}}
 @keyframes hero-rise{from{opacity:0;translate:0 24px}}
 @keyframes hero-gather{from{opacity:0;letter-spacing:.9em}}
-@supports (animation-timeline:scroll()){
-  /* the buildings leave slower than the figure */
-  .city{animation:hero-drift linear both;animation-timeline:scroll(root);animation-range:0 100svh}
-  @keyframes hero-drift{to{translate:0 14svh}}
-}
-#hero-title{display:grid;gap:var(--s-2);justify-items:center}
-.h1-name{font-size:clamp(44px,5.2vw,76px);font-weight:500;line-height:1.02;letter-spacing:-.01em}
-.h1-dates{font-size:clamp(22px,2.2vw,30px);font-weight:500;color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
-.lead{font-size:var(--t-lead);color:var(--muted);max-width:52ch}
-.cta{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s-3);margin-top:var(--s-1)}
 .credit{font-size:var(--t-small);color:var(--muted);line-height:1.5;max-width:var(--measure);margin-top:var(--s-3)}
 
 /* ---------- Buttons ---------- */
@@ -358,9 +361,12 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 }
 @media(max-width:620px){
   body{font-size:16px}
-  .hero{padding-block:var(--s-3) var(--s-7)}
-  .city{width:190vw;top:-2svh}
-  .portrait{width:88vw}
+  .hero{--horizon:58svh;padding-block:var(--s-3) var(--s-5)}
+  .hero-copy{margin-top:var(--s-2)}
+  .city img{width:64vw}
+  .city-c{right:calc(50% + 4vw)}
+  .city-b{left:calc(50% + 4vw)}
+  .portrait{width:min(92vw,62svh)}
   .btn{padding:0 var(--s-4);font-size:14px}
   .about h3{font-size:24px}
   section.block{padding-block:var(--s-8)}
@@ -423,332 +429,22 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header id="top-bar" class="home"><div class="wrap bar">
-  <a href="index.html" class="brand" aria-label="Blazhevich — home">Blazhevich</a>
-  <nav aria-label="Main navigation"><a href="#scores">Scores</a><a href="#listen">Listen</a><a href="#biography">Biography</a><a href="#usa">In America</a><a href="#schools">Schools</a><a href="#concertos">Concertos</a><a href="#about">About</a><a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a></nav>
-</div></header>
 <main id="main">
 <section id="hero" class="hero" aria-labelledby="hero-title">
   <div class="city" aria-hidden="true"><img class="city-c" src="../assets/conservatory-1940s.webp" width="960" height="600" alt=""><img class="city-b" src="../assets/bolshoi-1905.webp" width="960" height="600" alt=""></div>
   <div class="wrap hero-stage">
     <figure class="portrait">
-      <img src="../assets/blazhevich-portrait.webp" srcset="../assets/blazhevich-portrait-683.webp 683w, ../assets/blazhevich-portrait.webp 1024w" sizes="(max-width:620px) 88vw, 560px" width="1024" height="1536" fetchpriority="high" alt="Artistic portrait of Vladislav Blazhevich in an early 20th-century suit">
+      <img src="../assets/blazhevich-portrait.webp" srcset="../assets/blazhevich-portrait-683.webp 683w, ../assets/blazhevich-portrait.webp 1024w" sizes="(max-width:620px) 92vw, 640px" width="1024" height="1536" fetchpriority="high" alt="Artistic portrait of Vladislav Blazhevich in an early 20th-century suit">
     </figure>
     <div class="hero-copy">
-      <p class="hero-mark" aria-hidden="true">Blazhevich</p>
-      <h1 id="hero-title"><span class="h1-name">Vladislav Blazhevich</span><span class="h1-dates">1881–1942</span></h1>
-      <p class="lead">Vladislav Blazhevich (1881–1942): the life, the music and the method books behind the “Clef Studies.” Sources, scores and recordings for brass players.</p>
-      <div class="cta"><a class="btn btn-brass" href="#scores">Find scores</a><a class="btn btn-ghost" href="#listen">Listen</a></div>
+      <h1 id="hero-title" class="hero-mark"><span aria-hidden="true">Blazhevich</span><span class="sr">Vladislav Blazhevich, 1881–1942</span></h1>
+      <div class="hero-nav"><button class="hero-btn" type="button" popovertarget="menu">Menu</button><a class="hero-btn" href="../index.html" hreflang="ru" lang="ru">RU</a></div>
+      <nav id="menu" class="hero-menu" popover aria-label="Sections"><a href="scores.html">Scores</a><a href="listen.html">Listen</a><a href="biography.html">Biography</a><a href="usa.html">In America</a><a href="schools.html">Schools</a><a href="concertos.html">Concertos</a><a href="about.html">About</a></nav>
     </div>
   </div>
 </section>
 
-<section id="scores" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Works and scores</h2><div class="eyebrow">For practice and performance</div><p>A starting selection, not a complete catalogue. Links lead to libraries and descriptions; no third-party score files are hosted here.</p></div>
-  <div class="tools">
-    <label for="search">Search by title<input id="search" type="search" placeholder="e.g. legato or tuba" autocomplete="off"></label>
-    <label for="instrument">Instrument<select id="instrument"><option value="all">All instruments</option><option value="trombone">Trombone</option><option value="tuba">Tuba</option></select></label>
-  </div>
-<div class="extra-tools-v3"><label for="filter-genre">Genre<select id="filter-genre" data-catalog-filter="genre"><option value="all">All</option><option value="method">Method</option><option value="duet">Duet</option><option value="exercise">Exercises</option><option value="study">Studies</option><option value="concerto">Concertos</option></select></label><label for="filter-ensemble">Forces<select id="filter-ensemble" data-catalog-filter="ensemble"><option value="all">All</option><option value="single">Single player: study material</option><option value="duo">Two trombones</option><option value="unspecified">Accompaniment not specified</option></select></label><label for="filter-source">Source<select id="filter-source" data-catalog-filter="source"><option value="all">All</option><option value="mgk">Moscow Conservatory</option><option value="classon">classON</option><option value="history">Edition history</option><option value="recordings">Recording project</option><option value="imslp">IMSLP</option></select></label><label for="filter-difficulty">Difficulty<select id="filter-difficulty" data-catalog-filter="difficulty"><option value="all">All</option><option value="unrated">Not assessed from the score</option></select></label></div><p class="note">Difficulty has not yet been assessed from scores. Proposed rubric: basic, intermediate, advanced — based on range, rhythm, endurance and clefs. No rating is assigned by title alone. Source filter describes the linked resource, not a verified publisher.</p>  <p class="note count" id="count" role="status" aria-live="polite" data-tpl="Showing {n} of {t}">10 items</p>
-  <div class="grid" id="catalog">
-    <article class="card" data-instrument="trombone" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>School for Trombone in Clefs (Clef Studies)</h3><div class="tag">Trombone, clefs</div><p>His best-known work in the US. American editions by Raichman (1948), Ostrander and Hunsberger. The current East-West urtext follows the 1939 Russian edition.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">History of the editions ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Trombone concertos</h3><div class="tag">Trombone, concertos</div><p>Thirteen concertos written for his conservatory students, most in the 1920s. Many were not published in his lifetime. Caleb Lambert recorded the first four.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Recording project ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="duet" data-ensemble="duo" data-source="mgk" data-difficulty="unrated"><h3>School for the Slide Trombone</h3><div class="tag">Trombone, method</div><p>His 1936 method for beginners, with piano accompaniment. Described in the Moscow Conservatory’s history of its brass department.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="exercise" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>School of Legato Development</h3><div class="tag">Trombone, legato</div><p>Listed among his teaching works by the Moscow Conservatory. Dates of the editions differ between sources.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="method" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Concert Duets</h3><div class="tag">Two trombones, ensemble</div><p>38 duets for two trombones, written for ensemble and orchestral readiness.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Sequences</h3><div class="tag">Trombone, exercises</div><p>26 melodic exercises in various rhythms and clefs. Current US edition with Michael Mulcahy (East-West, 2008).</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>70 Studies for BB♭ Tuba</h3><div class="tag">Tuba, etudes</div><p>Robert King edition, Alphonse Leduc, two volumes. Adapted by Blazhevich from his trombone material.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">IMSLP catalogue ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="method" data-ensemble="single" data-source="history" data-difficulty="unrated"><h3>Tuba School, Part 1</h3><div class="tag">Tuba, method</div><p>Score entry in the classON library. Access and terms of use are set by the library.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Library (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="concerto" data-ensemble="unspecified" data-source="recordings" data-difficulty="unrated"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 29–47, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Library (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="study" data-ensemble="single" data-source="imslp" data-difficulty="unrated"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 48–66, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Library (Russian) ↗</a></article>
-  </div>
-  <p id="empty" class="empty" hidden>Nothing found. Try another title or choose all instruments.</p>
-  <noscript><p class="note">Search needs JavaScript. All items and links are listed above.</p></noscript>
-</div></section>
-
-<section id="listen" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Listen</h2><div class="eyebrow">Live sound</div></div>
-  <div class="listen reveal">
-    <div>
-      <h3>Caleb Lambert’s recordings</h3>
-      <p>As part of his DMA at the University of Iowa (2020), Caleb Lambert made what he describes as the first formal recordings of Concertos No. 1–4 and Miniature No. 6. They are free to stream on his site.</p>
-      <div><a class="btn btn-brass" href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Open the recordings ↗</a></div>
-      <p class="note">External site. No audio is copied or autoplayed here.</p>
-    </div>
-    <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  </div>
-</div></section>
-
-<section id="biography" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>How Blazhevich became Blazhevich</h2><div class="eyebrow">A life in music · 1881–1942</div><p>From an orphan on a poor Smolensk farm to a professor at the Moscow Conservatory whose etudes are still assigned at American universities.</p></div>
-
-  <div class="facts reveal" role="list">
-    <div role="listitem"><b>3 (15) August 1881</b><span>born at the Tregubovka farm, Smolensk Governorate</span></div>
-    <div role="listitem"><b>Age 6</b><span>lost his mother; his father was serving a hard-labour sentence</span></div>
-    <div role="listitem"><b>1905/06–1928</b><span>in the Bolshoi Theatre orchestra, finally as principal trombone</span></div>
-    <div role="listitem"><b>13</b><span>trombone concertos</span></div>
-  </div>
-
-  <div class="chapters">
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1881–1893</span><span class="ch-place">Smolensk region</span></div><div class="ch-body">
-      <h3>An orphan from the Tregubovka farm</h3>
-      <p>Vladislav Mikhailovich Blazhevich was born on 3 (15) August 1881 at the Tregubovka farm in the Katyn district of Smolensk. His father Mikhail came from the Polish nobility. According to the researcher Andrey Kharlamov, in the year of his son’s birth the father was arrested for anti-government views and sentenced to twenty years of hard labour.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-      <p>His mother could not manage the household alone and died in 1887, when the boy was six. An uncle on his father’s side became his guardian. They lived in poverty: according to Kharlamov, the boy had no shoes of his own until he was twelve. His first instrument was an ocarina. Colleagues later said that these early losses made him withdrawn, but also gave him a strong will and the habit of relying only on himself.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1893–1900</span><span class="ch-place">Military bands</span></div><div class="ch-body">
-      <h3>Twelve years old — and into the army</h3>
-      <p>At twelve his uncle placed him as a band pupil with the 3rd Artillery Brigade in Smolensk. There he had his own clothes and his own instrument for the first time. He started on the euphonium but asked to switch to the trombone, which offered more chances to play solos and to get into a real orchestra. In 1899 he served in the Astrakhan Grenadier Regiment, and in 1900 he left the army to study.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1900–1905</span><span class="ch-place">Moscow</span><figure class="ch-photo"><div class="mat"><img src="../assets/blazhevich-1903-560.webp" srcset="../assets/blazhevich-1903-560.webp 560w, ../assets/blazhevich-1903.webp 900w" sizes="(max-width:820px) 60vw, 220px" width="900" height="1327" loading="lazy" alt="Vladislav Blazhevich in 1903, a photograph with his signature and the date"></div><figcaption>Blazhevich as a student, 1903, with his signature. Photographer unknown; <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain.</figcaption></figure></div><div class="ch-body">
-      <h3>The Conservatory and Bork’s class</h3>
-      <p>In 1900 Blazhevich entered the Moscow Conservatory in the trombone class of Christoph Bork. He later remembered his teacher as “a dry and pedantic teacher who liked discipline and demanded unquestioning fulfilment of his instructions.” Besides trombone he studied music theory, orchestration and piano, and persuaded the administration to let him attend lessons for other instruments to understand how they were taught and played. He later carried this broad training into his own teaching. He graduated in 1905.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1905–1928</span><span class="ch-place">Bolshoi Theatre</span></div><div class="ch-body">
-      <h3>The Bolshoi, the war, Persimfans</h3>
-      <p>After the Conservatory Blazhevich won a place in the Bolshoi Theatre orchestra. English Wikipedia, following Kharlamov, gives the 1906 season; Russian sources give 1905. Colleagues remembered him as strong-willed and kind, and an excellent section leader. He also played in the Moscow Brass Quartet with S. Loginov, A. Kolpinsky and A. Andrushkevich.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a><a href="#s7">[7]</a></sup></p>
-      <p>During the First World War he was drafted as an assistant superintendent of a military hospital. He kept playing at the Bolshoi and composed at night. In 1916 he organised a benefit concert of his own works in memory of the fallen.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-      <p>In 1922–1932 he played in Persimfans, the First Conductorless Symphony Ensemble. In 1926, according to Russian Wikipedia, he organised and led the wind band of the Special Armed Detachment. He left the Bolshoi in 1928 as principal trombone; his last performance was Borodin’s <i>Prince Igor</i>. Colleagues thought retiring at 47 was too early.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1920–1942</span><span class="ch-place">Conservatory</span></div><div class="ch-body">
-      <h3>Professor and author of methods</h3>
-      <p>In 1920 the rector of the Moscow Conservatory, M. M. Ippolitov-Ivanov, invited Blazhevich to become professor of trombone and tuba. He founded the military bandmasters’ class, which later grew into the faculty of military conductors, and headed that department in 1929–1936. In the 1930s he also taught at the Gnesin school.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
-      <p>As the Conservatory puts it, there were almost no methods, etudes or pieces for trombone and tuba in Russia at the time, and this “repertoire hunger” made Blazhevich write them himself. He wrote two trombone methods: an advanced school in clefs in 1925 and a beginners’ school with piano accompaniment in 1936. He also wrote a legato school, 26 sequences, 38 concert duets, 12 melodic and 24 virtuoso etudes, etudes for alto and bass trombone, and a tuba method and 70 studies for tuba. By his own account, he wrote the thirteen concertos to show all the capabilities of the trombone and to give students solo repertoire. Most of the concertos date from the 1920s; Nos. 11–13 were probably written in the 1930s.<sup class="ref"><a href="#s1">[1]</a><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p>
-      <p>Over twenty-two years at the Conservatory he trained many trombonists and tuba players. His best pupils are named as V. A. Shcherbinin, soloist of the Bolshoi and Conservatory professor, and B. P. Grigoriev, professor at the Gnesin Institute.<sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1920–1941</span><span class="ch-place">Conductor and author</span></div><div class="ch-body">
-      <h3>Goznak and the State Wind Orchestra of the USSR</h3>
-      <p>According to the Krugosvet encyclopedia, from 1920 Blazhevich directed the wind band of the Goznak factory, and led it for many years.<sup class="ref"><a href="#s8">[8]</a></sup></p>
-      <p>Blazhevich founded the State Wind Orchestra of the USSR himself. An order of the All-Union Committee for the Arts of 28 January 1937 appointed him its artistic director retroactively, from 1 January 1937. The orchestra was at its height in 1937–1939, under Blazhevich; after he left, the baton passed to B. P. Moshkov.<sup class="ref"><a href="#s9">[9]</a></sup></p>
-      <p>In July 1941 almost the whole orchestra, about sixty musicians, enlisted in the 6th People’s Militia Division of Moscow’s Dzerzhinsky district. Within two or three months the musicians went missing in the Vyazma encirclement. The newspaper <i>Vechernyaya Moskva</i> is still searching for their names.<sup class="ref"><a href="#s9">[9]</a></sup></p>
-      <p>Late in life he wrote a book on the methods of teaching the trombone. Kharlamov cites it as <i>Methods</i>, 1941; English Wikipedia gives 1948, probably the year of publication. There is also an <i>Autobiography</i> of 1939.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1942</span><span class="ch-place">Moscow</span></div><div class="ch-body">
-      <h3>Last years and legacy</h3>
-      <p>Blazhevich died in Moscow on 10 April 1942 and is buried at the Vvedenskoye Cemetery (plot 10). In 1980 the Moscow children’s music school for wind and percussion No. 80 was named after him. On 17 January 2011 the Moscow Conservatory held a concert for the 130th anniversary of his birth.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-    </div></article>
-  </div>
-
-  <aside class="insight reveal" aria-labelledby="insight-title">
-    <h3 id="insight-title">What made him who he was</h3>
-    <div class="eyebrow">Editorial summary of the sources</div>
-    <ul>
-      <li><b>Character.</b> Orphaned early and raised in poverty, he learned to rely only on himself. Colleagues saw this as the basis of his success.</li>
-      <li><b>Early practice.</b> From the age of twelve he played every day in military bands, first on euphonium, then on trombone.</li>
-      <li><b>Broad training.</b> Strict Bork, plus theory, orchestration, piano and lessons for other instruments.</li>
-      <li><b>A top-level stage.</b> More than twenty years at the Bolshoi and ten in Persimfans, where the ensemble holds together without a conductor.</li>
-      <li><b>A gap in the repertoire.</b> There was nothing to teach from, so he wrote it himself: methods, etudes, duets, concertos.</li>
-    </ul>
-    <p class="note">This is the editors’ summary of the facts above, not a quotation from a source.</p>
-  </aside>
-
-  <div class="timeline-wrap reveal">
-    <h3>Timeline</h3>
-    <ol class="timeline">
-      <li><strong>1881</strong><span>3 (15) August — born. His father is arrested the same year.</span></li>
-      <li><strong>1887</strong><span>His mother dies; an uncle becomes his guardian.</span></li>
-      <li><strong>≈1893</strong><span>Band pupil with the 3rd Artillery Brigade in Smolensk.</span></li>
-      <li><strong>1899–1900</strong><span>Serves in the Astrakhan Grenadier Regiment.</span></li>
-      <li><strong>1900–1905</strong><span>Moscow Conservatory, trombone class of Ch. Bork.</span></li>
-      <li><strong>1905/1906</strong><span>Joins the Bolshoi Theatre orchestra.</span></li>
-      <li><strong>1916</strong><span>Benefit concert of his own compositions.</span></li>
-      <li><strong>1920</strong><span>Ippolitov-Ivanov invites him to be a Conservatory professor.</span></li>
-      <li><strong>from 1920</strong><span>According to Krugosvet, directs the Goznak factory wind band.</span></li>
-      <li><strong>1922–1932</strong><span>Plays in Persimfans.</span></li>
-      <li><strong>1924–1926</strong><span>Concerto manuscripts are dated 1924. In 1926 Muzgiz publishes Concerto No. 9, the first concerto in print.</span></li>
-      <li><strong>1925</strong><span>School for Trombone in Clefs, the future American “Clef Studies.”</span></li>
-      <li><strong>1928</strong><span>Leaves the Bolshoi as principal trombone. Last performance: <i>Prince Igor</i>.</span></li>
-      <li><strong>1929–1936</strong><span>Heads the military bandmasters’ department.</span></li>
-      <li><strong>1930, 1933</strong><span>Muzgiz publishes Concertos No. 5 and No. 2.</span></li>
-      <li><strong>1936</strong><span>Second trombone method, for beginners.</span></li>
-      <li><strong>1937</strong><span>Order of 28 January: artistic director of the State Wind Orchestra of the USSR from 1 January.</span></li>
-      <li><strong>1937–1939</strong><span>Leads the State Wind Orchestra of the USSR.</span></li>
-      <li><strong>1941</strong><span>In July the orchestra joins the People’s Militia and goes missing near Vyazma.</span></li>
-      <li><strong>1942</strong><span>10 April — dies in Moscow.</span></li>
-    </ol>
-  </div>
-
-  <details class="conflicts reveal">
-    <summary>Where the sources disagree</summary>
-    <ul>
-      <li><b>Start at the Bolshoi.</b> The Conservatory and Russian Wikipedia give 1905; Kharlamov and the Gnesin school give 1906.</li>
-      <li><b>Date of death.</b> Usually 10 April 1942; the English Wikipedia infobox gives 11 April.</li>
-      <li><b>Publication years.</b> The Conservatory dates the Legato School to 1926, the duets to 1928 and the Sequences to 1938. Kharlamov gives 1924, 1926 and 1924; classON dates the School for the Slide Trombone to 1935 and part one of the legato school to 1938. Some dates may refer to composition, others to publication. English Wikipedia dates the first method to 1916, Kharlamov to 1925.</li>
-      <li><b>Tuba method.</b> According to Kharlamov, the School for Contrabass Tuba was published by Muzgiz in 1937. The Conservatory lists the tuba school among post-war publications.</li>
-      <li><b>Raichman and Blazhevich.</b> English Wikipedia says they studied together “in the early 1940s.” This conflicts with other data: according to Yeo, Raichman worked in Boston from 1927, and according to Kharlamov he took Blazhevich’s music out of Russia in 1926.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></li>
-    </ul>
-  </details>
-</div></section>
-
-<section id="usa" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Blazhevich in America</h2><div class="eyebrow">Recognition overseas</div></div>
-  <div class="usa-grid">
-    <div class="usa-text reveal">
-      <h3 id="raichman">Jacob Raichman, the bridge</h3>
-      <p>Jacob (Jacques) Raichman (1892–1982) was born in Vitebsk, the son of an army bandmaster. He graduated in 1911 from the St. Petersburg Conservatory in the class of P. N. Volkov, then played at the Bolshoi, where he met Blazhevich and studied with him for a time.<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p>Serge Koussevitzky hired him for the Boston Symphony reportedly without an audition. With the Russian immigration quota full, Raichman arrived via Havana in January 1927. He became co-principal around 1928 and principal after Joannès Rochut left in 1930, until 1955.<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p>He brought Blazhevich’s 1925 method, the Sequences, Concert Duets, Legato School and Concerto No. 9 from Russia, taught from them in Boston and wrote to Blazhevich for more. In 1948 Leeds Music published his edition of the 1925 method as <i>Clef Studies for Trombone</i>.<sup class="ref"><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></p>
-      <h3>A complicated legacy</h3>
-      <p>According to Kharlamov, the first US editions (Concerto No. 2, Cundy-Bettoney, and Concert Piece No. 5, Belwin, both 1939) and many later ones appeared without permission and without royalties to his heirs, often with heavy editorial changes. From 2007 East-West International has published editions based on the originals with the family’s consent.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a></sup></p>
-    </div>
-    <ol class="editions reveal">
-      <li><b>1926</b><span>Raichman takes Blazhevich’s music from Russia.</span></li>
-      <li><b>1939</b><span>Concerto No. 2 and Concert Piece No. 5 — first US editions.</span></li>
-      <li><b>1948</b><span><i>Clef Studies for Trombone</i>, Leeds Music, ed. J. Raichman.</span></li>
-      <li><b>1964</b><span>MCA buys Leeds and its Russian catalogue.</span></li>
-      <li><b>1974</b><span>Victor Venglovsky (Leningrad) sends all 13 concertos to William Cramer (Florida State).</span></li>
-      <li><b>2007–2012</b><span>East-West editions with the family’s consent: <i>School for Trombone in Clefs</i>, <i>Sequences</i>, <i>Low Range Studies</i>.</span></li>
-      <li><b>2020</b><span>Caleb Lambert records Concertos No. 1–4.</span></li>
-    </ol>
-  </div>
-</div></section>
-
-<section id="schools" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
-
-  <div class="lineages">
-    <div class="lineage reveal" aria-labelledby="moscow-line">
-      <h3 id="moscow-line">Moscow</h3>
-      <ol class="gen">
-        <li class="node">
-          <span class="node-years">1832–1916</span>
-          <b>Christoph (Khristofor Ivanovich) Bork</b>
-          <p>Born in Havelberg, Prussia. In 1861 he took Russian citizenship and joined the Bolshoi Theatre orchestra. Until 1882 he was principal trombone of the ballet orchestra; from 1875 he also played timpani, and from 1889 timpani only. Professor at the Conservatory from 1875, he taught trombone, tuba and percussion until his death and drew up a five-year trombone curriculum. Order of St. Stanislaus, 3rd class.<sup class="ref"><a href="#s1">[1]</a><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Pupils: <em>V. M. Blazhevich</em>, S. Diev, V. Derzhanovsky, K. Kupinsky, I. Piorkovsky, A. Sobolevsky, S. Chesnokov</span>
-        </li>
-        <li class="node node-key">
-          <span class="node-years">1881–1942</span>
-          <b>Vladislav Mikhailovich Blazhevich</b>
-          <p>Studied with Bork in 1900–1905; Conservatory professor from 1920. His methods and etudes became the teaching foundation for the next generations.</p>
-          <span class="pupils">Pupils: V. A. Shcherbinin, B. P. Grigoriev, K. G. Moreinis, G. M. Voronin, and <a href="#raichman">J. Raichman</a> (for a time)</span>
-        </li>
-        <li class="node">
-          <span class="node-years">1896–1963</span>
-          <b>Vladimir Shcherbinin (V. A. Shcherbinin)</b>
-          <p>Pupil of Blazhevich, soloist of the Bolshoi Theatre orchestra and professor at the Moscow Conservatory. According to the Gnesin school, he created his own system of daily trombone practice. A. K. Lebedev, who founded a separate tuba class in 1950, graduated from his class.<sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup></p>
-        </li>
-        <li class="node">
-          <span class="node-years">from 1944</span>
-          <b>B. P. Grigoriev</b>
-          <p>Pupil of Blazhevich and soloist of the Bolshoi Theatre orchestra. From 1944 he taught trombone and tuba at the newly founded Gnesin Institute and became a professor there. So Blazhevich’s school continued at two Moscow institutions at once.<sup class="ref"><a href="#s7">[7]</a></sup></p>
-          <span class="pupils">Pupils: V. Zdorov, V. Dosadin, V. Esipov, K. Lokalin, M. Chepkoi</span>
-        </li>
-        <li class="node node-later">
-          <span class="node-years">later</span>
-          <b>Shcherbinin’s pupils</b>
-          <p>V. B. Batashov, Conservatory professor; M. M. Zeinalov (1917–1993), Bolshoi soloist, Conservatory professor and editor of the 1985 collection of Blazhevich etudes; K. M. Ladilov, professor at the Gnesin Institute. P. I. Chumakov also taught trombone at the Conservatory, and later Batashov and A. T. Skobelev.</p>
-        </li>
-      </ol>
-    </div>
-
-    <div class="lineage reveal" aria-labelledby="spb-line">
-      <h3 id="spb-line">St. Petersburg — Leningrad</h3>
-      <ol class="gen">
-        <li class="node">
-          <span class="node-years">1831–1909</span>
-          <b>Franz de Paula Türner</b>
-          <p>Austrian; from 1855 in the Imperial theatre orchestras of St. Petersburg. Taught the Conservatory’s trombone and tuba class in 1870–1909 and wrote elementary methods for brass (1877, 1878).</p>
-          <span class="pupils">Pupils: P. N. Volkov, A. F. Kazbiryuk, K. Kreek, R. Kull</span>
-        </li>
-        <li class="node node-key">
-          <span class="node-years">1877–1933</span>
-          <b>Pyotr Naumovich Volkov</b>
-          <p>Principal trombone of the Mariinsky Theatre orchestra (1899–1933), where he played alongside Reiche; Conservatory professor (1917–1933). Jacob Raichman graduated from his class in 1911, and in the early 1930s Kozlov and Korshunov studied with him at the workers’ faculty. He died on 22 February 1933; Reiche took over the class (associate professor from 1933, acting professor from 1935).<sup class="ref"><a href="#s4">[4]</a><a href="#s5">[5]</a></sup> Patronymic and dates corrected after the St. Petersburg Conservatory encyclopedia.</p>
-          <span class="pupils">Pupils: <a href="#raichman">J. A. Raichman</a> (graduated 1911), A. A. Kozlov and N. S. Korshunov (workers’ faculty), I. A. Gershkovich and others</span>
-        </li>
-        <li class="node">
-          <span class="node-years">1878–1946</span>
-          <b>Eugen (Evgeny Adolfovich) Reiche</b>
-          <p>Born in Dresden; graduated from the Dresden Conservatory in trombone in 1896. Moved to St. Petersburg in 1897. In 1899 he won the bass trombone post at the Mariinsky Theatre under Nápravník, playing his own concerto, and stayed until 1941. Taught from 1906; at the Leningrad Conservatory from 1933, professor from 1940. Died in evacuation in Tashkent.<sup class="ref"><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Pupils: A. A. Kozlov, N. S. Korshunov, I. M. Polyatskin (1st prize, All-Union competition 1941), L. A. Ignatiev (class of 1942)</span>
-        </li>
-        <li class="node node-pair">
-          <div>
-            <span class="node-years">1908–1992</span>
-            <b>Akim Alekseevich Kozlov</b>
-            <p>From the Smolensk region, a band pupil of a railway regiment. Studied with Volkov, then with Reiche. From 1937 in the Leningrad Philharmonic orchestra, joining at the same time as Mravinsky. Taught at the Conservatory in 1946–1992.<sup class="ref"><a href="#s5">[5]</a></sup></p>
-            <span class="pupils">Pupils: V. Venglovsky, B. Vinogradov, G. Danilov, A. Evtushenko, G. Strautman</span>
-          </div>
-          <div>
-            <span class="node-years">1910–1989</span>
-            <b>Nikolai Sergeevich Korshunov</b>
-            <p>Also studied with Volkov, then with Reiche (graduated 1939). Soloist of the Leningrad Philharmonic orchestra in 1937–1972. Taught at the Conservatory from 1948, professor from 1972.<sup class="ref"><a href="#s5">[5]</a></sup></p>
-            <span class="pupils">Pupils: V. Sumerkin, A. Gzhanyants, O. Korolev; tuba players N. Novikov, V. Galuzin</span>
-          </div>
-        </li>
-        <li class="node">
-          <span class="node-years">1926–1994</span>
-          <b>Victor Fyodorovich Venglovsky</b>
-          <p>Graduated from the Conservatory under Kozlov in 1953; postgraduate study with the horn player M. N. Buyanovsky. In the Leningrad Philharmonic orchestra from 1950; taught at the Conservatory from 1966, professor from 1984. Author of the widely used <i>Daily Exercises for Trombone</i>. In 1974 he sent all 13 Blazhevich concertos to the United States.<sup class="ref"><a href="#s3">[3]</a><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Pupils: A. N. Morozov (professor at the Moscow Conservatory), V. V. Golikov and others</span>
-        </li>
-      </ol>
-    </div>
-  </div>
-
-  <p class="note reveal school-note"><b>Editors’ observation:</b> Moscow began with the Prussian trombonist Christoph Bork. St. Petersburg began with the Austrian Franz Türner (from 1870), followed by his pupil Pyotr Volkov and the German Eugen Reiche from Dresden. The branches intertwined: Raichman, a St. Petersburg graduate, studied with the Muscovite Blazhevich and took his music to America, and half a century later the Leningrader Venglovsky sent his concertos there too.</p>
-</div></section>
-
-<section id="concertos" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Thirteen trombone concertos</h2><div class="eyebrow">Solo repertoire</div><p>Written for his students, they are played without breaks between movements, with piano interludes linking them. Blazhevich modelled them on Ferdinand David’s Concertino, which he called the most successful work for trombone.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p></div>
-  <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Concertos">
-    <table class="conc">
-      <thead><tr><th scope="col">No.</th><th scope="col">Key</th><th scope="col">Date</th><th scope="col">Publication history</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>E♭ major</td><td>1923</td><td>Only edition: Edition BIM, from a manuscript copy obtained in Moscow in 1981. <span class="chip">Lambert recording</span></td></tr>
-        <tr><td>2</td><td>D♭ major</td><td>1924</td><td>Muzgiz 1933; Cundy-Bettoney, Boston 1939; IMC 1950. <span class="chip">Lambert recording</span></td></tr>
-        <tr><td>3</td><td>E♭ major</td><td>1924</td><td>One published edition. <span class="chip">Lambert recording</span></td></tr>
-        <tr><td>4</td><td>B♭ major</td><td>1924</td><td>One published edition. <span class="chip">Lambert recording</span></td></tr>
-        <tr><td>5</td><td>E♭ major</td><td>1924</td><td>Muzgiz 1930; IMC 1956. Often a set piece in Eastern European competitions.</td></tr>
-        <tr><td>6</td><td>B♭ major</td><td>1924</td><td>—</td></tr>
-        <tr><td>7</td><td>E♭ major</td><td>1924</td><td>—</td></tr>
-        <tr><td>8</td><td>A♭ major</td><td>1925</td><td>—</td></tr>
-        <tr><td>9</td><td>E minor</td><td>1925 (MS 1924)</td><td>First concerto published (Muzgiz 1926). Never published outside Russia.</td></tr>
-        <tr><td>10</td><td>F minor</td><td>1924</td><td>First published in Russia in 1963. Blazhevich considered it the hardest.</td></tr>
-        <tr><td>11</td><td>—</td><td>1926 or 1930s</td><td>The only one in sonata form; written for trombone, not tuba.</td></tr>
-        <tr><td>12</td><td>—</td><td>1926 or 1930s</td><td>Manuscript only.</td></tr>
-        <tr><td>13</td><td>A♭ major</td><td>1927 or 1930s</td><td>Manuscript only; one copy titled “Concert Fantasy.”</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="note reveal">Keys and dates follow the English Wikipedia list of compositions; Kharlamov dates all recovered manuscripts to 1924 and Nos. 11–13 probably to the 1930s.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p>
-</div></section>
-
-<section id="about" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>About this project</h2><div class="eyebrow">Transparency and sources</div></div>
-  <div class="about">
-    <div class="reveal">
-      <p>An independent project about the life, music and teaching legacy of Vladislav Blazhevich. It does not represent the Moscow Conservatory, the libraries or the performers it links to. The Russian version is the primary one; this English page follows it. Bracketed source numbers here match the English list below, not the Russian one.</p>
-      <p><a class="btn btn-ghost" href="../index.html">Русская версия →</a></p>
-      <p class="note">The portrait is an AI-generated artistic image based on a 1903 photograph of Blazhevich (<a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain), toned to match the archive photographs. It is not a historical photograph. The opening screen backdrop shows the Tchaikovsky Moscow Conservatory in the 1940s and the Bolshoi Theatre around 1905 (public domain).</p>
-    </div>
-    <div class="reveal">
-      <h3>Sources</h3>
-      <ol class="sources">
-        <li id="s1">Moscow Conservatory, <a href="https://www.mosconsv.ru/ru/groups/11202">history of the brass department</a> (Russian).</li>
-        <li id="s2">Wikipedia: <a href="https://en.wikipedia.org/wiki/Vladislav_Blazhevich">Vladislav Blazhevich</a> and <a href="https://en.wikipedia.org/wiki/List_of_compositions_by_Vladislav_Blazhevich">list of compositions</a>; the early life cites A. G. Kharlamov, “Blazhevich: His life and work,” ITA Journal 36/3 (2008), 30–34.</li>
-        <li id="s3">A. Kharlamov, <a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">The History of Selected Works</a> and <a href="https://www.jayfriedman.net/blazhevich-destiny-of-works-in-the-west/">Destiny of Works in the West</a> (2009).</li>
-        <li id="s4">D. Yeo, <a href="https://www.yeodoug.com/Yeo_ITAJ_January_2025_Joannes_Rochut.pdf">“Joannès Rochut…”, ITA Journal, January 2025</a>, notes 159–194.</li>
-        <li id="s5">Wikipedia (Russian): <a href="https://ru.wikipedia.org/wiki/Борк,_Христофор_Иванович">Bork</a>, <a href="https://ru.wikipedia.org/wiki/Рейхе,_Евгений_Адольфович">Reiche</a>, <a href="https://ru.wikipedia.org/wiki/Коршунов,_Николай_Сергеевич">Korshunov</a>; Saint Petersburg Conservatory encyclopedia: <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">A. Kozlov</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">V. Venglovsky</a>; <a href="https://conservatory.ru/x-letka/ads/vypusk-1942-goda-orkestrovye-dukhovye-i-udarnye-instrumenty">class of 1942</a> (Russian).</li>
-        <li id="s6">C. Lambert, <a href="https://static1.squarespace.com/static/5f68ca3f4f54480b7bf578b0/t/5f6a4799bd059e17895aa1db/1600800678933/The+Solo+Trombone+Works+of+Vladislav+Blazhevich.pdf">The Solo Trombone Works of Vladislav Blazhevich</a>, University of Iowa, 2020.</li>
-        <li id="s7">Gnesin Music College, <a href="https://www.gnesin.ru/mediateka/metodicheskie_materialy/metodicheskie_posobiya/maslov_dukhovaya_shkola">history of the Moscow wind school</a> (Russian).</li>
-        <li id="s8"><a href="https://www.krugosvet.ru/enc/kultura_i_obrazovanie/muzyka/BLAZHEVICH_VLADISLAV_MIHALOVICH.html">Krugosvet encyclopedia</a> (Russian). The page did not open from this project’s tools; the Goznak band (from 1920) is cited from search results of 9 November 2026 and is not confirmed by the other sources read.</li>
-        <li id="s9"><i>Vechernyaya Moskva</i>: E. Pyatunina, V. Bogdanov, <a href="https://vm.ru/society/114265-trubachi-pod-zvuki-marsha-bojcy-vyhodili-na-ulicy-stolicy">“Trumpeters”</a>, 17 October 2012; E. Pyatunina, <a href="https://vm.ru/society/551256-orkestr-nashej-pamyati">“The orchestra of our memory”</a>, 9 November 2017 (Russian). Read 9 November 2026.</li>
-      </ol>
-      <p class="note">Bracketed numbers in the text link to this list. Where sources disagree, the Russian version lists the conflicts.</p>
-    </div>
-  </div>
-</div></section>
-<section id="people-v3" class="block"><div class="wrap"><h2>Teachers and pupils: biographical cards</h2><p>The essay combines memoirs, biographies and archival reproductions. Its dates are attributed, not independently verified archival facts.</p><div class="people-v3"><article class="person-v3" id="person-blazhevich"><h3>Vladislav Mikhailovich Blazhevich</h3><p>Владислав Михайлович Блажевич</p><dl><dt>Dates</dt><dd>Teaching at Moscow Conservatory: 1920–1942; death in 1942 stated by the Conservatory. <a href="#v3-source-4">[4]</a></dd><dt>Studies and teacher</dt><dd>1900–1905, Moscow Conservatory, class of H. Bork. <a href="#v3-source-1">[1]</a></dd><dt>Work and publications</dt><dd>Teacher of trombone and tuba; author of methods, concert duets and sequences. <a href="#v3-source-1">[1]</a></dd><dt>Pupils</dt><dd>Vladimir Shcherbinin, Boris Grigoryev. <a href="#v3-source-1">[1]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-shcherbinin"><h3>Vladimir Arnoldovich Shcherbinin</h3><p>Владимир Арнольдович Щербинин</p><dl><dt>Dates</dt><dd>18 January 1896 – 5 June 1963, according to the essay. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>Pupil of Blazhevich. The essay gives conflicting completion dates: 1930 and external graduation in 1947; the explanation is unconfirmed. <a href="#v3-source-3">[3]</a></dd><dt>Work</dt><dd>According to the essay: Bolshoi Theatre soloist in 1926–1944; Moscow Conservatory teacher. <a href="#v3-source-3">[3]</a></dd><dt>Pupils</dt><dd>Batashev, according to his official Conservatory biography; further connections appear below. <a href="#v3-source-2">[2]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-batashev"><h3>Viktor Borisovich Batashev</h3><p>Виктор Борисович Баташёв</p><dl><dt>Dates and spelling</dt><dd>The essay gives 7 June 1937; the spelling Batashov also occurs. The birth date has not been independently corroborated. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>Music college 1956; Moscow Conservatory 1960, class of Shcherbinin. <a href="#v3-source-2">[2]</a></dd><dt>Work and awards</dt><dd>Bolshoi Symphony Orchestra 1959–2001; Geneva 1958, first prize; Prague 1962, third prize. Teaching from 1963 with an interruption; professor from 1995. <a href="#v3-source-2">[2]</a></dd><dt>Pupils and recordings</dt><dd>The Conservatory lists Mazhorin and Sharov; its biography mentions Radio Fund and Melodiya recordings. <a href="#v3-source-2">[2]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-turusin"><h3>Mikhail Nikolaevich Turusin</h3><p>Михаил Николаевич Турусин</p><dl><dt>Dates</dt><dd>Birth year 1924 appears in an archival heading reproduced in the essay; the original file has not been checked. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>According to the biographical appendix: college 1944–1947; Moscow Conservatory 1947–1952, class of Shcherbinin. <a href="#v3-source-3">[3]</a></dd><dt>Work</dt><dd>According to the appendix: Bolshoi Theatre 1948–1959 and 1963–1975; Radio and Television Orchestra 1960–1963. <a href="#v3-source-3">[3]</a></dd><dt>Teaching and awards</dt><dd>According to the appendix: Moscow Conservatory from 1965; first prizes at the Budapest 1949 and Berlin 1951 festivals. <a href="#v3-source-3">[3]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-ladilov"><h3>Konstantin Mikhailovich Ladilov</h3><p>Константин Михайлович Ладилов</p><dl><dt>Dates</dt><dd>9 February 1927 – 13 February 1983, according to the essay’s biographical appendix. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>According to the appendix: Gorky Conservatory 1952, class of Shcherbinin; postgraduate studies at Moscow Conservatory completed in 1956. <a href="#v3-source-3">[3]</a></dd><dt>Work</dt><dd>According to the appendix: USSR State Symphony Orchestra soloist 1957–1983; teaching at the Gnessin Institute from 1964. <a href="#v3-source-3">[3]</a></dd><dt>Awards</dt><dd>According to the appendix: first prize at the Bucharest festival, 1953. <a href="#v3-source-3">[3]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article></div><h3>Teacher → pupil connections</h3><ul class="lineage-v3"><li class="documented">Bork → Blazhevich — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Blazhevich → Shcherbinin — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Blazhevich → Grigoryev — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Shcherbinin → Batashev — institutional source <a href="#v3-source-2">[2]</a></li><li class="provisional">Shcherbinin → Ladilov — essay; independent check pending <a href="#v3-source-3">[3]</a></li><li class="provisional">Shcherbinin → Turusin — essay; independent check pending <a href="#v3-source-3">[3]</a></li><li class="provisional">Shcherbinin → Mironov — essay; independent check pending <a href="#v3-source-3">[3]</a></li><li class="documented">Shcherbinin → Lebedev — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Grigoryev → Dosadin — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Batashev → Mazhorin — institutional source <a href="#v3-source-2">[2]</a></li><li class="documented">Batashev → Sharov — institutional source <a href="#v3-source-2">[2]</a></li></ul><p>These edges concern teaching relationships, not shared employment or private consultations. Dashed borders denote essay-only evidence.</p><h3>Sources</h3><ol><li id="v3-source-1"><a href="https://www.mosconsv.ru/ru/groups/11202">Moscow Conservatory: department history</a></li><li id="v3-source-2"><a href="https://www.mosconsv.ru/ru/person/9085">Moscow Conservatory: Viktor Batashev</a></li><li id="v3-source-3"><a href="https://tuba.org.ru/scherbinin.pdf">Essay on Shcherbinin and his pupils</a></li><li id="v3-source-4"><a href="https://www.mosconsv.ru/ru/eventdet/124387">Moscow Conservatory: Blazhevich as professor</a></li></ol></div></section></main>
-<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a><span>Vladislav Blazhevich, Владислав Блажевич</span><a href="../index.html" hreflang="ru" lang="ru">Русский</a></div></footer>
-<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+</main>
 <script>
 'use strict';
 (function(){
@@ -772,7 +468,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop');
-  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>(bar.classList.contains('home')?innerHeight*.6:10));totop.classList.toggle('show',y>700)};
+  if(!bar)return; /* главная: один экран, шапки нет */
+  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700)};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
