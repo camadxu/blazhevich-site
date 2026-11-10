@@ -92,9 +92,6 @@ strong,b{font-weight:600}
 /* ---------- Header ---------- */
 header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
 header.scrolled{border-bottom-color:var(--line)}
-/* home: the first screen is bare, the bar slides in once it is scrolled past; without JS it simply stays */
-.js header.home{position:fixed;left:0;right:0;transform:translateY(-100%);transition:transform .45s var(--ease),border-color .3s}
-.js header.home.scrolled,.js header.home:focus-within{transform:none}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-2) var(--s-6);min-height:var(--header-h);flex-wrap:wrap}
 .brand{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-block:var(--s-2)}
 .brand:hover{color:var(--accent)}
@@ -106,35 +103,41 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .lang{margin-left:var(--s-2);border:1px solid var(--field);border-radius:var(--radius);padding:var(--s-1) var(--s-3)!important;font-weight:600;color:var(--ink)!important}
 .lang:hover{background:var(--surface)}
 
-/* ---------- Hero: the portrait before the three Moscow addresses ---------- */
-.hero{position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-8);text-align:center}
-/* two equal views meet on the axis behind the figure and run off the top and sides of the window */
-.city{position:absolute;z-index:-1;top:-13svh;left:50%;transform:translateX(-50%);width:max(130vw,190svh);display:flex;justify-content:center;pointer-events:none}
-.city img{display:block;width:54%;height:auto;max-width:none;flex:none;animation:hero-fade 1.6s ease both}
-.city-b{margin-left:-8%}
+/* ---------- Hero: one screen. The figure stands close, the two houses far off across a sunlit square ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.hero{--horizon:66svh;position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-6);text-align:center;
+  /* one sun for the whole scene: high on the left, warming the sky and the paper */
+  background:radial-gradient(120% 90% at 16% -10%,#fff8e6 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),#ece1c8 calc(var(--horizon) + 5svh),var(--paper) 100%)}
+/* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
+.hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
+  background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
+  -webkit-mask-image:linear-gradient(transparent,#000 10%,transparent 62%);mask-image:linear-gradient(transparent,#000 10%,transparent 62%)}
+/* both views stand on the horizon, small and hazy with distance, lit by the same light */
+.city{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--horizon);pointer-events:none}
+.city img{position:absolute;bottom:-9.2%;width:clamp(300px,38vw,660px);height:auto;max-width:none;opacity:.8;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);animation:hero-fade 1.6s ease both}
+.city-c{right:calc(50% + clamp(90px,12vw,220px))}
+.city-b{left:calc(50% + clamp(90px,12vw,220px))}
 .hero-stage{display:grid;justify-items:center}
 /* bust crop: the box shows the top of the full-length file and the chest melts into the paper */
-.portrait{margin:0;width:clamp(260px,60svh,560px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);animation:hero-rise 1.1s var(--ease) both}
+.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
 .portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}
-.hero-copy{display:grid;justify-items:center;gap:var(--s-4);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
-.hero-copy>*{animation:hero-rise .9s var(--ease) .45s both}
-.hero-copy>.lead{animation-delay:.6s}
-.hero-copy>.cta{animation-delay:.75s}
-.hero-copy>.hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(14px,1.3vw,18px);letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
+.hero-copy{display:grid;justify-items:center;gap:var(--s-5);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
+.hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
-@keyframes hero-fade{from{opacity:0;scale:1.04}}
+.hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:rgb(244 238 225/.72);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
+/* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
+.hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
+.hero-menu:not(:popover-open){display:none}
+.hero-menu:popover-open{display:grid;width:min(92vw,400px)}
+.hero-menu::backdrop{background:rgb(42 33 24/.28)}
+.hero-menu a{display:block;padding:var(--s-3);font-family:var(--display);font-size:28px;font-weight:500;line-height:1.15;color:var(--ink);text-decoration:none}
+.hero-menu a+a{border-top:1px solid var(--line)}
+.hero-menu a:hover{color:var(--accent)}
+@keyframes hero-fade{from{opacity:0}}
 @keyframes hero-rise{from{opacity:0;translate:0 24px}}
 @keyframes hero-gather{from{opacity:0;letter-spacing:.9em}}
-@supports (animation-timeline:scroll()){
-  /* the buildings leave slower than the figure */
-  .city{animation:hero-drift linear both;animation-timeline:scroll(root);animation-range:0 100svh}
-  @keyframes hero-drift{to{translate:0 14svh}}
-}
-#hero-title{display:grid;gap:var(--s-2);justify-items:center}
-.h1-name{font-size:clamp(44px,5.2vw,76px);font-weight:500;line-height:1.02;letter-spacing:-.01em}
-.h1-dates{font-size:clamp(22px,2.2vw,30px);font-weight:500;color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
-.lead{font-size:var(--t-lead);color:var(--muted);max-width:52ch}
-.cta{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s-3);margin-top:var(--s-1)}
 .credit{font-size:var(--t-small);color:var(--muted);line-height:1.5;max-width:var(--measure);margin-top:var(--s-3)}
 
 /* ---------- Buttons ---------- */
@@ -354,9 +357,12 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 }
 @media(max-width:620px){
   body{font-size:16px}
-  .hero{padding-block:var(--s-3) var(--s-7)}
-  .city{width:190vw;top:-2svh}
-  .portrait{width:88vw}
+  .hero{--horizon:58svh;padding-block:var(--s-3) var(--s-5)}
+  .hero-copy{margin-top:var(--s-2)}
+  .city img{width:64vw}
+  .city-c{right:calc(50% + 4vw)}
+  .city-b{left:calc(50% + 4vw)}
+  .portrait{width:min(92vw,62svh)}
   .btn{padding:0 var(--s-4);font-size:14px}
   .about h3{font-size:24px}
   section.block{padding-block:var(--s-8)}
@@ -419,78 +425,22 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Перейти к содержимому</a>
 <div class="draft">Предварительный просмотр · не опубликовано</div>
-<header id="top-bar" class="home"><div class="wrap bar">
-  <a href="index.html" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>
-  <nav aria-label="Основная навигация"><a href="#scores">Ноты</a><a href="#listen">Слушать</a><a href="biography.html">Биография</a><a href="usa.html">В США</a><a href="schools.html">Школы</a><a href="concertos.html">Концерты</a><a href="about.html">О проекте</a><a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a></nav>
-</div></header>
 <main id="main">
 <section id="hero" class="hero" aria-labelledby="hero-title">
   <div class="city" aria-hidden="true"><img class="city-c" src="assets/conservatory-1940s.webp" width="960" height="600" alt=""><img class="city-b" src="assets/bolshoi-1905.webp" width="960" height="600" alt=""></div>
   <div class="wrap hero-stage">
     <figure class="portrait">
-      <img src="assets/blazhevich-portrait.webp" srcset="assets/blazhevich-portrait-683.webp 683w, assets/blazhevich-portrait.webp 1024w" sizes="(max-width:620px) 88vw, 560px" width="1024" height="1536" fetchpriority="high" alt="Художественный портрет Владислава Блажевича в костюме начала XX века">
+      <img src="assets/blazhevich-portrait.webp" srcset="assets/blazhevich-portrait-683.webp 683w, assets/blazhevich-portrait.webp 1024w" sizes="(max-width:620px) 92vw, 640px" width="1024" height="1536" fetchpriority="high" alt="Художественный портрет Владислава Блажевича в костюме начала XX века">
     </figure>
     <div class="hero-copy">
-      <p class="hero-mark" aria-hidden="true">Blazhevich</p>
-      <h1 id="hero-title"><span class="h1-name">Владислав Блажевич</span><span class="h1-dates">1881–1942</span></h1>
-      <p class="lead">Биография и музыкальное наследие. Нотные источники, учебные работы и записи для исполнителей на медных духовых.</p>
-      <div class="cta"><a class="btn btn-brass" href="#scores">Найти ноты</a><a class="btn btn-ghost" href="#listen">Слушать музыку</a></div>
+      <h1 id="hero-title" class="hero-mark"><span aria-hidden="true">Blazhevich</span><span class="sr">Владислав Блажевич, 1881–1942</span></h1>
+      <div class="hero-nav"><button class="hero-btn" type="button" popovertarget="menu">Меню</button><a class="hero-btn" href="en/index.html" hreflang="en" lang="en">EN</a></div>
+      <nav id="menu" class="hero-menu" popover aria-label="Разделы"><a href="scores.html">Ноты</a><a href="listen.html">Слушать</a><a href="biography.html">Биография</a><a href="usa.html">В США</a><a href="schools.html">Школы</a><a href="concertos.html">Концерты</a><a href="about.html">О проекте</a></nav>
     </div>
   </div>
 </section>
-<section id="scores" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Произведения и ноты</h2><div class="eyebrow">Для занятий и исполнения</div><p>Начальная подборка, а не полный каталог. Ссылки ведут в библиотеки и к описаниям произведений; чужие нотные файлы здесь не размещены.</p></div>
-  <div class="tools">
-    <label for="search">Поиск по названию<input id="search" type="search" placeholder="Например, легато или туба" autocomplete="off"></label>
-    <label for="instrument">Инструмент<select id="instrument"><option value="all">Все инструменты</option><option value="тромбон">Тромбон</option><option value="туба">Туба</option></select></label>
-  </div>
-<div class="extra-tools-v3"><label for="filter-genre">Жанр<select id="filter-genre" data-catalog-filter="genre"><option value="all">Все</option><option value="method">Школа</option><option value="duet">Дуэт</option><option value="exercise">Упражнения</option><option value="study">Этюды</option><option value="concerto">Концерты</option></select></label><label for="filter-ensemble">Состав<select id="filter-ensemble" data-catalog-filter="ensemble"><option value="all">Все</option><option value="single">Один исполнитель: учебный материал</option><option value="duo">Два тромбона</option><option value="unspecified">Состав сопровождения уточняется</option></select></label><label for="filter-source">Источник<select id="filter-source" data-catalog-filter="source"><option value="all">Все</option><option value="mgk">Московская консерватория</option><option value="classon">classON</option><option value="history">История изданий</option><option value="recordings">Проект записей</option><option value="imslp">IMSLP</option></select></label><label for="filter-difficulty">Сложность<select id="filter-difficulty" data-catalog-filter="difficulty"><option value="all">Все</option><option value="unrated">Не оценено по нотам</option></select></label></div><p class="note">Сложность пока не оценена по нотам. Предлагаемая шкала: базовая, средняя, высокая — по диапазону, ритму, выносливости и ключам. По одному названию оценка не назначается. Фильтр источника обозначает ресурс ссылки, а не проверенное издательство.</p>  <p class="note count" id="count" role="status" aria-live="polite">В подборке — 10 записей</p>
-  <div class="grid" id="catalog">
-    <article class="card" data-instrument="тромбон" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Школа для раздвижного тромбона</h3><div class="tag">Тромбон, школа</div><p>Работа с ключами и исполнительской техникой. Упомянута в историческом обзоре консерватории. Ссылка ведёт к описанию, не к PDF.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Школа развития легато на цуг-тромбоне</h3><div class="tag">Тромбон, легато</div><p>Учебная работа из перечня наследия Блажевича на сайте Московской консерватории. Издания и их даты требуют отдельного сопоставления.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="duet" data-ensemble="duo" data-source="mgk" data-difficulty="unrated"><h3>Концертные дуэты</h3><div class="tag">Два тромбона, ансамбль</div><p>Произведения для двух тромбонов, включённые в обзор педагогического наследия. Нотный файл пока не добавлен.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="exercise" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Секвенции для тромбона</h3><div class="tag">Тромбон, упражнения</div><p>26 мелодических упражнений в различных ритмах и ключах — по описанию Московской консерватории.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="method" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Школа игры на тубе. Часть 1</h3><div class="tag">Туба, школа</div><p>Карточка нотного материала в библиотеке classON. Условия доступа и использования определяет библиотека.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Ноты в библиотеке ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Школа игры на тубе. Часть 2</h3><div class="tag">Туба, этюды</div><p>Этюды, страницы 29–47. Нумерация страниц приведена по карточке classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Ноты в библиотеке ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Школа игры на тубе. Часть 2</h3><div class="tag">Туба, этюды</div><p>Этюды, страницы 48–66. Продолжение подборки библиотеки classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Ноты в библиотеке ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="method" data-ensemble="single" data-source="history" data-difficulty="unrated"><h3>Школа для тромбона в ключах (Clef Studies)</h3><div class="tag">Тромбон, ключи</div><p>Самая известная в США работа Блажевича. Американские издания: Райхман (Leeds, 1948), Острандер (IMC, 1957), Хансбергер (MCA, 1965). Современный уртекст East-West сделан по русскому изданию 1939 года.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">История изданий ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="concerto" data-ensemble="unspecified" data-source="recordings" data-difficulty="unrated"><h3>Концерты для тромбона</h3><div class="tag">Тромбон, концерты</div><p>Тринадцать концертов, написанных для студентов консерватории. Большинство создано в 1920-х годах, многие при жизни автора не изданы. Первые четыре записал Калеб Ламберт.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Проект записей ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="study" data-ensemble="single" data-source="imslp" data-difficulty="unrated"><h3>70 этюдов для тубы in B</h3><div class="tag">Туба, этюды</div><p>Американская редакция Роберта Кинга, Alphonse Leduc, два тома. Источники связывают эти этюды со школой для тромбона в ключах.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">Каталог IMSLP ↗</a></article>
-  </div>
-  <p id="empty" class="empty" hidden>Ничего не найдено. Попробуйте другое название или выберите все инструменты.</p>
-  <noscript><p class="note">Для поиска нужен JavaScript. Все записи и ссылки доступны выше и без него.</p></noscript>
-</div></section>
-<section id="listen" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Слушать Блажевича</h2><div class="eyebrow">Живое звучание</div></div>
-  <div class="listen reveal">
-    <div>
-      <h3>Записи Калеба Ламберта</h3>
-      <p>Авторский проект, связанный с исследованием в Университете Айовы. Ламберт сообщает о записи первых четырёх тромбоновых концертов и ранее не публиковавшейся миниатюры. На странице доступны записи и ссылка на исследование.</p>
-      <div><a class="btn btn-brass" href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Открыть записи у исполнителя ↗</a></div>
-      <p class="note">Переход на внешний сайт. Автоматического воспроизведения и копий аудиозаписей здесь нет.</p>
-    </div>
-    <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  </div>
-</div></section>
-<section id="explore" class="block"><div class="wrap">
-  <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Кто такой Блажевич</h2><div class="eyebrow">Владислав Блажевич · 1881–1942</div><p>Тромбонист Большого театра, профессор Московской консерватории и автор школ, по которым до сих пор учатся тромбонисты и тубисты в России и США. Сирота со смоленского хутора, он с двенадцати лет играл в военном оркестре, учился у Христофора Борка, а когда учить оказалось не по чему, сам написал школы, этюды и тринадцать концертов.</p></div>
-  <div class="explore-grid">
-    <a class="explore-card reveal" href="biography.html"><b>Как Блажевич стал Блажевичем</b><span class="eyebrow">Биография</span><span>Детство, военные оркестры, консерватория, Большой театр, Персимфанс, профессура. С хронологией и разбором противоречий в источниках.</span></a>
-    <a class="explore-card reveal" href="usa.html"><b>Блажевич в Америке</b><span class="eyebrow">Признание за океаном</span><span>Как ноты попали в Бостон, почему «Clef Studies» задают в американских университетах и что с правами наследников.</span></a>
-    <a class="explore-card reveal" href="schools.html"><b>Две школы русского тромбона</b><span class="eyebrow">Учитель → ученик</span><span>Москва от Борка и Петербург от Волкова и Рейхе. Отдельно — судьба Якова Райхмана.</span></a>
-    <a class="explore-card reveal" href="moscow.html"><b>Московская школа</b><span class="eyebrow">Досье</span><span>От Борка и Блажевича до Щербинина, Баташова, Ладилова и гнесинской ветви.</span><i aria-hidden="true">→</i></a>
-    <a class="explore-card reveal" href="leningrad.html"><b>Ленинградская школа</b><span class="eyebrow">Сборник</span><span>Тюрнер, Волков, Козлов, Венгловский и Квартет тромбонов филармонии.</span><i aria-hidden="true">→</i></a>
-    <a class="explore-card reveal" href="concertos.html"><b>13 концертов для тромбона</b><span class="eyebrow">Сольный репертуар</span><span>Тональности, даты, первые издания и записи, как устроены концерты и путь к ним через миниатюры.</span></a>
-  </div>
-</div></section>
 </main>
-<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a><span>Владислав Блажевич, Vladislav Blazhevich</span><a href="en/index.html" hreflang="en" lang="en">English</a></div></footer>
-<button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>
 <script>
 'use strict';
 (function(){
@@ -514,7 +464,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop');
-  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>(bar.classList.contains('home')?innerHeight*.6:10));totop.classList.toggle('show',y>700)};
+  if(!bar)return; /* главная: один экран, шапки нет */
+  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700)};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
