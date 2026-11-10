@@ -107,12 +107,10 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 
 /* ---------- Hero: the portrait before the three Moscow addresses ---------- */
 .hero{position:relative;isolation:isolate;overflow:hidden;padding-block:var(--s-5) var(--s-8);text-align:center}
-.city{position:absolute;z-index:-1;top:var(--s-6);left:50%;transform:translateX(-50%);width:min(100vw,1920px,152svh);display:flex;justify-content:center;align-items:flex-end;pointer-events:none}
-.city img{display:block;height:auto;max-width:none;flex:none}
-/* one continuous panorama: the side views overlap the theatre so no paper shows between them */
-.city-b{width:42%;z-index:0}
-.city-c{width:36%;margin-right:-8%;z-index:1}
-.city-g{width:36%;margin-left:-8%;z-index:1}
+.city{position:absolute;z-index:-1;top:var(--s-6);left:50%;transform:translateX(-50%);width:min(100vw,1600px,150svh);display:flex;justify-content:center;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+/* symmetry: two equal views meet on the axis, behind the figure */
+.city img{display:block;width:54%;height:auto;max-width:none;flex:none}
+.city-b{margin-left:-8%}
 .hero-stage{display:grid;justify-items:center}
 .portrait{margin:0;width:clamp(220px,34svh,320px)}
 .portrait img{display:block;width:100%;height:auto;aspect-ratio:2/3}
@@ -341,9 +339,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 }
 @media(max-width:620px){
   body{font-size:16px}
-  .hero{display:flex;flex-direction:column;padding-block:var(--s-3) var(--s-7)}
-  .city{order:2;position:static;transform:none;width:100%;display:grid;margin-top:var(--s-6);grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-1);padding-inline:var(--s-2)}
-  .city-c,.city-g,.city-b{transform:none;margin:0;opacity:1;width:100%}
+  .hero{padding-block:var(--s-3) var(--s-7)}
+  .city{width:170vw;top:var(--s-8)}
   .portrait{width:62vw}
   .hero-copy{margin-top:calc(var(--s-7) * -1)}
   .btn{padding:0 var(--s-4);font-size:14px}
@@ -421,7 +418,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
     <div class="reveal">
       <p>Независимый проект о жизни, музыке и педагогическом наследии Владислава Блажевича. Он не представляет Московскую консерваторию, библиотеки или исполнителей, на которых ссылается.</p>
       <p>В этой версии нет регистрации, сбора пожертвований и приёма конкурсных заявок. Проект не заявляет связи с историческими конкурсами имени Блажевича. Личный помощник и идея нового конкурса не входят в первый выпуск.</p>
-      <p class="note">Портрет на первом экране — художественное изображение, созданное с помощью ИИ по мотивам фотографии Блажевича 1903 года и тонированное в одну гамму с архивными снимками; это не историческая фотография. Исходная фотография 1903 года: <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, общественное достояние (источник на Commons: А. Г. Харламов, ITA Journal, т. 36, № 3, 2008, с. 30–34). Фон первого экрана — тонированные фотографии из Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория имени Чайковского, 1940-е</a> и <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905 года</a> (общественное достояние), <a href="https://commons.wikimedia.org/wiki/File:GoznakMainEntrance.jpg">Московская печатная фабрика «Гознак»</a> (снимок 2025 года, CC0).</p>
+      <p class="note">Портрет на первом экране — художественное изображение, созданное с помощью ИИ по мотивам фотографии Блажевича 1903 года и тонированное в одну гамму с архивными снимками; это не историческая фотография. Исходная фотография 1903 года: <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, общественное достояние (источник на Commons: А. Г. Харламов, ITA Journal, т. 36, № 3, 2008, с. 30–34). Фон первого экрана — тонированные фотографии из Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория имени Чайковского, 1940-е</a> и <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905 года</a> (общественное достояние).</p>
     </div>
     <div class="reveal">
       <h3>Прочитанные источники</h3>
@@ -440,7 +437,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
         <li id="s8"><a href="https://www.krugosvet.ru/enc/kultura_i_obrazovanie/muzyka/BLAZHEVICH_VLADISLAV_MIHALOVICH.html">Энциклопедия «Кругосвет»</a>. <em class="st st-no">не открылась: сервер отклоняет подключение</em> Сведения из неё (годы в Большом театре и Персимфансе, кафедра) совпадают с источниками [1], [2] и [7]. Сведение об оркестре фабрики «Гознак» (с 1920 года) приведено по поисковой выдаче 9 ноября 2026 года; другими прочитанными источниками оно не подтверждено.</li>
         <li id="s9">А. Штильман, <a href="https://www.litres.ru/book/artur-shtilman/v-bolshom-teatre-i-metropoliten-opera-gody-zhizni-v-moskve-11961952/chitat-onlayn/">«В Большом театре и Метрополитен-опера»</a> (фрагмент о Райхмане); <a href="https://cyclowiki.org/wiki/Циклопедия:Списки:Преподаватели_Санкт-Петербургской_консерватории">Циклопедия: преподаватели Санкт-Петербургской консерватории</a> (Волков в этом списке отсутствует); <a href="https://conservatory.ru/x-letka/ads/vypusk-1942-goda-orkestrovye-dukhovye-i-udarnye-instrumenty">выпуск 1942 года</a>. <em class="st st-ok">прочитаны 8 ноября 2026</em></li>
         <li id="s10">J. M. Thompson, <a href="https://trombone.net/resources-events/reviews-list/review/?reviewid=1706">рецензия на «School for Trombone in Clefs» (East-West)</a>, ITA Journal 39:1, 2011, со списком американских изданий; <a href="https://trombone.org/reviews/view.php?id=224">Online Trombone Journal — рецензия на сборник «Before Blazhevich»</a>; библиотечная запись <a href="https://vaara.finna.fi/Record/vaarakirjastot.11126370">«Studies in Clefs», IMC, 1957</a>. <em class="st st-ok">прочитаны 8 ноября 2026</em></li>
-        <li id="s11">Иллюстрации (Wikimedia Commons): <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">фотография 1903 года с автографом (основа портрета; сама фотография — в биографии, глава «Консерватория и класс Борка»)</a>, <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905</a>, <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория, 1940-е</a>, <a href="https://commons.wikimedia.org/wiki/File:GoznakMainEntrance.jpg">Московская печатная фабрика «Гознак»</a>.</li>
+        <li id="s11">Иллюстрации (Wikimedia Commons): <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">фотография 1903 года с автографом (основа портрета; сама фотография — в биографии, глава «Консерватория и класс Борка»)</a>, <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905</a>, <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория, 1940-е</a>.</li>
         <li id="s12">«Вечерняя Москва»: Е. Пятунина, В. Богданов, <a href="https://vm.ru/society/114265-trubachi-pod-zvuki-marsha-bojcy-vyhodili-na-ulicy-stolicy">«Трубачи. Под звуки марша бойцы выходили на улицы столицы»</a>, 17 октября 2012; Е. Пятунина, <a href="https://vm.ru/society/551256-orkestr-nashej-pamyati">«Оркестр нашей памяти»</a>, 9 ноября 2017. <em class="st st-ok">прочитаны 9 ноября 2026</em></li>
       </ol>
       <p class="note">Номера в квадратных скобках в тексте ведут к этому списку. Пометка «читались целиком» означает только, что редакция сайта открывала эти страницы. Независимую проверку перед публикацией стоит провести отдельно, особенно для энциклопедии «Кругосвет» [8], которую открыть не удалось. Расхождения источников показаны в разделе биографии, а не исправлены молча. Права на конкретные нотные издания проверяются отдельно.</p>

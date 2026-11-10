@@ -85,12 +85,10 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 
 /* ---------- Hero: the portrait before the three Moscow addresses ---------- */
 .hero{position:relative;isolation:isolate;overflow:hidden;padding-block:var(--s-5) var(--s-8);text-align:center}
-.city{position:absolute;z-index:-1;top:var(--s-6);left:50%;transform:translateX(-50%);width:min(100vw,1920px,152svh);display:flex;justify-content:center;align-items:flex-end;pointer-events:none}
-.city img{display:block;height:auto;max-width:none;flex:none}
-/* one continuous panorama: the side views overlap the theatre so no paper shows between them */
-.city-b{width:42%;z-index:0}
-.city-c{width:36%;margin-right:-8%;z-index:1}
-.city-g{width:36%;margin-left:-8%;z-index:1}
+.city{position:absolute;z-index:-1;top:var(--s-6);left:50%;transform:translateX(-50%);width:min(100vw,1600px,150svh);display:flex;justify-content:center;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+/* symmetry: two equal views meet on the axis, behind the figure */
+.city img{display:block;width:54%;height:auto;max-width:none;flex:none}
+.city-b{margin-left:-8%}
 .hero-stage{display:grid;justify-items:center}
 .portrait{margin:0;width:clamp(220px,34svh,320px)}
 .portrait img{display:block;width:100%;height:auto;aspect-ratio:2/3}
@@ -319,9 +317,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 }
 @media(max-width:620px){
   body{font-size:16px}
-  .hero{display:flex;flex-direction:column;padding-block:var(--s-3) var(--s-7)}
-  .city{order:2;position:static;transform:none;width:100%;display:grid;margin-top:var(--s-6);grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-1);padding-inline:var(--s-2)}
-  .city-c,.city-g,.city-b{transform:none;margin:0;opacity:1;width:100%}
+  .hero{padding-block:var(--s-3) var(--s-7)}
+  .city{width:170vw;top:var(--s-8)}
   .portrait{width:62vw}
   .hero-copy{margin-top:calc(var(--s-7) * -1)}
   .btn{padding:0 var(--s-4);font-size:14px}
