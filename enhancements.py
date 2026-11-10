@@ -52,7 +52,7 @@ META=[('method','single','mgk'),('method','single','mgk'),('duet','duo','mgk'),(
 LABELS={'genre': [('method','Школа','Method'),('duet','Дуэт','Duet'),('exercise','Упражнения','Exercises'),('study','Этюды','Studies'),('concerto','Концерты','Concertos')], 'ensemble':[('single','Один исполнитель: учебный материал','Single player: study material'),('duo','Два тромбона','Two trombones'),('unspecified','Состав сопровождения уточняется','Accompaniment not specified')], 'source':[('mgk','Московская консерватория','Moscow Conservatory'),('classon','classON','classON'),('history','История изданий','Edition history'),('recordings','Проект записей','Recording project'),('imslp','IMSLP','IMSLP')], 'difficulty':[('unrated','Не оценено по нотам','Not assessed from the score')]}
 def apply():
  out=ROOT/'site'
- for path,en in [('index.html',False),('en/index.html',True)]:
+ for path,en in [('scores.html',False),('en/scores.html',True)]:
   p=out/path;s=p.read_text();idx=[0]
   def attrs(m):
    j=idx[0];idx[0]+=1;g,e,so=META[j]
@@ -65,16 +65,14 @@ def apply():
    controls+=''.join(f'<option value="{val}">{eng if en else ru}</option>' for val,ru,eng in opts)+'</select></label>'
   controls+='</div><p class="note">'+('Difficulty has not yet been assessed from scores. Proposed rubric: basic, intermediate, advanced — based on range, rhythm, endurance and clefs. No rating is assigned by title alone. Source filter describes the linked resource, not a verified publisher.' if en else 'Сложность пока не оценена по нотам. Предлагаемая шкала: базовая, средняя, высокая — по диапазону, ритму, выносливости и ключам. По одному названию оценка не назначается. Фильтр источника обозначает ресурс ссылки, а не проверенное издательство.')+'</p>'
   marker='  <p class="note count"';assert marker in s;s=s.replace(marker,controls+marker,1)
-  if en:
-   s=s.replace('</main>',people_section(True)+'</main>')
-   s=s.replace('Перейти к содержимому','Skip to content')
   # The hero carries no caption by the owner's choice; the portrait's AI origin and the photo credits live on the About page.
   p.write_text(s)
- p=out/'schools.html';s=p.read_text();s=s.replace('</main>',people_section()+'</main>');p.write_text(s)
+ # Карточки людей: на русском они повторяли бы московское досье, поэтому остаются только в английской версии.
+ p=out/'en/schools.html';s=p.read_text();s=s.replace('</main>',people_section(True)+'</main>');p.write_text(s)
  # Styling additions inherit the existing palette and typography.
  css=''  # styles for these additions live in src/style.css
  for page in out.rglob('*.html'):
   text=page.read_text();page.write_text(text.replace('</head>',css+'</head>',1))
  # Standalone error page; activation on hosting requires verified server config.
- (out/'404.html').write_text('''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Страница не найдена — Blazhevich</title><style>body{max-width:48rem;margin:10vh auto;padding:24px;background:#f4eee1;color:#2a2118;font:18px/1.6 system-ui}a{color:#24426b}</style></head><body><main><h1>Страница не найдена / Page not found</h1><p>Проверьте адрес или вернитесь к каталогу.</p><a href="/">Главная / Home</a> · <a href="/#scores">Ноты / Scores</a> · <a href="/en/">English</a></main></body></html>''')
+ (out/'404.html').write_text('''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Страница не найдена — Blazhevich</title><style>body{max-width:48rem;margin:10vh auto;padding:24px;background:#f4eee1;color:#2a2118;font:18px/1.6 system-ui}a{color:#24426b}</style></head><body><main><h1>Страница не найдена / Page not found</h1><p>Проверьте адрес или вернитесь к каталогу.</p><a href="/">Главная / Home</a> · <a href="/scores.html">Ноты / Scores</a> · <a href="/en/">English</a></main></body></html>''')
 if __name__=='__main__':apply()
