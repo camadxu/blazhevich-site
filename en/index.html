@@ -376,6 +376,37 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   *,*::before,*::after{animation:none!important;transition:none!important}
   .reveal.pre{opacity:1;transform:none}
 }
+
+/* ---------- Страницы-досье школ (moscow.html, leningrad.html) ---------- */
+.warn{color:var(--gold);font-weight:700;cursor:help}
+.dossier-tree{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:var(--s-5) var(--s-6);margin-bottom:var(--s-7);overflow-x:auto}
+.dossier-tree h3{margin-bottom:var(--s-3)}
+.tree,.tree ul{list-style:none;margin:0;padding-left:22px;border-left:1px solid var(--line)}
+.tree{border-left:0;padding-left:0}
+.tree li{position:relative;padding:4px 0 4px 14px;font-size:15px;color:var(--muted)}
+.tree ul li::before{content:"";position:absolute;left:-22px;top:15px;width:30px;border-top:1px solid var(--line)}
+.tree b{color:var(--ink)}
+.facts-list{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--muted)}
+.sub-h{font-family:var(--display);font-weight:500;font-size:var(--t-title);margin:var(--s-7) 0 var(--s-4)}
+.persons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin-bottom:var(--s-7)}
+.person{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:var(--s-5);display:grid;gap:var(--s-2);align-content:start;min-width:0}
+.person h4{font-family:var(--display);font-size:24px;font-weight:600;margin:0;color:var(--ink)}
+.person ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:15px;color:var(--muted)}
+.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7);margin:var(--s-6) 0}
+.two-col > div{min-width:0;display:grid;gap:var(--s-3);align-content:start}
+.plain-list{padding-left:18px}
+.conc.plain{min-width:560px}
+.conc.plain td,.conc.plain td:nth-child(2),.conc.plain td:nth-child(3){white-space:normal}
+.conc.plain td:first-child{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink);width:auto;white-space:nowrap}
+.school-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin-bottom:var(--s-6)}
+@media(max-width:820px){.persons,.two-col,.school-links{grid-template-columns:1fr}}
+@media(max-width:620px){
+  .conc.plain{min-width:0}
+  .conc.plain td:first-child{white-space:normal;font-size:15px;color:var(--gold)}
+  .conc.plain td:nth-child(3){color:var(--muted);font-size:14px}
+  .tree ul{padding-left:12px}.tree ul li::before{left:-12px;width:18px}
+  .dossier-tree{padding:var(--s-4)}
+}
 </style>
 </head>
 <body>
@@ -604,16 +635,17 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
     <div class="lineage reveal" aria-labelledby="spb-line">
       <h3 id="spb-line">St. Petersburg — Leningrad</h3>
       <ol class="gen">
-        <li class="node node-gap">
-          <span class="node-years">1862</span>
-          <b>The Conservatory opens</b>
-          <p>Russia’s first conservatory opened on 8 (20) September 1862. We could not find the names of its first trombone teachers.</p>
+        <li class="node">
+          <span class="node-years">1831–1909</span>
+          <b>Franz de Paula Türner</b>
+          <p>Austrian; from 1855 in the Imperial theatre orchestras of St. Petersburg. Taught the Conservatory’s trombone and tuba class in 1870–1909 and wrote elementary methods for brass (1877, 1878).</p>
+          <span class="pupils">Pupils: P. N. Volkov, A. F. Kazbiryuk, K. Kreek, R. Kull</span>
         </li>
         <li class="node node-key">
-          <span class="node-years">† c. 1935</span>
-          <b>Pyotr Nikolaevich Volkov</b>
-          <p>Conservatory professor and trombonist of the Mariinsky Theatre, where he played alongside Reiche. Jacob Raichman graduated from his class in 1911, and in the early 1930s Kozlov and Korshunov studied with him at the workers’ faculty. After his death in 1935 Reiche took over the department.<sup class="ref"><a href="#s4">[4]</a><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Pupils: <a href="#raichman">J. A. Raichman</a> (graduated 1911), A. A. Kozlov and N. S. Korshunov (workers’ faculty)</span>
+          <span class="node-years">1877–1933</span>
+          <b>Pyotr Naumovich Volkov</b>
+          <p>Principal trombone of the Mariinsky Theatre orchestra (1899–1933), where he played alongside Reiche; Conservatory professor (1917–1933). Jacob Raichman graduated from his class in 1911, and in the early 1930s Kozlov and Korshunov studied with him at the workers’ faculty. He died on 22 February 1933; Reiche took over the class (associate professor from 1933, acting professor from 1935).<sup class="ref"><a href="#s4">[4]</a><a href="#s5">[5]</a></sup> Patronymic and dates corrected after the St. Petersburg Conservatory encyclopedia.</p>
+          <span class="pupils">Pupils: <a href="#raichman">J. A. Raichman</a> (graduated 1911), A. A. Kozlov and N. S. Korshunov (workers’ faculty), I. A. Gershkovich and others</span>
         </li>
         <li class="node">
           <span class="node-years">1878–1946</span>
@@ -645,7 +677,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
     </div>
   </div>
 
-  <p class="note reveal school-note"><b>Editors’ observation:</b> Moscow began with the Prussian trombonist Christoph Bork. In St. Petersburg the German Eugen Reiche from Dresden is a key figure, but Pyotr Volkov taught the class before him. The branches intertwined: Raichman, a St. Petersburg graduate, studied with the Muscovite Blazhevich and took his music to America, and half a century later the Leningrader Venglovsky sent his concertos there too.</p>
+  <p class="note reveal school-note"><b>Editors’ observation:</b> Moscow began with the Prussian trombonist Christoph Bork. St. Petersburg began with the Austrian Franz Türner (from 1870), followed by his pupil Pyotr Volkov and the German Eugen Reiche from Dresden. The branches intertwined: Raichman, a St. Petersburg graduate, studied with the Muscovite Blazhevich and took his music to America, and half a century later the Leningrader Venglovsky sent his concertos there too.</p>
 </div></section>
 
 <section id="concertos" class="block"><div class="wrap">
