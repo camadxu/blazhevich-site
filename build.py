@@ -92,10 +92,10 @@ def relink(html, page, id_page):
         return f'href="{tgt[0]}#{i}"'
     return re.sub(r'href="#([\w-]+)"', fix, html)
 
-def header(nav_html, lang_link, home):
+def header(nav_html, lang_link, home, cls=''):
     return (f'<a class="skip" href="#main">{"Перейти к содержимому" if home=="index.html" else "Skip to content"}</a>\n'
             + ('<div class="draft">Предварительный просмотр · не опубликовано</div>\n' if not a.release else '')
-            + f'<header id="top-bar"><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
+            + f'<header id="top-bar"{cls}><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
             f'  <nav aria-label="Основная навигация">{nav_html}{lang_link}</nav>\n</div></header>\n')
 
 FOOTER_RU = ('<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a>'
@@ -157,7 +157,7 @@ for f, (ss, title, desc) in PAGES.items():
             h = re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
         main += h
     nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
-    body = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html') \
+    body = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html', ' class="home"' if f == 'index.html' else '') \
         + f'<main id="main">\n{main}</main>\n'
     body = relink(body, f, id_page)
     if f != 'index.html':
@@ -169,7 +169,7 @@ for f, (ss, title, desc) in PAGES.items():
 en = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec('page', 'en'))  # пути к картинкам из папки en/
 nav_en = ''.join(f'<a href="#{i}">{t}</a>' for i, t in
                  [('scores', 'Scores'), ('listen', 'Listen'), ('biography', 'Biography'), ('usa', 'In America'), ('schools', 'Schools'), ('concertos', 'Concertos'), ('about', 'About')])
-body_en = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html') \
+body_en = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html', ' class="home"') \
     .replace('Основная навигация', 'Main navigation').replace('на главную', 'home').replace('Предварительный просмотр · не опубликовано', 'Preview · not published') \
     + f'<main id="main">\n{en}</main>\n'
 (OUT / 'en' / 'index.html').write_text(page(
