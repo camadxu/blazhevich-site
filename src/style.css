@@ -337,6 +337,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 @media(max-width:620px){
   body{font-size:16px}
   .hero{--horizon:58svh;padding-block:var(--s-3) var(--s-5)}
+  /* на узком экране вся ширина — одно здание: консерватория с Большим залом за фигурой, а не стык двух снимков */
+  .city-scene{object-position:23% 100%}
   .hero-copy{margin-top:var(--s-2)}
   .portrait{width:min(92vw,62svh)}
   .btn{padding:0 var(--s-4);font-size:14px}
@@ -372,11 +374,6 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 .warn{color:var(--gold);font-weight:700;cursor:help}
 .dossier-tree{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:var(--s-5) var(--s-6);margin-bottom:var(--s-7);overflow-x:auto}
 .dossier-tree h3{margin-bottom:var(--s-3)}
-.tree,.tree ul{list-style:none;margin:0;padding-left:22px;border-left:1px solid var(--line)}
-.tree{border-left:0;padding-left:0}
-.tree li{position:relative;padding:4px 0 4px 14px;font-size:15px;color:var(--muted)}
-.tree ul li::before{content:"";position:absolute;left:-22px;top:15px;width:30px;border-top:1px solid var(--line)}
-.tree b{color:var(--ink)}
 .facts-list{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--muted)}
 .sub-h{font-family:var(--display);font-weight:500;font-size:var(--t-title);margin:var(--s-7) 0 var(--s-4)}
 .persons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin-bottom:var(--s-7)}
@@ -395,7 +392,6 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .conc.plain{min-width:0}
   .conc.plain td:first-child{white-space:normal;font-size:15px;color:var(--gold)}
   .conc.plain td:nth-child(3){color:var(--muted);font-size:14px}
-  .tree ul{padding-left:12px}.tree ul li::before{left:-12px;width:18px}
   .dossier-tree{padding:var(--s-4)}
 }
 
@@ -456,3 +452,45 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
 html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
+
+/* надпись и кнопки на первом экране лежат на снимке: под ними мягкая бумажная подложка, чтобы буквы не путались с фасадом */
+.hero-copy{position:relative}
+.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,rgb(244 238 225/.9),rgb(244 238 225/.6) 55%,transparent);pointer-events:none}
+
+/* ---------- Генеалогия школы: схема-дерево. Ствол учитель → ученик сверху вниз, затем две ветви рядом ---------- */
+.dossier-tree{margin-inline:0}
+.lineage,.lineage ol,.lineage ul{list-style:none;margin:0;padding:0}
+.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
+.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
+/* вертикальная связь к следующему поколению */
+.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
+.tnode{display:grid;justify-items:center;gap:2px;max-width:340px;padding:var(--s-3) var(--s-5);border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);text-align:center}
+.tnode b{font:600 22px/1.15 var(--display);color:var(--ink)}
+.tnode-key{border-color:var(--rule);box-shadow:0 0 0 4px var(--tint)}
+.tnode-key b{font-size:26px}
+.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
+.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
+/* развилка: горизонтальная перекладина над двумя ветвями */
+.split{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);align-items:start;padding-top:var(--s-5)}
+.branch{position:relative;display:grid;justify-items:center;gap:var(--s-3)}
+.branch::before{content:"";position:absolute;top:calc(-1 * var(--s-5));left:50%;height:var(--s-5);border-left:1px solid var(--rule)}
+/* перекладина развилки: от центра каждой ветви к середине между ними */
+.branch::after{content:"";position:absolute;top:calc(-1 * var(--s-5));border-top:1px solid var(--rule)}
+.branch:first-child::after{left:50%;right:calc(-1 * var(--s-6) / 2)}
+.branch:last-child::after{right:50%;left:calc(-1 * var(--s-6) / 2)}
+.branch-name{margin:0;font:italic 500 17px/1.2 var(--display);color:var(--gold)}
+.leaves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-2);width:100%}
+.leaves li,.chain li{padding:var(--s-2) var(--s-3);border-top:1px solid var(--line);font-size:15px;color:var(--muted)}
+.leaves li b,.chain li b{color:var(--ink);font-weight:600}
+.leaves .role{display:block}
+.leaves .more{grid-column:1 / -1;font-size:14px}
+.chain{display:grid;gap:var(--s-2);width:100%;counter-reset:gen}
+.chain li{position:relative;padding-left:var(--s-6)}
+.chain li::before{counter-increment:gen;content:counter(gen);position:absolute;left:var(--s-2);top:var(--s-2);font:italic 600 16px/1.4 var(--display);color:var(--gold)}
+@media(max-width:820px){
+  .split{grid-template-columns:1fr;gap:var(--s-7)}
+  .branch::after{display:none}
+  .branch:nth-child(2)::before{display:none}
+  .leaves{grid-template-columns:1fr}
+}
+.dossier-tree > .note{margin-top:var(--s-6)}
