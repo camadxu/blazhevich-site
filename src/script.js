@@ -19,9 +19,11 @@
 
 
   /* Шапка, кнопка «наверх», активный пункт меню */
-  const bar=document.getElementById('top-bar'), totop=document.getElementById('totop');
-  if(!bar)return; /* главная: один экран, шапки нет */
-  const onScroll=()=>{const y=scrollY;bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700)};
+  const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
+  if(!totop)return;
+  /* главная — одна длинная страница: боковое меню и кнопка «Меню» появляются, когда первый экран ушёл вверх */
+  const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700);
+    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6)};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];

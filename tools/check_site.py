@@ -17,8 +17,9 @@ import pathlib, re, sys
 from html.parser import HTMLParser
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
-PAGES = ['index.html', 'scores.html', 'listen.html', 'biography.html', 'usa.html', 'schools.html', 'moscow.html', 'leningrad.html', 'concertos.html', 'about.html',
-         'en/index.html'] + [f'en/{k}.html' for k in ('scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about')]
+# Сайт — одна общая страница (index.html, en/index.html) и два досье; старые адреса разделов — переадресации
+PAGES = ['index.html', 'moscow.html', 'leningrad.html', 'en/index.html']
+SECTIONS = ('scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about')
 errors, external = [], set()
 
 class P(HTMLParser):
@@ -70,6 +71,18 @@ for pg, p in list(parsed.items()):
             errors.append(f'{pg}: битая ссылка {url}'); continue
         if frag and target.suffix == '.html' and frag not in ids_of(target):
             errors.append(f'{pg}: нет якоря #{frag} в {target.relative_to(SITE)}')
+
+# переадресации со старых адресов ведут на существующий раздел общей страницы
+for pre in ('', 'en/'):
+    for k in SECTIONS:
+        f = SITE / f'{pre}{k}.html'
+        if not f.exists():
+            errors.append(f'нет переадресации {pre}{k}.html'); continue
+        m = re.search(r'url=([^"]+)"', f.read_text(encoding='utf-8'))
+        tgt, _, frag = (m.group(1) if m else '').partition('#')
+        if not m or not (f.parent / tgt).exists() or frag not in ids_of(f.parent / tgt):
+            errors.append(f'{pre}{k}.html: переадресация ведёт не туда ({m.group(1) if m else "нет"})')
+        checked += 1
 
 css = SITE / 'assets' / 'fonts.css'
 if css.exists():

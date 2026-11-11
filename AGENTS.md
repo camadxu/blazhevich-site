@@ -45,6 +45,9 @@
 
 ## Структура
 
+- **Сайт одной страницей (решение владельца, 11.11.2026):** `index.html` и `en/index.html` — первый экран и все разделы подряд, боковое меню справа (на телефоне кнопка «Меню»). Отдельно только досье `moscow.html` и `leningrad.html`. Старые адреса разделов (`scores.html` и т. п.) — переадресации на `index.html#раздел`.
+- Фоны-сцены (первый экран, шапка досье о Москве) собираются скриптами `tools/scenes/*.py` из снимков в `assets/`.
+
 - `src/` — исходники страниц и стилей; `assets/` — изображения, шрифты, og-image; `tools/` — проверки; `build.py`, `enhancements.py` — сборщик.
 - `.github/workflows/deploy-test.yml` — автодеплой теста при push в `main`; `.github/workflows/deploy-prod.yml` — ручная публикация прода; `.github/scripts/publish-artifact.sh` — публикация артефакт-веток `deploy/*`.
 - `.deploy/htaccess` — шаблон `.htaccess` для деплой-веток (ErrorDocument 404, блокировка служебных каталогов Git).
