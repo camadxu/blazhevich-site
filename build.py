@@ -76,6 +76,8 @@ PAGES = {  # файл: (секции, заголовок, описание)
 }
 NAV_RU = [('scores', 'Ноты'), ('listen', 'Слушать'), ('biography', 'Биография'), ('usa', 'В США'),
           ('schools', 'Школы'), ('concertos', 'Концерты'), ('about', 'О проекте')]
+# досье-подстраницы: крошка ведёт на родительский раздел, в меню подсвечен он же
+PARENT_RU = {'moscow.html': ('schools', 'Школы'), 'leningrad.html': ('schools', 'Школы')}
 PAGE_OF_SECTION = {s: f for f, (ss, _, _) in PAGES.items() for s in ss}
 
 def ids_in(html):
@@ -103,10 +105,10 @@ def header(nav_html, lang_link, home):
             + f'<header id="top-bar"><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
             f'  <nav aria-label="Основная навигация">{nav_html}{lang_link}</nav>\n</div></header>\n')
 
-def inner(h, crumb):
+def inner(h, crumb, href='index.html'):
     """На внутренней странице заголовок секции становится h1 с «хлебной крошкой»."""
     h = h.replace('<div class="section-head reveal">',
-                  f'<div class="section-head reveal"><a class="crumb" href="index.html">← {crumb}</a>', 1)
+                  f'<div class="section-head reveal"><a class="crumb" href="{href}">← {crumb}</a>', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
 EN_WORDS = [('Перейти к содержимому', 'Skip to content'), ('Основная навигация', 'Main navigation'), ('на главную', 'home'),
@@ -167,15 +169,19 @@ for f, (ss, _, _) in PAGES.items():
 
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
 for f, (ss, title, desc) in PAGES.items():
+    par = PARENT_RU.get(f)
     if f == 'index.html':   # главная — один первый экран: без шапки и подвала, меню открывается кнопкой
         body, footer = DRAFT + f'<main id="main">\n{sec("hero")}</main>\n', ''
     else:
+        crumb = (par[1], f'{PAGE_OF_SECTION[par[0]]}') if par else ('Главная', 'index.html')
         body = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html') \
-            + '<main id="main">\n' + ''.join(inner(sec(s_), 'Главная') for s_ in ss) + '</main>\n'
+            + '<main id="main">\n' + ''.join(inner(sec(s_), *crumb) for s_ in ss) + '</main>\n'
         footer = FOOTER_RU
     body = relink(body, f, id_page)
     if f != 'index.html':
         body = body.replace(f'<a href="#{ss[0]}">', f'<a href="{f}">', 1)
+    if par:
+        body = body.replace(f'<a href="{PAGE_OF_SECTION[par[0]]}">', f'<a href="{PAGE_OF_SECTION[par[0]]}" class="active">', 1)
     (OUT / f).write_text(page('ru', title, desc, f, '', body,
                               '<link rel="stylesheet" href="assets/fonts.css">', footer))
 
