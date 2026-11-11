@@ -105,10 +105,19 @@ def header(nav_html, lang_link, home):
             + f'<header id="top-bar"><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
             f'  <nav aria-label="Основная навигация">{nav_html}{lang_link}</nav>\n</div></header>\n')
 
-def inner(h, crumb, href='index.html'):
+# архивная виньетка в шапке раздела: декоративная (alt=""), источники снимков — в «О проекте»
+VIGNETTE = {'scores': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
+            'biography': 'conservatory-1940s.webp', 'concertos': 'bolshoi-1905.webp',
+            'schools': 'conservatory-1940s.webp', 'moscow': 'bolshoi-1905.webp'}
+
+def inner(h, crumb, href='index.html', prefix=''):
     """На внутренней странице заголовок секции становится h1 с «хлебной крошкой»."""
+    sid = re.match(r'\s*<section id="([\w-]+)"', h)
+    v = VIGNETTE.get(sid.group(1)) if sid else None
+    fig = (f'<figure class="head-vignette" aria-hidden="true"><img src="{prefix}assets/{v}" alt="" loading="lazy" decoding="async"></figure>'
+           if v else '')
     h = h.replace('<div class="section-head reveal">',
-                  f'<div class="section-head reveal"><a class="crumb" href="{href}">← {crumb}</a>', 1)
+                  f'<div class="section-head reveal"><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
 EN_WORDS = [('Перейти к содержимому', 'Skip to content'), ('Основная навигация', 'Main navigation'), ('на главную', 'home'),
@@ -207,7 +216,7 @@ FONTS_EN = '<link rel="stylesheet" href="../assets/fonts.css">'
     'en/index.html', '../', en_words(relink(DRAFT + f'<main id="main">\n{en_secs["hero"]}</main>\n', 'index.html', id_page_en)), FONTS_EN, ''))
 for k, (_, title, desc) in EN_PAGES.items():
     body = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html') \
-        + f'<main id="main">\n{inner(en_secs[k], "Home")}</main>\n'
+        + f'<main id="main">\n{inner(en_secs[k], "Home", "index.html", "../")}</main>\n'
     body = relink(body, f'{k}.html', id_page_en).replace(f'<a href="#{k}">', f'<a href="{k}.html">', 1)
     (OUT / 'en' / f'{k}.html').write_text(page('en', title, desc, f'en/{k}.html', '../', en_words(body), FONTS_EN, FOOTER_EN))
 
