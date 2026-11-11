@@ -122,8 +122,8 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 
 /* ---------- Buttons ---------- */
 .btn{display:inline-flex;max-width:100%;align-items:center;justify-content:center;gap:var(--s-2);min-height:48px;padding:0 var(--s-5);border:1px solid transparent;border-radius:var(--radius);font:600 15px/1.2 var(--body);text-decoration:none;text-align:center;transition:background-color .2s,border-color .2s,color .2s}
-.btn-brass{background:var(--accent);color:var(--on-accent)}
-.btn-brass:hover{background:var(--accent-hi);color:var(--on-accent)}
+.btn-brass{background:var(--ink);color:var(--on-accent)}   /* ink, not blue: the one button sits in the cream palette */
+.btn-brass:hover{background:var(--gold);color:var(--on-accent)}
 .btn-ghost{border-color:var(--field);color:var(--ink);background:transparent}
 .btn-ghost:hover{border-color:var(--ink);color:var(--ink);background:var(--surface)}
 .btn:active{transform:translateY(1px)}
