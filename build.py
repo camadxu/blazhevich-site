@@ -67,9 +67,9 @@ PAGES = {  # файл: (секции, заголовок, описание)
                      'Кто у кого учился: Борк, Блажевич, Щербинин, Григорьев; Волков, Рейхе, Козлов, Коршунов, Венгловский. Биография Якова Райхмана.'),
     'concertos.html': (['concertos'], '13 концертов для тромбона Блажевича — Blazhevich',
                        'Все 13 концертов Владислава Блажевича: тональности, даты, первые издания, записи и устройство формы.'),
-    'moscow.html': (['moscow'], 'Московская тромбонная школа — Blazhevich',
+    'moscow.html': (['moscow'], 'Московская тромбоновая школа — Blazhevich',
                     'Досье о московской школе тромбона: Витнебен, Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь, ноты и записи.'),
-    'leningrad.html': (['leningrad'], 'Ленинградская тромбонная школа — Blazhevich',
+    'leningrad.html': (['leningrad'], 'Ленинградская тромбоновая школа — Blazhevich',
                        'Петербургско-ленинградская школа тромбона: Тюрнер, Волков, Козлов, Венгловский, Квартет тромбонов филармонии, дискография.'),
     'about.html': (['about'], 'О проекте и источники — Blazhevich',
                    'Независимый проект о Владиславе Блажевиче: принципы, источники и иллюстрации.'),
@@ -108,7 +108,9 @@ def header(nav_html, lang_link, home):
 # архивная виньетка в шапке раздела: декоративная (alt=""), источники снимков — в «О проекте»
 VIGNETTE = {'scores': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
             'biography': 'conservatory-1940s.webp', 'concertos': 'bolshoi-1905.webp',
-            'schools': 'conservatory-1940s.webp', 'moscow': 'bolshoi-1905.webp'}
+            'schools': 'conservatory-1940s.webp'}
+# сцена во всю ширину с текстом поверх (assets/scene-*.webp делает tools/scenes/*.py)
+SCENE = {'moscow'}
 
 def inner(h, crumb, href='index.html', prefix=''):
     """На внутренней странице заголовок секции становится h1 с «хлебной крошкой»."""
@@ -116,8 +118,9 @@ def inner(h, crumb, href='index.html', prefix=''):
     v = VIGNETTE.get(sid.group(1)) if sid else None
     fig = (f'<figure class="head-vignette" aria-hidden="true"><img src="{prefix}assets/{v}" alt="" loading="lazy" decoding="async"></figure>'
            if v else '')
+    cls = f' scene scene-{sid.group(1)}' if sid and sid.group(1) in SCENE else ''
     h = h.replace('<div class="section-head reveal">',
-                  f'<div class="section-head reveal"><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
+                  f'<div class="section-head{cls} reveal"><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
 EN_WORDS = [('Перейти к содержимому', 'Skip to content'), ('Основная навигация', 'Main navigation'), ('на главную', 'home'),

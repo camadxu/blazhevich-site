@@ -415,3 +415,17 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .head-vignette{height:clamp(140px,34vw,220px);margin-block:var(--s-2) var(--s-3)}
   .head-vignette img{object-position:center 40%;object-fit:cover;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 75%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 75%,transparent)}
 }
+
+/* сцена во всю ширину: здание вблизи, второе вдали, площадь; текст шапки поверх неба */
+.section-head.scene{max-width:none;justify-content:flex-start;min-height:min(59.9vw,1150px);
+  margin:calc(-1 * var(--s-9)) calc(50% - 50vw) var(--s-7);padding:var(--s-7) calc(50vw - 50%) var(--s-7);
+  background:var(--paper) var(--scene) center bottom/100% auto no-repeat}
+.section-head.scene > *{max-width:var(--measure)}
+.section-head.scene .page-title{max-width:none}
+.section-head.scene p{color:var(--ink)}
+.scene-moscow{--scene:url(assets/scene-moscow.webp)}
+@media(max-width:1100px){
+  .section-head.scene{min-height:0;margin-top:calc(-1 * var(--s-8));padding-top:52.5vw;
+    background:linear-gradient(to bottom,transparent calc(52.5vw - 60px),var(--paper) 52.5vw),var(--paper) var(--scene-sm,var(--scene)) center top/100% auto no-repeat}
+  .scene-moscow{--scene-sm:url(assets/scene-moscow-960.webp)}
+}
