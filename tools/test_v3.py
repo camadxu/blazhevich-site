@@ -44,7 +44,7 @@ assert 'созданное с помощью ИИ' in (ROOT/'site/index.html').r
 assert 'AI-generated' in (ROOT/'site/en/index.html').read_text()
 for pg in ['index.html','en/index.html']:
  s=(ROOT/'site'/pg).read_text()
- assert 'scene-home.webp' in s and 'goznak-moscow' not in s
+ assert 'conservatory-full.webp' in s and 'goznak-moscow' not in s
  # главная — весь сайт одной страницей: первый экран, боковое меню, все разделы подряд, без верхней шапки
  assert 'class="hero-mark"' in s and 'popovertarget="menu"' in s and 'class="rail"' in s and '<header' not in s and 'id="catalog"' in s
  assert all(f'<section id="{k}"' in s for k in ['scores','listen','biography','usa','schools','concertos','about'])
