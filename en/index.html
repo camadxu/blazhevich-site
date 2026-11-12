@@ -436,10 +436,12 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 .section-head.scene .page-title{max-width:none}
 .section-head.scene p{color:var(--ink)}
 .scene-moscow{--scene:url(assets/scene-moscow.webp)}
+.scene-leningrad{--scene:url(assets/scene-leningrad.webp)}
 @media(max-width:1100px){
   .section-head.scene{min-height:0;margin-top:calc(-1 * var(--s-8));padding-top:52.5vw;
     background:linear-gradient(to bottom,transparent calc(52.5vw - 60px),var(--paper) 52.5vw),var(--paper) var(--scene-sm,var(--scene)) center top/100% auto no-repeat}
   .scene-moscow{--scene-sm:url(assets/scene-moscow-960.webp)}
+  .scene-leningrad{--scene-sm:url(assets/scene-leningrad-960.webp)}
 }
 
 /* ---------- Общая страница: боковое меню справа (десктоп) и кнопка «Меню» (телефон, планшет) ----------
@@ -513,26 +515,38 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 }
 .dossier-tree > .note{margin-top:var(--s-6)}
 
-/* ---------- Первый экран (по указанию владельца 11.11.2026): консерватория — весь фон, без пустого неба и площади;
-   Блажевич меньше и ниже, стоит перед зданием ---------- */
-.hero{display:grid;align-content:end;background:#6b5a44;padding-block:var(--s-6) var(--s-7)}
+/* ---------- Первый экран (картинка владельца, 12.11.2026): Блажевич с тромбоном перед Большим залом
+   консерватории и Большим театром — одна композиция на весь экран; поверх только надпись и «Меню», EN в углу ---------- */
+.hero{display:grid;align-content:end;background:#efe4cc;padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
-/* лёгкое затемнение к низу — фигура и надпись «стоят» на земле перед фасадом */
-.city::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgb(42 33 24/.38))}
-.portrait{width:auto;height:min(62svh,620px);aspect-ratio:683/1024;-webkit-mask-image:linear-gradient(#000 76%,transparent 95%);mask-image:linear-gradient(#000 76%,transparent 95%)}
-.portrait img{object-fit:contain;object-position:50% 0;filter:drop-shadow(0 0 14px rgb(20 14 8/.55)) drop-shadow(0 18px 30px rgb(20 14 8/.35))}
-.hero-copy{margin-top:calc(min(62svh,620px) * -.14)}
-.hero-copy::before{inset:-30% -18%;background:radial-gradient(closest-side,rgb(42 33 24/.62),rgb(42 33 24/.35) 60%,transparent)}
-.hero-mark{color:#f1e2bd;text-shadow:0 1px 10px rgb(20 14 8/.7)}
-.hero-mark::before,.hero-mark::after{background:#e2cf9f}
+.hero-lang{background:rgb(42 33 24/.18);color:#f4ead2;border-color:rgb(241 226 189/.7);position:absolute;z-index:2;top:calc(var(--s-5) + env(safe-area-inset-top,0px));right:calc(var(--s-5) + env(safe-area-inset-right,0px))}
 @media(max-width:620px){
-  .portrait{height:min(56svh,520px)}
-  /* узкий экран: в кадре ротонда и портик Большого зала за фигурой */
-  .city-scene{object-position:46% 40%}
-  .hero-copy{margin-top:calc(min(56svh,520px) * -.14)}
+  /* узкий экран: в кадре фигура с тромбоном, здания по краям */
+  .city-scene{object-position:55% 30%}
+  .hero-lang{top:var(--s-3);right:var(--s-3)}
 }
+.hero-lang:hover{background:rgb(42 33 24/.35);color:#fff8e6;border-color:#f4ead2}
+
+/* ---------- Шапка досье о Москве по макету владельца (12.11.2026): оглавление 2×2, автограф 1903 года, консерватория справа внизу ---------- */
+.scene .eyebrow a{color:inherit;text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-color:var(--rule)}
+.scene .eyebrow a:hover{color:var(--ink)}
+.dossier-toc{order:4;display:block}
+.dossier-toc ol{list-style:none;margin:var(--s-4) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);grid-template-rows:repeat(2,auto);grid-auto-flow:column;column-gap:var(--s-7)}
+.dossier-toc li{border-bottom:1px solid var(--line)}
+.dossier-toc a{display:block;padding:var(--s-3) 0;font:500 21px/1.25 var(--display);color:var(--ink);text-decoration:none}
+.dossier-toc a:hover{color:var(--accent)}
+.dossier-toc span{font-variant-numeric:lining-nums}
+.autograph{order:5;margin:auto 0 0;padding-top:var(--s-5);display:flex;align-items:flex-end;gap:var(--s-5);flex-wrap:wrap}
+.autograph img{width:min(330px,70vw);height:auto}
+.autograph figcaption{font:italic 500 15px/1.3 var(--display);color:var(--muted);padding-bottom:var(--s-2)}
+.section-head.scene{justify-content:flex-start}
+@media(max-width:1100px){.dossier-toc ol{max-width:none}}
+@media(max-width:620px){.dossier-toc ol{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}.dossier-toc a{font-size:19px}}
+.section-head.scene-moscow,.section-head.scene-leningrad{min-height:clamp(560px,calc(100svh - 110px),59.9vw);padding-bottom:var(--s-5)}
+@media(max-width:1100px){.section-head.scene-moscow,.section-head.scene-leningrad{min-height:0}}
+.section-head.scene p.scene-credit{order:5;max-width:none;margin:auto 0 0;padding-top:var(--s-5);font:italic 500 15px/1.3 var(--display);color:var(--muted)}
 </style>
 </head>
 <body>
@@ -542,14 +556,12 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 <button class="fab" type="button" popovertarget="menu">Menu</button>
 <main id="main">
 <section id="hero" class="hero" aria-labelledby="hero-title">
-  <div class="city" aria-hidden="true"><img class="city-scene" src="../assets/conservatory-full.webp" width="1054" height="524" alt="" fetchpriority="high"></div>
+  <div class="city"><img class="city-scene" src="../assets/hero-home.webp" width="1306" height="816" alt="Artistic composition: Vladislav Blazhevich with his trombone on the square, the Great Hall of the Moscow Conservatory and the Bolshoi Theatre behind him" fetchpriority="high"></div>
+  <a class="hero-btn hero-lang" href="../index.html" hreflang="ru" lang="ru">RU</a>
   <div class="wrap hero-stage">
-    <figure class="portrait">
-      <img src="../assets/blazhevich-portrait.webp" srcset="../assets/blazhevich-portrait-683.webp 683w, ../assets/blazhevich-portrait.webp 1024w" sizes="(max-width:620px) 92vw, 640px" width="1024" height="1536" fetchpriority="high" alt="Artistic portrait of Vladislav Blazhevich in an early 20th-century suit">
-    </figure>
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-mark"><span aria-hidden="true">Blazhevich</span><span class="sr">Vladislav Blazhevich, 1881–1942</span></h1>
-      <div class="hero-nav"><button class="hero-btn" type="button" popovertarget="menu">Menu</button><a class="hero-btn" href="../index.html" hreflang="ru" lang="ru">RU</a></div>
+      <div class="hero-nav"><button class="hero-btn" type="button" popovertarget="menu">Menu</button></div>
       <nav id="menu" class="hero-menu" popover aria-label="Sections"><a href="#scores">Scores</a><a href="#listen">Listen</a><a href="#biography">Biography</a><a href="#usa">In America</a><a href="#schools">Schools</a><a href="#concertos">Concertos</a><a href="#about">About</a></nav>
     </div>
   </div>
@@ -606,6 +618,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
       <ul class="sources plain-list">
         <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3">Spotify — Leningrad Philharmonic Trombone Quartet (1977)</a></li>
         <li><a href="https://music.yandex.ru/album/42318197">Yandex Music — the same quartet</a></li>
+        <li><a href="https://music.yandex.ru/artist/3762704">Yandex Music — Viktor Venglovsky</a></li>
       </ul>
     </div>
   </div>
@@ -740,6 +753,11 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   <div class="staff" aria-hidden="true"></div>
   <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="../assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
 
+  <div class="school-links reveal">
+    <a class="explore-card" href="moscow.html"><b>The Moscow school</b><span class="eyebrow">Dossier</span><span>Wittneben and Bork, Blazhevich in his own 1928 questionnaire, Shcherbinin and his pupils, the Gnesin branch, scores and recordings.</span><i aria-hidden="true">→</i></a>
+    <a class="explore-card" href="leningrad.html"><b>The Leningrad school</b><span class="eyebrow">Dossier</span><span>Türner, Volkov, Kozlov, Venglovsky; the “singing” manner, the Philharmonic Trombone Quartet, Melodiya records.</span><i aria-hidden="true">→</i></a>
+  </div>
+
   <div class="lineages">
     <div class="lineage reveal" aria-labelledby="moscow-line">
       <h3 id="moscow-line">Moscow</h3>
@@ -856,7 +874,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     <div class="reveal">
       <p>An independent project about the life, music and teaching legacy of Vladislav Blazhevich. It does not represent the Moscow Conservatory, the libraries or the performers it links to. The Russian version is the primary one; this English page follows it. Bracketed source numbers here match the English list below, not the Russian one.</p>
       <p><a class="btn btn-ghost" href="../index.html">Русская версия →</a></p>
-      <p class="note">The portrait is an AI-generated artistic image based on a 1903 photograph of Blazhevich (<a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain), toned to match the archive photographs. It is not a historical photograph. The opening screen backdrop shows the Tchaikovsky Moscow Conservatory in the 1940s and the Bolshoi Theatre around 1905 (public domain).</p>
+      <p class="note">The opening image is an artistic composition supplied by the site owner: Blazhevich with his trombone in front of the Great Hall of the Moscow Conservatory and the Bolshoi Theatre; it is not a historical photograph. The portrait in it is an AI-generated artistic image based on a 1903 photograph of Blazhevich (<a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain), toned to match the archive photographs. It is not a historical photograph. The buildings follow photographs of the Tchaikovsky Moscow Conservatory in the 1940s and the Bolshoi Theatre around 1905 (public domain).</p>
     </div>
     <div class="reveal">
       <h3>Sources</h3>

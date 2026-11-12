@@ -436,10 +436,12 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 .section-head.scene .page-title{max-width:none}
 .section-head.scene p{color:var(--ink)}
 .scene-moscow{--scene:url(assets/scene-moscow.webp)}
+.scene-leningrad{--scene:url(assets/scene-leningrad.webp)}
 @media(max-width:1100px){
   .section-head.scene{min-height:0;margin-top:calc(-1 * var(--s-8));padding-top:52.5vw;
     background:linear-gradient(to bottom,transparent calc(52.5vw - 60px),var(--paper) 52.5vw),var(--paper) var(--scene-sm,var(--scene)) center top/100% auto no-repeat}
   .scene-moscow{--scene-sm:url(assets/scene-moscow-960.webp)}
+  .scene-leningrad{--scene-sm:url(assets/scene-leningrad-960.webp)}
 }
 
 /* ---------- Общая страница: боковое меню справа (десктоп) и кнопка «Меню» (телефон, планшет) ----------
@@ -513,26 +515,38 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 }
 .dossier-tree > .note{margin-top:var(--s-6)}
 
-/* ---------- Первый экран (по указанию владельца 11.11.2026): консерватория — весь фон, без пустого неба и площади;
-   Блажевич меньше и ниже, стоит перед зданием ---------- */
-.hero{display:grid;align-content:end;background:#6b5a44;padding-block:var(--s-6) var(--s-7)}
+/* ---------- Первый экран (картинка владельца, 12.11.2026): Блажевич с тромбоном перед Большим залом
+   консерватории и Большим театром — одна композиция на весь экран; поверх только надпись и «Меню», EN в углу ---------- */
+.hero{display:grid;align-content:end;background:#efe4cc;padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
-/* лёгкое затемнение к низу — фигура и надпись «стоят» на земле перед фасадом */
-.city::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgb(42 33 24/.38))}
-.portrait{width:auto;height:min(62svh,620px);aspect-ratio:683/1024;-webkit-mask-image:linear-gradient(#000 76%,transparent 95%);mask-image:linear-gradient(#000 76%,transparent 95%)}
-.portrait img{object-fit:contain;object-position:50% 0;filter:drop-shadow(0 0 14px rgb(20 14 8/.55)) drop-shadow(0 18px 30px rgb(20 14 8/.35))}
-.hero-copy{margin-top:calc(min(62svh,620px) * -.14)}
-.hero-copy::before{inset:-30% -18%;background:radial-gradient(closest-side,rgb(42 33 24/.62),rgb(42 33 24/.35) 60%,transparent)}
-.hero-mark{color:#f1e2bd;text-shadow:0 1px 10px rgb(20 14 8/.7)}
-.hero-mark::before,.hero-mark::after{background:#e2cf9f}
+.hero-lang{background:rgb(42 33 24/.18);color:#f4ead2;border-color:rgb(241 226 189/.7);position:absolute;z-index:2;top:calc(var(--s-5) + env(safe-area-inset-top,0px));right:calc(var(--s-5) + env(safe-area-inset-right,0px))}
 @media(max-width:620px){
-  .portrait{height:min(56svh,520px)}
-  /* узкий экран: в кадре ротонда и портик Большого зала за фигурой */
-  .city-scene{object-position:46% 40%}
-  .hero-copy{margin-top:calc(min(56svh,520px) * -.14)}
+  /* узкий экран: в кадре фигура с тромбоном, здания по краям */
+  .city-scene{object-position:55% 30%}
+  .hero-lang{top:var(--s-3);right:var(--s-3)}
 }
+.hero-lang:hover{background:rgb(42 33 24/.35);color:#fff8e6;border-color:#f4ead2}
+
+/* ---------- Шапка досье о Москве по макету владельца (12.11.2026): оглавление 2×2, автограф 1903 года, консерватория справа внизу ---------- */
+.scene .eyebrow a{color:inherit;text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-color:var(--rule)}
+.scene .eyebrow a:hover{color:var(--ink)}
+.dossier-toc{order:4;display:block}
+.dossier-toc ol{list-style:none;margin:var(--s-4) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);grid-template-rows:repeat(2,auto);grid-auto-flow:column;column-gap:var(--s-7)}
+.dossier-toc li{border-bottom:1px solid var(--line)}
+.dossier-toc a{display:block;padding:var(--s-3) 0;font:500 21px/1.25 var(--display);color:var(--ink);text-decoration:none}
+.dossier-toc a:hover{color:var(--accent)}
+.dossier-toc span{font-variant-numeric:lining-nums}
+.autograph{order:5;margin:auto 0 0;padding-top:var(--s-5);display:flex;align-items:flex-end;gap:var(--s-5);flex-wrap:wrap}
+.autograph img{width:min(330px,70vw);height:auto}
+.autograph figcaption{font:italic 500 15px/1.3 var(--display);color:var(--muted);padding-bottom:var(--s-2)}
+.section-head.scene{justify-content:flex-start}
+@media(max-width:1100px){.dossier-toc ol{max-width:none}}
+@media(max-width:620px){.dossier-toc ol{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}.dossier-toc a{font-size:19px}}
+.section-head.scene-moscow,.section-head.scene-leningrad{min-height:clamp(560px,calc(100svh - 110px),59.9vw);padding-bottom:var(--s-5)}
+@media(max-width:1100px){.section-head.scene-moscow,.section-head.scene-leningrad{min-height:0}}
+.section-head.scene p.scene-credit{order:5;max-width:none;margin:auto 0 0;padding-top:var(--s-5);font:italic 500 15px/1.3 var(--display);color:var(--muted)}
 </style>
 </head>
 <body>
@@ -540,12 +554,40 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 <div class="draft">Предварительный просмотр · не опубликовано</div>
 <header id="top-bar"><div class="wrap bar">
   <a href="index.html" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>
-  <nav aria-label="Основная навигация"><a href="index.html#scores">Ноты</a><a href="index.html#listen">Слушать</a><a href="index.html#biography">Биография</a><a href="index.html#usa">В США</a><a href="index.html#schools" class="active">Школы</a><a href="index.html#concertos">Концерты</a><a href="index.html#about">О проекте</a><a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a></nav>
+  <nav aria-label="Основная навигация"><a href="index.html#scores">Ноты</a><a href="index.html#listen">Слушать</a><a href="index.html#biography">Биография</a><a href="index.html#usa">В США</a><a href="index.html#schools" class="active">Школы</a><a href="index.html#concertos">Концерты</a><a href="index.html#about">О проекте</a><a class="lang" href="en/leningrad.html" hreflang="en" lang="en">EN</a></nav>
 </div></header>
 <main id="main">
 <section id="leningrad" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><a class="crumb" href="index.html#schools">← Школы</a><h1 class="page-title">Ленинградская тромбоновая школа</h1><div class="eyebrow">Тюрнер → Волков → Козлов → Венгловский</div><p>Петербургско-ленинградская школа — одна из старейших ветвей отечественного исполнительства на медных. Документированная история начинается в 1870 году, когда класс тромбона Петербургской консерватории принял австриец Франц Тюрнер. Прямое учительство протянуло традицию через столетие — до 1994 года. Справочно-биографический сборник составлен в ноябре 2026 года по материалам Петербургской консерватории, Петербургской филармонии и открытых источников.</p></div>
+  <div class="section-head scene scene-leningrad reveal"><a class="crumb" href="index.html#schools">← Школы</a><h1 class="page-title">Ленинградская тромбоновая школа</h1><div class="eyebrow">Досье · <a href="#l-origins">Тюрнер</a> → <a href="#l-volkov">Волков</a> → <a href="#l-kozlov">Козлов</a> → <a href="#l-venglovsky">Венгловский</a></div><p>Петербургско-ленинградская школа — одна из старейших ветвей отечественного исполнительства на медных. Документированная история начинается в 1870 году, когда класс тромбона Петербургской консерватории принял австриец Франц Тюрнер. Прямое учительство протянуло традицию через столетие — до 1994 года. Справочно-биографический сборник составлен в ноябре 2026 года по материалам Петербургской консерватории, Петербургской филармонии и открытых источников.</p><nav class="dossier-toc" aria-label="Разделы досье"><ol><li><a href="#l-origins"><span>01.</span> Истоки и Франц Тюрнер</a></li><li><a href="#l-volkov"><span>02.</span> П. Н. Волков</a></li><li><a href="#l-kozlov"><span>03.</span> А. А. Козлов</a></li><li><a href="#l-venglovsky"><span>04.</span> В. Ф. Венгловский</a></li></ol></nav><p class="scene-credit">Здание Петербургской консерватории на Театральной площади, архивный снимок</p></div>
+
+  <figure class="dossier-tree reveal" aria-labelledby="tree-title">
+    <h3 id="tree-title">Генеалогия школы</h3>
+    <ol class="lineage">
+      <li><div class="tnode"><b>Ф.&nbsp;Тюрнер</b><span class="yrs">1831–1909</span><span class="role">класс тромбона и тубы Петербургской консерватории 1870–1909; оркестры императорских театров</span></div></li>
+      <li><div class="tnode tnode-key"><b>П.&nbsp;Н.&nbsp;Волков</b><span class="yrs">1877–1933</span><span class="role">профессор консерватории 1917–1933, первый тромбон Мариинского театра 1899–1933</span></div></li>
+      <li class="split">
+        <div class="branch">
+          <div class="tnode"><b>А.&nbsp;А.&nbsp;Козлов</b><span class="yrs">1908–1992</span><span class="role">ученик Волкова и Е.&nbsp;А.&nbsp;Рейхе; профессор консерватории, оркестр филармонии 1937–1989</span></div>
+          <p class="branch-name">филармоническая ветвь</p>
+          <ul class="leaves">
+            <li><b>В.&nbsp;Ф.&nbsp;Венгловский</b> <span class="yrs">1926–1994</span><span class="role">солист оркестра филармонии, руководитель Квартета тромбонов; профессор консерватории</span></li>
+            <li><b>Г.&nbsp;Данилов</b>, <b>Б.&nbsp;Виноградов</b>, <b>А.&nbsp;Евтушенко</b>, <b>Г.&nbsp;Страутман</b><span class="role">костяк Квартета тромбонов филармонии</span></li>
+            <li class="more">Ученики Венгловского: А.&nbsp;Н.&nbsp;Морозов, А.&nbsp;А.&nbsp;Скобелев (I премия, Женева 1973), В.&nbsp;В.&nbsp;Голиков.</li>
+          </ul>
+        </div>
+        <div class="branch">
+          <div class="tnode"><b>И.&nbsp;А.&nbsp;Гершкович</b><span class="yrs">ученик Волкова</span><span class="role">педагог училища: у него начинал Венгловский (1945)</span></div>
+          <p class="branch-name">другие ученики Волкова</p>
+          <ul class="leaves">
+            <li><b>Я.&nbsp;Райхман</b> <span class="yrs">выпуск 1911</span><span class="role">по надписи на футляре тромбона</span></li>
+            <li class="more">В.&nbsp;В.&nbsp;Кузнецов, И.&nbsp;З.&nbsp;Хейфец, П.&nbsp;А.&nbsp;Курилов, И.&nbsp;З.&nbsp;Иванов, П.&nbsp;В.&nbsp;Петров, Я.&nbsp;И.&nbsp;Райхлин, Б.&nbsp;И.&nbsp;Анисимов.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+    <p class="note">Прямая линия учительства — сто с лишним лет, от прихода Тюрнера в консерваторию (1870) до смерти Венгловского (1994). Как и в Москве, корень иностранный: Тюрнер — австриец; Волков — первый русский во главе класса.</p>
+  </figure>
 
   <aside class="insight reveal" aria-labelledby="l-core">
     <h3 id="l-core">«Поющая» манера</h3>
