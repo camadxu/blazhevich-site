@@ -18,6 +18,10 @@
   if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
 
 
+  /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
+  const menu=document.getElementById('menu');
+  if(menu&&menu.hidePopover)menu.addEventListener('click',e=>{if(e.target.closest('a'))menu.hidePopover()});
+
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
   if(!totop)return;

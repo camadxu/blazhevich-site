@@ -94,7 +94,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
   -webkit-mask-image:linear-gradient(transparent,#000 10%,transparent 62%);mask-image:linear-gradient(transparent,#000 10%,transparent 62%)}
 /* both views stand on the horizon, small and hazy with distance, lit by the same light */
 .city{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--horizon);pointer-events:none}
-/* консерватория и Большой театр крупно, во всю ширину за фигурой: от верха окна до горизонта (tools/scenes/home_scene.py) */
+/* консерватория и Большой театр крупно, во всю ширину за фигурой: от верха окна до горизонта (сейчас фон — один снимок, см. правила «Первый экран» ниже) */
 .city-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;opacity:.92;animation:hero-fade 1.6s ease both}
 .hero-stage{display:grid;justify-items:center}
 /* bust crop: the box shows the top of the full-length file and the chest melts into the paper */
@@ -337,8 +337,6 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
 @media(max-width:620px){
   body{font-size:16px}
   .hero{--horizon:58svh;padding-block:var(--s-3) var(--s-5)}
-  /* на узком экране вся ширина — одно здание: консерватория с Большим залом за фигурой, а не стык двух снимков */
-  .city-scene{object-position:23% 100%}
   .hero-copy{margin-top:var(--s-2)}
   .portrait{width:min(92vw,62svh)}
   .btn{padding:0 var(--s-4);font-size:14px}
@@ -511,5 +509,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 .hero-mark::before,.hero-mark::after{background:#e2cf9f}
 @media(max-width:620px){
   .portrait{height:min(56svh,520px)}
+  /* узкий экран: в кадре ротонда и портик Большого зала за фигурой */
+  .city-scene{object-position:46% 40%}
   .hero-copy{margin-top:calc(min(56svh,520px) * -.14)}
 }

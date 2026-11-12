@@ -84,6 +84,14 @@ for pre in ('', 'en/'):
             errors.append(f'{pre}{k}.html: переадресация ведёт не туда ({m.group(1) if m else "нет"})')
         checked += 1
 
+# sitemap.xml (публичная сборка) не должен перечислять переадресации с noindex
+sm = SITE / 'sitemap.xml'
+if sm.exists():
+    for loc in re.findall(r'<loc>[^<]*/([^/<]*\.html)</loc>', sm.read_text(encoding='utf-8')):
+        f = SITE / loc
+        if f.exists() and 'noindex' in f.read_text(encoding='utf-8')[:600]:
+            errors.append(f'sitemap.xml: в списке переадресация {loc}')
+
 css = SITE / 'assets' / 'fonts.css'
 if css.exists():
     for u in re.findall(r'url\(([^)]+)\)', css.read_text()):
