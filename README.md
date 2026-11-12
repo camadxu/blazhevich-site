@@ -16,7 +16,7 @@ blazhevich-site/
 │   ├── style.css        все стили (встраиваются в каждую страницу)
 │   ├── script.js        весь скрипт (встраивается в каждую страницу)
 │   ├── ru/*.html        русские разделы: hero, scores, listen, explore, biography, usa, schools, concertos, about
-│   └── en/page.html     английская страница целиком
+│   └── en/page.html     английская страница целиком; en/moscow.html, en/leningrad.html — английские досье
 ├── assets/              изображения, шрифты (woff2), fonts.css, картинка-превью og-image.jpg
 ├── tools/check_site.py  проверка собранного сайта: файлы, ссылки, якоря, внешние ресурсы
 └── site/                ГОТОВЫЙ ПУБЛИЧНЫЙ САЙТ для https://blazhevich.space (см. ниже)

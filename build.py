@@ -65,6 +65,13 @@ NAV_RU = [('scores', 'Ноты'), ('listen', 'Слушать'), ('biography', '�
           ('schools', 'Школы'), ('concertos', 'Концерты'), ('about', 'О проекте')]
 # досье-подстраницы: крошка ведёт на родительский раздел, в меню подсвечен он же
 PARENT_RU = {'moscow.html': ('schools', 'Школы'), 'leningrad.html': ('schools', 'Школы')}
+# английские досье: src/en/<имя>.html → en/<имя>.html (заголовок, описание)
+EN_DOSSIERS = {
+    'moscow.html': ('The Moscow trombone school — Blazhevich',
+                    'A dossier on the Moscow trombone school: Wittneben, Bork, Blazhevich, Shcherbinin and his pupils, the Gnesin branch, scores and recordings.'),
+    'leningrad.html': ('The Leningrad trombone school — Blazhevich',
+                       'The St. Petersburg–Leningrad trombone school: Türner, Volkov, Kozlov, Venglovsky, the Philharmonic Trombone Quartet, discography.'),
+}
 PAGE_OF_SECTION = {s: f for f, (ss, _, _) in PAGES.items() for s in ss}
 
 def ids_in(html):
@@ -106,8 +113,11 @@ def inner(h, crumb, href='index.html', prefix=''):
     fig = (f'<figure class="head-vignette" aria-hidden="true"><img src="{prefix}assets/{v}" alt="" loading="lazy" decoding="async"></figure>'
            if v else '')
     cls = f' scene scene-{sid.group(1)}' if sid and sid.group(1) in SCENE else ''
+    # url() во встроенном CSS считается от страницы: из папки en/ картинку сцены даём с префиксом
+    sty = (f' style="--scene:url({prefix}assets/scene-{sid.group(1)}.webp);--scene-sm:url({prefix}assets/scene-{sid.group(1)}-960.webp)"'
+           if cls and prefix else '')
     h = h.replace('<div class="section-head reveal">',
-                  f'<div class="section-head{cls} reveal"><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
+                  f'<div class="section-head{cls} reveal"{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
 def deco(h, prefix=''):
@@ -162,9 +172,13 @@ def head(title, desc, path, lang, prefix, fonts):
          '<meta name="twitter:card" content="summary_large_image">']
     if DOM:
         m += [f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">']
-        if path in ('index.html', 'en/index.html'):   # языковые пары есть только у главных страниц
+        if path in ('index.html', 'en/index.html'):   # языковые пары: общая страница и два досье
             m += [f'<link rel="alternate" hreflang="ru" href="{DOM}/">',
                   f'<link rel="alternate" hreflang="en" href="{DOM}/en/">']
+        elif path.removeprefix('en/') in EN_DOSSIERS:
+            f_ = path.removeprefix('en/')
+            m += [f'<link rel="alternate" hreflang="ru" href="{DOM}/{f_}">',
+                  f'<link rel="alternate" hreflang="en" href="{DOM}/en/{f_}">']
     m.append(fonts)
     return '\n'.join(m)
 
@@ -198,7 +212,8 @@ for f, (ss, title, desc) in PAGES.items():
         footer = FOOTER_RU
     else:
         crumb = (par[1], f'index.html#{par[0]}') if par else ('Главная', 'index.html')
-        body = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html') \
+        en_href = f'en/{f}' if f in EN_DOSSIERS else 'en/index.html'
+        body = header(nav, f'<a class="lang" href="{en_href}" hreflang="en" lang="en">EN</a>', 'index.html') \
             + '<main id="main">\n' + ''.join(inner(sec(s_), *crumb) for s_ in ss) + '</main>\n'
         footer = FOOTER_RU
     body = relink(body, f, id_page)
@@ -237,10 +252,16 @@ body = ('<a class="skip" href="#scores">Skip to content</a>\n' + DRAFT
     'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en)), FONTS_EN, FOOTER_EN))
 for k, (label, title, _) in EN_PAGES.items():   # старые адреса английских разделов
     (OUT / 'en' / f'{k}.html').write_text(stub(f'index.html#{k}', title, 'en'))
+nav_en_idx = ''.join(f'<a href="index.html#{k}"{" class=\"active\"" if k == "schools" else ""}>{v[0]}</a>' for k, v in EN_PAGES.items())
+for f, (title, desc) in EN_DOSSIERS.items():
+    src = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec(f[:-5], 'en'))
+    body = (header(nav_en_idx, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')
+            + '<main id="main">\n' + inner(src, 'Schools', 'index.html#schools', '../') + '</main>\n')
+    (OUT / 'en' / f).write_text(page('en', title, desc, f'en/{f}', '../', en_words(body), FONTS_EN, FOOTER_EN))
 
 if a.release:
     today = datetime.date.fromisoformat(a.lastmod).isoformat() if a.lastmod else datetime.date.today().isoformat()
-    urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/']
+    urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/'] + [f'en/{f}' for f in EN_DOSSIERS]
     (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + ''.join(f'  <url><loc>{DOM}/{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls) + '</urlset>\n')
     (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {DOM}/sitemap.xml\n')
