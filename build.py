@@ -97,7 +97,7 @@ VIGNETTE = {'scores': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonn
             'biography': 'conservatory-1940s.webp', 'concertos': 'bolshoi-1905.webp',
             'schools': 'conservatory-1940s.webp'}
 # сцена во всю ширину с текстом поверх (assets/scene-*.webp делает tools/scenes/*.py)
-SCENE = {'moscow'}
+SCENE = {'moscow', 'leningrad'}
 
 def inner(h, crumb, href='index.html', prefix=''):
     """На внутренней странице заголовок секции становится h1 с «хлебной крошкой»."""
