@@ -252,7 +252,8 @@ body = ('<a class="skip" href="#scores">Skip to content</a>\n' + DRAFT
     'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en)), FONTS_EN, FOOTER_EN))
 for k, (label, title, _) in EN_PAGES.items():   # старые адреса английских разделов
     (OUT / 'en' / f'{k}.html').write_text(stub(f'index.html#{k}', title, 'en'))
-nav_en_idx = ''.join(f'<a href="index.html#{k}"{" class=\"active\"" if k == "schools" else ""}>{v[0]}</a>' for k, v in EN_PAGES.items())
+act = ' class="active"'  # вне f-string-выражения: бэкслеш внутри выражения валиден только с Python 3.12
+nav_en_idx = ''.join(f'<a href="index.html#{k}"{act if k == "schools" else ""}>{v[0]}</a>' for k, v in EN_PAGES.items())
 for f, (title, desc) in EN_DOSSIERS.items():
     src = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec(f[:-5], 'en'))
     body = (header(nav_en_idx, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')

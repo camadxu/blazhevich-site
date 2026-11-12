@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageChops, ImageFilter
 A = Path(__file__).resolve().parents[2] / 'assets'
+SRC = Path(__file__).resolve().parent  # исходный снимок лежит рядом со скриптом — в прод не попадает
 W, H, HZ = 1920, 1150, 900
 TOP, BOT = (247, 241, 228), (238, 228, 206)
 
@@ -26,7 +27,7 @@ floor.putalpha(ImageChops.multiply(floor.getchannel('A'), m))
 img = Image.alpha_composite(img, floor)
 
 # снимок: отрезаем пустое небо и рамку, сепия как у московского снимка (тёмное ~ (70,54,38), светлое — бумага)
-src = Image.open(A / 'leningrad-conservatory.webp').convert('L').crop((0, 110, 1280, 850))
+src = Image.open(SRC / 'leningrad-conservatory.webp').convert('L').crop((0, 110, 1280, 850))
 w = 1080; h = round(src.height * w / src.width)
 src = src.resize((w, h), Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.4, percent=60, threshold=2))
 g = np.asarray(src).astype(float) / 255
