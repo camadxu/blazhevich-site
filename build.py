@@ -131,7 +131,7 @@ def deco(h, prefix=''):
 
 def rail(items, lang_link, label):
     """Боковое меню общей страницы (на узких экранах вместо него кнопка «Меню»)."""
-    edge = 'Разделы' if label == 'Разделы' else 'Sections'
+    edge = 'Меню' if label == 'Разделы' else 'Menu'   # то же слово, что на кнопках первого экрана и телефона
     return (f'<div class="rail-edge" aria-hidden="true"><span>{edge}</span></div>\n'
             f'<nav class="rail" aria-label="{label}">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in items)
             + f'{lang_link}</nav>\n')

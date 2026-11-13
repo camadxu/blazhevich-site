@@ -562,3 +562,48 @@ main > section.block{position:relative}
 main > section.block + section.block::before{content:"◆";position:absolute;top:0;left:50%;translate:-50% -50%;width:min(460px,70vw);
   text-align:center;font-size:11px;line-height:1;color:var(--rule);
   background:linear-gradient(to right,transparent,var(--rule) 18%,var(--rule) 44%,transparent 44% 56%,var(--rule) 56%,var(--rule) 82%,transparent) center/100% 1px no-repeat}
+
+/* ---------- Лента жизни (биография): годы 1881–1942 по горизонтали, периоды — полосами на трёх дорожках.
+   Позиции задают --a (начало, %) и --w (длина, %); фрагмент делает tools/media/make_fragments.py ---------- */
+.lifeline{margin:var(--s-7) 0;max-width:none}
+.lifeline figcaption,.routemap figcaption{font:italic 500 17px/1.4 var(--display);color:var(--gold);margin-bottom:var(--s-3)}
+.ll-scroll{overflow-x:auto;padding-bottom:var(--s-2)}
+.ll-track{position:relative;min-width:860px;height:252px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--rule) 22%,transparent) 0 1px,transparent 1px calc(100% / 6.1)) calc(900% / 61) 0}
+.ll-span{position:absolute;left:var(--a);width:var(--w);top:calc(34px + var(--lane) * 46px);height:38px;display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--s-2);overflow:hidden;white-space:nowrap;border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:var(--surface);color:var(--ink);text-decoration:none;line-height:1.15;transition:background .2s,border-color .2s}
+a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--ink)}
+.ll-span b{font:600 15px/1.1 var(--display);overflow:hidden;text-overflow:ellipsis}
+.ll-span i{font:500 11px/1.2 var(--body);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-axis span{position:absolute;top:6px;left:var(--a);translate:-50% 0;font:500 12px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-marks span{position:absolute;bottom:8px;left:var(--a);padding-left:var(--s-2);border-left:1px solid var(--accent);font:500 12px/1.3 var(--body);color:var(--muted);white-space:nowrap}
+.ll-marks span:last-child{translate:-100% 0;padding:0 var(--s-2) 0 0;border-left:0;border-right:1px solid var(--accent)}
+.ll-marks b{color:var(--accent);font-weight:600}
+
+/* ---------- Схема-карта (В США): обзор Атлантики и врезка России; рисунок — SVG из tools/media/make_fragments.py ---------- */
+.routemap{margin:0 0 var(--s-7);max-width:none}
+.routemap svg{display:block;width:100%;height:auto;background:var(--surface) var(--grain);border:1px solid var(--rule);outline:1px solid var(--line);outline-offset:4px}
+.routemap figcaption{margin:var(--s-4) 0 0;font-size:15px;color:var(--muted);max-width:var(--measure)}
+.rm-grid,.rm-grid path{fill:none;stroke:var(--line);stroke-width:1}
+.rm-frame{fill:none;stroke:var(--rule);stroke-width:1.5}
+.rm-inset{fill:none;stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4}
+.rm-route{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round}
+.rm-route-2{stroke-width:1.6;stroke-dasharray:7 6;stroke:var(--gold)}
+.rm-dot{fill:var(--surface);stroke:var(--ink);stroke-width:1.6}
+.rm-key{fill:var(--accent);stroke:var(--surface)}
+.rm-city{font:600 17px var(--display);fill:var(--ink)}
+.rm-sub,.rm-note{font:500 12.5px var(--body);fill:var(--muted)}
+.rm-note{fill:var(--accent);font-weight:600}
+.rm-sea,.rm-land{font:italic 500 19px var(--display);fill:var(--rule);letter-spacing:.28em}
+.rm-land{font-size:15px;letter-spacing:.2em}
+@media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
+.ll-short{overflow:visible;padding:0}
+.ll-short b,.ll-short i{position:relative;left:calc(100% + var(--s-2));overflow:visible}
+.ll-left b,.ll-left i{left:auto;right:calc(100% + var(--s-2));position:absolute}
+.ll-left b{top:4px}.ll-left i{top:21px}
+
+/* ---------- Плеер в «Слушать»: до нажатия — только кнопка, после — iframe Яндекс Музыки (YouTube не встраиваем: в РФ он недоступен) ---------- */
+.player{margin-top:var(--s-4);display:grid;gap:var(--s-2);justify-items:start}
+.player iframe{width:100%;max-width:614px;height:450px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--surface)}
+html:not(.js) .player{display:none}
