@@ -6,8 +6,8 @@
 <title>Blazhevich — Vladislav Blazhevich, trombone: life, concertos, Clef Studies</title>
 <meta name="description" content="Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#f4eee1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4eee1'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#e8dbbf">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Blazhevich">
@@ -27,19 +27,19 @@
 :root{
   color-scheme:light;
   /* paper and ink */
-  --paper:#f4eee1;          /* page */
-  --surface:#fbf8f1;        /* raised paper: fields, table, panels */
-  --band:#ece3cf;           /* a band one step darker than the page */
-  --ink:#2a2118;            /* text, 13.7:1 on paper */
-  --muted:#5a4d3f;          /* secondary text, 7.1:1 */
-  --accent:#24426b;         /* empire blue: links and the one primary action, 8.8:1 */
-  --accent-hi:#18304f;
-  --gold:#7a5a17;           /* years and figures set in type, 5.5:1 */
-  --rule:#a8843a;           /* gilt hairlines, decoration only */
-  --line:#d6c9ae;           /* quiet hairlines */
-  --field:#8c7b60;          /* field and outline edges, 3.5:1 */
-  --on-accent:#fbf8f1;
-  --select:#d9c79c;
+  --paper:#e8dbbf;          /* page: aged cream, matched to the sepia of the first screen (13.11.2026) */
+  --surface:#f0e6cf;        /* raised paper: cards, table, panels */
+  --band:#dccaa6;           /* a band one step darker than the page */
+  --ink:#2b1d10;            /* sepia ink, 11.9:1 on paper */
+  --muted:#56432e;          /* secondary text, 6.8:1 */
+  --accent:#6a3418;         /* burnt umber: links, 7.2:1 — the blue left with the old palette */
+  --accent-hi:#4a220e;
+  --gold:#6b4d12;           /* years and figures set in type, 5.7:1 */
+  --rule:#9c7a3c;           /* gilt hairlines, decoration only */
+  --line:#c8b48d;           /* quiet hairlines */
+  --field:#7d6748;          /* field and outline edges, 3.9:1 */
+  --on-accent:#f0e6cf;
+  --select:#cdb27a;
   --tint:color-mix(in srgb,var(--rule) 12%,transparent);
   --shadow:color-mix(in srgb,var(--ink) 14%,transparent);
 
@@ -64,13 +64,15 @@
   --gutter-l:max(var(--s-4),env(safe-area-inset-left,0px));
   --gutter-r:max(var(--s-4),env(safe-area-inset-right,0px));
   --ease:cubic-bezier(.2,.7,.2,1);
+  /* бумажное зерно: едва заметный шум поверх кремового фона, как на старом листе */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ---------- Base ---------- */
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + var(--s-5));overflow-x:clip}
-body{margin:0;background:var(--paper);color:var(--ink);font:var(--t-body)/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
+body{margin:0;background:var(--paper) var(--grain);color:var(--ink);font:var(--t-body)/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
 ::selection{background:var(--select);color:var(--ink)}
 a{color:var(--accent);text-underline-offset:.22em;text-decoration-thickness:1px}
 a:hover{color:var(--accent-hi);text-decoration-thickness:2px}
@@ -107,7 +109,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .hero{--horizon:66svh;position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-6);text-align:center;
   /* one sun for the whole scene: high on the left, warming the sky and the paper */
-  background:radial-gradient(120% 90% at 16% -10%,#fff8e6 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),#ece1c8 calc(var(--horizon) + 5svh),var(--paper) 100%)}
+  background:radial-gradient(120% 90% at 16% -10%,var(--surface) 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),var(--band) calc(var(--horizon) + 5svh),var(--paper) 100%)}
 /* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
 .hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
   background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
@@ -124,7 +126,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
 .hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
-.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:rgb(244 238 225/.72);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
 .hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
 /* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
 .hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
@@ -167,14 +169,12 @@ section.block p{max-width:var(--measure)}
 .reveal{transition:opacity .8s ease,transform .8s var(--ease)}
 
 /* ---------- Catalogue: a ruled index, not tiles ---------- */
-.tools{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:var(--s-4);margin-bottom:var(--s-4)}
 label{font-size:var(--t-small);font-weight:600;color:var(--ink)}
 input,select{width:100%;display:block;margin-top:var(--s-2);min-height:48px;padding:0 var(--s-4);border:1px solid var(--field);border-radius:var(--radius);background:var(--surface);color:var(--ink);font:inherit;font-size:16px;font-weight:400;transition:border-color .2s}
 input::placeholder{color:var(--muted)}
 input:hover,select:hover{border-color:var(--ink)}
 input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--field)}
 input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
-.count{margin-block:var(--s-5) var(--s-4);font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--ink)}
 .card{position:relative;display:grid;grid-template-columns:180px minmax(0,1fr) auto;gap:var(--s-2) var(--s-6);padding:var(--s-5) var(--s-3);border-bottom:1px solid var(--line);transition:background-color .2s;min-width:0}
 .card:hover{background:var(--surface)}
@@ -185,7 +185,6 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .card a::after{content:"";position:absolute;inset:0}
 .card:hover a{text-decoration:underline}
 .tag{font-size:15px;color:var(--gold);font-weight:500}
-.empty{padding:var(--s-5);border:1px dashed var(--field);color:var(--muted);margin-top:var(--s-4)}
 
 /* ---------- Listen: a band ---------- */
 #listen{background:var(--band)}
@@ -322,13 +321,8 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .lineage-v3{padding:0;list-style:none;display:grid;gap:var(--s-2);margin-block:var(--s-4)}
 .lineage-v3 li{padding:var(--s-3) var(--s-4);border:1px solid var(--line);background:var(--surface)}
 .lineage-v3 .provisional{border-style:dashed;border-color:var(--field)}
-.extra-tools-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin:var(--s-4) 0}
-.extra-tools-v3 label{display:grid;gap:0}
 
 /* ---------- Footer ---------- */
-footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);color:var(--muted);font-size:15px}
-.foot{display:flex;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;align-items:center}
-.foot .brand{font-size:16px}
 .totop{position:fixed;right:calc(var(--s-4) + env(safe-area-inset-right,0px));bottom:calc(var(--s-4) + env(safe-area-inset-bottom,0px));z-index:25;width:48px;height:48px;border:1px solid var(--field);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-size:20px;cursor:pointer;transition:opacity .3s,transform .3s}
 .js .totop{opacity:0;transform:translateY(var(--s-3));pointer-events:none}
 .js .totop.show{opacity:1;transform:none;pointer-events:auto}
@@ -352,7 +346,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .explore-card:nth-child(odd),.explore-card:nth-child(even){padding:var(--s-5) 0;border-right:0}
   .card{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}
   .card .tag,.card h3,.card p,.card a{grid-column:1;grid-row:auto}
-  .people-v3,.extra-tools-v3{grid-template-columns:minmax(0,1fr)}
+  .people-v3{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:620px){
   body{font-size:16px}
@@ -365,7 +359,6 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .bar{justify-content:center;padding-block:var(--s-2)}
   nav{justify-content:center}
   nav a{padding:var(--s-2) var(--s-2);font-size:14px}
-  .tools{grid-template-columns:minmax(0,1fr)}
   .facts{grid-template-columns:minmax(0,1fr)}
   .facts > div,.facts > div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .facts > div:first-child{border-top:0}
@@ -461,35 +454,44 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-menu{position:fixed}
-@media(min-width:1101px){
-  .rail{display:flex}
-  .past-hero .rail{opacity:1;pointer-events:auto}
-  /* место под меню справа: колонка разделов чуть уже */
-  .rail ~ main .block > .wrap{max-width:min(var(--container),calc(100vw - 2 * 190px))}
+/* Меню разделов (13.11.2026, просьба владельца): на компьютере с мышью оно спрятано за правым краем
+   и само выезжает, когда курсор подходит к краю окна; у края всегда видна тонкая вкладка «Разделы».
+   С клавиатуры меню открывается по Tab (focus-within). Без мыши (телефон, планшет) — кнопка «Меню». */
+.rail-edge{display:none}
+@media(min-width:1101px) and (hover:hover) and (pointer:fine){
+  .rail-edge{display:flex;position:fixed;z-index:21;top:0;bottom:0;right:0;width:44px;align-items:center;justify-content:center}
+  .rail-edge span{writing-mode:vertical-rl;padding:var(--s-4) var(--s-2);border:1px solid var(--rule);border-right:0;border-radius:var(--radius) 0 0 var(--radius);
+    background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    color:var(--gold);font:600 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;transition:opacity .25s}
+  .rail{display:flex;right:0;padding:var(--s-4) 0 var(--s-4) var(--s-3);border:1px solid var(--rule);border-right:3px solid var(--rule);
+    border-radius:var(--radius) 0 0 var(--radius);background:var(--surface) var(--grain);box-shadow:-10px 0 28px -12px var(--shadow);
+    opacity:0;translate:calc(100% + 24px) -50%;pointer-events:none;transition:opacity .25s ease,translate .35s var(--ease)}
+  .rail-edge:hover + .rail,.rail:hover,.rail:focus-within{opacity:1;translate:0 -50%;pointer-events:auto}
+  .rail-edge:has(+ .rail:hover) span,.rail-edge:hover span{opacity:0}
 }
-@media(max-width:1100px){
+@media not all and (min-width:1101px) and (hover:hover) and (pointer:fine){
   .fab{display:inline-flex;align-items:center}
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
-html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
+html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 /* надпись и кнопки на первом экране лежат на снимке: под ними мягкая бумажная подложка, чтобы буквы не путались с фасадом */
 .hero-copy{position:relative}
-.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,rgb(244 238 225/.9),rgb(244 238 225/.6) 55%,transparent);pointer-events:none}
+.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,color-mix(in srgb,var(--paper) 90%,transparent),color-mix(in srgb,var(--paper) 60%,transparent) 55%,transparent);pointer-events:none}
 
 /* ---------- Генеалогия школы: схема-дерево. Ствол учитель → ученик сверху вниз, затем две ветви рядом ---------- */
 .dossier-tree{margin-inline:0}
-.lineage,.lineage ol,.lineage ul{list-style:none;margin:0;padding:0}
-.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
-.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
+ol.lineage,ol.lineage ol,ol.lineage ul{list-style:none;margin:0;padding:0}
+ol.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
+ol.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
 /* вертикальная связь к следующему поколению */
-.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
+ol.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
 .tnode{display:grid;justify-items:center;gap:2px;max-width:340px;padding:var(--s-3) var(--s-5);border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);text-align:center}
 .tnode b{font:600 22px/1.15 var(--display);color:var(--ink)}
 .tnode-key{border-color:var(--rule);box-shadow:0 0 0 4px var(--tint)}
 .tnode-key b{font-size:26px}
-.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
-.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
+ol.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
+ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 /* развилка: горизонтальная перекладина над двумя ветвями */
 .split{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);align-items:start;padding-top:var(--s-5)}
 .branch{position:relative;display:grid;justify-items:center;gap:var(--s-3)}
@@ -517,7 +519,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 /* ---------- Первый экран (картинка владельца, 12.11.2026): Блажевич с тромбоном перед Большим залом
    консерватории и Большим театром — одна композиция на весь экран; поверх только надпись и «Меню», EN в углу ---------- */
-.hero{display:grid;align-content:end;background:#efe4cc;padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
+.hero{display:grid;align-content:end;background:var(--band);padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
@@ -547,12 +549,231 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 .section-head.scene-moscow,.section-head.scene-leningrad{min-height:clamp(560px,calc(100svh - 110px),59.9vw);padding-bottom:var(--s-5)}
 @media(max-width:1100px){.section-head.scene-moscow,.section-head.scene-leningrad{min-height:0}}
 .section-head.scene p.scene-credit{order:5;max-width:none;margin:auto 0 0;padding-top:var(--s-5);font:italic 500 15px/1.3 var(--display);color:var(--muted)}
+
+/* ---------- Старинная гамма (13.11.2026): весь сайт в тон первого экрана — кремовая бумага с зерном, сепия, края листа чуть темнее ---------- */
+body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
+  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,rgb(74 48 20/.16) 100%)}
+@media print{body::after{display:none}}
+.rail .lang{margin-right:var(--s-4)}
+
+/* ---------- Ноты как библиотечные карточки (13.11.2026): две колонки, у каждой карточки номер, красная линейка
+   и строки каталожной карточки; источник — «штампом» внизу. Вся карточка по-прежнему ссылка. ---------- */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0;counter-reset:card}
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-5) var(--s-4);
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
+  background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
+  box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
+.card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+.card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
+  border-bottom:1px solid color-mix(in srgb,#8a2b1c 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
+.card h3{font-size:26px;margin-top:var(--s-2)}
+.card p{font-size:16px;line-height:32px;margin:0}
+.card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
+  background:var(--paper);font-size:13px;letter-spacing:.06em;text-transform:uppercase;rotate:-1.2deg}
+.card:hover a{text-decoration:none;border-color:var(--accent)}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
+main > section.block{position:relative}
+main > section.block + section.block::before{content:"◆";position:absolute;top:0;left:50%;translate:-50% -50%;width:min(460px,70vw);
+  text-align:center;font-size:11px;line-height:1;color:var(--rule);
+  background:linear-gradient(to right,transparent,var(--rule) 18%,var(--rule) 44%,transparent 44% 56%,var(--rule) 56%,var(--rule) 82%,transparent) center/100% 1px no-repeat}
+
+/* ---------- Лента жизни (биография): годы 1881–1942 по горизонтали, периоды — полосами на трёх дорожках.
+   Позиции задают --a (начало, %) и --w (длина, %); фрагмент делает tools/media/make_fragments.py ---------- */
+.lifeline{margin:var(--s-7) 0;max-width:none}
+.lifeline figcaption,.routemap figcaption{font:italic 500 17px/1.4 var(--display);color:var(--gold);margin-bottom:var(--s-3)}
+.ll-scroll{overflow-x:auto;padding-bottom:var(--s-2)}
+.ll-track{position:relative;min-width:860px;height:252px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--rule) 22%,transparent) 0 1px,transparent 1px calc(100% / 6.1)) calc(900% / 61) 0}
+.ll-span{position:absolute;left:var(--a);width:var(--w);top:calc(34px + var(--lane) * 46px);height:38px;display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--s-2);overflow:hidden;white-space:nowrap;border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:var(--surface);color:var(--ink);text-decoration:none;line-height:1.15;transition:background .2s,border-color .2s}
+a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--ink)}
+.ll-span b{font:600 15px/1.1 var(--display);overflow:hidden;text-overflow:ellipsis}
+.ll-span i{font:500 11px/1.2 var(--body);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-axis span{position:absolute;top:6px;left:var(--a);translate:-50% 0;font:500 12px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-marks span{position:absolute;bottom:8px;left:var(--a);padding-left:var(--s-2);border-left:1px solid var(--accent);font:500 12px/1.3 var(--body);color:var(--muted);white-space:nowrap}
+.ll-marks span:last-child{translate:-100% 0;padding:0 var(--s-2) 0 0;border-left:0;border-right:1px solid var(--accent)}
+.ll-marks b{color:var(--accent);font-weight:600}
+
+/* ---------- Схема-карта (В США): обзор Атлантики и врезка России; рисунок — SVG из tools/media/make_fragments.py ---------- */
+.routemap{margin:0 0 var(--s-7);max-width:none}
+.routemap svg{display:block;width:100%;height:auto;background:var(--surface) var(--grain);border:1px solid var(--rule);outline:1px solid var(--line);outline-offset:4px}
+.routemap figcaption{margin:var(--s-4) 0 0;font-size:15px;color:var(--muted);max-width:var(--measure)}
+.rm-grid,.rm-grid path{fill:none;stroke:var(--line);stroke-width:1}
+.rm-frame{fill:none;stroke:var(--rule);stroke-width:1.5}
+.rm-inset{fill:none;stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4}
+.rm-route{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round}
+.rm-route-2{stroke-width:1.6;stroke-dasharray:7 6;stroke:var(--gold)}
+.rm-dot{fill:var(--surface);stroke:var(--ink);stroke-width:1.6}
+.rm-key{fill:var(--accent);stroke:var(--surface)}
+.rm-city{font:600 17px var(--display);fill:var(--ink)}
+.rm-sub,.rm-note{font:500 12.5px var(--body);fill:var(--muted)}
+.rm-note{fill:var(--accent);font-weight:600}
+.rm-sea,.rm-land{font:italic 500 19px var(--display);fill:var(--rule);letter-spacing:.28em}
+.rm-land{font-size:15px;letter-spacing:.2em}
+@media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
+.ll-short{overflow:visible;padding:0}
+.ll-short b,.ll-short i{position:relative;left:calc(100% + var(--s-2));overflow:visible}
+.ll-left b,.ll-left i{left:auto;right:calc(100% + var(--s-2));position:absolute}
+.ll-left b{top:4px}.ll-left i{top:21px}
+
+/* ---------- Плеер в «Слушать»: до нажатия — только кнопка, после — iframe Яндекс Музыки (YouTube не встраиваем: в РФ он недоступен) ---------- */
+.player{margin-top:var(--s-4);display:grid;gap:var(--s-2);justify-items:start}
+.player iframe{width:100%;max-width:614px;height:450px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--surface)}
+html:not(.js) .player{display:none}
+
+/* ============================================================================================
+   Редакционная доводка (13.11.2026): вступление после первого экрана с оглавлением, номера разделов,
+   крупный портрет 1903 года, цитата, источники по темам, подвал, линия прочитанного
+   ============================================================================================ */
+
+/* ---------- Вступление: кто это, одной фразой, и оглавление семи разделов ---------- */
+.lede{padding-block:var(--s-9) var(--s-8);border-bottom:1px solid var(--line)}
+.lede-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--s-8);align-items:start}
+.lede-copy{display:grid;gap:var(--s-5);align-content:start}
+.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.lede-kicker::after{content:"";flex:1;max-width:120px;height:1px;background:var(--rule)}
+.lede-text{font:500 clamp(28px,3.3vw,44px)/1.16 var(--display);letter-spacing:-.005em;color:var(--ink);text-wrap:balance}
+.lede-sub{color:var(--muted);max-width:52ch}
+.toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);counter-reset:toc}
+.toc li{counter-increment:toc;border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:44px minmax(0,auto) minmax(0,1fr) 20px;align-items:baseline;gap:var(--s-3);padding:var(--s-3) var(--s-2) var(--s-3) 0;
+  color:var(--ink);text-decoration:none;transition:background-color .2s,padding .25s var(--ease)}
+.toc a::before{content:counter(toc,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
+.toc a::after{content:"↓";justify-self:end;color:var(--rule);transition:translate .25s var(--ease),color .2s}
+.toc b{font:600 26px/1.15 var(--display)}
+.toc span{font-size:15px;line-height:1.4;color:var(--muted);text-align:right}
+.toc a:hover{background:var(--tint);padding-left:var(--s-3);color:var(--ink)}
+.toc a:hover::after{translate:0 3px;color:var(--accent)}
+@media(max-width:900px){
+  .lede{padding-block:var(--s-8) var(--s-7)}
+  .lede-grid{grid-template-columns:minmax(0,1fr);gap:var(--s-7)}
+}
+@media(max-width:520px){
+  .toc a{grid-template-columns:36px minmax(0,1fr) 20px;row-gap:2px}
+  .toc span{grid-column:2;grid-row:2;text-align:left;font-size:14px}
+  .toc a::after{grid-column:3;grid-row:1}
+}
+
+/* ---------- Номер раздела над заголовком (только общая страница, где есть боковое меню) ---------- */
+.section-head[data-n]::before{content:attr(data-n);order:-2;width:max-content;min-width:56px;padding-bottom:var(--s-2);margin-bottom:var(--s-2);
+  border-bottom:1px solid var(--rule);font:italic 600 22px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
+
+/* ---------- Биография: буквица в первой главе и портрет 1903 года в собственной колонке ---------- */
+.chapter:first-child .ch-body > p:first-of-type::first-letter{float:left;font:600 76px/.78 var(--display);padding:var(--s-2) var(--s-3) 0 0;color:var(--gold)}
+.ch-photo{margin:0}
+@media(min-width:1021px){
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo .ch-photo{rotate:1.2deg;margin-top:var(--s-2)}
+}
+@media(max-width:1020px){.chapter.has-photo .ch-photo{grid-column:1 / -1;width:min(320px,78vw);margin-top:var(--s-3)}}
+.ch-photo .mat{box-shadow:0 14px 30px -18px var(--shadow)}
+
+/* ---------- Цитата: слова самого Блажевича набраны антиквой с золочёной линейкой ---------- */
+.quote{margin:var(--s-2) 0 var(--s-3);padding:var(--s-2) 0 var(--s-2) var(--s-5);border-left:2px solid var(--rule);display:grid;gap:var(--s-3)}
+.quote p{font:italic 500 21px/1.45 var(--display);color:var(--ink)!important;max-width:none}
+.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+/* ---------- О проекте: источники по темам, во всю ширину, в две колонки ---------- */
+.about{margin-bottom:var(--s-8)}
+.about-credit{padding-left:var(--s-5);border-left:1px solid var(--line)}
+.src-block{border-top:1px solid var(--ink);padding-top:var(--s-6);display:grid;gap:var(--s-5)}
+.src-block > h3{font-size:36px}
+.src-lead{color:var(--muted)}
+.src-groups{columns:2;column-gap:var(--s-8)}
+.src-group{break-inside:avoid;margin:0 0 var(--s-6);font-weight:400}
+.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.src-group .sources{font-size:15.5px;line-height:1.6;gap:var(--s-3)}
+.src-group .sources li::marker{font:italic 600 17px var(--display);color:var(--gold)}
+.sources li:target{outline:1px solid var(--rule);outline-offset:6px}
+@media(max-width:820px){.src-groups{columns:1}.about-credit{padding-left:0;border-left:0}}
+
+/* ---------- Подвал: имя и годы, разделы, досье, язык ---------- */
+body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background:var(--band);padding-block:var(--s-8) var(--s-7);color:var(--muted);font-size:15px}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr);gap:var(--s-6) var(--s-8);align-items:start}
+.foot-id{display:grid;gap:var(--s-3);max-width:38ch}
+.foot .brand{font-size:20px;padding:0}
+.foot-name{font:500 24px/1.2 var(--display);color:var(--ink)}
+.foot-name span{color:var(--gold);font-style:italic;font-variant-numeric:lining-nums;white-space:nowrap}
+.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.foot ul + h2{margin-top:var(--s-5)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-2)}
+.foot-secs{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s-5)}
+.foot ul a{color:var(--ink);text-decoration:none;display:inline-block;padding-block:2px}
+.foot ul a:hover{color:var(--accent);text-decoration:underline}
+.foot-fine{grid-column:1 / -1;margin-top:var(--s-4);padding-top:var(--s-4);border-top:1px solid var(--line);font-size:var(--t-small)}
+@media(max-width:820px){.foot{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.foot-id{grid-column:1 / -1}}
+@media(max-width:520px){.foot{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Линия прочитанного: тонкая золочёная полоска вверху общей страницы ---------- */
+.progress{position:fixed;z-index:31;top:0;left:0;right:0;height:2px;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));pointer-events:none}
+html:not(.past-hero) .progress{opacity:0}
+@media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
+
+/* ---------- «Слушать» (13.11.2026): записи как конверты пластинок — диск слева, подпись и ссылки справа ---------- */
+.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5)}
+.record{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-5);align-items:start;padding:var(--s-6);min-width:0;
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--surface) var(--grain);box-shadow:0 12px 26px -20px var(--shadow)}
+.record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
+.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
+.record-main .record-body{gap:var(--s-4)}
+.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.record h3{font-size:28px}
+.record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
+.record p{color:var(--muted)}
+/* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
+.disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
+  background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
+    radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
+    conic-gradient(from 20deg,transparent 0 8%,rgb(255 240 210/.16) 12%,transparent 18% 50%,rgb(255 240 210/.12) 62%,transparent 68%),
+    repeating-radial-gradient(circle,#2b1d10 0 1.5px,#3b2a19 1.5px 3px);
+  box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
+.disc-sm{width:84px}
+.record:hover .disc{rotate:18deg}
+.disc{transition:rotate .8s var(--ease)}
+.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
+.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.record-links b{font-weight:600;font-size:16px;line-height:1.35}
+.record-links span{font-size:var(--t-small);color:var(--accent)}
+.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
+.record .player iframe{max-width:none}
+@media(max-width:900px){.records{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:620px){
+  .record,.record-main{grid-template-columns:minmax(0,1fr);padding:var(--s-5);gap:var(--s-4)}
+  .disc{width:112px}.disc-sm{width:72px}
+}
+
+/* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
+.ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
+.ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
+.ch-note span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.nw{white-space:nowrap}
+.ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
+.ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+.ch-plate figcaption{font-size:13px;line-height:1.5;color:var(--muted);max-width:62ch}
+@media(min-width:1021px){
+  .chapter{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .ch-mark{grid-column:1;grid-row:1}
+  .ch-body{grid-column:2;grid-row:1}
+  .ch-note,.chapter .ch-photo{grid-column:3;grid-row:1}
+  .ch-note{margin-top:var(--s-2)}
+  .ch-plate{grid-column:2 / -1;grid-row:2}
+}
+@media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
+@media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
+@media(prefers-reduced-motion:reduce){.record:hover .disc{rotate:none}}
 </style>
 </head>
 <body>
 <a class="skip" href="#scores">Skip to content</a>
 <div class="draft">Preview · not published</div>
+<div class="rail-edge" aria-hidden="true"><span>Menu</span></div>
 <nav class="rail" aria-label="Sections"><a href="#scores">Scores</a><a href="#listen">Listen</a><a href="#biography">Biography</a><a href="#usa">In America</a><a href="#schools">Schools</a><a href="#concertos">Concertos</a><a href="#about">About</a><a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a></nav>
+<div class="progress" aria-hidden="true"></div>
 <button class="fab" type="button" popovertarget="menu">Menu</button>
 <main id="main">
 <section id="hero" class="hero" aria-labelledby="hero-title">
@@ -561,72 +782,81 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   <div class="wrap hero-stage">
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-mark"><span aria-hidden="true">Blazhevich</span><span class="sr">Vladislav Blazhevich, 1881–1942</span></h1>
-      <div class="hero-nav"><button class="hero-btn" type="button" popovertarget="menu">Menu</button></div>
       <nav id="menu" class="hero-menu" popover aria-label="Sections"><a href="#scores">Scores</a><a href="#listen">Listen</a><a href="#biography">Biography</a><a href="#usa">In America</a><a href="#schools">Schools</a><a href="#concertos">Concertos</a><a href="#about">About</a></nav>
     </div>
   </div>
 </section>
+<div class="lede"><div class="wrap lede-grid">
+  <div class="lede-copy reveal"><p class="lede-kicker">Vladislav Mikhailovich Blazhevich · 1881–1942</p>
+    <p class="lede-text">Trombonist of the Bolshoi Theatre, professor at the Moscow Conservatory, and author of the method books and studies that trombonists in Russia and the United States still learn from.</p>
+    <p class="lede-sub">This site gathers his scores, recordings, biography and the story of two Russian trombone schools. Facts are given with their sources, and disagreements between sources are marked.</p></div>
+  <div class="toc reveal" role="navigation" aria-label="Contents"><ol><li><a href="#scores"><b>Scores</b><span>Method books, studies, duets, concertos</span></a></li><li><a href="#listen"><b>Listen</b><span>Recordings and where to hear them</span></a></li><li><a href="#biography"><b>Biography</b><span>1881–1942: from a Smolensk farm to the Conservatory</span></a></li><li><a href="#usa"><b>In America</b><span>How the music reached Boston and became a standard</span></a></li><li><a href="#schools"><b>Schools</b><span>Moscow and Leningrad: teacher → pupil</span></a></li><li><a href="#concertos"><b>Concertos</b><span>Thirteen concertos for trombone</span></a></li><li><a href="#about"><b>About</b><span>Principles and sources</span></a></li></ol></div>
+</div></div>
 
 <section id="scores" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="../assets/v-conservatory-portico.webp" alt="" loading="lazy" decoding="async"></figure><h2>Works and scores</h2><div class="eyebrow">For practice and performance</div><p>A starting selection, not a complete catalogue. Links lead to libraries and descriptions; no third-party score files are hosted here.</p></div>
-  <div class="tools">
-    <label for="search">Search by title<input id="search" type="search" placeholder="e.g. legato or tuba" autocomplete="off"></label>
-    <label for="instrument">Instrument<select id="instrument"><option value="all">All instruments</option><option value="trombone">Trombone</option><option value="tuba">Tuba</option></select></label>
-  </div>
-<div class="extra-tools-v3"><label for="filter-genre">Genre<select id="filter-genre" data-catalog-filter="genre"><option value="all">All</option><option value="method">Method</option><option value="duet">Duet</option><option value="exercise">Exercises</option><option value="study">Studies</option><option value="concerto">Concertos</option></select></label><label for="filter-ensemble">Forces<select id="filter-ensemble" data-catalog-filter="ensemble"><option value="all">All</option><option value="single">Single player: study material</option><option value="duo">Two trombones</option><option value="unspecified">Accompaniment not specified</option></select></label><label for="filter-source">Source<select id="filter-source" data-catalog-filter="source"><option value="all">All</option><option value="mgk">Moscow Conservatory</option><option value="classon">classON</option><option value="history">Edition history</option><option value="recordings">Recording project</option><option value="imslp">IMSLP</option></select></label><label for="filter-difficulty">Difficulty<select id="filter-difficulty" data-catalog-filter="difficulty"><option value="all">All</option><option value="unrated">Not assessed from the score</option></select></label></div><p class="note">Difficulty has not yet been assessed from scores. Proposed rubric: basic, intermediate, advanced — based on range, rhythm, endurance and clefs. No rating is assigned by title alone. Source filter describes the linked resource, not a verified publisher.</p>  <p class="note count" id="count" role="status" aria-live="polite" data-tpl="Showing {n} of {t}">10 items</p>
+  <div class="section-head reveal" data-n="01"><figure class="head-vignette" aria-hidden="true"><img src="../assets/v-conservatory-portico.webp" alt="" loading="lazy" decoding="async"></figure><h2>Works and scores</h2><div class="eyebrow">For practice and performance</div><p>A starting selection, not a complete catalogue. Links lead to libraries and descriptions; no third-party score files are hosted here.</p></div>
   <div class="grid" id="catalog">
-    <article class="card" data-instrument="trombone" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>School for Trombone in Clefs (Clef Studies)</h3><div class="tag">Trombone, clefs</div><p>His best-known work in the US. American editions by Raichman (1948), Ostrander and Hunsberger. The current East-West urtext follows the 1939 Russian edition.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">History of the editions ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Trombone concertos</h3><div class="tag">Trombone, concertos</div><p>Thirteen concertos written for his conservatory students, most in the 1920s. Many were not published in his lifetime. Caleb Lambert recorded the first four.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Recording project ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="duet" data-ensemble="duo" data-source="mgk" data-difficulty="unrated"><h3>School for the Slide Trombone</h3><div class="tag">Trombone, method</div><p>His 1936 method for beginners, with piano accompaniment. Described in the Moscow Conservatory’s history of its brass department.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="exercise" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>School of Legato Development</h3><div class="tag">Trombone, legato</div><p>Listed among his teaching works by the Moscow Conservatory. Dates of the editions differ between sources.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="method" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Concert Duets</h3><div class="tag">Two trombones, ensemble</div><p>38 duets for two trombones, written for ensemble and orchestral readiness.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="trombone" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Sequences</h3><div class="tag">Trombone, exercises</div><p>26 melodic exercises in various rhythms and clefs. Current US edition with Michael Mulcahy (East-West, 2008).</p><a href="https://www.mosconsv.ru/ru/groups/11202">Source (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>70 Studies for BB♭ Tuba</h3><div class="tag">Tuba, etudes</div><p>Robert King edition, Alphonse Leduc, two volumes. Adapted by Blazhevich from his trombone material.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">IMSLP catalogue ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="method" data-ensemble="single" data-source="history" data-difficulty="unrated"><h3>Tuba School, Part 1</h3><div class="tag">Tuba, method</div><p>Score entry in the classON library. Access and terms of use are set by the library.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Library (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="concerto" data-ensemble="unspecified" data-source="recordings" data-difficulty="unrated"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 29–47, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Library (Russian) ↗</a></article>
-    <article class="card" data-instrument="tuba" data-genre="study" data-ensemble="single" data-source="imslp" data-difficulty="unrated"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 48–66, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Library (Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>School for Trombone in Clefs (Clef Studies)</h3><div class="tag">Trombone, clefs</div><p>His best-known work in the US. American editions by Raichman (1948), Ostrander and Hunsberger. The current East-West urtext follows the 1939 Russian edition.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">History of the editions ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>Trombone concertos</h3><div class="tag">Trombone, concertos</div><p>Thirteen concertos written for his conservatory students, most in the 1920s. Many were not published in his lifetime. Caleb Lambert recorded the first four.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Recording project ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>School for the Slide Trombone</h3><div class="tag">Trombone, method</div><p>His 1936 method for beginners, with piano accompaniment. Described in the Moscow Conservatory’s history of its brass department.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Description at the source (in Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>School of Legato Development</h3><div class="tag">Trombone, legato</div><p>Listed among his teaching works by the Moscow Conservatory. Dates of the editions differ between sources.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Description at the source (in Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>Concert Duets</h3><div class="tag">Two trombones, ensemble</div><p>38 duets for two trombones, written for ensemble and orchestral readiness.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Description at the source (in Russian) ↗</a></article>
+    <article class="card" data-instrument="trombone"><h3>Sequences</h3><div class="tag">Trombone, exercises</div><p>26 melodic exercises in various rhythms and clefs. Current US edition with Michael Mulcahy (East-West, 2008).</p><a href="https://www.mosconsv.ru/ru/groups/11202">Description at the source (in Russian) ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>70 Studies for BB♭ Tuba</h3><div class="tag">Tuba, etudes</div><p>Robert King edition, Alphonse Leduc, two volumes. Adapted by Blazhevich from his trombone material.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">IMSLP catalogue ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>Tuba School, Part 1</h3><div class="tag">Tuba, method</div><p>Score entry in the classON library. Access and terms of use are set by the library.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Score in the library (in Russian) ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 29–47, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Score in the library (in Russian) ↗</a></article>
+    <article class="card" data-instrument="tuba"><h3>Tuba School, Part 2</h3><div class="tag">Tuba, etudes</div><p>Etudes, pages 48–66, as listed by classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Score in the library (in Russian) ↗</a></article>
   </div>
-  <p id="empty" class="empty" hidden>Nothing found. Try another title or choose all instruments.</p>
   <noscript><p class="note">Search needs JavaScript. All items and links are listed above.</p></noscript>
 </div></section>
 
 <section id="listen" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="../assets/v-bolshoi-colonnade.webp" alt="" loading="lazy" decoding="async"></figure><h2>Listen</h2><div class="eyebrow">Live sound</div></div>
-  <div class="listen reveal">
-    <div>
-      <h3>Caleb Lambert’s recordings</h3>
-      <p>As part of his DMA at the University of Iowa (2020), Caleb Lambert made what he describes as the first formal recordings of Concertos No. 1–4 and Miniature No. 6. They are free to stream on his site.</p>
-      <div><a class="btn btn-brass" href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Open the recordings ↗</a></div>
-      <p class="note">External site. No audio is copied or autoplayed here.</p>
-    </div>
-    <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  </div>
-  <div class="two-col reveal">
-    <div>
-      <h3>The Moscow school on record</h3>
-      <p class="note">Players taught by Blazhevich’s own students.</p>
-      <ul class="sources plain-list">
-        <li>Rimsky-Korsakov, Trombone Concerto with wind band; soloist Viktor Batashev, 1972 (Melodiya LP): <a href="https://www.youtube.com/watch?v=Ggy0rW8XK3U">YouTube</a>.</li>
-        <li>Batashev’s Melodiya discography (1959, 1989): <a href="https://records.su/tag/Баташов_Виктор">records.su</a> (in Russian).</li>
-      </ul>
-    </div>
-    <div>
-      <h3>The Leningrad school on record</h3>
-      <p class="note">The Leningrad Philharmonic Trombone Quartet.</p>
-      <ul class="sources plain-list">
-        <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3">Spotify — Leningrad Philharmonic Trombone Quartet (1977)</a></li>
-        <li><a href="https://music.yandex.ru/album/42318197">Yandex Music — the same quartet</a></li>
-        <li><a href="https://music.yandex.ru/artist/3762704">Yandex Music — Viktor Venglovsky</a></li>
-      </ul>
-    </div>
+  <div class="section-head reveal" data-n="02"><figure class="head-vignette" aria-hidden="true"><img src="../assets/v-bolshoi-colonnade.webp" alt="" loading="lazy" decoding="async"></figure><h2>Listen</h2><div class="eyebrow">Live sound</div></div>
+  <div class="records">
+    <article class="record record-main reveal">
+      <div class="disc" aria-hidden="true"></div>
+      <div class="record-body">
+        <p class="record-tag">Music by Blazhevich · <span class="nw">Concertos No. 1–4</span></p>
+        <h3>Caleb Lambert’s recordings</h3>
+        <p>As part of his DMA at the University of Iowa (2020), Caleb Lambert made what he describes as the first formal recordings of Concertos No. 1–4 and Miniature No. 6. They are free to stream on his site.</p>
+        <div><a class="btn btn-brass" href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Open the recordings on the performer’s site ↗</a></div>
+        <p class="note">External site. No audio is copied or autoplayed here.</p>
+      </div>
+    </article>
+    <article class="record reveal">
+      <div class="disc disc-sm" aria-hidden="true"></div>
+      <div class="record-body">
+        <p class="record-tag">The Moscow school · Melodiya</p>
+        <h3>Viktor Batashev</h3>
+        <p class="note">Players taught by Blazhevich’s own students.</p>
+        <ul class="record-links">
+          <li><a href="https://www.youtube.com/watch?v=Ggy0rW8XK3U"><b>Rimsky-Korsakov, Trombone Concerto with wind band</b><span>Soloist Viktor Batashev, 1972, Melodiya LP · YouTube ↗</span></a></li>
+          <li><a href="https://records.su/tag/Баташов_Виктор"><b>Melodiya discography, 1959 and 1989</b><span>records.su ↗ (in Russian)</span></a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="record reveal">
+      <div class="disc disc-sm" aria-hidden="true"></div>
+      <div class="record-body">
+        <p class="record-tag">The Leningrad school · 1977</p>
+        <h3>The Leningrad Philharmonic Trombone Quartet</h3>
+        <p class="note">More in the <a href="leningrad.html">Leningrad school dossier</a>.</p>
+        <ul class="record-links">
+          <li><a href="https://music.yandex.ru/album/42318197"><b>The quartet’s album</b><span>Yandex Music ↗</span></a></li>
+          <li><a href="https://music.yandex.ru/artist/3762704"><b>Viktor Venglovsky</b><span>Yandex Music ↗</span></a></li>
+          <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3"><b>Leningrad Philharmonic Trombone Quartet (1977)</b><span>Spotify ↗</span></a></li>
+        </ul>
+        <div class="player" data-src="https://music.yandex.ru/iframe/album/42318197" data-title="Leningrad Philharmonic Trombone Quartet — Yandex Music player"><button class="btn btn-ghost" type="button">▶ Play the album here</button><p class="note">The Yandex Music player loads only after you press the button.</p></div>
+      </div>
+    </article>
   </div>
 </div></section>
 
 <section id="biography" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="../assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>How Blazhevich became Blazhevich</h2><div class="eyebrow">A life in music · 1881–1942</div><p>From an orphan on a poor Smolensk farm to a professor at the Moscow Conservatory whose etudes are still assigned at American universities.</p></div>
+  <div class="section-head reveal" data-n="03"><figure class="head-vignette" aria-hidden="true"><img src="../assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>How Blazhevich became Blazhevich</h2><div class="eyebrow">A life in music · 1881–1942</div><p>From an orphan on a poor Smolensk farm to a professor at the Moscow Conservatory whose etudes are still assigned at American universities.</p></div>
 
   <div class="facts reveal" role="list">
     <div role="listitem"><b>3 (15) August 1881</b><span>born at the Tregubovka farm, Smolensk Governorate</span></div>
@@ -635,32 +865,47 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     <div role="listitem"><b>13</b><span>trombone concertos</span></div>
   </div>
 
+<!-- lifeline -->
+  <figure class="lifeline reveal" aria-label="A life in years">
+  <figcaption>A life in years · 1881–1942</figcaption>
+  <div class="ll-scroll" tabindex="0"><div class="ll-track">
+  <span class="ll-span" style="--a:0.0%;--w:19.67%;--lane:0"><b>Smolensk region</b><i>1881–1893</i></span>
+  <span class="ll-span" style="--a:19.67%;--w:11.48%;--lane:0"><b>Army bands</b><i>1893–1900</i></span>
+  <span class="ll-span ll-short" style="--a:31.15%;--w:8.19%;--lane:1"><b>Conservatory</b><i>1900–1905</i></span>
+  <span class="ll-span" style="--a:39.34%;--w:37.71%;--lane:0"><b>Bolshoi Theatre</b><i>1905–1928</i></span>
+  <span class="ll-span" style="--a:63.93%;--w:36.07%;--lane:1"><b>Conservatory professor</b><i>1920–1942</i></span>
+  <span class="ll-span" style="--a:67.21%;--w:16.4%;--lane:2"><b>Persimfans</b><i>1922–1932</i></span>
+  <span class="ll-span ll-short ll-left" style="--a:91.8%;--w:3.28%;--lane:3"><b>USSR State Wind Band</b><i>1937–1939</i></span>
+  <div class="ll-axis" aria-hidden="true"><span style="--a:14.75%">1890</span><span style="--a:31.15%">1900</span><span style="--a:47.54%">1910</span><span style="--a:63.93%">1920</span><span style="--a:80.33%">1930</span><span style="--a:96.72%">1940</span></div>
+  <div class="ll-marks"><span style="--a:0.0%"><b>1881</b> born</span><span style="--a:31.15%"><b>1900</b> Bork’s class</span><span style="--a:72.13%"><b>1925</b> Clef Studies</span><span style="--a:100.0%"><b>1942</b> Moscow, 10 April</span></div>
+  </div></div></figure>
+  <!-- /lifeline -->
   <div class="chapters">
     <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1881–1893</span><span class="ch-place">Smolensk region</span></div><div class="ch-body">
       <h3>An orphan from the Tregubovka farm</h3>
-      <p>Vladislav Mikhailovich Blazhevich was born on 3 (15) August 1881 at the Tregubovka farm in the Katyn district of Smolensk. His father Mikhail came from the Polish nobility. According to the researcher Andrey Kharlamov, in the year of his son’s birth the father was arrested for anti-government views and sentenced to twenty years of hard labour.<sup class="ref"><a href="#s2">[2]</a></sup></p>
+      <p>Vladislav Mikhailovich Blazhevich was born on 3 (15) August 1881 at the Tregubovka farm in the Katyn district of Smolensk. His father Mikhail came from the Polish nobility. <span class="warn">⚠</span> In a 1928 questionnaire Blazhevich himself gave his nationality as Lithuanian (see the <a href="moscow.html#m-blazhevich">Moscow dossier</a>). According to the researcher Andrey Kharlamov, in the year of his son’s birth the father was arrested for anti-government views and sentenced to twenty years of hard labour.<sup class="ref"><a href="#s2">[2]</a></sup></p>
       <p>His mother could not manage the household alone and died in 1887, when the boy was six. An uncle on his father’s side became his guardian. They lived in poverty: according to Kharlamov, the boy had no shoes of his own until he was twelve. His first instrument was an ocarina. Colleagues later said that these early losses made him withdrawn, but also gave him a strong will and the habit of relying only on himself.<sup class="ref"><a href="#s2">[2]</a></sup></p>
     </div></article>
     <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1893–1900</span><span class="ch-place">Military bands</span></div><div class="ch-body">
       <h3>Twelve years old — and into the army</h3>
       <p>At twelve his uncle placed him as a band pupil with the 3rd Artillery Brigade in Smolensk. There he had his own clothes and his own instrument for the first time. He started on the euphonium but asked to switch to the trombone, which offered more chances to play solos and to get into a real orchestra. In 1899 he served in the Astrakhan Grenadier Regiment, and in 1900 he left the army to study.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-    </div></article>
-    <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1900–1905</span><span class="ch-place">Moscow</span><figure class="ch-photo"><div class="mat"><img src="../assets/blazhevich-1903-560.webp" srcset="../assets/blazhevich-1903-560.webp 560w, ../assets/blazhevich-1903.webp 900w" sizes="(max-width:820px) 60vw, 220px" width="900" height="1327" loading="lazy" alt="Vladislav Blazhevich in 1903, a photograph with his signature and the date"></div><figcaption>Blazhevich as a student, 1903, with his signature. Photographer unknown; <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain.</figcaption></figure></div><div class="ch-body">
+    </div><aside class="ch-note"><b>Age 12</b><span>The age at which he became a band pupil and was given an instrument of his own.</span></aside></article>
+    <article class="chapter has-photo reveal"><div class="ch-mark"><span class="ch-years">1900–1905</span><span class="ch-place">Moscow</span></div><div class="ch-body">
       <h3>The Conservatory and Bork’s class</h3>
       <p>In 1900 Blazhevich entered the Moscow Conservatory in the trombone class of Christoph Bork. He later remembered his teacher as “a dry and pedantic teacher who liked discipline and demanded unquestioning fulfilment of his instructions.” Besides trombone he studied music theory, orchestration and piano, and persuaded the administration to let him attend lessons for other instruments to understand how they were taught and played. He later carried this broad training into his own teaching. He graduated in 1905.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
-    </div></article>
+    </div><figure class="ch-photo"><div class="mat"><img src="../assets/blazhevich-1903-560.webp" srcset="../assets/blazhevich-1903-560.webp 560w, ../assets/blazhevich-1903.webp 900w" sizes="(max-width:820px) 70vw, 320px" width="900" height="1327" loading="lazy" alt="Vladislav Blazhevich in 1903, a photograph with his signature and the date"></div><figcaption>Blazhevich as a student, 1903, with his signature. Photographer unknown; <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain.</figcaption></figure></article>
     <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1905–1928</span><span class="ch-place">Bolshoi Theatre</span></div><div class="ch-body">
       <h3>The Bolshoi, the war, Persimfans</h3>
       <p>After the Conservatory Blazhevich won a place in the Bolshoi Theatre orchestra. English Wikipedia, following Kharlamov, gives the 1906 season; Russian sources give 1905. Colleagues remembered him as strong-willed and kind, and an excellent section leader. He also played in the Moscow Brass Quartet with S. Loginov, A. Kolpinsky and A. Andrushkevich.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a><a href="#s7">[7]</a></sup></p>
       <p>During the First World War he was drafted as an assistant superintendent of a military hospital. He kept playing at the Bolshoi and composed at night. In 1916 he organised a benefit concert of his own works in memory of the fallen.<sup class="ref"><a href="#s2">[2]</a></sup></p>
       <p>In 1922–1932 he played in Persimfans, the First Conductorless Symphony Ensemble. In 1926, according to Russian Wikipedia, he organised and led the wind band of the Special Armed Detachment. He left the Bolshoi in 1928 as principal trombone; his last performance was Borodin’s <i>Prince Igor</i>. Colleagues thought retiring at 47 was too early.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-    </div></article>
+    </div><figure class="ch-plate"><img src="../assets/bolshoi-1905.webp" width="960" height="600" loading="lazy" decoding="async" alt="The Bolshoi Theatre in Moscow, photograph of about 1905"><figcaption>The Bolshoi Theatre, about 1905, the years when Blazhevich joined its orchestra. Toned photograph, <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Wikimedia Commons</a>, public domain.</figcaption></figure></article>
     <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1920–1942</span><span class="ch-place">Conservatory</span></div><div class="ch-body">
       <h3>Professor and author of methods</h3>
       <p>In 1920 the rector of the Moscow Conservatory, M. M. Ippolitov-Ivanov, invited Blazhevich to become professor of trombone and tuba. He founded the military bandmasters’ class, which later grew into the faculty of military conductors, and headed that department in 1929–1936. In the 1930s he also taught at the Gnesin school.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
       <p>As the Conservatory puts it, there were almost no methods, etudes or pieces for trombone and tuba in Russia at the time, and this “repertoire hunger” made Blazhevich write them himself. He wrote two trombone methods: an advanced school in clefs in 1925 and a beginners’ school with piano accompaniment in 1936. He also wrote a legato school, 26 sequences, 38 concert duets, 12 melodic and 24 virtuoso etudes, etudes for alto and bass trombone, and a tuba method and 70 studies for tuba. By his own account, he wrote the thirteen concertos to show all the capabilities of the trombone and to give students solo repertoire. Most of the concertos date from the 1920s; Nos. 11–13 were probably written in the 1930s.<sup class="ref"><a href="#s1">[1]</a><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p>
       <p>Over twenty-two years at the Conservatory he trained many trombonists and tuba players. His best pupils are named as V. A. Shcherbinin, soloist of the Bolshoi and Conservatory professor, and B. P. Grigoriev, professor at the Gnesin Institute.<sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup></p>
-    </div></article>
+    </div><figure class="ch-plate"><img src="../assets/conservatory-1940s.webp" width="960" height="600" loading="lazy" decoding="async" alt="The Great Hall of the Moscow Conservatory, photograph of the 1940s"><figcaption>The Moscow Conservatory in the 1940s. Blazhevich taught here from 1920 until the end of his life. Toned photograph, <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Wikimedia Commons</a>, public domain.</figcaption></figure></article>
     <article class="chapter reveal"><div class="ch-mark"><span class="ch-years">1920–1941</span><span class="ch-place">Conductor and author</span></div><div class="ch-body">
       <h3>Goznak and the State Wind Orchestra of the USSR</h3>
       <p>According to the Krugosvet encyclopedia, from 1920 Blazhevich directed the wind band of the Goznak factory, and led it for many years.<sup class="ref"><a href="#s8">[8]</a></sup></p>
@@ -727,7 +972,46 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 <section id="usa" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Blazhevich in America</h2><div class="eyebrow">Recognition overseas</div></div>
+  <div class="section-head reveal" data-n="04"><h2>Blazhevich in America</h2><div class="eyebrow">Recognition overseas</div></div>
+<!-- routemap -->
+  <figure class="routemap reveal"><svg viewBox="0 0 1000 470" role="img" aria-labelledby="rm-t rm-d"><title id="rm-t">Chart: how Blazhevich’s music reached America</title><desc id="rm-d">Blazhevich came from Smolensk province to Moscow in 1900. Jacob Raichman was born in Vitebsk, studied in St. Petersburg, played in Moscow and in 1926 took Blazhevich’s music to Boston. In 1974 Victor Venglovsky sent all 13 concertos from Leningrad to Florida.</desc>
+  <g class="rm-grid"><path d="M0.0 30V440"/><path d="M71.1 30V440"/><path d="M142.2 30V440"/><path d="M213.3 30V440"/><path d="M284.4 30V440"/><path d="M355.6 30V440"/><path d="M426.7 30V440"/><path d="M497.8 30V440"/><path d="M568.9 30V440"/><path d="M640.0 30V440"/><path d="M0 440.0H640"/><path d="M0 337.5H640"/><path d="M0 235.0H640"/><path d="M0 132.5H640"/><path d="M0 30.0H640"/></g>
+  <rect class="rm-frame" x="0.5" y="30" width="639.5" height="410"/><rect class="rm-frame" x="680" y="60" width="310" height="360"/>
+  <path class="rm-grid" d="M680.0 60V420"/>
+  <path class="rm-grid" d="M724.3 60V420"/>
+  <path class="rm-grid" d="M768.6 60V420"/>
+  <path class="rm-grid" d="M812.9 60V420"/>
+  <path class="rm-grid" d="M857.1 60V420"/>
+  <path class="rm-grid" d="M901.4 60V420"/>
+  <path class="rm-grid" d="M945.7 60V420"/>
+  <path class="rm-grid" d="M990.0 60V420"/>
+  <path class="rm-grid" d="M680 380.0H990"/>
+  <path class="rm-grid" d="M680 300.0H990"/>
+  <path class="rm-grid" d="M680 220.0H990"/>
+  <path class="rm-grid" d="M680 140.0H990"/>
+  <text class="rm-sea" x="330" y="330" text-anchor="middle">Atlantic Ocean</text>
+  <text class="rm-land" x="60" y="200">North America</text>
+  <text class="rm-land" x="500" y="205">Europe</text>
+  <text class="rm-land" x="835" y="52" text-anchor="middle">Russia, enlarged</text>
+  <rect class="rm-inset" x="549.9" y="71.0" width="66.4" height="92.2"/><path class="rm-inset" d="M616.3 71.0L680 60M616.3 163.2L680 420"/>
+  <path class="rm-route" d="M605.0 124.8 Q347.4 14.799999999999997 89.8 262.1"/><path class="rm-route rm-route-2" d="M570.4 81.9 Q298.75 51.900000000000006 27.1 384.2"/>
+  <text class="rm-note" x="330" y="74" text-anchor="middle">1926 · Raichman takes the music to Boston</text>
+  <text class="rm-note" x="300" y="246" text-anchor="middle">1974 · Venglovsky: all 13 concertos</text>
+  <circle class="rm-dot rm-key" cx="89.8" cy="262.1" r="6"/><text class="rm-city" x="99.8" y="286.1" text-anchor="start">Boston</text>
+  <text class="rm-sub" x="99.8" y="303.1">Clef Studies, 1948</text>
+  <circle class="rm-dot" cx="27.1" cy="384.2" r="4.5"/><text class="rm-city" x="39.1" y="389.2" text-anchor="start">Tallahassee, Florida</text>
+  <circle class="rm-dot" cx="605.0" cy="124.8" r="3.5"/><circle class="rm-dot" cx="570.4" cy="81.9" r="3.5"/>
+  <path class="rm-route" d="M814.0 308.8L937.3 270.0"/>
+  <path class="rm-route rm-route-2" d="M773.0 292.4L775.4 102.4L937.3 270.0"/>
+  <circle class="rm-dot rm-key" cx="937.3" cy="270.0" r="6"/><text class="rm-city" x="943.3" y="296.0" text-anchor="middle">Moscow</text>
+  <circle class="rm-dot" cx="775.4" cy="102.4" r="4.5"/><text class="rm-city" x="787.4" y="107.4" text-anchor="start">St. Petersburg</text>
+  <circle class="rm-dot" cx="814.0" cy="308.8" r="4.5"/><text class="rm-city" x="818.0" y="332.8" text-anchor="start">Tregubovka, Smolensk</text>
+  <circle class="rm-dot" cx="773.0" cy="292.4" r="4.5"/><text class="rm-city" x="763.0" y="284.4" text-anchor="end">Vitebsk</text>
+  <text class="rm-sub" x="845.65" y="275.4" text-anchor="middle">Blazhevich, 1900</text>
+  <text class="rm-sub" x="787.4" y="124.4">Raichman, class of 1911</text>
+  </svg>
+  <figcaption>A chart rather than an exact map: the cities sit at their true coordinates, coastlines are not drawn. Solid line: the path of Blazhevich and his music; dashed: Raichman’s path and Venglovsky’s parcel.</figcaption></figure>
+  <!-- /routemap -->
   <div class="usa-grid">
     <div class="usa-text reveal">
       <h3 id="raichman">Jacob Raichman, the bridge</h3>
@@ -751,7 +1035,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 <section id="schools" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="../assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
+  <div class="section-head reveal" data-n="05"><figure class="head-vignette" aria-hidden="true"><img src="../assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
 
   <div class="school-links reveal">
     <a class="explore-card" href="moscow.html"><b>The Moscow school</b><span class="eyebrow">Dossier</span><span>Wittneben and Bork, Blazhevich in his own 1928 questionnaire, Shcherbinin and his pupils, the Gnesin branch, scores and recordings.</span><i aria-hidden="true">→</i></a>
@@ -765,7 +1049,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
         <li class="node">
           <span class="node-years">1832–1916</span>
           <b>Christoph (Khristofor Ivanovich) Bork</b>
-          <p>Born in Havelberg, Prussia. In 1861 he took Russian citizenship and joined the Bolshoi Theatre orchestra. Until 1882 he was principal trombone of the ballet orchestra; from 1875 he also played timpani, and from 1889 timpani only. Professor at the Conservatory from 1875, he taught trombone, tuba and percussion until his death and drew up a five-year trombone curriculum. Order of St. Stanislaus, 3rd class.<sup class="ref"><a href="#s1">[1]</a><a href="#s5">[5]</a></sup></p>
+          <p>Born in Havelberg, Prussia. In 1861 he took Russian citizenship and joined the Bolshoi Theatre orchestra. Until 1882 he was principal trombone of the ballet orchestra; from 1875 he also played timpani, and from 1889 timpani only. Professor at the Conservatory from 1875 (<span class="warn">⚠</span> his RGALI personal file gives other dates: timpani from 1867, professor from 1883; see the <a href="moscow.html#m-bork">Moscow dossier</a>); he taught trombone, tuba and percussion until his death and drew up a five-year trombone curriculum. Order of St. Stanislaus, 3rd class.<sup class="ref"><a href="#s1">[1]</a><a href="#s5">[5]</a></sup></p>
           <span class="pupils">Pupils: <em>V. M. Blazhevich</em>, S. Diev, V. Derzhanovsky, K. Kupinsky, I. Piorkovsky, A. Sobolevsky, S. Chesnokov</span>
         </li>
         <li class="node node-key">
@@ -831,7 +1115,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
         <li class="node">
           <span class="node-years">1926–1994</span>
           <b>Victor Fyodorovich Venglovsky</b>
-          <p>Graduated from the Conservatory under Kozlov in 1953; postgraduate study with the horn player M. N. Buyanovsky. In the Leningrad Philharmonic orchestra from 1950; taught at the Conservatory from 1966, professor from 1984. Author of the widely used <i>Daily Exercises for Trombone</i>. In 1974 he sent all 13 Blazhevich concertos to the United States.<sup class="ref"><a href="#s3">[3]</a><a href="#s5">[5]</a></sup></p>
+          <p>Graduated from the Conservatory under Kozlov in 1953; postgraduate study with the horn player M. N. Buyanovsky. In the Leningrad Philharmonic orchestra from 1950; taught at the Conservatory from 1966 (<span class="warn">⚠</span> other Conservatory materials give 1963), professor from 1984. Author of the widely used <i>Daily Exercises for Trombone</i>. In 1974 he sent all 13 Blazhevich concertos to the United States.<sup class="ref"><a href="#s3">[3]</a><a href="#s5">[5]</a></sup></p>
           <span class="pupils">Pupils: A. N. Morozov (professor at the Moscow Conservatory), V. V. Golikov and others</span>
         </li>
       </ol>
@@ -843,7 +1127,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 <section id="people-v3" class="block"><div class="wrap"><h2>Teachers and pupils: biographical cards</h2><p>The essay combines memoirs, biographies and archival reproductions. Its dates are attributed, not independently verified archival facts.</p><div class="people-v3"><article class="person-v3" id="person-blazhevich"><h3>Vladislav Mikhailovich Blazhevich</h3><p>Владислав Михайлович Блажевич</p><dl><dt>Dates</dt><dd>Teaching at Moscow Conservatory: 1920–1942; death in 1942 stated by the Conservatory. <a href="#v3-source-4">[4]</a></dd><dt>Studies and teacher</dt><dd>1900–1905, Moscow Conservatory, class of H. Bork. <a href="#v3-source-1">[1]</a></dd><dt>Work and publications</dt><dd>Teacher of trombone and tuba; author of methods, concert duets and sequences. <a href="#v3-source-1">[1]</a></dd><dt>Pupils</dt><dd>Vladimir Shcherbinin, Boris Grigoryev. <a href="#v3-source-1">[1]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-shcherbinin"><h3>Vladimir Arnoldovich Shcherbinin</h3><p>Владимир Арнольдович Щербинин</p><dl><dt>Dates</dt><dd>18 January 1896 – 5 June 1963, according to the essay. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>Pupil of Blazhevich. The essay gives conflicting completion dates: 1930 and external graduation in 1947; the explanation is unconfirmed. <a href="#v3-source-3">[3]</a></dd><dt>Work</dt><dd>According to the essay: Bolshoi Theatre soloist in 1926–1944; Moscow Conservatory teacher. <a href="#v3-source-3">[3]</a></dd><dt>Pupils</dt><dd>Batashev, according to his official Conservatory biography; further connections appear below. <a href="#v3-source-2">[2]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-batashev"><h3>Viktor Borisovich Batashev</h3><p>Виктор Борисович Баташёв</p><dl><dt>Dates and spelling</dt><dd>The essay gives 7 June 1937; the spelling Batashov also occurs. The birth date has not been independently corroborated. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>Music college 1956; Moscow Conservatory 1960, class of Shcherbinin. <a href="#v3-source-2">[2]</a></dd><dt>Work and awards</dt><dd>Bolshoi Symphony Orchestra 1959–2001; Geneva 1958, first prize; Prague 1962, third prize. Teaching from 1963 with an interruption; professor from 1995. <a href="#v3-source-2">[2]</a></dd><dt>Pupils and recordings</dt><dd>The Conservatory lists Mazhorin and Sharov; its biography mentions Radio Fund and Melodiya recordings. <a href="#v3-source-2">[2]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-turusin"><h3>Mikhail Nikolaevich Turusin</h3><p>Михаил Николаевич Турусин</p><dl><dt>Dates</dt><dd>Birth year 1924 appears in an archival heading reproduced in the essay; the original file has not been checked. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>According to the biographical appendix: college 1944–1947; Moscow Conservatory 1947–1952, class of Shcherbinin. <a href="#v3-source-3">[3]</a></dd><dt>Work</dt><dd>According to the appendix: Bolshoi Theatre 1948–1959 and 1963–1975; Radio and Television Orchestra 1960–1963. <a href="#v3-source-3">[3]</a></dd><dt>Teaching and awards</dt><dd>According to the appendix: Moscow Conservatory from 1965; first prizes at the Budapest 1949 and Berlin 1951 festivals. <a href="#v3-source-3">[3]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article><article class="person-v3" id="person-ladilov"><h3>Konstantin Mikhailovich Ladilov</h3><p>Константин Михайлович Ладилов</p><dl><dt>Dates</dt><dd>9 February 1927 – 13 February 1983, according to the essay’s biographical appendix. <a href="#v3-source-3">[3]</a></dd><dt>Studies and teacher</dt><dd>According to the appendix: Gorky Conservatory 1952, class of Shcherbinin; postgraduate studies at Moscow Conservatory completed in 1956. <a href="#v3-source-3">[3]</a></dd><dt>Work</dt><dd>According to the appendix: USSR State Symphony Orchestra soloist 1957–1983; teaching at the Gnessin Institute from 1964. <a href="#v3-source-3">[3]</a></dd><dt>Awards</dt><dd>According to the appendix: first prize at the Bucharest festival, 1953. <a href="#v3-source-3">[3]</a></dd><dt>Additional fields</dt><dd>Unlisted compositions, editions, pupils and individual recordings have not been verified in this update; this does not imply their absence.</dd><dt>Images and verification</dt><dd>No new portrait published in this card. Source review: project research pass; archival facsimiles not verified. See the dated editorial report.</dd></dl></article></div><h3>Teacher → pupil connections</h3><ul class="lineage-v3"><li class="documented">Bork → Blazhevich — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Blazhevich → Shcherbinin — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Blazhevich → Grigoryev — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Shcherbinin → Batashev — institutional source <a href="#v3-source-2">[2]</a></li><li class="provisional">Shcherbinin → Ladilov — essay; independent check pending <a href="#v3-source-3">[3]</a></li><li class="provisional">Shcherbinin → Turusin — essay; independent check pending <a href="#v3-source-3">[3]</a></li><li class="provisional">Shcherbinin → Mironov — essay; independent check pending <a href="#v3-source-3">[3]</a></li><li class="documented">Shcherbinin → Lebedev — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Grigoryev → Dosadin — institutional source <a href="#v3-source-1">[1]</a></li><li class="documented">Batashev → Mazhorin — institutional source <a href="#v3-source-2">[2]</a></li><li class="documented">Batashev → Sharov — institutional source <a href="#v3-source-2">[2]</a></li></ul><p>These edges concern teaching relationships, not shared employment or private consultations. Dashed borders denote essay-only evidence.</p><h3>Sources</h3><ol><li id="v3-source-1"><a href="https://www.mosconsv.ru/ru/groups/11202">Moscow Conservatory: department history</a></li><li id="v3-source-2"><a href="https://www.mosconsv.ru/ru/person/9085">Moscow Conservatory: Viktor Batashev</a></li><li id="v3-source-3"><a href="https://tuba.org.ru/scherbinin.pdf">Essay on Shcherbinin and his pupils</a></li><li id="v3-source-4"><a href="https://www.mosconsv.ru/ru/eventdet/124387">Moscow Conservatory: Blazhevich as professor</a></li></ol></div></section><section id="concertos" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="../assets/bolshoi-1905.webp" alt="" loading="lazy" decoding="async"></figure><h2>Thirteen trombone concertos</h2><div class="eyebrow">Solo repertoire</div><p>Written for his students, they are played without breaks between movements, with piano interludes linking them. Blazhevich modelled them on Ferdinand David’s Concertino, which he called the most successful work for trombone.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p></div>
+  <div class="section-head reveal" data-n="06"><figure class="head-vignette" aria-hidden="true"><img src="../assets/bolshoi-1905.webp" alt="" loading="lazy" decoding="async"></figure><h2>Thirteen trombone concertos</h2><div class="eyebrow">Solo repertoire</div><p>Written for his students, they are played without breaks between movements, with piano interludes linking them. Blazhevich modelled them on Ferdinand David’s Concertino, which he called the most successful work for trombone.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p></div>
   <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Concertos">
     <table class="conc">
       <thead><tr><th scope="col">No.</th><th scope="col">Key</th><th scope="col">Date</th><th scope="col">Publication history</th></tr></thead>
@@ -869,32 +1153,48 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 <section id="about" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>About this project</h2><div class="eyebrow">Transparency and sources</div></div>
+  <div class="section-head reveal" data-n="07"><h2>About this project</h2><div class="eyebrow">Transparency and sources</div></div>
   <div class="about">
     <div class="reveal">
       <p>An independent project about the life, music and teaching legacy of Vladislav Blazhevich. It does not represent the Moscow Conservatory, the libraries or the performers it links to. The Russian version is the primary one; this English page follows it. Bracketed source numbers here match the English list below, not the Russian one.</p>
       <p><a class="btn btn-ghost" href="../index.html">Русская версия →</a></p>
+    </div>
+    <div class="reveal about-credit">
       <p class="note">The opening image is an artistic composition supplied by the site owner: Blazhevich with his trombone in front of the Great Hall of the Moscow Conservatory and the Bolshoi Theatre; it is not a historical photograph. The portrait in it is an AI-generated artistic image based on a 1903 photograph of Blazhevich (<a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, public domain), toned to match the archive photographs. It is not a historical photograph. The buildings follow photographs of the Tchaikovsky Moscow Conservatory in the 1940s and the Bolshoi Theatre around 1905 (public domain).</p>
     </div>
-    <div class="reveal">
-      <h3>Sources</h3>
-      <ol class="sources">
-        <li id="s1">Moscow Conservatory, <a href="https://www.mosconsv.ru/ru/groups/11202">history of the brass department</a> (Russian).</li>
-        <li id="s2">Wikipedia: <a href="https://en.wikipedia.org/wiki/Vladislav_Blazhevich">Vladislav Blazhevich</a> and <a href="https://en.wikipedia.org/wiki/List_of_compositions_by_Vladislav_Blazhevich">list of compositions</a>; the early life cites A. G. Kharlamov, “Blazhevich: His life and work,” ITA Journal 36/3 (2008), 30–34.</li>
-        <li id="s3">A. Kharlamov, <a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">The History of Selected Works</a> and <a href="https://www.jayfriedman.net/blazhevich-destiny-of-works-in-the-west/">Destiny of Works in the West</a> (2009).</li>
-        <li id="s4">D. Yeo, <a href="https://www.yeodoug.com/Yeo_ITAJ_January_2025_Joannes_Rochut.pdf">“Joannès Rochut…”, ITA Journal, January 2025</a>, notes 159–194.</li>
-        <li id="s5">Wikipedia (Russian): <a href="https://ru.wikipedia.org/wiki/Борк,_Христофор_Иванович">Bork</a>, <a href="https://ru.wikipedia.org/wiki/Рейхе,_Евгений_Адольфович">Reiche</a>, <a href="https://ru.wikipedia.org/wiki/Коршунов,_Николай_Сергеевич">Korshunov</a>; Saint Petersburg Conservatory encyclopedia: <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">A. Kozlov</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">V. Venglovsky</a>; <a href="https://conservatory.ru/x-letka/ads/vypusk-1942-goda-orkestrovye-dukhovye-i-udarnye-instrumenty">class of 1942</a> (Russian).</li>
-        <li id="s6">C. Lambert, <a href="https://static1.squarespace.com/static/5f68ca3f4f54480b7bf578b0/t/5f6a4799bd059e17895aa1db/1600800678933/The+Solo+Trombone+Works+of+Vladislav+Blazhevich.pdf">The Solo Trombone Works of Vladislav Blazhevich</a>, University of Iowa, 2020.</li>
-        <li id="s7">Gnesin Music College, <a href="https://www.gnesin.ru/mediateka/metodicheskie_materialy/metodicheskie_posobiya/maslov_dukhovaya_shkola">history of the Moscow wind school</a> (Russian).</li>
-        <li id="s8"><a href="https://www.krugosvet.ru/enc/kultura_i_obrazovanie/muzyka/BLAZHEVICH_VLADISLAV_MIHALOVICH.html">Krugosvet encyclopedia</a> (Russian). The page did not open from this project’s tools; the Goznak band (from 1920) is cited from search results of 9 November 2026 and is not confirmed by the other sources read.</li>
-        <li id="s9"><i>Vechernyaya Moskva</i>: E. Pyatunina, V. Bogdanov, <a href="https://vm.ru/society/114265-trubachi-pod-zvuki-marsha-bojcy-vyhodili-na-ulicy-stolicy">“Trumpeters”</a>, 17 October 2012; E. Pyatunina, <a href="https://vm.ru/society/551256-orkestr-nashej-pamyati">“The orchestra of our memory”</a>, 9 November 2017 (Russian). Read 9 November 2026.</li>
-      </ol>
-      <p class="note">Bracketed numbers in the text link to this list. Where sources disagree, the Russian version lists the conflicts.</p>
+  </div>
+  <div class="src-block reveal">
+    <h3>Sources</h3>
+    <p class="src-lead">Nine sources grouped by subject. The numbers match the bracketed references in the text.</p>
+    <div class="src-groups">
+      <section class="src-group"><h4>Life and biography</h4><ol class="sources">
+        <li id="s1" value="1">Moscow Conservatory, <a href="https://www.mosconsv.ru/ru/groups/11202">history of the brass department</a> (Russian).</li>
+        <li id="s2" value="2">Wikipedia: <a href="https://en.wikipedia.org/wiki/Vladislav_Blazhevich">Vladislav Blazhevich</a> and <a href="https://en.wikipedia.org/wiki/List_of_compositions_by_Vladislav_Blazhevich">list of compositions</a>; the early life cites A. G. Kharlamov, “Blazhevich: His life and work,” ITA Journal 36/3 (2008), 30–34.</li>
+        <li id="s8" value="8"><a href="https://www.krugosvet.ru/enc/kultura_i_obrazovanie/muzyka/BLAZHEVICH_VLADISLAV_MIHALOVICH.html">Krugosvet encyclopedia</a> (Russian). The page did not open from this project’s tools; the Goznak band (from 1920) is cited from search results of 9 November 2026 and is not confirmed by the other sources read.</li>
+        <li id="s9" value="9"><i>Vechernyaya Moskva</i>: E. Pyatunina, V. Bogdanov, <a href="https://vm.ru/society/114265-trubachi-pod-zvuki-marsha-bojcy-vyhodili-na-ulicy-stolicy">“Trumpeters”</a>, 17 October 2012; E. Pyatunina, <a href="https://vm.ru/society/551256-orkestr-nashej-pamyati">“The orchestra of our memory”</a>, 9 November 2017 (Russian). Read 9 November 2026.</li>
+      </ol></section>
+      <section class="src-group"><h4>Works and editions</h4><ol class="sources">
+        <li id="s3" value="3">A. Kharlamov, <a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">The History of Selected Works</a> and <a href="https://www.jayfriedman.net/blazhevich-destiny-of-works-in-the-west/">Destiny of Works in the West</a> (2009).</li>
+        <li id="s6" value="6">C. Lambert, <a href="https://static1.squarespace.com/static/5f68ca3f4f54480b7bf578b0/t/5f6a4799bd059e17895aa1db/1600800678933/The+Solo+Trombone+Works+of+Vladislav+Blazhevich.pdf">The Solo Trombone Works of Vladislav Blazhevich</a>, University of Iowa, 2020.</li>
+      </ol></section>
+      <section class="src-group"><h4>Schools and teachers</h4><ol class="sources">
+        <li id="s5" value="5">Wikipedia (Russian): <a href="https://ru.wikipedia.org/wiki/Борк,_Христофор_Иванович">Bork</a>, <a href="https://ru.wikipedia.org/wiki/Рейхе,_Евгений_Адольфович">Reiche</a>, <a href="https://ru.wikipedia.org/wiki/Коршунов,_Николай_Сергеевич">Korshunov</a>; Saint Petersburg Conservatory encyclopedia: <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">A. Kozlov</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">V. Venglovsky</a>; <a href="https://conservatory.ru/x-letka/ads/vypusk-1942-goda-orkestrovye-dukhovye-i-udarnye-instrumenty">class of 1942</a> (Russian).</li>
+        <li id="s7" value="7">Gnesin Music College, <a href="https://www.gnesin.ru/mediateka/metodicheskie_materialy/metodicheskie_posobiya/maslov_dukhovaya_shkola">history of the Moscow wind school</a> (Russian).</li>
+      </ol></section>
+      <section class="src-group"><h4>Raichman and Boston</h4><ol class="sources">
+        <li id="s4" value="4">D. Yeo, <a href="https://www.yeodoug.com/Yeo_ITAJ_January_2025_Joannes_Rochut.pdf">“Joannès Rochut…”, ITA Journal, January 2025</a>, notes 159–194.</li>
+      </ol></section>
     </div>
+    <p class="note">Bracketed numbers in the text link to this list. Where sources disagree, the Russian version lists the conflicts.</p>
   </div>
 </div></section>
 </main>
-<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a><span>Vladislav Blazhevich, Владислав Блажевич</span><a href="../index.html" hreflang="ru" lang="ru">Русский</a></div></footer>
+<footer><div class="wrap foot">
+  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">Vladislav Blazhevich <span>1881–1942</span></p><p>Trombonist, teacher, composer. An independent project about his life, scores and school.</p></div>
+  <div class="foot-col" role="navigation" aria-label="Footer"><h2>Sections</h2><ul class="foot-secs"><li><a href="index.html#scores">Scores</a></li><li><a href="index.html#listen">Listen</a></li><li><a href="index.html#biography">Biography</a></li><li><a href="index.html#usa">In America</a></li><li><a href="index.html#schools">Schools</a></li><li><a href="index.html#concertos">Concertos</a></li><li><a href="index.html#about">About</a></li></ul></div>
+  <div class="foot-col"><h2>School dossiers</h2><ul><li><a href="moscow.html">The Moscow trombone school</a></li><li><a href="leningrad.html">The Leningrad trombone school</a></li></ul><h2>Language</h2><ul><li><a href="../index.html" hreflang="ru" lang="ru">Русская версия</a></li></ul></div>
+  <p class="foot-fine">Sources and image credits are listed under <a href="index.html#about">About</a>.</p>
+</div></footer>
 <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
 <script>
 'use strict';
@@ -902,20 +1202,9 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Каталог: поиск и фильтр */
-  const search=document.getElementById('search'), instrument=document.getElementById('instrument');
-  const cards=[...document.querySelectorAll('#catalog .card')];
-  const norm=s=>s.toLocaleLowerCase().replaceAll('ё','е').trim();
-  const countEl=document.getElementById('count');
-  const extraFilters=[...document.querySelectorAll('[data-catalog-filter]')];
-  function filterCatalog(){
-    const q=norm(search.value); let n=0;
-    for(const c of cards){const ok=norm(c.textContent).includes(q)&&(instrument.value==='all'||c.dataset.instrument===instrument.value)&&extraFilters.every(f=>f.value==='all'||c.dataset[f.dataset.catalogFilter]===f.value);c.hidden=!ok;if(ok)n++}
-    countEl.textContent=(countEl.dataset.tpl||'Показано: {n} из {t}').replace('{n}',n).replace('{t}',cards.length);
-    document.getElementById('empty').hidden=n!==0;
-  }
-  if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
-
+  /* Плеер: внешний iframe (Яндекс Музыка) подгружается только по нажатию кнопки */
+  document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
+    btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
 
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
@@ -924,9 +1213,12 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
   if(!totop)return;
+  /* тонкая линия прочитанного вверху общей страницы и название текущего раздела на вкладке меню у края */
+  const prog=document.querySelector('.progress'), edge=document.querySelector('.rail-edge span'), edgeWord=edge?edge.textContent:'';
   /* главная — одна длинная страница: боковое меню и кнопка «Меню» появляются, когда первый экран ушёл вверх */
   const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700);
-    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6)};
+    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6);
+    if(prog){const max=document.documentElement.scrollHeight-innerHeight;prog.style.setProperty('--p',max>0?Math.min(1,y/max):0)}};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
@@ -935,7 +1227,8 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     const here=location.pathname.split('/').pop()||'index.html';
     const pageLink=links.find(a=>a.getAttribute('href')===here);
     if(pageLink) pageLink.classList.add('active');
-    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))})}}},{rootMargin:'-45% 0px -50% 0px'});
+    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))});
+      const cur=document.querySelector('.rail a.active');if(edge&&cur)edge.textContent=edgeWord+' · '+cur.textContent}}},{rootMargin:'-45% 0px -50% 0px'});
     links.map(a=>a.getAttribute('href').split('#')[1]).filter(Boolean).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el)});
 
     /* Плавное появление: прячем только то, что ниже первого экрана */

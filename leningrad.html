@@ -6,8 +6,8 @@
 <title>Ленинградская тромбоновая школа — Blazhevich</title>
 <meta name="description" content="Петербургско-ленинградская школа тромбона: Тюрнер, Волков, Козлов, Венгловский, Квартет тромбонов филармонии, дискография.">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#f4eee1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4eee1'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#e8dbbf">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:site_name" content="Blazhevich">
@@ -27,19 +27,19 @@
 :root{
   color-scheme:light;
   /* paper and ink */
-  --paper:#f4eee1;          /* page */
-  --surface:#fbf8f1;        /* raised paper: fields, table, panels */
-  --band:#ece3cf;           /* a band one step darker than the page */
-  --ink:#2a2118;            /* text, 13.7:1 on paper */
-  --muted:#5a4d3f;          /* secondary text, 7.1:1 */
-  --accent:#24426b;         /* empire blue: links and the one primary action, 8.8:1 */
-  --accent-hi:#18304f;
-  --gold:#7a5a17;           /* years and figures set in type, 5.5:1 */
-  --rule:#a8843a;           /* gilt hairlines, decoration only */
-  --line:#d6c9ae;           /* quiet hairlines */
-  --field:#8c7b60;          /* field and outline edges, 3.5:1 */
-  --on-accent:#fbf8f1;
-  --select:#d9c79c;
+  --paper:#e8dbbf;          /* page: aged cream, matched to the sepia of the first screen (13.11.2026) */
+  --surface:#f0e6cf;        /* raised paper: cards, table, panels */
+  --band:#dccaa6;           /* a band one step darker than the page */
+  --ink:#2b1d10;            /* sepia ink, 11.9:1 on paper */
+  --muted:#56432e;          /* secondary text, 6.8:1 */
+  --accent:#6a3418;         /* burnt umber: links, 7.2:1 — the blue left with the old palette */
+  --accent-hi:#4a220e;
+  --gold:#6b4d12;           /* years and figures set in type, 5.7:1 */
+  --rule:#9c7a3c;           /* gilt hairlines, decoration only */
+  --line:#c8b48d;           /* quiet hairlines */
+  --field:#7d6748;          /* field and outline edges, 3.9:1 */
+  --on-accent:#f0e6cf;
+  --select:#cdb27a;
   --tint:color-mix(in srgb,var(--rule) 12%,transparent);
   --shadow:color-mix(in srgb,var(--ink) 14%,transparent);
 
@@ -64,13 +64,15 @@
   --gutter-l:max(var(--s-4),env(safe-area-inset-left,0px));
   --gutter-r:max(var(--s-4),env(safe-area-inset-right,0px));
   --ease:cubic-bezier(.2,.7,.2,1);
+  /* бумажное зерно: едва заметный шум поверх кремового фона, как на старом листе */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ---------- Base ---------- */
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + var(--s-5));overflow-x:clip}
-body{margin:0;background:var(--paper);color:var(--ink);font:var(--t-body)/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
+body{margin:0;background:var(--paper) var(--grain);color:var(--ink);font:var(--t-body)/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
 ::selection{background:var(--select);color:var(--ink)}
 a{color:var(--accent);text-underline-offset:.22em;text-decoration-thickness:1px}
 a:hover{color:var(--accent-hi);text-decoration-thickness:2px}
@@ -107,7 +109,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .hero{--horizon:66svh;position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-6);text-align:center;
   /* one sun for the whole scene: high on the left, warming the sky and the paper */
-  background:radial-gradient(120% 90% at 16% -10%,#fff8e6 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),#ece1c8 calc(var(--horizon) + 5svh),var(--paper) 100%)}
+  background:radial-gradient(120% 90% at 16% -10%,var(--surface) 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),var(--band) calc(var(--horizon) + 5svh),var(--paper) 100%)}
 /* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
 .hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
   background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
@@ -124,7 +126,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
 .hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
-.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:rgb(244 238 225/.72);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
 .hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
 /* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
 .hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
@@ -167,14 +169,12 @@ section.block p{max-width:var(--measure)}
 .reveal{transition:opacity .8s ease,transform .8s var(--ease)}
 
 /* ---------- Catalogue: a ruled index, not tiles ---------- */
-.tools{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:var(--s-4);margin-bottom:var(--s-4)}
 label{font-size:var(--t-small);font-weight:600;color:var(--ink)}
 input,select{width:100%;display:block;margin-top:var(--s-2);min-height:48px;padding:0 var(--s-4);border:1px solid var(--field);border-radius:var(--radius);background:var(--surface);color:var(--ink);font:inherit;font-size:16px;font-weight:400;transition:border-color .2s}
 input::placeholder{color:var(--muted)}
 input:hover,select:hover{border-color:var(--ink)}
 input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--field)}
 input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
-.count{margin-block:var(--s-5) var(--s-4);font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--ink)}
 .card{position:relative;display:grid;grid-template-columns:180px minmax(0,1fr) auto;gap:var(--s-2) var(--s-6);padding:var(--s-5) var(--s-3);border-bottom:1px solid var(--line);transition:background-color .2s;min-width:0}
 .card:hover{background:var(--surface)}
@@ -185,7 +185,6 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .card a::after{content:"";position:absolute;inset:0}
 .card:hover a{text-decoration:underline}
 .tag{font-size:15px;color:var(--gold);font-weight:500}
-.empty{padding:var(--s-5);border:1px dashed var(--field);color:var(--muted);margin-top:var(--s-4)}
 
 /* ---------- Listen: a band ---------- */
 #listen{background:var(--band)}
@@ -322,13 +321,8 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .lineage-v3{padding:0;list-style:none;display:grid;gap:var(--s-2);margin-block:var(--s-4)}
 .lineage-v3 li{padding:var(--s-3) var(--s-4);border:1px solid var(--line);background:var(--surface)}
 .lineage-v3 .provisional{border-style:dashed;border-color:var(--field)}
-.extra-tools-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin:var(--s-4) 0}
-.extra-tools-v3 label{display:grid;gap:0}
 
 /* ---------- Footer ---------- */
-footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);color:var(--muted);font-size:15px}
-.foot{display:flex;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;align-items:center}
-.foot .brand{font-size:16px}
 .totop{position:fixed;right:calc(var(--s-4) + env(safe-area-inset-right,0px));bottom:calc(var(--s-4) + env(safe-area-inset-bottom,0px));z-index:25;width:48px;height:48px;border:1px solid var(--field);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-size:20px;cursor:pointer;transition:opacity .3s,transform .3s}
 .js .totop{opacity:0;transform:translateY(var(--s-3));pointer-events:none}
 .js .totop.show{opacity:1;transform:none;pointer-events:auto}
@@ -352,7 +346,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .explore-card:nth-child(odd),.explore-card:nth-child(even){padding:var(--s-5) 0;border-right:0}
   .card{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}
   .card .tag,.card h3,.card p,.card a{grid-column:1;grid-row:auto}
-  .people-v3,.extra-tools-v3{grid-template-columns:minmax(0,1fr)}
+  .people-v3{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:620px){
   body{font-size:16px}
@@ -365,7 +359,6 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .bar{justify-content:center;padding-block:var(--s-2)}
   nav{justify-content:center}
   nav a{padding:var(--s-2) var(--s-2);font-size:14px}
-  .tools{grid-template-columns:minmax(0,1fr)}
   .facts{grid-template-columns:minmax(0,1fr)}
   .facts > div,.facts > div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .facts > div:first-child{border-top:0}
@@ -461,35 +454,44 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-menu{position:fixed}
-@media(min-width:1101px){
-  .rail{display:flex}
-  .past-hero .rail{opacity:1;pointer-events:auto}
-  /* место под меню справа: колонка разделов чуть уже */
-  .rail ~ main .block > .wrap{max-width:min(var(--container),calc(100vw - 2 * 190px))}
+/* Меню разделов (13.11.2026, просьба владельца): на компьютере с мышью оно спрятано за правым краем
+   и само выезжает, когда курсор подходит к краю окна; у края всегда видна тонкая вкладка «Разделы».
+   С клавиатуры меню открывается по Tab (focus-within). Без мыши (телефон, планшет) — кнопка «Меню». */
+.rail-edge{display:none}
+@media(min-width:1101px) and (hover:hover) and (pointer:fine){
+  .rail-edge{display:flex;position:fixed;z-index:21;top:0;bottom:0;right:0;width:44px;align-items:center;justify-content:center}
+  .rail-edge span{writing-mode:vertical-rl;padding:var(--s-4) var(--s-2);border:1px solid var(--rule);border-right:0;border-radius:var(--radius) 0 0 var(--radius);
+    background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    color:var(--gold);font:600 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;transition:opacity .25s}
+  .rail{display:flex;right:0;padding:var(--s-4) 0 var(--s-4) var(--s-3);border:1px solid var(--rule);border-right:3px solid var(--rule);
+    border-radius:var(--radius) 0 0 var(--radius);background:var(--surface) var(--grain);box-shadow:-10px 0 28px -12px var(--shadow);
+    opacity:0;translate:calc(100% + 24px) -50%;pointer-events:none;transition:opacity .25s ease,translate .35s var(--ease)}
+  .rail-edge:hover + .rail,.rail:hover,.rail:focus-within{opacity:1;translate:0 -50%;pointer-events:auto}
+  .rail-edge:has(+ .rail:hover) span,.rail-edge:hover span{opacity:0}
 }
-@media(max-width:1100px){
+@media not all and (min-width:1101px) and (hover:hover) and (pointer:fine){
   .fab{display:inline-flex;align-items:center}
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
-html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
+html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 /* надпись и кнопки на первом экране лежат на снимке: под ними мягкая бумажная подложка, чтобы буквы не путались с фасадом */
 .hero-copy{position:relative}
-.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,rgb(244 238 225/.9),rgb(244 238 225/.6) 55%,transparent);pointer-events:none}
+.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,color-mix(in srgb,var(--paper) 90%,transparent),color-mix(in srgb,var(--paper) 60%,transparent) 55%,transparent);pointer-events:none}
 
 /* ---------- Генеалогия школы: схема-дерево. Ствол учитель → ученик сверху вниз, затем две ветви рядом ---------- */
 .dossier-tree{margin-inline:0}
-.lineage,.lineage ol,.lineage ul{list-style:none;margin:0;padding:0}
-.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
-.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
+ol.lineage,ol.lineage ol,ol.lineage ul{list-style:none;margin:0;padding:0}
+ol.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
+ol.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
 /* вертикальная связь к следующему поколению */
-.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
+ol.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
 .tnode{display:grid;justify-items:center;gap:2px;max-width:340px;padding:var(--s-3) var(--s-5);border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);text-align:center}
 .tnode b{font:600 22px/1.15 var(--display);color:var(--ink)}
 .tnode-key{border-color:var(--rule);box-shadow:0 0 0 4px var(--tint)}
 .tnode-key b{font-size:26px}
-.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
-.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
+ol.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
+ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 /* развилка: горизонтальная перекладина над двумя ветвями */
 .split{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);align-items:start;padding-top:var(--s-5)}
 .branch{position:relative;display:grid;justify-items:center;gap:var(--s-3)}
@@ -517,7 +519,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 /* ---------- Первый экран (картинка владельца, 12.11.2026): Блажевич с тромбоном перед Большим залом
    консерватории и Большим театром — одна композиция на весь экран; поверх только надпись и «Меню», EN в углу ---------- */
-.hero{display:grid;align-content:end;background:#efe4cc;padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
+.hero{display:grid;align-content:end;background:var(--band);padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
@@ -547,28 +549,245 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 .section-head.scene-moscow,.section-head.scene-leningrad{min-height:clamp(560px,calc(100svh - 110px),59.9vw);padding-bottom:var(--s-5)}
 @media(max-width:1100px){.section-head.scene-moscow,.section-head.scene-leningrad{min-height:0}}
 .section-head.scene p.scene-credit{order:5;max-width:none;margin:auto 0 0;padding-top:var(--s-5);font:italic 500 15px/1.3 var(--display);color:var(--muted)}
+
+/* ---------- Старинная гамма (13.11.2026): весь сайт в тон первого экрана — кремовая бумага с зерном, сепия, края листа чуть темнее ---------- */
+body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
+  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,rgb(74 48 20/.16) 100%)}
+@media print{body::after{display:none}}
+.rail .lang{margin-right:var(--s-4)}
+
+/* ---------- Ноты как библиотечные карточки (13.11.2026): две колонки, у каждой карточки номер, красная линейка
+   и строки каталожной карточки; источник — «штампом» внизу. Вся карточка по-прежнему ссылка. ---------- */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0;counter-reset:card}
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-5) var(--s-4);
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
+  background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
+  box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
+.card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+.card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
+  border-bottom:1px solid color-mix(in srgb,#8a2b1c 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
+.card h3{font-size:26px;margin-top:var(--s-2)}
+.card p{font-size:16px;line-height:32px;margin:0}
+.card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
+  background:var(--paper);font-size:13px;letter-spacing:.06em;text-transform:uppercase;rotate:-1.2deg}
+.card:hover a{text-decoration:none;border-color:var(--accent)}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
+main > section.block{position:relative}
+main > section.block + section.block::before{content:"◆";position:absolute;top:0;left:50%;translate:-50% -50%;width:min(460px,70vw);
+  text-align:center;font-size:11px;line-height:1;color:var(--rule);
+  background:linear-gradient(to right,transparent,var(--rule) 18%,var(--rule) 44%,transparent 44% 56%,var(--rule) 56%,var(--rule) 82%,transparent) center/100% 1px no-repeat}
+
+/* ---------- Лента жизни (биография): годы 1881–1942 по горизонтали, периоды — полосами на трёх дорожках.
+   Позиции задают --a (начало, %) и --w (длина, %); фрагмент делает tools/media/make_fragments.py ---------- */
+.lifeline{margin:var(--s-7) 0;max-width:none}
+.lifeline figcaption,.routemap figcaption{font:italic 500 17px/1.4 var(--display);color:var(--gold);margin-bottom:var(--s-3)}
+.ll-scroll{overflow-x:auto;padding-bottom:var(--s-2)}
+.ll-track{position:relative;min-width:860px;height:252px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--rule) 22%,transparent) 0 1px,transparent 1px calc(100% / 6.1)) calc(900% / 61) 0}
+.ll-span{position:absolute;left:var(--a);width:var(--w);top:calc(34px + var(--lane) * 46px);height:38px;display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--s-2);overflow:hidden;white-space:nowrap;border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:var(--surface);color:var(--ink);text-decoration:none;line-height:1.15;transition:background .2s,border-color .2s}
+a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--ink)}
+.ll-span b{font:600 15px/1.1 var(--display);overflow:hidden;text-overflow:ellipsis}
+.ll-span i{font:500 11px/1.2 var(--body);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-axis span{position:absolute;top:6px;left:var(--a);translate:-50% 0;font:500 12px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-marks span{position:absolute;bottom:8px;left:var(--a);padding-left:var(--s-2);border-left:1px solid var(--accent);font:500 12px/1.3 var(--body);color:var(--muted);white-space:nowrap}
+.ll-marks span:last-child{translate:-100% 0;padding:0 var(--s-2) 0 0;border-left:0;border-right:1px solid var(--accent)}
+.ll-marks b{color:var(--accent);font-weight:600}
+
+/* ---------- Схема-карта (В США): обзор Атлантики и врезка России; рисунок — SVG из tools/media/make_fragments.py ---------- */
+.routemap{margin:0 0 var(--s-7);max-width:none}
+.routemap svg{display:block;width:100%;height:auto;background:var(--surface) var(--grain);border:1px solid var(--rule);outline:1px solid var(--line);outline-offset:4px}
+.routemap figcaption{margin:var(--s-4) 0 0;font-size:15px;color:var(--muted);max-width:var(--measure)}
+.rm-grid,.rm-grid path{fill:none;stroke:var(--line);stroke-width:1}
+.rm-frame{fill:none;stroke:var(--rule);stroke-width:1.5}
+.rm-inset{fill:none;stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4}
+.rm-route{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round}
+.rm-route-2{stroke-width:1.6;stroke-dasharray:7 6;stroke:var(--gold)}
+.rm-dot{fill:var(--surface);stroke:var(--ink);stroke-width:1.6}
+.rm-key{fill:var(--accent);stroke:var(--surface)}
+.rm-city{font:600 17px var(--display);fill:var(--ink)}
+.rm-sub,.rm-note{font:500 12.5px var(--body);fill:var(--muted)}
+.rm-note{fill:var(--accent);font-weight:600}
+.rm-sea,.rm-land{font:italic 500 19px var(--display);fill:var(--rule);letter-spacing:.28em}
+.rm-land{font-size:15px;letter-spacing:.2em}
+@media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
+.ll-short{overflow:visible;padding:0}
+.ll-short b,.ll-short i{position:relative;left:calc(100% + var(--s-2));overflow:visible}
+.ll-left b,.ll-left i{left:auto;right:calc(100% + var(--s-2));position:absolute}
+.ll-left b{top:4px}.ll-left i{top:21px}
+
+/* ---------- Плеер в «Слушать»: до нажатия — только кнопка, после — iframe Яндекс Музыки (YouTube не встраиваем: в РФ он недоступен) ---------- */
+.player{margin-top:var(--s-4);display:grid;gap:var(--s-2);justify-items:start}
+.player iframe{width:100%;max-width:614px;height:450px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--surface)}
+html:not(.js) .player{display:none}
+
+/* ============================================================================================
+   Редакционная доводка (13.11.2026): вступление после первого экрана с оглавлением, номера разделов,
+   крупный портрет 1903 года, цитата, источники по темам, подвал, линия прочитанного
+   ============================================================================================ */
+
+/* ---------- Вступление: кто это, одной фразой, и оглавление семи разделов ---------- */
+.lede{padding-block:var(--s-9) var(--s-8);border-bottom:1px solid var(--line)}
+.lede-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--s-8);align-items:start}
+.lede-copy{display:grid;gap:var(--s-5);align-content:start}
+.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.lede-kicker::after{content:"";flex:1;max-width:120px;height:1px;background:var(--rule)}
+.lede-text{font:500 clamp(28px,3.3vw,44px)/1.16 var(--display);letter-spacing:-.005em;color:var(--ink);text-wrap:balance}
+.lede-sub{color:var(--muted);max-width:52ch}
+.toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);counter-reset:toc}
+.toc li{counter-increment:toc;border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:44px minmax(0,auto) minmax(0,1fr) 20px;align-items:baseline;gap:var(--s-3);padding:var(--s-3) var(--s-2) var(--s-3) 0;
+  color:var(--ink);text-decoration:none;transition:background-color .2s,padding .25s var(--ease)}
+.toc a::before{content:counter(toc,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
+.toc a::after{content:"↓";justify-self:end;color:var(--rule);transition:translate .25s var(--ease),color .2s}
+.toc b{font:600 26px/1.15 var(--display)}
+.toc span{font-size:15px;line-height:1.4;color:var(--muted);text-align:right}
+.toc a:hover{background:var(--tint);padding-left:var(--s-3);color:var(--ink)}
+.toc a:hover::after{translate:0 3px;color:var(--accent)}
+@media(max-width:900px){
+  .lede{padding-block:var(--s-8) var(--s-7)}
+  .lede-grid{grid-template-columns:minmax(0,1fr);gap:var(--s-7)}
+}
+@media(max-width:520px){
+  .toc a{grid-template-columns:36px minmax(0,1fr) 20px;row-gap:2px}
+  .toc span{grid-column:2;grid-row:2;text-align:left;font-size:14px}
+  .toc a::after{grid-column:3;grid-row:1}
+}
+
+/* ---------- Номер раздела над заголовком (только общая страница, где есть боковое меню) ---------- */
+.section-head[data-n]::before{content:attr(data-n);order:-2;width:max-content;min-width:56px;padding-bottom:var(--s-2);margin-bottom:var(--s-2);
+  border-bottom:1px solid var(--rule);font:italic 600 22px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
+
+/* ---------- Биография: буквица в первой главе и портрет 1903 года в собственной колонке ---------- */
+.chapter:first-child .ch-body > p:first-of-type::first-letter{float:left;font:600 76px/.78 var(--display);padding:var(--s-2) var(--s-3) 0 0;color:var(--gold)}
+.ch-photo{margin:0}
+@media(min-width:1021px){
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo .ch-photo{rotate:1.2deg;margin-top:var(--s-2)}
+}
+@media(max-width:1020px){.chapter.has-photo .ch-photo{grid-column:1 / -1;width:min(320px,78vw);margin-top:var(--s-3)}}
+.ch-photo .mat{box-shadow:0 14px 30px -18px var(--shadow)}
+
+/* ---------- Цитата: слова самого Блажевича набраны антиквой с золочёной линейкой ---------- */
+.quote{margin:var(--s-2) 0 var(--s-3);padding:var(--s-2) 0 var(--s-2) var(--s-5);border-left:2px solid var(--rule);display:grid;gap:var(--s-3)}
+.quote p{font:italic 500 21px/1.45 var(--display);color:var(--ink)!important;max-width:none}
+.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+/* ---------- О проекте: источники по темам, во всю ширину, в две колонки ---------- */
+.about{margin-bottom:var(--s-8)}
+.about-credit{padding-left:var(--s-5);border-left:1px solid var(--line)}
+.src-block{border-top:1px solid var(--ink);padding-top:var(--s-6);display:grid;gap:var(--s-5)}
+.src-block > h3{font-size:36px}
+.src-lead{color:var(--muted)}
+.src-groups{columns:2;column-gap:var(--s-8)}
+.src-group{break-inside:avoid;margin:0 0 var(--s-6);font-weight:400}
+.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.src-group .sources{font-size:15.5px;line-height:1.6;gap:var(--s-3)}
+.src-group .sources li::marker{font:italic 600 17px var(--display);color:var(--gold)}
+.sources li:target{outline:1px solid var(--rule);outline-offset:6px}
+@media(max-width:820px){.src-groups{columns:1}.about-credit{padding-left:0;border-left:0}}
+
+/* ---------- Подвал: имя и годы, разделы, досье, язык ---------- */
+body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background:var(--band);padding-block:var(--s-8) var(--s-7);color:var(--muted);font-size:15px}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr);gap:var(--s-6) var(--s-8);align-items:start}
+.foot-id{display:grid;gap:var(--s-3);max-width:38ch}
+.foot .brand{font-size:20px;padding:0}
+.foot-name{font:500 24px/1.2 var(--display);color:var(--ink)}
+.foot-name span{color:var(--gold);font-style:italic;font-variant-numeric:lining-nums;white-space:nowrap}
+.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.foot ul + h2{margin-top:var(--s-5)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-2)}
+.foot-secs{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s-5)}
+.foot ul a{color:var(--ink);text-decoration:none;display:inline-block;padding-block:2px}
+.foot ul a:hover{color:var(--accent);text-decoration:underline}
+.foot-fine{grid-column:1 / -1;margin-top:var(--s-4);padding-top:var(--s-4);border-top:1px solid var(--line);font-size:var(--t-small)}
+@media(max-width:820px){.foot{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.foot-id{grid-column:1 / -1}}
+@media(max-width:520px){.foot{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Линия прочитанного: тонкая золочёная полоска вверху общей страницы ---------- */
+.progress{position:fixed;z-index:31;top:0;left:0;right:0;height:2px;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));pointer-events:none}
+html:not(.past-hero) .progress{opacity:0}
+@media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
+
+/* ---------- «Слушать» (13.11.2026): записи как конверты пластинок — диск слева, подпись и ссылки справа ---------- */
+.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5)}
+.record{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-5);align-items:start;padding:var(--s-6);min-width:0;
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--surface) var(--grain);box-shadow:0 12px 26px -20px var(--shadow)}
+.record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
+.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
+.record-main .record-body{gap:var(--s-4)}
+.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.record h3{font-size:28px}
+.record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
+.record p{color:var(--muted)}
+/* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
+.disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
+  background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
+    radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
+    conic-gradient(from 20deg,transparent 0 8%,rgb(255 240 210/.16) 12%,transparent 18% 50%,rgb(255 240 210/.12) 62%,transparent 68%),
+    repeating-radial-gradient(circle,#2b1d10 0 1.5px,#3b2a19 1.5px 3px);
+  box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
+.disc-sm{width:84px}
+.record:hover .disc{rotate:18deg}
+.disc{transition:rotate .8s var(--ease)}
+.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
+.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.record-links b{font-weight:600;font-size:16px;line-height:1.35}
+.record-links span{font-size:var(--t-small);color:var(--accent)}
+.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
+.record .player iframe{max-width:none}
+@media(max-width:900px){.records{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:620px){
+  .record,.record-main{grid-template-columns:minmax(0,1fr);padding:var(--s-5);gap:var(--s-4)}
+  .disc{width:112px}.disc-sm{width:72px}
+}
+
+/* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
+.ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
+.ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
+.ch-note span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.nw{white-space:nowrap}
+.ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
+.ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+.ch-plate figcaption{font-size:13px;line-height:1.5;color:var(--muted);max-width:62ch}
+@media(min-width:1021px){
+  .chapter{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .ch-mark{grid-column:1;grid-row:1}
+  .ch-body{grid-column:2;grid-row:1}
+  .ch-note,.chapter .ch-photo{grid-column:3;grid-row:1}
+  .ch-note{margin-top:var(--s-2)}
+  .ch-plate{grid-column:2 / -1;grid-row:2}
+}
+@media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
+@media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
+@media(prefers-reduced-motion:reduce){.record:hover .disc{rotate:none}}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Перейти к содержимому</a>
-<div class="draft">Предварительный просмотр · не опубликовано</div>
+<a class="skip" href="#main">Перейти к содержимому</a>
+<div class="draft">Предварительный просмотр · не опубликовано</div>
 <header id="top-bar"><div class="wrap bar">
   <a href="index.html" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>
-  <nav aria-label="Основная навигация"><a href="index.html#scores">Ноты</a><a href="index.html#listen">Слушать</a><a href="index.html#biography">Биография</a><a href="index.html#usa">В США</a><a href="index.html#schools" class="active">Школы</a><a href="index.html#concertos">Концерты</a><a href="index.html#about">О проекте</a><a class="lang" href="en/leningrad.html" hreflang="en" lang="en">EN</a></nav>
+  <nav aria-label="Основная навигация"><a href="index.html#scores">Ноты</a><a href="index.html#listen">Слушать</a><a href="index.html#biography">Биография</a><a href="index.html#usa">В США</a><a href="index.html#schools" class="active">Школы</a><a href="index.html#concertos">Концерты</a><a href="index.html#about">О проекте</a><a class="lang" href="en/leningrad.html" hreflang="en" lang="en">EN</a></nav>
 </div></header>
 <main id="main">
 <section id="leningrad" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head scene scene-leningrad reveal"><a class="crumb" href="index.html#schools">← Школы</a><h1 class="page-title">Ленинградская тромбоновая школа</h1><div class="eyebrow">Досье · <a href="#l-origins">Тюрнер</a> → <a href="#l-volkov">Волков</a> → <a href="#l-kozlov">Козлов</a> → <a href="#l-venglovsky">Венгловский</a></div><p>Петербургско-ленинградская школа — одна из старейших ветвей отечественного исполнительства на медных. Документированная история начинается в 1870 году, когда класс тромбона Петербургской консерватории принял австриец Франц Тюрнер. Прямое учительство протянуло традицию через столетие — до 1994 года. Справочно-биографический сборник составлен в ноябре 2026 года по материалам Петербургской консерватории, Петербургской филармонии и открытых источников.</p><nav class="dossier-toc" aria-label="Разделы досье"><ol><li><a href="#l-origins"><span>01.</span> Истоки и Франц Тюрнер</a></li><li><a href="#l-volkov"><span>02.</span> П. Н. Волков</a></li><li><a href="#l-kozlov"><span>03.</span> А. А. Козлов</a></li><li><a href="#l-venglovsky"><span>04.</span> В. Ф. Венгловский</a></li></ol></nav><p class="scene-credit">Здание Петербургской консерватории на Театральной площади, архивный снимок</p></div>
+  <div class="section-head scene scene-leningrad reveal"><a class="crumb" href="index.html#schools">← Школы</a><h1 class="page-title">Ленинградская тромбоновая школа</h1><div class="eyebrow">Досье · <a href="#l-origins">Тюрнер</a> → <a href="#l-volkov">Волков</a> → <a href="#l-kozlov">Козлов</a> → <a href="#l-venglovsky">Венгловский</a></div><p>Петербургско-ленинградская школа — одна из старейших ветвей отечественного исполнительства на медных. Документированная история начинается в 1870 году, когда класс тромбона Петербургской консерватории принял австриец Франц Тюрнер. Прямое учительство протянуло традицию через столетие — до 1994 года. Справочно-биографический сборник составлен в ноябре 2026 года по материалам Петербургской консерватории, Петербургской филармонии и открытых источников.</p><nav class="dossier-toc" aria-label="Разделы досье"><ol><li><a href="#l-origins"><span>01.</span> Истоки и Франц Тюрнер</a></li><li><a href="#l-volkov"><span>02.</span> П. Н. Волков</a></li><li><a href="#l-kozlov"><span>03.</span> А. А. Козлов</a></li><li><a href="#l-venglovsky"><span>04.</span> В. Ф. Венгловский</a></li></ol></nav><p class="scene-credit">Здание Петербургской консерватории на Театральной площади, архивный снимок</p></div>
 
   <figure class="dossier-tree reveal" aria-labelledby="tree-title">
     <h3 id="tree-title">Генеалогия школы</h3>
     <ol class="lineage">
-      <li><div class="tnode"><b>Ф.&nbsp;Тюрнер</b><span class="yrs">1831–1909</span><span class="role">класс тромбона и тубы Петербургской консерватории 1870–1909; оркестры императорских театров</span></div></li>
+      <li><div class="tnode"><b>Ф.&nbsp;Тюрнер</b><span class="yrs">1831–1909</span><span class="role">класс тромбона и тубы Петербургской консерватории 1870–1909; оркестры императорских театров</span></div></li>
       <li><div class="tnode tnode-key"><b>П.&nbsp;Н.&nbsp;Волков</b><span class="yrs">1877–1933</span><span class="role">профессор консерватории 1917–1933, первый тромбон Мариинского театра 1899–1933</span></div></li>
       <li class="split">
         <div class="branch">
-          <div class="tnode"><b>А.&nbsp;А.&nbsp;Козлов</b><span class="yrs">1908–1992</span><span class="role">ученик Волкова и Е.&nbsp;А.&nbsp;Рейхе; профессор консерватории, оркестр филармонии 1937–1989</span></div>
+          <div class="tnode"><b>А.&nbsp;А.&nbsp;Козлов</b><span class="yrs">1908–1992</span><span class="role">ученик Волкова и Е.&nbsp;А.&nbsp;Рейхе; профессор консерватории, оркестр филармонии 1937–1989</span></div>
           <p class="branch-name">филармоническая ветвь</p>
           <ul class="leaves">
             <li><b>В.&nbsp;Ф.&nbsp;Венгловский</b> <span class="yrs">1926–1994</span><span class="role">солист оркестра филармонии, руководитель Квартета тромбонов; профессор консерватории</span></li>
@@ -577,34 +796,34 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
           </ul>
         </div>
         <div class="branch">
-          <div class="tnode"><b>И.&nbsp;А.&nbsp;Гершкович</b><span class="yrs">ученик Волкова</span><span class="role">педагог училища: у него начинал Венгловский (1945)</span></div>
+          <div class="tnode"><b>И.&nbsp;А.&nbsp;Гершкович</b><span class="yrs">ученик Волкова</span><span class="role">педагог училища: у него начинал Венгловский (1945)</span></div>
           <p class="branch-name">другие ученики Волкова</p>
           <ul class="leaves">
-            <li><b>Я.&nbsp;Райхман</b> <span class="yrs">выпуск 1911</span><span class="role">по надписи на футляре тромбона</span></li>
+            <li><b>Я.&nbsp;Райхман</b> <span class="yrs">выпуск 1911</span><span class="role">по надписи на футляре тромбона</span></li>
             <li class="more">В.&nbsp;В.&nbsp;Кузнецов, И.&nbsp;З.&nbsp;Хейфец, П.&nbsp;А.&nbsp;Курилов, И.&nbsp;З.&nbsp;Иванов, П.&nbsp;В.&nbsp;Петров, Я.&nbsp;И.&nbsp;Райхлин, Б.&nbsp;И.&nbsp;Анисимов.</li>
           </ul>
         </div>
       </li>
     </ol>
-    <p class="note">Прямая линия учительства — сто с лишним лет, от прихода Тюрнера в консерваторию (1870) до смерти Венгловского (1994). Как и в Москве, корень иностранный: Тюрнер — австриец; Волков — первый русский во главе класса.</p>
+    <p class="note">Прямая линия учительства — сто с лишним лет, от прихода Тюрнера в консерваторию (1870) до смерти Венгловского (1994). Как и в Москве, корень иностранный: Тюрнер — австриец; Волков — первый русский во главе класса.</p>
   </figure>
 
   <aside class="insight reveal" aria-labelledby="l-core">
     <h3 id="l-core">«Поющая» манера</h3>
     <div class="eyebrow">Общий стержень</div>
-    <p>«Волковский метод» сложился под влиянием русского оперного вокала: развитое исполнительское дыхание, певучесть звука, чёткая атака «колокольного» типа. Волков передал эти принципы ученикам, Козлов — своим воспитанникам, а Венгловский закрепил их в учебных пособиях и редакциях репертуара.</p>
+    <p>«Волковский метод» сложился под влиянием русского оперного вокала: развитое исполнительское дыхание, певучесть звука, чёткая атака «колокольного» типа. Волков передал эти принципы ученикам, Козлов — своим воспитанникам, а Венгловский закрепил их в учебных пособиях и редакциях репертуара.</p>
   </aside>
 
-  <h3 class="sub-h">Педагоги класса тромбона Петербургской — Ленинградской консерватории</h3>
+  <h3 class="sub-h">Педагоги класса тромбона Петербургской — Ленинградской консерватории</h3>
   <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Педагоги класса тромбона">
     <table class="conc plain">
       <thead><tr><th scope="col">Годы</th><th scope="col">Педагог</th><th scope="col">Оркестровая служба</th></tr></thead>
       <tbody>
         <tr><td>1870–1909</td><td>Франц де Паула Тюрнер (1831–1909), австриец</td><td>Оркестры императорских театров (1855–1887); капельмейстер оркестра лейб-гвардии Сапёрного батальона.</td></tr>
-        <tr><td>1906–1933</td><td>Пётр Наумович Волков (1877–1933), ученик Тюрнера</td><td>Первый тромбон оркестра Мариинского театра (1899–1933); сезон 1926/27 — Филармонический оркестр.</td></tr>
-        <tr><td>с 1933</td><td>Евгений Адольфович Рейхе (доцент с 1933, и. о. профессора с 1935)</td><td>Бас-тромбон Мариинского театра (по Википедии, 1899–1941).</td></tr>
-        <tr><td>1946–1992</td><td>Аким Алексеевич Козлов (1908–1992), ученик Волкова и Рейхе</td><td>Симфонический оркестр Ленинградской филармонии (1937–1989).</td></tr>
-        <tr><td>1963–1994</td><td>Виктор Фёдорович Венгловский (1926–1994), ученик Козлова</td><td>Симфонический оркестр Ленинградской филармонии (с 1950); Квартет тромбонов.</td></tr>
+        <tr><td>1906–1933</td><td>Пётр Наумович Волков (1877–1933), ученик Тюрнера</td><td>Первый тромбон оркестра Мариинского театра (1899–1933); сезон 1926/27 — Филармонический оркестр.</td></tr>
+        <tr><td>с 1933</td><td>Евгений Адольфович Рейхе (доцент с 1933, и. о. профессора с 1935)</td><td>Бас-тромбон Мариинского театра (по Википедии, 1899–1941).</td></tr>
+        <tr><td>1946–1992</td><td>Аким Алексеевич Козлов (1908–1992), ученик Волкова и Рейхе</td><td>Симфонический оркестр Ленинградской филармонии (1937–1989).</td></tr>
+        <tr><td>1963–1994</td><td>Виктор Фёдорович Венгловский (1926–1994), ученик Козлова</td><td>Симфонический оркестр Ленинградской филармонии (с 1950); Квартет тромбонов.</td></tr>
       </tbody>
     </table>
   </div>
@@ -613,38 +832,38 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     <article class="chapter reveal" id="l-origins">
       <div class="ch-mark"><span class="ch-years">1855–1909</span><span class="ch-place">Тюрнер</span></div>
       <div class="ch-body">
-        <h3>Истоки: оркестры Петербурга и Франц Тюрнер</h3>
-        <p>До открытия консерватории тромбонисты служили в оркестрах императорских театров, придворных духовых ансамблях и военных оркестрах гвардейских полков; костяк духовых групп составляли приглашённые немецкие, австрийские и чешские музыканты. Для кронштадтских моряков инспектор духовых оркестров Морского ведомства Н. А. Римский-Корсаков написал в 1877 году Концерт для тромбона и духового оркестра — первое отечественное концертное сочинение для этого инструмента.</p>
-        <p>Франц де Паула Тюрнер приехал в Петербург в 1855 году, 32 года играл в оркестрах императорских театров, участвовал в «Хоре любителей игры на духовых инструментах», устроенном по инициативе будущего Александра III; у Тюрнера цесаревич брал уроки игры на тубе. В 1870–1909 годах вёл класс тромбона и тубы консерватории. Принял российское подданство в 1887 году, в 1888-м получил личное дворянство. Автор «Практической элементарной школы для всех медных духовых инструментов» (1877) и «Элементарной школы» (1878), переиздававшейся до 1930 года. Ученики: П. Н. Волков, А. Ф. Казбирюк, будущий профессор Таллинской консерватории К. Крээк, дирижёр Р. Кулль.</p>
+        <h3>Истоки: оркестры Петербурга и Франц Тюрнер</h3>
+        <p>До открытия консерватории тромбонисты служили в оркестрах императорских театров, придворных духовых ансамблях и военных оркестрах гвардейских полков; костяк духовых групп составляли приглашённые немецкие, австрийские и чешские музыканты. Для кронштадтских моряков инспектор духовых оркестров Морского ведомства Н. А. Римский-Корсаков написал в 1877 году Концерт для тромбона и духового оркестра — первое отечественное концертное сочинение для этого инструмента.</p>
+        <p>Франц де Паула Тюрнер приехал в Петербург в 1855 году, 32 года играл в оркестрах императорских театров, участвовал в «Хоре любителей игры на духовых инструментах», устроенном по инициативе будущего Александра III; у Тюрнера цесаревич брал уроки игры на тубе. В 1870–1909 годах вёл класс тромбона и тубы консерватории. Принял российское подданство в 1887 году, в 1888-м получил личное дворянство. Автор «Практической элементарной школы для всех медных духовых инструментов» (1877) и «Элементарной школы» (1878), переиздававшейся до 1930 года. Ученики: П. Н. Волков, А. Ф. Казбирюк, будущий профессор Таллинской консерватории К. Крээк, дирижёр Р. Кулль.</p>
       </div>
     </article>
     <article class="chapter reveal" id="l-volkov">
       <div class="ch-mark"><span class="ch-years">1877–1933</span><span class="ch-place">Волков</span></div>
       <div class="ch-body">
         <h3>Пётр Наумович Волков</h3>
-        <p>Родился 12 (24) января 1877 года в селе Головчино Курской губернии в семье крепостного валторниста Наума Волкова, игру которого высоко оценил Чайковский. Учился в Харьковском отделении Филармонического общества, затем в Петербургской консерватории у Тюрнера (аттестат 1901, диплом свободного художника 1910, с премией имени В. А. Шуберта).</p>
-        <p>С 1899 года до конца жизни — первый тромбон оркестра Мариинского (Кировского) театра, медная группа которого славилась «органным» звучанием и восхищала Направника, Коутса, Мотля, Купера. Сезон 1926/27 служил в Филармоническом оркестре: 27 марта 1927 года на концерте к 100-летию смерти Бетховена участвовал в исполнении «Equale» для квартета тромбонов.</p>
-        <p>В консерватории с 1906 года: старший преподаватель с 1909, профессор 1917–1933; в 1930–1933 вёл оркестровый отдел рабфака. Ученики: В. В. Кузнецов, И. З. Хейфец, П. А. Курилов, И. А. Гершкович, И. З. Иванов, П. В. Петров, Я. И. Райхлин, Б. И. Анисимов; у Волкова на рабфаке начинал Аким Козлов. По надписи на футляре тромбона, у Волкова в 1911 году окончил консерваторию и <a href="index.html#raichman">Яков Райхман</a>. Умер 22 февраля 1933 года в Ленинграде.</p>
+        <p>Родился 12 (24) января 1877 года в селе Головчино Курской губернии в семье крепостного валторниста Наума Волкова, игру которого высоко оценил Чайковский. Учился в Харьковском отделении Филармонического общества, затем в Петербургской консерватории у Тюрнера (аттестат 1901, диплом свободного художника 1910, с премией имени В. А. Шуберта).</p>
+        <p>С 1899 года до конца жизни — первый тромбон оркестра Мариинского (Кировского) театра, медная группа которого славилась «органным» звучанием и восхищала Направника, Коутса, Мотля, Купера. Сезон 1926/27 служил в Филармоническом оркестре: 27 марта 1927 года на концерте к 100-летию смерти Бетховена участвовал в исполнении «Equale» для квартета тромбонов.</p>
+        <p>В консерватории с 1906 года: старший преподаватель с 1909, профессор 1917–1933; в 1930–1933 вёл оркестровый отдел рабфака. Ученики: В. В. Кузнецов, И. З. Хейфец, П. А. Курилов, И. А. Гершкович, И. З. Иванов, П. В. Петров, Я. И. Райхлин, Б. И. Анисимов; у Волкова на рабфаке начинал Аким Козлов. По надписи на футляре тромбона, у Волкова в 1911 году окончил консерваторию и <a href="index.html#raichman">Яков Райхман</a>. Умер 22 февраля 1933 года в Ленинграде.</p>
       </div>
     </article>
     <article class="chapter reveal" id="l-kozlov">
       <div class="ch-mark"><span class="ch-years">1908–1992</span><span class="ch-place">Козлов</span></div>
       <div class="ch-body">
         <h3>Аким Алексеевич Козлов</h3>
-        <p>Родился 9 сентября 1908 года в деревне Ярыгино Смоленской губернии. В голодные годы родители определили его в железнодорожный полк: звуками рожка он будил полк, был замечен капельмейстером и принят воспитанником в музыкальный взвод. В 1931 году полк направил его в Ленинградскую консерваторию: рабфак у Волкова (1932–1933), затем класс Рейхе (1933–1938), аспирантура (1941).</p>
-        <p>В 1937 году студентом выиграл конкурс в оркестр Ленинградской филармонии — одновременно с приходом Е. А. Мравинского — и играл в нём более полувека. В 1941 году записался в народное ополчение, но был отозван в оркестр, уезжавший в эвакуацию в Новосибирск. Его соло в Седьмой симфонии Сибелиуса, Пятнадцатой Шостаковича, «Болеро» Равеля ценили Мравинский и Темирканов; за соло в своих симфониях его благодарил Шостакович. Натан Рахлин называл его группу «орлиной стаей тромбонистов-виртуозов».</p>
-        <p>Преподавал в консерватории с 1946 года (доцент 1958, профессор 1971); в 1972–1983 — в Петрозаводском филиале. Ученики: В. Венгловский, Б. Виноградов, А. Евтушенко, Г. Данилов, Г. Страутман — костяк будущего квартета тромбонов филармонии. Заслуженный артист РСФСР (1956), орден «Знак Почёта» (1983). 26 марта 1989 года восьмидесятилетний Козлов сыграл в Малом зале Романс Сен-Санса со своей невесткой, арфисткой Татьяной Тауэр. Умер 22 ноября 1992 года.</p>
-        <p><span class="warn">⚠</span> Сын Козлова, контрабасист оркестра, по данным проекта филармонии — Сергей, в справочных источниках — Борис.</p>
+        <p>Родился 9 сентября 1908 года в деревне Ярыгино Смоленской губернии. В голодные годы родители определили его в железнодорожный полк: звуками рожка он будил полк, был замечен капельмейстером и принят воспитанником в музыкальный взвод. В 1931 году полк направил его в Ленинградскую консерваторию: рабфак у Волкова (1932–1933), затем класс Рейхе (1933–1938), аспирантура (1941).</p>
+        <p>В 1937 году студентом выиграл конкурс в оркестр Ленинградской филармонии — одновременно с приходом Е. А. Мравинского — и играл в нём более полувека. В 1941 году записался в народное ополчение, но был отозван в оркестр, уезжавший в эвакуацию в Новосибирск. Его соло в Седьмой симфонии Сибелиуса, Пятнадцатой Шостаковича, «Болеро» Равеля ценили Мравинский и Темирканов; за соло в своих симфониях его благодарил Шостакович. Натан Рахлин называл его группу «орлиной стаей тромбонистов-виртуозов».</p>
+        <p>Преподавал в консерватории с 1946 года (доцент 1958, профессор 1971); в 1972–1983 — в Петрозаводском филиале. Ученики: В. Венгловский, Б. Виноградов, А. Евтушенко, Г. Данилов, Г. Страутман — костяк будущего квартета тромбонов филармонии. Заслуженный артист РСФСР (1956), орден «Знак Почёта» (1983). 26 марта 1989 года восьмидесятилетний Козлов сыграл в Малом зале Романс Сен-Санса со своей невесткой, арфисткой Татьяной Тауэр. Умер 22 ноября 1992 года.</p>
+        <p><span class="warn">⚠</span> Сын Козлова, контрабасист оркестра, по данным проекта филармонии — Сергей, в справочных источниках — Борис.</p>
       </div>
     </article>
     <article class="chapter reveal" id="l-venglovsky">
       <div class="ch-mark"><span class="ch-years">1926–1994</span><span class="ch-place">Венгловский</span></div>
       <div class="ch-body">
         <h3>Виктор Фёдорович Венгловский</h3>
-        <p>Родился 17 мая 1926 года в Балте Одесской области; рано осиротел и воспитывался в детском доме. С 1940 — воспитанник Военно-музыкантской школы в Ростове-на-Дону, с 1943 — в оркестре Ленинградской военно-транспортной академии. Училище у И. Гершковича (1945), консерватория у Козлова (с 1948, диплом с отличием 1953); в 1950 году по конкурсу принят в оркестр филармонии. В 1953 — вторая премия фестиваля в Бухаресте.</p>
-        <p>Солист-виртуоз и руководитель Квартета тромбонов Ленинградской филармонии. 23 апреля 1964 года впервые в СССР исполнил «Зимнее концертино» Мийо; в 1983 — «Траурную музыку для королевы Марии» Пёрселла. Ему посвящены Концертино В. Успенского, «Метаморфозы» Г. Окунева, Квартет А. Смелкова, Три пьесы В. Буяновского. Записи изданы также в Японии и США, среди них соло на баритон-тромбоне в Седьмой симфонии Малера под управлением Кондрашина.</p>
-        <p>В консерватории с 1963 года (доцент 1972, профессор 1984–1994). Ученики: А. Н. Морозов, А. А. Скобелев (I премия, Женева 1973), В. В. Голиков. Автор пособия «Ежедневные упражнения для тромбона» (1986); консультант Ленинградского завода духовых инструментов при создании первых отечественных басовых тромбонов. Член International Trombone Association (1976), заслуженный артист РСФСР (1991). Умер 28 марта 1994 года.</p>
-        <p><span class="warn">⚠</span> Начало преподавания в консерватории: в сборнике и энциклопедии консерватории встречаются 1963 и 1966 годы.</p>
+        <p>Родился 17 мая 1926 года в Балте Одесской области; рано осиротел и воспитывался в детском доме. С 1940 — воспитанник Военно-музыкантской школы в Ростове-на-Дону, с 1943 — в оркестре Ленинградской военно-транспортной академии. Училище у И. Гершковича (1945), консерватория у Козлова (с 1948, диплом с отличием 1953); в 1950 году по конкурсу принят в оркестр филармонии. В 1953 — вторая премия фестиваля в Бухаресте.</p>
+        <p>Солист-виртуоз и руководитель Квартета тромбонов Ленинградской филармонии. 23 апреля 1964 года впервые в СССР исполнил «Зимнее концертино» Мийо; в 1983 — «Траурную музыку для королевы Марии» Пёрселла. Ему посвящены Концертино В. Успенского, «Метаморфозы» Г. Окунева, Квартет А. Смелкова, Три пьесы В. Буяновского. Записи изданы также в Японии и США, среди них соло на баритон-тромбоне в Седьмой симфонии Малера под управлением Кондрашина.</p>
+        <p>В консерватории с 1963 года (доцент 1972, профессор 1984–1994). Ученики: А. Н. Морозов, А. А. Скобелев (I премия, Женева 1973), В. В. Голиков. Автор пособия «Ежедневные упражнения для тромбона» (1986); консультант Ленинградского завода духовых инструментов при создании первых отечественных басовых тромбонов. Член International Trombone Association (1976), заслуженный артист РСФСР (1991). Умер 28 марта 1994 года.</p>
+        <p><span class="warn">⚠</span> Начало преподавания в консерватории: в сборнике и энциклопедии консерватории встречаются 1963 и 1966 годы.</p>
       </div>
     </article>
   </div>
@@ -652,16 +871,16 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   <h3 class="sub-h">Грампластинки фирмы «Мелодия»</h3>
   <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Дискография">
     <table class="conc plain">
-      <thead><tr><th scope="col">Шифр</th><th scope="col">Запись и исполнители</th><th scope="col">Год</th></tr></thead>
+      <thead><tr><th scope="col">Шифр</th><th scope="col">Запись и исполнители</th><th scope="col">Год</th></tr></thead>
       <tbody>
-        <tr><td>Д 018957/58</td><td>Д. Мийо. «Зимнее концертино» (солист В. Венгловский; Ленинградский камерный оркестр, дир. Л. Гозман). Переиздания в Японии и США.</td><td>1969</td></tr>
-        <tr><td>Д 00021451/52</td><td>К. Сероцкий. Четыре пьесы для четырёх тромбонов; А. Дубенский. Кончерто гроссо (Венгловский, Данилов, Коршунов, Козлов).</td><td>1969</td></tr>
-        <tr><td>СМ 01921/22</td><td>«Играет Виктор Венгловский» (ф-но — Т. Венгловская): Рахманинов, Вебер, Бозза и др.</td><td>1970</td></tr>
+        <tr><td>Д 018957/58</td><td>Д. Мийо. «Зимнее концертино» (солист В. Венгловский; Ленинградский камерный оркестр, дир. Л. Гозман). Переиздания в Японии и США.</td><td>1969</td></tr>
+        <tr><td>Д 00021451/52</td><td>К. Сероцкий. Четыре пьесы для четырёх тромбонов; А. Дубенский. Кончерто гроссо (Венгловский, Данилов, Коршунов, Козлов).</td><td>1969</td></tr>
+        <tr><td>СМ 01921/22</td><td>«Играет Виктор Венгловский» (ф-но — Т. Венгловская): Рахманинов, Вебер, Бозза и др.</td><td>1970</td></tr>
         <tr><td>СМ 02529/30</td><td>Бетховен. Три пьесы для квартета тромбонов (Венгловский, Данилов, Козлов, Коршунов).</td><td>1970</td></tr>
         <tr><td>СМ 04239/40</td><td>«Играет квартет тромбонов»: Дондейн, Томази, Сероцкий, Бозза, Дюфаи, Кладницкий.</td><td>1973</td></tr>
-        <tr><td>CDVP 000474</td><td>Малер. Симфония № 7 (соло баритон-тромбона — Венгловский; дир. К. Кондрашин).</td><td>1975</td></tr>
-        <tr><td>С 10 09485/86</td><td>Квартет тромбонов Ленинградской филармонии: Рейхе, Бах, Телеман, Чайковский и др.</td><td>1978</td></tr>
-        <tr><td>С 10 16649/50</td><td>Г. Вагензейль. Концерт для тромбона (солист Венгловский); М. Гайдн. Концерт для валторны и тромбона.</td><td>1982</td></tr>
+        <tr><td>CDVP 000474</td><td>Малер. Симфония № 7 (соло баритон-тромбона — Венгловский; дир. К. Кондрашин).</td><td>1975</td></tr>
+        <tr><td>С 10 09485/86</td><td>Квартет тромбонов Ленинградской филармонии: Рейхе, Бах, Телеман, Чайковский и др.</td><td>1978</td></tr>
+        <tr><td>С 10 16649/50</td><td>Г. Вагензейль. Концерт для тромбона (солист Венгловский); М. Гайдн. Концерт для валторны и тромбона.</td><td>1982</td></tr>
       </tbody>
     </table>
   </div>
@@ -669,27 +888,33 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     <div>
       <h3>Где слушать</h3>
       <ul class="sources plain-list">
-        <li><a href="https://music.yandex.ru/album/42318197">Яндекс Музыка — Квартет тромбонов Ленинградской филармонии</a></li>
-        <li><a href="https://music.yandex.ru/artist/3762704">Яндекс Музыка — Виктор Венгловский</a></li>
-        <li><a href="https://zvuk.com/release/50707005">Звук — альбом квартета тромбонов</a></li>
-        <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3">Spotify — Leningrad Philharmonic Trombone Quartet (1977)</a></li>
-        <li><a href="https://melody.su/catalog/classic/142210">«Мелодия» — каталог</a></li>
+        <li><a href="https://music.yandex.ru/album/42318197">Яндекс Музыка — Квартет тромбонов Ленинградской филармонии</a></li>
+        <li><a href="https://music.yandex.ru/artist/3762704">Яндекс Музыка — Виктор Венгловский</a></li>
+        <li><a href="https://zvuk.com/release/50707005">Звук — альбом квартета тромбонов</a></li>
+        <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3">Spotify — Leningrad Philharmonic Trombone Quartet (1977)</a></li>
+        <li><a href="https://melody.su/catalog/classic/142210">«Мелодия» — каталог</a></li>
       </ul>
+      <div class="player" data-src="https://music.yandex.ru/iframe/album/42318197" data-title="Квартет тромбонов Ленинградской филармонии — плеер Яндекс Музыки"><button class="btn btn-brass" type="button">▶ Слушать альбом здесь</button><p class="note">Плеер Яндекс Музыки загружается только после нажатия кнопки.</p></div>
     </div>
     <div>
       <h3>Источники сборника</h3>
       <ul class="sources plain-list">
         <li>Энциклопедия Петербургской консерватории: <a href="https://www.conservatory.ru/esweb/volkov-pyotr-naumovich-1877-1933">Волков</a>, <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">Козлов</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">Венгловский</a>, <a href="https://www.conservatory.ru/esweb/tyurner-franc-franz-de-paula-turner-1831-1909">Тюрнер</a>.</li>
-        <li>«100 лет Петербургской филармонии»: <a href="https://100philharmonia.spb.ru/persons/4151/">Волков</a>, <a href="https://100philharmonia.spb.ru/persons/10654/">Козлов</a>, <a href="https://100philharmonia.spb.ru/persons/33314/">Венгловский</a>.</li>
-        <li>Р. Петров. <a href="https://www.conservatory.ru/sites/default/files/uploads/zurnaly/Musicus_56_web_conservatory/Musicus_56_Petrov.pdf">«Тромбонист Франц Тюрнер»</a> // Musicus, № 56.</li>
+        <li>«100 лет Петербургской филармонии»: <a href="https://100philharmonia.spb.ru/persons/4151/">Волков</a>, <a href="https://100philharmonia.spb.ru/persons/10654/">Козлов</a>, <a href="https://100philharmonia.spb.ru/persons/33314/">Венгловский</a>.</li>
+        <li>Р. Петров. <a href="https://www.conservatory.ru/sites/default/files/uploads/zurnaly/Musicus_56_web_conservatory/Musicus_56_Petrov.pdf">«Тромбонист Франц Тюрнер»</a> // Musicus, № 56.</li>
         <li>Brass Bulletin No 37 (1982): «Pyotr Naumovich Volkov and the Russian Trombone».</li>
       </ul>
     </div>
   </div>
-  <p class="note">Сборник составлен в ноябре 2026 года по открытым источникам. Портреты и архивные фотографии из сборника на сайт не перенесены: права на их публикацию не подтверждены.</p>
+  <p class="note">Сборник составлен в ноябре 2026 года по открытым источникам. Портреты и архивные фотографии из сборника на сайт не перенесены: права на их публикацию не подтверждены.</p>
 </div></section>
 </main>
-<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a><span>Владислав Блажевич, Vladislav Blazhevich</span><a href="en/index.html" hreflang="en" lang="en">English</a></div></footer>
+<footer><div class="wrap foot">
+  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">Владислав Блажевич <span>1881–1942</span></p><p>Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.</p></div>
+  <div class="foot-col" role="navigation" aria-label="Подвал"><h2>Разделы</h2><ul class="foot-secs"><li><a href="index.html#scores">Ноты</a></li><li><a href="index.html#listen">Слушать</a></li><li><a href="index.html#biography">Биография</a></li><li><a href="index.html#usa">В США</a></li><li><a href="index.html#schools">Школы</a></li><li><a href="index.html#concertos">Концерты</a></li><li><a href="index.html#about">О проекте</a></li></ul></div>
+  <div class="foot-col"><h2>Досье школ</h2><ul><li><a href="moscow.html">Московская тромбоновая школа</a></li><li><a href="leningrad.html">Ленинградская тромбоновая школа</a></li></ul><h2>Язык</h2><ul><li><a href="en/index.html" hreflang="en" lang="en">English version</a></li></ul></div>
+  <p class="foot-fine">Источники и права на изображения указаны в разделе <a href="index.html#about">«О проекте»</a>.</p>
+</div></footer>
 <button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>
 <script>
 'use strict';
@@ -697,20 +922,9 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Каталог: поиск и фильтр */
-  const search=document.getElementById('search'), instrument=document.getElementById('instrument');
-  const cards=[...document.querySelectorAll('#catalog .card')];
-  const norm=s=>s.toLocaleLowerCase().replaceAll('ё','е').trim();
-  const countEl=document.getElementById('count');
-  const extraFilters=[...document.querySelectorAll('[data-catalog-filter]')];
-  function filterCatalog(){
-    const q=norm(search.value); let n=0;
-    for(const c of cards){const ok=norm(c.textContent).includes(q)&&(instrument.value==='all'||c.dataset.instrument===instrument.value)&&extraFilters.every(f=>f.value==='all'||c.dataset[f.dataset.catalogFilter]===f.value);c.hidden=!ok;if(ok)n++}
-    countEl.textContent=(countEl.dataset.tpl||'Показано: {n} из {t}').replace('{n}',n).replace('{t}',cards.length);
-    document.getElementById('empty').hidden=n!==0;
-  }
-  if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
-
+  /* Плеер: внешний iframe (Яндекс Музыка) подгружается только по нажатию кнопки */
+  document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
+    btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
 
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
@@ -719,9 +933,12 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
   if(!totop)return;
+  /* тонкая линия прочитанного вверху общей страницы и название текущего раздела на вкладке меню у края */
+  const prog=document.querySelector('.progress'), edge=document.querySelector('.rail-edge span'), edgeWord=edge?edge.textContent:'';
   /* главная — одна длинная страница: боковое меню и кнопка «Меню» появляются, когда первый экран ушёл вверх */
   const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700);
-    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6)};
+    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6);
+    if(prog){const max=document.documentElement.scrollHeight-innerHeight;prog.style.setProperty('--p',max>0?Math.min(1,y/max):0)}};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
@@ -730,7 +947,8 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     const here=location.pathname.split('/').pop()||'index.html';
     const pageLink=links.find(a=>a.getAttribute('href')===here);
     if(pageLink) pageLink.classList.add('active');
-    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))})}}},{rootMargin:'-45% 0px -50% 0px'});
+    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))});
+      const cur=document.querySelector('.rail a.active');if(edge&&cur)edge.textContent=edgeWord+' · '+cur.textContent}}},{rootMargin:'-45% 0px -50% 0px'});
     links.map(a=>a.getAttribute('href').split('#')[1]).filter(Boolean).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el)});
 
     /* Плавное появление: прячем только то, что ниже первого экрана */

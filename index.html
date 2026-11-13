@@ -6,8 +6,8 @@
 <title>Blazhevich — Владислав Блажевич: тромбон, ноты, история</title>
 <meta name="description" content="Владислав Блажевич (1881–1942): ноты, записи, биография, 13 концертов для тромбона, школы тромбона и признание в США.">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#f4eee1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4eee1'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#e8dbbf">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:site_name" content="Blazhevich">
@@ -27,19 +27,19 @@
 :root{
   color-scheme:light;
   /* paper and ink */
-  --paper:#f4eee1;          /* page */
-  --surface:#fbf8f1;        /* raised paper: fields, table, panels */
-  --band:#ece3cf;           /* a band one step darker than the page */
-  --ink:#2a2118;            /* text, 13.7:1 on paper */
-  --muted:#5a4d3f;          /* secondary text, 7.1:1 */
-  --accent:#24426b;         /* empire blue: links and the one primary action, 8.8:1 */
-  --accent-hi:#18304f;
-  --gold:#7a5a17;           /* years and figures set in type, 5.5:1 */
-  --rule:#a8843a;           /* gilt hairlines, decoration only */
-  --line:#d6c9ae;           /* quiet hairlines */
-  --field:#8c7b60;          /* field and outline edges, 3.5:1 */
-  --on-accent:#fbf8f1;
-  --select:#d9c79c;
+  --paper:#e8dbbf;          /* page: aged cream, matched to the sepia of the first screen (13.11.2026) */
+  --surface:#f0e6cf;        /* raised paper: cards, table, panels */
+  --band:#dccaa6;           /* a band one step darker than the page */
+  --ink:#2b1d10;            /* sepia ink, 11.9:1 on paper */
+  --muted:#56432e;          /* secondary text, 6.8:1 */
+  --accent:#6a3418;         /* burnt umber: links, 7.2:1 — the blue left with the old palette */
+  --accent-hi:#4a220e;
+  --gold:#6b4d12;           /* years and figures set in type, 5.7:1 */
+  --rule:#9c7a3c;           /* gilt hairlines, decoration only */
+  --line:#c8b48d;           /* quiet hairlines */
+  --field:#7d6748;          /* field and outline edges, 3.9:1 */
+  --on-accent:#f0e6cf;
+  --select:#cdb27a;
   --tint:color-mix(in srgb,var(--rule) 12%,transparent);
   --shadow:color-mix(in srgb,var(--ink) 14%,transparent);
 
@@ -64,13 +64,15 @@
   --gutter-l:max(var(--s-4),env(safe-area-inset-left,0px));
   --gutter-r:max(var(--s-4),env(safe-area-inset-right,0px));
   --ease:cubic-bezier(.2,.7,.2,1);
+  /* бумажное зерно: едва заметный шум поверх кремового фона, как на старом листе */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ---------- Base ---------- */
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + var(--s-5));overflow-x:clip}
-body{margin:0;background:var(--paper);color:var(--ink);font:var(--t-body)/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
+body{margin:0;background:var(--paper) var(--grain);color:var(--ink);font:var(--t-body)/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
 ::selection{background:var(--select);color:var(--ink)}
 a{color:var(--accent);text-underline-offset:.22em;text-decoration-thickness:1px}
 a:hover{color:var(--accent-hi);text-decoration-thickness:2px}
@@ -107,7 +109,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .hero{--horizon:66svh;position:relative;isolation:isolate;overflow:hidden;min-height:100svh;padding-block:var(--s-4) var(--s-6);text-align:center;
   /* one sun for the whole scene: high on the left, warming the sky and the paper */
-  background:radial-gradient(120% 90% at 16% -10%,#fff8e6 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),#ece1c8 calc(var(--horizon) + 5svh),var(--paper) 100%)}
+  background:radial-gradient(120% 90% at 16% -10%,var(--surface) 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),var(--band) calc(var(--horizon) + 5svh),var(--paper) 100%)}
 /* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
 .hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
   background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
@@ -124,7 +126,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
 .hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
-.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:rgb(244 238 225/.72);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
 .hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
 /* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
 .hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
@@ -167,14 +169,12 @@ section.block p{max-width:var(--measure)}
 .reveal{transition:opacity .8s ease,transform .8s var(--ease)}
 
 /* ---------- Catalogue: a ruled index, not tiles ---------- */
-.tools{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:var(--s-4);margin-bottom:var(--s-4)}
 label{font-size:var(--t-small);font-weight:600;color:var(--ink)}
 input,select{width:100%;display:block;margin-top:var(--s-2);min-height:48px;padding:0 var(--s-4);border:1px solid var(--field);border-radius:var(--radius);background:var(--surface);color:var(--ink);font:inherit;font-size:16px;font-weight:400;transition:border-color .2s}
 input::placeholder{color:var(--muted)}
 input:hover,select:hover{border-color:var(--ink)}
 input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--field)}
 input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
-.count{margin-block:var(--s-5) var(--s-4);font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--ink)}
 .card{position:relative;display:grid;grid-template-columns:180px minmax(0,1fr) auto;gap:var(--s-2) var(--s-6);padding:var(--s-5) var(--s-3);border-bottom:1px solid var(--line);transition:background-color .2s;min-width:0}
 .card:hover{background:var(--surface)}
@@ -185,7 +185,6 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .card a::after{content:"";position:absolute;inset:0}
 .card:hover a{text-decoration:underline}
 .tag{font-size:15px;color:var(--gold);font-weight:500}
-.empty{padding:var(--s-5);border:1px dashed var(--field);color:var(--muted);margin-top:var(--s-4)}
 
 /* ---------- Listen: a band ---------- */
 #listen{background:var(--band)}
@@ -322,13 +321,8 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .lineage-v3{padding:0;list-style:none;display:grid;gap:var(--s-2);margin-block:var(--s-4)}
 .lineage-v3 li{padding:var(--s-3) var(--s-4);border:1px solid var(--line);background:var(--surface)}
 .lineage-v3 .provisional{border-style:dashed;border-color:var(--field)}
-.extra-tools-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin:var(--s-4) 0}
-.extra-tools-v3 label{display:grid;gap:0}
 
 /* ---------- Footer ---------- */
-footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);color:var(--muted);font-size:15px}
-.foot{display:flex;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;align-items:center}
-.foot .brand{font-size:16px}
 .totop{position:fixed;right:calc(var(--s-4) + env(safe-area-inset-right,0px));bottom:calc(var(--s-4) + env(safe-area-inset-bottom,0px));z-index:25;width:48px;height:48px;border:1px solid var(--field);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-size:20px;cursor:pointer;transition:opacity .3s,transform .3s}
 .js .totop{opacity:0;transform:translateY(var(--s-3));pointer-events:none}
 .js .totop.show{opacity:1;transform:none;pointer-events:auto}
@@ -352,7 +346,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .explore-card:nth-child(odd),.explore-card:nth-child(even){padding:var(--s-5) 0;border-right:0}
   .card{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}
   .card .tag,.card h3,.card p,.card a{grid-column:1;grid-row:auto}
-  .people-v3,.extra-tools-v3{grid-template-columns:minmax(0,1fr)}
+  .people-v3{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:620px){
   body{font-size:16px}
@@ -365,7 +359,6 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   .bar{justify-content:center;padding-block:var(--s-2)}
   nav{justify-content:center}
   nav a{padding:var(--s-2) var(--s-2);font-size:14px}
-  .tools{grid-template-columns:minmax(0,1fr)}
   .facts{grid-template-columns:minmax(0,1fr)}
   .facts > div,.facts > div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .facts > div:first-child{border-top:0}
@@ -461,35 +454,44 @@ footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);colo
   background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-menu{position:fixed}
-@media(min-width:1101px){
-  .rail{display:flex}
-  .past-hero .rail{opacity:1;pointer-events:auto}
-  /* место под меню справа: колонка разделов чуть уже */
-  .rail ~ main .block > .wrap{max-width:min(var(--container),calc(100vw - 2 * 190px))}
+/* Меню разделов (13.11.2026, просьба владельца): на компьютере с мышью оно спрятано за правым краем
+   и само выезжает, когда курсор подходит к краю окна; у края всегда видна тонкая вкладка «Разделы».
+   С клавиатуры меню открывается по Tab (focus-within). Без мыши (телефон, планшет) — кнопка «Меню». */
+.rail-edge{display:none}
+@media(min-width:1101px) and (hover:hover) and (pointer:fine){
+  .rail-edge{display:flex;position:fixed;z-index:21;top:0;bottom:0;right:0;width:44px;align-items:center;justify-content:center}
+  .rail-edge span{writing-mode:vertical-rl;padding:var(--s-4) var(--s-2);border:1px solid var(--rule);border-right:0;border-radius:var(--radius) 0 0 var(--radius);
+    background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    color:var(--gold);font:600 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;transition:opacity .25s}
+  .rail{display:flex;right:0;padding:var(--s-4) 0 var(--s-4) var(--s-3);border:1px solid var(--rule);border-right:3px solid var(--rule);
+    border-radius:var(--radius) 0 0 var(--radius);background:var(--surface) var(--grain);box-shadow:-10px 0 28px -12px var(--shadow);
+    opacity:0;translate:calc(100% + 24px) -50%;pointer-events:none;transition:opacity .25s ease,translate .35s var(--ease)}
+  .rail-edge:hover + .rail,.rail:hover,.rail:focus-within{opacity:1;translate:0 -50%;pointer-events:auto}
+  .rail-edge:has(+ .rail:hover) span,.rail-edge:hover span{opacity:0}
 }
-@media(max-width:1100px){
+@media not all and (min-width:1101px) and (hover:hover) and (pointer:fine){
   .fab{display:inline-flex;align-items:center}
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
-html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
+html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 /* надпись и кнопки на первом экране лежат на снимке: под ними мягкая бумажная подложка, чтобы буквы не путались с фасадом */
 .hero-copy{position:relative}
-.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,rgb(244 238 225/.9),rgb(244 238 225/.6) 55%,transparent);pointer-events:none}
+.hero-copy::before{content:"";position:absolute;z-index:-1;inset:-18% -14%;background:radial-gradient(closest-side,color-mix(in srgb,var(--paper) 90%,transparent),color-mix(in srgb,var(--paper) 60%,transparent) 55%,transparent);pointer-events:none}
 
 /* ---------- Генеалогия школы: схема-дерево. Ствол учитель → ученик сверху вниз, затем две ветви рядом ---------- */
 .dossier-tree{margin-inline:0}
-.lineage,.lineage ol,.lineage ul{list-style:none;margin:0;padding:0}
-.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
-.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
+ol.lineage,ol.lineage ol,ol.lineage ul{list-style:none;margin:0;padding:0}
+ol.lineage{display:grid;justify-items:center;gap:var(--s-6);margin-top:var(--s-5)}
+ol.lineage > li{position:relative;display:grid;justify-items:center;width:100%}
 /* вертикальная связь к следующему поколению */
-.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
+ol.lineage > li:not(:last-child)::after{content:"";position:absolute;left:50%;bottom:calc(-1 * var(--s-6));height:var(--s-6);border-left:1px solid var(--rule)}
 .tnode{display:grid;justify-items:center;gap:2px;max-width:340px;padding:var(--s-3) var(--s-5);border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);text-align:center}
 .tnode b{font:600 22px/1.15 var(--display);color:var(--ink)}
 .tnode-key{border-color:var(--rule);box-shadow:0 0 0 4px var(--tint)}
 .tnode-key b{font-size:26px}
-.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
-.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
+ol.lineage .yrs{font:italic 500 16px/1.3 var(--display);color:var(--gold)}
+ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 /* развилка: горизонтальная перекладина над двумя ветвями */
 .split{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);align-items:start;padding-top:var(--s-5)}
 .branch{position:relative;display:grid;justify-items:center;gap:var(--s-3)}
@@ -517,7 +519,7 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 
 /* ---------- Первый экран (картинка владельца, 12.11.2026): Блажевич с тромбоном перед Большим залом
    консерватории и Большим театром — одна композиция на весь экран; поверх только надпись и «Меню», EN в углу ---------- */
-.hero{display:grid;align-content:end;background:#efe4cc;padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
+.hero{display:grid;align-content:end;background:var(--band);padding-block:var(--s-6) clamp(var(--s-6),7svh,var(--s-9))}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
@@ -547,12 +549,231 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
 .section-head.scene-moscow,.section-head.scene-leningrad{min-height:clamp(560px,calc(100svh - 110px),59.9vw);padding-bottom:var(--s-5)}
 @media(max-width:1100px){.section-head.scene-moscow,.section-head.scene-leningrad{min-height:0}}
 .section-head.scene p.scene-credit{order:5;max-width:none;margin:auto 0 0;padding-top:var(--s-5);font:italic 500 15px/1.3 var(--display);color:var(--muted)}
+
+/* ---------- Старинная гамма (13.11.2026): весь сайт в тон первого экрана — кремовая бумага с зерном, сепия, края листа чуть темнее ---------- */
+body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
+  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,rgb(74 48 20/.16) 100%)}
+@media print{body::after{display:none}}
+.rail .lang{margin-right:var(--s-4)}
+
+/* ---------- Ноты как библиотечные карточки (13.11.2026): две колонки, у каждой карточки номер, красная линейка
+   и строки каталожной карточки; источник — «штампом» внизу. Вся карточка по-прежнему ссылка. ---------- */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0;counter-reset:card}
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-5) var(--s-4);
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
+  background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
+  box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
+.card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+.card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
+  border-bottom:1px solid color-mix(in srgb,#8a2b1c 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
+.card h3{font-size:26px;margin-top:var(--s-2)}
+.card p{font-size:16px;line-height:32px;margin:0}
+.card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
+  background:var(--paper);font-size:13px;letter-spacing:.06em;text-transform:uppercase;rotate:-1.2deg}
+.card:hover a{text-decoration:none;border-color:var(--accent)}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
+main > section.block{position:relative}
+main > section.block + section.block::before{content:"◆";position:absolute;top:0;left:50%;translate:-50% -50%;width:min(460px,70vw);
+  text-align:center;font-size:11px;line-height:1;color:var(--rule);
+  background:linear-gradient(to right,transparent,var(--rule) 18%,var(--rule) 44%,transparent 44% 56%,var(--rule) 56%,var(--rule) 82%,transparent) center/100% 1px no-repeat}
+
+/* ---------- Лента жизни (биография): годы 1881–1942 по горизонтали, периоды — полосами на трёх дорожках.
+   Позиции задают --a (начало, %) и --w (длина, %); фрагмент делает tools/media/make_fragments.py ---------- */
+.lifeline{margin:var(--s-7) 0;max-width:none}
+.lifeline figcaption,.routemap figcaption{font:italic 500 17px/1.4 var(--display);color:var(--gold);margin-bottom:var(--s-3)}
+.ll-scroll{overflow-x:auto;padding-bottom:var(--s-2)}
+.ll-track{position:relative;min-width:860px;height:252px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--rule) 22%,transparent) 0 1px,transparent 1px calc(100% / 6.1)) calc(900% / 61) 0}
+.ll-span{position:absolute;left:var(--a);width:var(--w);top:calc(34px + var(--lane) * 46px);height:38px;display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--s-2);overflow:hidden;white-space:nowrap;border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:var(--surface);color:var(--ink);text-decoration:none;line-height:1.15;transition:background .2s,border-color .2s}
+a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--ink)}
+.ll-span b{font:600 15px/1.1 var(--display);overflow:hidden;text-overflow:ellipsis}
+.ll-span i{font:500 11px/1.2 var(--body);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-axis span{position:absolute;top:6px;left:var(--a);translate:-50% 0;font:500 12px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-marks span{position:absolute;bottom:8px;left:var(--a);padding-left:var(--s-2);border-left:1px solid var(--accent);font:500 12px/1.3 var(--body);color:var(--muted);white-space:nowrap}
+.ll-marks span:last-child{translate:-100% 0;padding:0 var(--s-2) 0 0;border-left:0;border-right:1px solid var(--accent)}
+.ll-marks b{color:var(--accent);font-weight:600}
+
+/* ---------- Схема-карта (В США): обзор Атлантики и врезка России; рисунок — SVG из tools/media/make_fragments.py ---------- */
+.routemap{margin:0 0 var(--s-7);max-width:none}
+.routemap svg{display:block;width:100%;height:auto;background:var(--surface) var(--grain);border:1px solid var(--rule);outline:1px solid var(--line);outline-offset:4px}
+.routemap figcaption{margin:var(--s-4) 0 0;font-size:15px;color:var(--muted);max-width:var(--measure)}
+.rm-grid,.rm-grid path{fill:none;stroke:var(--line);stroke-width:1}
+.rm-frame{fill:none;stroke:var(--rule);stroke-width:1.5}
+.rm-inset{fill:none;stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4}
+.rm-route{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round}
+.rm-route-2{stroke-width:1.6;stroke-dasharray:7 6;stroke:var(--gold)}
+.rm-dot{fill:var(--surface);stroke:var(--ink);stroke-width:1.6}
+.rm-key{fill:var(--accent);stroke:var(--surface)}
+.rm-city{font:600 17px var(--display);fill:var(--ink)}
+.rm-sub,.rm-note{font:500 12.5px var(--body);fill:var(--muted)}
+.rm-note{fill:var(--accent);font-weight:600}
+.rm-sea,.rm-land{font:italic 500 19px var(--display);fill:var(--rule);letter-spacing:.28em}
+.rm-land{font-size:15px;letter-spacing:.2em}
+@media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
+.ll-short{overflow:visible;padding:0}
+.ll-short b,.ll-short i{position:relative;left:calc(100% + var(--s-2));overflow:visible}
+.ll-left b,.ll-left i{left:auto;right:calc(100% + var(--s-2));position:absolute}
+.ll-left b{top:4px}.ll-left i{top:21px}
+
+/* ---------- Плеер в «Слушать»: до нажатия — только кнопка, после — iframe Яндекс Музыки (YouTube не встраиваем: в РФ он недоступен) ---------- */
+.player{margin-top:var(--s-4);display:grid;gap:var(--s-2);justify-items:start}
+.player iframe{width:100%;max-width:614px;height:450px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--surface)}
+html:not(.js) .player{display:none}
+
+/* ============================================================================================
+   Редакционная доводка (13.11.2026): вступление после первого экрана с оглавлением, номера разделов,
+   крупный портрет 1903 года, цитата, источники по темам, подвал, линия прочитанного
+   ============================================================================================ */
+
+/* ---------- Вступление: кто это, одной фразой, и оглавление семи разделов ---------- */
+.lede{padding-block:var(--s-9) var(--s-8);border-bottom:1px solid var(--line)}
+.lede-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--s-8);align-items:start}
+.lede-copy{display:grid;gap:var(--s-5);align-content:start}
+.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.lede-kicker::after{content:"";flex:1;max-width:120px;height:1px;background:var(--rule)}
+.lede-text{font:500 clamp(28px,3.3vw,44px)/1.16 var(--display);letter-spacing:-.005em;color:var(--ink);text-wrap:balance}
+.lede-sub{color:var(--muted);max-width:52ch}
+.toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);counter-reset:toc}
+.toc li{counter-increment:toc;border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:44px minmax(0,auto) minmax(0,1fr) 20px;align-items:baseline;gap:var(--s-3);padding:var(--s-3) var(--s-2) var(--s-3) 0;
+  color:var(--ink);text-decoration:none;transition:background-color .2s,padding .25s var(--ease)}
+.toc a::before{content:counter(toc,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
+.toc a::after{content:"↓";justify-self:end;color:var(--rule);transition:translate .25s var(--ease),color .2s}
+.toc b{font:600 26px/1.15 var(--display)}
+.toc span{font-size:15px;line-height:1.4;color:var(--muted);text-align:right}
+.toc a:hover{background:var(--tint);padding-left:var(--s-3);color:var(--ink)}
+.toc a:hover::after{translate:0 3px;color:var(--accent)}
+@media(max-width:900px){
+  .lede{padding-block:var(--s-8) var(--s-7)}
+  .lede-grid{grid-template-columns:minmax(0,1fr);gap:var(--s-7)}
+}
+@media(max-width:520px){
+  .toc a{grid-template-columns:36px minmax(0,1fr) 20px;row-gap:2px}
+  .toc span{grid-column:2;grid-row:2;text-align:left;font-size:14px}
+  .toc a::after{grid-column:3;grid-row:1}
+}
+
+/* ---------- Номер раздела над заголовком (только общая страница, где есть боковое меню) ---------- */
+.section-head[data-n]::before{content:attr(data-n);order:-2;width:max-content;min-width:56px;padding-bottom:var(--s-2);margin-bottom:var(--s-2);
+  border-bottom:1px solid var(--rule);font:italic 600 22px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
+
+/* ---------- Биография: буквица в первой главе и портрет 1903 года в собственной колонке ---------- */
+.chapter:first-child .ch-body > p:first-of-type::first-letter{float:left;font:600 76px/.78 var(--display);padding:var(--s-2) var(--s-3) 0 0;color:var(--gold)}
+.ch-photo{margin:0}
+@media(min-width:1021px){
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo .ch-photo{rotate:1.2deg;margin-top:var(--s-2)}
+}
+@media(max-width:1020px){.chapter.has-photo .ch-photo{grid-column:1 / -1;width:min(320px,78vw);margin-top:var(--s-3)}}
+.ch-photo .mat{box-shadow:0 14px 30px -18px var(--shadow)}
+
+/* ---------- Цитата: слова самого Блажевича набраны антиквой с золочёной линейкой ---------- */
+.quote{margin:var(--s-2) 0 var(--s-3);padding:var(--s-2) 0 var(--s-2) var(--s-5);border-left:2px solid var(--rule);display:grid;gap:var(--s-3)}
+.quote p{font:italic 500 21px/1.45 var(--display);color:var(--ink)!important;max-width:none}
+.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+/* ---------- О проекте: источники по темам, во всю ширину, в две колонки ---------- */
+.about{margin-bottom:var(--s-8)}
+.about-credit{padding-left:var(--s-5);border-left:1px solid var(--line)}
+.src-block{border-top:1px solid var(--ink);padding-top:var(--s-6);display:grid;gap:var(--s-5)}
+.src-block > h3{font-size:36px}
+.src-lead{color:var(--muted)}
+.src-groups{columns:2;column-gap:var(--s-8)}
+.src-group{break-inside:avoid;margin:0 0 var(--s-6);font-weight:400}
+.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.src-group .sources{font-size:15.5px;line-height:1.6;gap:var(--s-3)}
+.src-group .sources li::marker{font:italic 600 17px var(--display);color:var(--gold)}
+.sources li:target{outline:1px solid var(--rule);outline-offset:6px}
+@media(max-width:820px){.src-groups{columns:1}.about-credit{padding-left:0;border-left:0}}
+
+/* ---------- Подвал: имя и годы, разделы, досье, язык ---------- */
+body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background:var(--band);padding-block:var(--s-8) var(--s-7);color:var(--muted);font-size:15px}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr);gap:var(--s-6) var(--s-8);align-items:start}
+.foot-id{display:grid;gap:var(--s-3);max-width:38ch}
+.foot .brand{font-size:20px;padding:0}
+.foot-name{font:500 24px/1.2 var(--display);color:var(--ink)}
+.foot-name span{color:var(--gold);font-style:italic;font-variant-numeric:lining-nums;white-space:nowrap}
+.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.foot ul + h2{margin-top:var(--s-5)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-2)}
+.foot-secs{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s-5)}
+.foot ul a{color:var(--ink);text-decoration:none;display:inline-block;padding-block:2px}
+.foot ul a:hover{color:var(--accent);text-decoration:underline}
+.foot-fine{grid-column:1 / -1;margin-top:var(--s-4);padding-top:var(--s-4);border-top:1px solid var(--line);font-size:var(--t-small)}
+@media(max-width:820px){.foot{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.foot-id{grid-column:1 / -1}}
+@media(max-width:520px){.foot{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Линия прочитанного: тонкая золочёная полоска вверху общей страницы ---------- */
+.progress{position:fixed;z-index:31;top:0;left:0;right:0;height:2px;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));pointer-events:none}
+html:not(.past-hero) .progress{opacity:0}
+@media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
+
+/* ---------- «Слушать» (13.11.2026): записи как конверты пластинок — диск слева, подпись и ссылки справа ---------- */
+.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5)}
+.record{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-5);align-items:start;padding:var(--s-6);min-width:0;
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--surface) var(--grain);box-shadow:0 12px 26px -20px var(--shadow)}
+.record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
+.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
+.record-main .record-body{gap:var(--s-4)}
+.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.record h3{font-size:28px}
+.record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
+.record p{color:var(--muted)}
+/* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
+.disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
+  background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
+    radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
+    conic-gradient(from 20deg,transparent 0 8%,rgb(255 240 210/.16) 12%,transparent 18% 50%,rgb(255 240 210/.12) 62%,transparent 68%),
+    repeating-radial-gradient(circle,#2b1d10 0 1.5px,#3b2a19 1.5px 3px);
+  box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
+.disc-sm{width:84px}
+.record:hover .disc{rotate:18deg}
+.disc{transition:rotate .8s var(--ease)}
+.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
+.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.record-links b{font-weight:600;font-size:16px;line-height:1.35}
+.record-links span{font-size:var(--t-small);color:var(--accent)}
+.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
+.record .player iframe{max-width:none}
+@media(max-width:900px){.records{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:620px){
+  .record,.record-main{grid-template-columns:minmax(0,1fr);padding:var(--s-5);gap:var(--s-4)}
+  .disc{width:112px}.disc-sm{width:72px}
+}
+
+/* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
+.ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
+.ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
+.ch-note span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.nw{white-space:nowrap}
+.ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
+.ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+.ch-plate figcaption{font-size:13px;line-height:1.5;color:var(--muted);max-width:62ch}
+@media(min-width:1021px){
+  .chapter{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .ch-mark{grid-column:1;grid-row:1}
+  .ch-body{grid-column:2;grid-row:1}
+  .ch-note,.chapter .ch-photo{grid-column:3;grid-row:1}
+  .ch-note{margin-top:var(--s-2)}
+  .ch-plate{grid-column:2 / -1;grid-row:2}
+}
+@media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
+@media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
+@media(prefers-reduced-motion:reduce){.record:hover .disc{rotate:none}}
 </style>
 </head>
 <body>
-<a class="skip" href="#scores">Перейти к содержимому</a>
-<div class="draft">Предварительный просмотр · не опубликовано</div>
-<nav class="rail" aria-label="Разделы"><a href="#scores">Ноты</a><a href="#listen">Слушать</a><a href="#biography">Биография</a><a href="#usa">В США</a><a href="#schools">Школы</a><a href="#concertos">Концерты</a><a href="#about">О проекте</a><a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a></nav>
+<a class="skip" href="#scores">Перейти к содержимому</a>
+<div class="draft">Предварительный просмотр · не опубликовано</div>
+<div class="rail-edge" aria-hidden="true"><span>Меню</span></div>
+<nav class="rail" aria-label="Разделы"><a href="#scores">Ноты</a><a href="#listen">Слушать</a><a href="#biography">Биография</a><a href="#usa">В США</a><a href="#schools">Школы</a><a href="#concertos">Концерты</a><a href="#about">О проекте</a><a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a></nav>
+<div class="progress" aria-hidden="true"></div>
 <button class="fab" type="button" popovertarget="menu">Меню</button>
 <main id="main">
 <section id="hero" class="hero" aria-labelledby="hero-title">
@@ -561,220 +782,283 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   <div class="wrap hero-stage">
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-mark"><span aria-hidden="true">Blazhevich</span><span class="sr">Владислав Блажевич, 1881–1942</span></h1>
-      <div class="hero-nav"><button class="hero-btn" type="button" popovertarget="menu">Меню</button></div>
-      <nav id="menu" class="hero-menu" popover aria-label="Разделы"><a href="#scores">Ноты</a><a href="#listen">Слушать</a><a href="#biography">Биография</a><a href="#usa">В США</a><a href="#schools">Школы</a><a href="#concertos">Концерты</a><a href="#about">О проекте</a></nav>
+      <nav id="menu" class="hero-menu" popover aria-label="Разделы"><a href="#scores">Ноты</a><a href="#listen">Слушать</a><a href="#biography">Биография</a><a href="#usa">В США</a><a href="#schools">Школы</a><a href="#concertos">Концерты</a><a href="#about">О проекте</a></nav>
     </div>
   </div>
 </section>
+<div class="lede"><div class="wrap lede-grid">
+  <div class="lede-copy reveal"><p class="lede-kicker">Владислав Михайлович Блажевич · 1881–1942</p>
+    <p class="lede-text">Тромбонист Большого театра, профессор Московской консерватории, автор школ и этюдов, по которым до сих пор учатся тромбонисты в России и в США.</p>
+    <p class="lede-sub">Здесь собраны его ноты, записи, биография и история двух школ русского тромбона. Факты даны со ссылками на источники, расхождения между ними отмечены.</p></div>
+  <div class="toc reveal" role="navigation" aria-label="Содержание"><ol><li><a href="#scores"><b>Ноты</b><span>Школы, этюды, дуэты, концерты</span></a></li><li><a href="#listen"><b>Слушать</b><span>Записи концертов и двух школ</span></a></li><li><a href="#biography"><b>Биография</b><span>1881–1942: от смоленского хутора до консерватории</span></a></li><li><a href="#usa"><b>В США</b><span>Как ноты попали в Бостон и стали учебником</span></a></li><li><a href="#schools"><b>Школы</b><span>Москва и Ленинград: учитель → ученик</span></a></li><li><a href="#concertos"><b>Концерты</b><span>Тринадцать концертов для тромбона</span></a></li><li><a href="#about"><b>О проекте</b><span>Принципы и источники</span></a></li></ol></div>
+</div></div>
 <section id="scores" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="assets/v-conservatory-portico.webp" alt="" loading="lazy" decoding="async"></figure><h2>Произведения и ноты</h2><div class="eyebrow">Для занятий и исполнения</div><p>Начальная подборка, а не полный каталог. Ссылки ведут в библиотеки и к описаниям произведений; чужие нотные файлы здесь не размещены.</p></div>
-  <div class="tools">
-    <label for="search">Поиск по названию<input id="search" type="search" placeholder="Например, легато или туба" autocomplete="off"></label>
-    <label for="instrument">Инструмент<select id="instrument"><option value="all">Все инструменты</option><option value="тромбон">Тромбон</option><option value="туба">Туба</option></select></label>
-  </div>
-<div class="extra-tools-v3"><label for="filter-genre">Жанр<select id="filter-genre" data-catalog-filter="genre"><option value="all">Все</option><option value="method">Школа</option><option value="duet">Дуэт</option><option value="exercise">Упражнения</option><option value="study">Этюды</option><option value="concerto">Концерты</option></select></label><label for="filter-ensemble">Состав<select id="filter-ensemble" data-catalog-filter="ensemble"><option value="all">Все</option><option value="single">Один исполнитель: учебный материал</option><option value="duo">Два тромбона</option><option value="unspecified">Состав сопровождения уточняется</option></select></label><label for="filter-source">Источник<select id="filter-source" data-catalog-filter="source"><option value="all">Все</option><option value="mgk">Московская консерватория</option><option value="classon">classON</option><option value="history">История изданий</option><option value="recordings">Проект записей</option><option value="imslp">IMSLP</option></select></label><label for="filter-difficulty">Сложность<select id="filter-difficulty" data-catalog-filter="difficulty"><option value="all">Все</option><option value="unrated">Не оценено по нотам</option></select></label></div><p class="note">Сложность пока не оценена по нотам. Предлагаемая шкала: базовая, средняя, высокая — по диапазону, ритму, выносливости и ключам. По одному названию оценка не назначается. Фильтр источника обозначает ресурс ссылки, а не проверенное издательство.</p>  <p class="note count" id="count" role="status" aria-live="polite">В подборке — 10 записей</p>
+  <div class="section-head reveal" data-n="01"><figure class="head-vignette" aria-hidden="true"><img src="assets/v-conservatory-portico.webp" alt="" loading="lazy" decoding="async"></figure><h2>Произведения и ноты</h2><div class="eyebrow">Для занятий и исполнения</div><p>Начальная подборка, а не полный каталог. Ссылки ведут в библиотеки и к описаниям произведений; чужие нотные файлы здесь не размещены.</p></div>
   <div class="grid" id="catalog">
-    <article class="card" data-instrument="тромбон" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Школа для раздвижного тромбона</h3><div class="tag">Тромбон, школа</div><p>Работа с ключами и исполнительской техникой. Упомянута в историческом обзоре консерватории. Ссылка ведёт к описанию, не к PDF.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="method" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Школа развития легато на цуг-тромбоне</h3><div class="tag">Тромбон, легато</div><p>Учебная работа из перечня наследия Блажевича на сайте Московской консерватории. Издания и их даты требуют отдельного сопоставления.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="duet" data-ensemble="duo" data-source="mgk" data-difficulty="unrated"><h3>Концертные дуэты</h3><div class="tag">Два тромбона, ансамбль</div><p>Произведения для двух тромбонов, включённые в обзор педагогического наследия. Нотный файл пока не добавлен.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="exercise" data-ensemble="single" data-source="mgk" data-difficulty="unrated"><h3>Секвенции для тромбона</h3><div class="tag">Тромбон, упражнения</div><p>26 мелодических упражнений в различных ритмах и ключах — по описанию Московской консерватории.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="method" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Школа игры на тубе. Часть 1</h3><div class="tag">Туба, школа</div><p>Карточка нотного материала в библиотеке classON. Условия доступа и использования определяет библиотека.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Ноты в библиотеке ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Школа игры на тубе. Часть 2</h3><div class="tag">Туба, этюды</div><p>Этюды, страницы 29–47. Нумерация страниц приведена по карточке classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Ноты в библиотеке ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="study" data-ensemble="single" data-source="classon" data-difficulty="unrated"><h3>Школа игры на тубе. Часть 2</h3><div class="tag">Туба, этюды</div><p>Этюды, страницы 48–66. Продолжение подборки библиотеки classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Ноты в библиотеке ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="method" data-ensemble="single" data-source="history" data-difficulty="unrated"><h3>Школа для тромбона в ключах (Clef Studies)</h3><div class="tag">Тромбон, ключи</div><p>Самая известная в США работа Блажевича. Американские издания: Райхман (Leeds, 1948), Острандер (IMC, 1957), Хансбергер (MCA, 1965). Современный уртекст East-West сделан по русскому изданию 1939 года.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">История изданий ↗</a></article>
-    <article class="card" data-instrument="тромбон" data-genre="concerto" data-ensemble="unspecified" data-source="recordings" data-difficulty="unrated"><h3>Концерты для тромбона</h3><div class="tag">Тромбон, концерты</div><p>Тринадцать концертов, написанных для студентов консерватории. Большинство создано в 1920-х годах, многие при жизни автора не изданы. Первые четыре записал Калеб Ламберт.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Проект записей ↗</a></article>
-    <article class="card" data-instrument="туба" data-genre="study" data-ensemble="single" data-source="imslp" data-difficulty="unrated"><h3>70 этюдов для тубы in B</h3><div class="tag">Туба, этюды</div><p>Американская редакция Роберта Кинга, Alphonse Leduc, два тома. Источники связывают эти этюды со школой для тромбона в ключах.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">Каталог IMSLP ↗</a></article>
+    <article class="card" data-instrument="тромбон"><h3>Школа для раздвижного тромбона</h3><div class="tag">Тромбон, школа</div><p>Работа с ключами и исполнительской техникой. Упомянута в историческом обзоре консерватории. Ссылка ведёт к описанию, не к PDF.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
+    <article class="card" data-instrument="тромбон"><h3>Школа развития легато на цуг-тромбоне</h3><div class="tag">Тромбон, легато</div><p>Учебная работа из перечня наследия Блажевича на сайте Московской консерватории. Издания и их даты требуют отдельного сопоставления.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
+    <article class="card" data-instrument="тромбон"><h3>Концертные дуэты</h3><div class="tag">Два тромбона, ансамбль</div><p>Произведения для двух тромбонов, включённые в обзор педагогического наследия. Нотный файл пока не добавлен.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
+    <article class="card" data-instrument="тромбон"><h3>Секвенции для тромбона</h3><div class="tag">Тромбон, упражнения</div><p>26 мелодических упражнений в различных ритмах и ключах — по описанию Московской консерватории.</p><a href="https://www.mosconsv.ru/ru/groups/11202">Описание в источнике ↗</a></article>
+    <article class="card" data-instrument="туба"><h3>Школа игры на тубе. Часть 1</h3><div class="tag">Туба, школа</div><p>Карточка нотного материала в библиотеке classON. Условия доступа и использования определяет библиотека.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-1/">Ноты в библиотеке ↗</a></article>
+    <article class="card" data-instrument="туба"><h3>Школа игры на тубе. Часть 2</h3><div class="tag">Туба, этюды</div><p>Этюды, страницы 29–47. Нумерация страниц приведена по карточке classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-29-47/">Ноты в библиотеке ↗</a></article>
+    <article class="card" data-instrument="туба"><h3>Школа игры на тубе. Часть 2</h3><div class="tag">Туба, этюды</div><p>Этюды, страницы 48–66. Продолжение подборки библиотеки classON.</p><a href="https://www.classon.ru/lib/catalog/blazhevich/Composition/shkola-igry-na-tube-chast-2-etyudy-str-48-66/">Ноты в библиотеке ↗</a></article>
+    <article class="card" data-instrument="тромбон"><h3>Школа для тромбона в ключах (Clef Studies)</h3><div class="tag">Тромбон, ключи</div><p>Самая известная в США работа Блажевича. Американские издания: Райхман (Leeds, 1948), Острандер (IMC, 1957), Хансбергер (MCA, 1965). Современный уртекст East-West сделан по русскому изданию 1939 года.</p><a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">История изданий ↗</a></article>
+    <article class="card" data-instrument="тромбон"><h3>Концерты для тромбона</h3><div class="tag">Тромбон, концерты</div><p>Тринадцать концертов, написанных для студентов консерватории. Большинство создано в 1920-х годах, многие при жизни автора не изданы. Первые четыре записал Калеб Ламберт.</p><a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Проект записей ↗</a></article>
+    <article class="card" data-instrument="туба"><h3>70 этюдов для тубы in B</h3><div class="tag">Туба, этюды</div><p>Американская редакция Роберта Кинга, Alphonse Leduc, два тома. Источники связывают эти этюды со школой для тромбона в ключах.</p><a href="https://imslp.org/wiki/Category:Blazhevich,_Vladislav">Каталог IMSLP ↗</a></article>
   </div>
-  <p id="empty" class="empty" hidden>Ничего не найдено. Попробуйте другое название или выберите все инструменты.</p>
-  <noscript><p class="note">Для поиска нужен JavaScript. Все записи и ссылки доступны выше и без него.</p></noscript>
+  <noscript><p class="note">Для поиска нужен JavaScript. Все записи и ссылки доступны выше и без него.</p></noscript>
 </div></section>
 <section id="listen" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="assets/v-bolshoi-colonnade.webp" alt="" loading="lazy" decoding="async"></figure><h2>Слушать Блажевича</h2><div class="eyebrow">Живое звучание</div></div>
-  <div class="listen reveal">
-    <div>
-      <h3>Записи Калеба Ламберта</h3>
-      <p>Авторский проект, связанный с исследованием в Университете Айовы. Ламберт сообщает о записи первых четырёх тромбоновых концертов и ранее не публиковавшейся миниатюры. На странице доступны записи и ссылка на исследование.</p>
-      <div><a class="btn btn-brass" href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Открыть записи у исполнителя ↗</a></div>
-      <p class="note">Переход на внешний сайт. Автоматического воспроизведения и копий аудиозаписей здесь нет.</p>
-    </div>
-    <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  </div>
-  <div class="two-col reveal">
-    <div>
-      <h3>Московская школа на записях</h3>
-      <p class="note">Ученики учеников Блажевича. Подробнее в досье «<a href="moscow.html">Московская тромбоновая школа</a>».</p>
-      <ul class="sources plain-list">
-        <li>Римский-Корсаков. Концерт для тромбона и духового оркестра, солист В. Баташёв, 1972 (LP «Мелодия»): <a href="https://www.youtube.com/watch?v=Ggy0rW8XK3U">YouTube</a>.</li>
-        <li>Дискография В. Баташёва на «Мелодии» (1959, 1989): <a href="https://records.su/tag/Баташов_Виктор">records.su</a>.</li>
-      </ul>
-    </div>
-    <div>
-      <h3>Ленинградская школа на записях</h3>
-      <p class="note">Квартет тромбонов Ленинградской филармонии. Подробнее в досье «<a href="leningrad.html">Ленинградская тромбоновая школа</a>».</p>
-      <ul class="sources plain-list">
-        <li><a href="https://music.yandex.ru/album/42318197">Яндекс Музыка — Квартет тромбонов Ленинградской филармонии</a></li>
-        <li><a href="https://music.yandex.ru/artist/3762704">Яндекс Музыка — Виктор Венгловский</a></li>
-        <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3">Spotify — Leningrad Philharmonic Trombone Quartet (1977)</a></li>
-      </ul>
-    </div>
+  <div class="section-head reveal" data-n="02"><figure class="head-vignette" aria-hidden="true"><img src="assets/v-bolshoi-colonnade.webp" alt="" loading="lazy" decoding="async"></figure><h2>Слушать Блажевича</h2><div class="eyebrow">Живое звучание</div></div>
+  <div class="records">
+    <article class="record record-main reveal">
+      <div class="disc" aria-hidden="true"></div>
+      <div class="record-body">
+        <p class="record-tag">Музыка Блажевича · <span class="nw">концерты № 1–4</span></p>
+        <h3>Записи Калеба Ламберта</h3>
+        <p>Авторский проект, связанный с исследованием в Университете Айовы. Ламберт сообщает о записи первых четырёх тромбоновых концертов и ранее не публиковавшейся миниатюры. На странице доступны записи и ссылка на исследование.</p>
+        <div><a class="btn btn-brass" href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Открыть записи у исполнителя ↗</a></div>
+        <p class="note">Переход на внешний сайт. Автоматического воспроизведения и копий аудиозаписей здесь нет.</p>
+      </div>
+    </article>
+    <article class="record reveal">
+      <div class="disc disc-sm" aria-hidden="true"></div>
+      <div class="record-body">
+        <p class="record-tag">Московская школа · «Мелодия»</p>
+        <h3>Виктор Баташёв</h3>
+        <p class="note">Ученики учеников Блажевича. Подробнее в досье «<a href="moscow.html">Московская тромбоновая школа</a>».</p>
+        <ul class="record-links">
+          <li><a href="https://www.youtube.com/watch?v=Ggy0rW8XK3U"><b>Римский-Корсаков. Концерт для тромбона и духового оркестра</b><span>Солист В. Баташёв, 1972, LP «Мелодия» · YouTube ↗ (в России может не открываться)</span></a></li>
+          <li><a href="https://records.su/tag/Баташов_Виктор"><b>Дискография на «Мелодии», 1959 и 1989</b><span>records.su ↗</span></a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="record reveal">
+      <div class="disc disc-sm" aria-hidden="true"></div>
+      <div class="record-body">
+        <p class="record-tag">Ленинградская школа · 1977</p>
+        <h3>Квартет тромбонов Ленинградской филармонии</h3>
+        <p class="note">Подробнее в досье «<a href="leningrad.html">Ленинградская тромбоновая школа</a>».</p>
+        <ul class="record-links">
+          <li><a href="https://music.yandex.ru/album/42318197"><b>Альбом квартета</b><span>Яндекс Музыка ↗</span></a></li>
+          <li><a href="https://music.yandex.ru/artist/3762704"><b>Виктор Венгловский</b><span>Яндекс Музыка ↗</span></a></li>
+          <li><a href="https://open.spotify.com/album/6XlR6gnrfvo9jdIkTISsp3"><b>Leningrad Philharmonic Trombone Quartet (1977)</b><span>Spotify ↗</span></a></li>
+        </ul>
+        <div class="player" data-src="https://music.yandex.ru/iframe/album/42318197" data-title="Квартет тромбонов Ленинградской филармонии — плеер Яндекс Музыки"><button class="btn btn-ghost" type="button">▶ Слушать альбом здесь</button><p class="note">Плеер Яндекс Музыки загружается только после нажатия кнопки.</p></div>
+      </div>
+    </article>
   </div>
 </div></section>
 <section id="biography" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Как Блажевич стал Блажевичем</h2><div class="eyebrow">Жизнь в музыке · 1881–1942</div><p>Путь от сироты с бедного смоленского хутора до профессора Московской консерватории, чьи этюды сегодня задают в американских университетах.</p></div>
+  <div class="section-head reveal" data-n="03"><figure class="head-vignette" aria-hidden="true"><img src="assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Как Блажевич стал Блажевичем</h2><div class="eyebrow">Жизнь в музыке · 1881–1942</div><p>Путь от сироты с бедного смоленского хутора до профессора Московской консерватории, чьи этюды сегодня задают в американских университетах.</p></div>
 
   <div class="facts reveal" role="list">
-    <div role="listitem"><b>3 (15) августа 1881</b><span>родился на хуторе Трегубовка, Смоленская губерния</span></div>
-    <div role="listitem"><b>6 лет</b><span>остался без матери, отец был на каторге</span></div>
-    <div role="listitem"><b>1905/06–1928</b><span>в оркестре Большого театра, под конец — первый тромбон</span></div>
+    <div role="listitem"><b>3 (15) августа 1881</b><span>родился на хуторе Трегубовка, Смоленская губерния</span></div>
+    <div role="listitem"><b>6 лет</b><span>остался без матери, отец был на каторге</span></div>
+    <div role="listitem"><b>1905/06–1928</b><span>в оркестре Большого театра, под конец — первый тромбон</span></div>
     <div role="listitem"><b>13</b><span>концертов для тромбона</span></div>
   </div>
 
+<!-- lifeline -->
+  <figure class="lifeline reveal" aria-label="Жизнь по годам">
+  <figcaption>Жизнь по годам · 1881–1942</figcaption>
+  <div class="ll-scroll" tabindex="0"><div class="ll-track">
+  <a class="ll-span" href="#ch-childhood" style="--a:0.0%;--w:19.67%;--lane:0"><b>Смоленщина</b><i>1881–1893</i></a>
+  <a class="ll-span" href="#ch-army" style="--a:19.67%;--w:11.48%;--lane:0"><b>Военные оркестры</b><i>1893–1900</i></a>
+  <a class="ll-span ll-short" href="#ch-conservatory" style="--a:31.15%;--w:8.19%;--lane:1"><b>Консерватория</b><i>1900–1905</i></a>
+  <a class="ll-span" href="#ch-bolshoi" style="--a:39.34%;--w:37.71%;--lane:0"><b>Большой театр</b><i>1905–1928</i></a>
+  <a class="ll-span" href="#ch-teacher" style="--a:63.93%;--w:36.07%;--lane:1"><b>Профессор консерватории</b><i>1920–1942</i></a>
+  <a class="ll-span" href="#ch-bolshoi" style="--a:67.21%;--w:16.4%;--lane:2"><b>Персимфанс</b><i>1922–1932</i></a>
+  <a class="ll-span ll-short ll-left" href="#ch-conductor" style="--a:91.8%;--w:3.28%;--lane:3"><b>Гос. духовой оркестр СССР</b><i>1937–1939</i></a>
+  <div class="ll-axis" aria-hidden="true"><span style="--a:14.75%">1890</span><span style="--a:31.15%">1900</span><span style="--a:47.54%">1910</span><span style="--a:63.93%">1920</span><span style="--a:80.33%">1930</span><span style="--a:96.72%">1940</span></div>
+  <div class="ll-marks"><span style="--a:0.0%"><b>1881</b> рождение</span><span style="--a:31.15%"><b>1900</b> класс Борка</span><span style="--a:72.13%"><b>1925</b> школа в ключах</span><span style="--a:100.0%"><b>1942</b> Москва, 10 апреля</span></div>
+  </div></div></figure>
+  <!-- /lifeline -->
   <div class="chapters">
     <article class="chapter reveal" id="ch-childhood">
       <div class="ch-mark"><span class="ch-years">1881–1893</span><span class="ch-place">Смоленщина</span></div>
       <div class="ch-body">
-        <h3>Сирота с хутора Трегубовка</h3>
-        <p>Владислав Михайлович Блажевич родился 3 (15) августа 1881 года на хуторе Трегубовка Катынской волости Смоленского уезда. Его отец Михаил происходил из польских дворян. По данным исследователя Андрея Харламова, в год рождения сына отца арестовали за антиправительственные взгляды и приговорили к 20 годам каторги.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-        <p>Мать одна не справлялась с хозяйством и умерла в 1887 году, когда мальчику было шесть лет. Опекуном стал дядя по отцу. Жили бедно: по Харламову, собственной обуви у мальчика не было до двенадцати лет. Первым его инструментом была окарина.<sup class="ref"><a href="#s2">[2]</a></sup> Коллеги позже говорили, что ранние потери сделали его замкнутым, но и дали ему сильную волю и привычку полагаться только на себя.</p>
+        <h3>Сирота с хутора Трегубовка</h3>
+        <p>Владислав Михайлович Блажевич родился 3 (15) августа 1881 года на хуторе Трегубовка Катынской волости Смоленского уезда. Его отец Михаил происходил из польских дворян. <span class="warn">⚠</span> Сам Блажевич в анкете 1928 года назвал себя литовцем (см. <a href="moscow.html#m-blazhevich">московское досье</a>). По данным исследователя Андрея Харламова, в год рождения сына отца арестовали за антиправительственные взгляды и приговорили к 20 годам каторги.<sup class="ref"><a href="#s2">[2]</a></sup></p>
+        <p>Мать одна не справлялась с хозяйством и умерла в 1887 году, когда мальчику было шесть лет. Опекуном стал дядя по отцу. Жили бедно: по Харламову, собственной обуви у мальчика не было до двенадцати лет. Первым его инструментом была окарина.<sup class="ref"><a href="#s2">[2]</a></sup> Коллеги позже говорили, что ранние потери сделали его замкнутым, но и дали ему сильную волю и привычку полагаться только на себя.</p>
       </div>
     </article>
 
     <article class="chapter reveal" id="ch-army">
       <div class="ch-mark"><span class="ch-years">1893–1900</span><span class="ch-place">Военные оркестры</span></div>
       <div class="ch-body">
-        <h3>Двенадцать лет — и в армию</h3>
-        <p>В двенадцать лет дядя определил его воспитанником в оркестр 3-й артиллерийской бригады в Смоленске. Там у него впервые появились своя одежда и свой инструмент. Сначала он играл на эуфониуме, но попросился на тромбон: этот инструмент давал больше возможностей солировать и попасть в настоящий оркестр. В 1899 году он служил в Астраханском гренадерском полку, а в 1900-м ушёл из армии учиться.<sup class="ref"><a href="#s2">[2]</a></sup></p>
+        <h3>Двенадцать лет — и в армию</h3>
+        <p>В двенадцать лет дядя определил его воспитанником в оркестр 3-й артиллерийской бригады в Смоленске. Там у него впервые появились своя одежда и свой инструмент. Сначала он играл на эуфониуме, но попросился на тромбон: этот инструмент давал больше возможностей солировать и попасть в настоящий оркестр. В 1899 году он служил в Астраханском гренадерском полку, а в 1900-м ушёл из армии учиться.<sup class="ref"><a href="#s2">[2]</a></sup></p>
       </div>
-    </article>
+    <aside class="ch-note"><b>12 лет</b><span>В этом возрасте он стал воспитанником военного оркестра и впервые получил свой инструмент.</span></aside></article>
 
-    <article class="chapter reveal" id="ch-conservatory">
-      <div class="ch-mark"><span class="ch-years">1900–1905</span><span class="ch-place">Москва</span><figure class="ch-photo"><div class="mat"><img src="assets/blazhevich-1903-560.webp" srcset="assets/blazhevich-1903-560.webp 560w, assets/blazhevich-1903.webp 900w" sizes="(max-width:820px) 60vw, 220px" width="900" height="1327" loading="lazy" alt="Владислав Блажевич в 1903 году, фотография с его автографом и датой"></div><figcaption>Блажевич-студент, 1903 год, с автографом. Автор снимка неизвестен; <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, общественное достояние.</figcaption></figure></div>
+    <article class="chapter has-photo reveal" id="ch-conservatory">
+      <div class="ch-mark"><span class="ch-years">1900–1905</span><span class="ch-place">Москва</span></div>
       <div class="ch-body">
-        <h3>Консерватория и класс Борка</h3>
-        <p>В 1900 году Блажевич поступил в Московскую консерваторию в класс тромбона Христофора Борка. Учителя он позже вспоминал как «сухого и педантичного педагога, который любил дисциплину и требовал беспрекословного выполнения своих указаний».<sup class="ref"><a href="#s2">[2]</a></sup> Кроме тромбона он изучал теорию музыки, инструментовку и фортепиано и упросил руководство пустить его на уроки других инструментов, чтобы лучше понять, как учат и играют на них. Такую всестороннюю учёбу он потом перенёс в собственную педагогику. Консерваторию он окончил в 1905 году.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
+        <h3>Консерватория и класс Борка</h3>
+        <p>В 1900 году Блажевич поступил в Московскую консерваторию в класс тромбона Христофора Борка. Учителя он позже вспоминал как «сухого и педантичного педагога, который любил дисциплину и требовал беспрекословного выполнения своих указаний».<sup class="ref"><a href="#s2">[2]</a></sup> Кроме тромбона он изучал теорию музыки, инструментовку и фортепиано и упросил руководство пустить его на уроки других инструментов, чтобы лучше понять, как учат и играют на них. Такую всестороннюю учёбу он потом перенёс в собственную педагогику. Консерваторию он окончил в 1905 году.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
       </div>
-    </article>
+    <figure class="ch-photo"><div class="mat"><img src="assets/blazhevich-1903-560.webp" srcset="assets/blazhevich-1903-560.webp 560w, assets/blazhevich-1903.webp 900w" sizes="(max-width:820px) 70vw, 320px" width="900" height="1327" loading="lazy" alt="Владислав Блажевич в 1903 году, фотография с его автографом и датой"></div><figcaption>Блажевич-студент, 1903 год, с автографом. Автор снимка неизвестен; <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, общественное достояние.</figcaption></figure></article>
 
     <article class="chapter reveal" id="ch-bolshoi">
       <div class="ch-mark"><span class="ch-years">1905–1928</span><span class="ch-place">Большой театр</span></div>
       <div class="ch-body">
         <h3>Большой театр, война, Персимфанс</h3>
-        <p>После консерватории Блажевич прошёл конкурс в оркестр Большого театра. Английская Википедия по Харламову называет сезон 1906 года, русские источники — 1905 год.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a><a href="#s7">[7]</a></sup> Коллеги вспоминали его как волевого и доброго человека и прекрасного руководителя группы. Он играл и в Московском квартете медных инструментов вместе с С. Логиновым, А. Колпинским и А. Андрушкевичем.<sup class="ref"><a href="#s7">[7]</a></sup></p>
-        <p>В Первую мировую войну его призвали помощником смотрителя военного госпиталя. При этом он продолжал играть в Большом театре и по ночам сочинял. В 1916 году он устроил благотворительный концерт из собственных сочинений в память о погибших.<sup class="ref"><a href="#s2">[2]</a></sup></p>
-        <p>В 1922–1932 годах Блажевич играл в Персимфансе — Первом симфоническом ансамбле без дирижёра. В 1926 году, по русской Википедии, он организовал и возглавил духовой оркестр Особого вооружённого отряда. Из Большого театра он ушёл в 1928 году первым тромбоном. Последним спектаклем был «Князь Игорь» Бородина. Уход в 47 лет коллеги сочли слишком ранним.<sup class="ref"><a href="#s2">[2]</a></sup></p>
+        <p>После консерватории Блажевич прошёл конкурс в оркестр Большого театра. Английская Википедия по Харламову называет сезон 1906 года, русские источники — 1905 год.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a><a href="#s7">[7]</a></sup> Коллеги вспоминали его как волевого и доброго человека и прекрасного руководителя группы. Он играл и в Московском квартете медных инструментов вместе с С. Логиновым, А. Колпинским и А. Андрушкевичем.<sup class="ref"><a href="#s7">[7]</a></sup></p>
+        <p>В Первую мировую войну его призвали помощником смотрителя военного госпиталя. При этом он продолжал играть в Большом театре и по ночам сочинял. В 1916 году он устроил благотворительный концерт из собственных сочинений в память о погибших.<sup class="ref"><a href="#s2">[2]</a></sup></p>
+        <p>В 1922–1932 годах Блажевич играл в Персимфансе — Первом симфоническом ансамбле без дирижёра. В 1926 году, по русской Википедии, он организовал и возглавил духовой оркестр Особого вооружённого отряда. Из Большого театра он ушёл в 1928 году первым тромбоном. Последним спектаклем был «Князь Игорь» Бородина. Уход в 47 лет коллеги сочли слишком ранним.<sup class="ref"><a href="#s2">[2]</a></sup></p>
       </div>
-    </article>
+    <figure class="ch-plate"><img src="assets/bolshoi-1905.webp" width="960" height="600" loading="lazy" decoding="async" alt="Большой театр в Москве, фотография около 1905 года"><figcaption>Большой театр, около 1905 года. В эти годы Блажевич пришёл в его оркестр. Тонированная фотография, <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Wikimedia Commons</a>, общественное достояние.</figcaption></figure></article>
 
     <article class="chapter reveal" id="ch-teacher">
       <div class="ch-mark"><span class="ch-years">1920–1942</span><span class="ch-place">Консерватория</span></div>
       <div class="ch-body">
-        <h3>Профессор и автор школ</h3>
-        <p>В 1920 году ректор Московской консерватории М. М. Ипполитов-Иванов пригласил Блажевича профессором по классу тромбона и тубы. Он основал военно-капельмейстерский класс, из которого позже вырос факультет военных дирижёров, и в 1929–1936 годах заведовал этой кафедрой. В 1930-е годы он преподавал и в Гнесинском училище.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
-        <p>Как пишет консерватория, школ, этюдов и пьес для тромбона и тубы в России тогда почти не было, и этот «репертуарный голод» заставил Блажевича писать их самому. Он написал две школы для тромбона: в 1925 году сложную школу в ключах, а в 1936 году школу для начинающих с аккомпанементом фортепиано. Кроме того — школу легато, 26 секвенций, 38 концертных дуэтов, 12 мелодических и 24 виртуозных этюда, этюды для альтового и бас-тромбона, школу и 70 этюдов для тубы. Тринадцать концертов он, по собственным словам, писал, чтобы показать все возможности тромбона и дать студентам сольный репертуар.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup> Большинство концертов написано в 1920-е годы, № 11–13, вероятно, в 1930-е.<sup class="ref"><a href="#s1">[1]</a><a href="#s3">[3]</a></sup></p>
-        <p>За двадцать два года работы в консерватории он воспитал многих тромбонистов и тубистов. Лучшими его учениками называют В. А. Щербинина, солиста Большого театра и профессора консерватории, и Б. П. Григорьева, профессора института имени Гнесиных.</p><sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup>
+        <h3>Профессор и автор школ</h3>
+        <p>В 1920 году ректор Московской консерватории М. М. Ипполитов-Иванов пригласил Блажевича профессором по классу тромбона и тубы. Он основал военно-капельмейстерский класс, из которого позже вырос факультет военных дирижёров, и в 1929–1936 годах заведовал этой кафедрой. В 1930-е годы он преподавал и в Гнесинском училище.<sup class="ref"><a href="#s1">[1]</a><a href="#s2">[2]</a></sup></p>
+        <p>Как пишет консерватория, школ, этюдов и пьес для тромбона и тубы в России тогда почти не было, и этот «репертуарный голод» заставил Блажевича писать их самому. Он написал две школы для тромбона: в 1925 году сложную школу в ключах, а в 1936 году школу для начинающих с аккомпанементом фортепиано. Кроме того — школу легато, 26 секвенций, 38 концертных дуэтов, 12 мелодических и 24 виртуозных этюда, этюды для альтового и бас-тромбона, школу и 70 этюдов для тубы. Тринадцать концертов он, по собственным словам, писал, чтобы показать все возможности тромбона и дать студентам сольный репертуар.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup> Большинство концертов написано в 1920-е годы, № 11–13, вероятно, в 1930-е.<sup class="ref"><a href="#s1">[1]</a><a href="#s3">[3]</a></sup></p>
+        <p>За двадцать два года работы в консерватории он воспитал многих тромбонистов и тубистов. Лучшими его учениками называют В. А. Щербинина, солиста Большого театра и профессора консерватории, и Б. П. Григорьева, профессора института имени Гнесиных.</p><sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup>
       </div>
-    </article>
+    <aside class="ch-note"><b>2 · 38 · 26 · 13</b><span>Две школы для тромбона, 38 концертных дуэтов, 26 секвенций и 13 концертов, не считая этюдов и школы для тубы.</span></aside><figure class="ch-plate"><img src="assets/conservatory-1940s.webp" width="960" height="600" loading="lazy" decoding="async" alt="Большой зал Московской консерватории, фотография 1940-х годов"><figcaption>Московская консерватория, 1940-е годы. Здесь Блажевич преподавал с 1920 года до конца жизни. Тонированная фотография, <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Wikimedia Commons</a>, общественное достояние.</figcaption></figure></article>
 
     <article class="chapter reveal" id="ch-conductor">
-      <div class="ch-mark"><span class="ch-years">1920–1941</span><span class="ch-place">Дирижёр и автор книг</span></div>
+      <div class="ch-mark"><span class="ch-years">1920–1941</span><span class="ch-place">Дирижёр и автор книг</span></div>
       <div class="ch-body">
-        <h3>«Гознак» и Государственный духовой оркестр СССР</h3>
-        <p>По данным энциклопедии «Кругосвет», с 1920 года Блажевич руководил духовым оркестром фабрики «Гознак» и вёл его много лет.<sup class="ref"><a href="#s8">[8]</a></sup></p>
-        <p>Государственный духовой оркестр СССР Блажевич создал сам. Приказом Всесоюзного комитета по делам искусств при СНК СССР от 28 января 1937 года он был назначен художественным руководителем оркестра задним числом, с 1 января 1937 года. Расцвет оркестра пришёлся на 1937–1939 годы, когда им руководил Блажевич; после его ухода дирижёрская палочка перешла к Б. П. Мошкову.<sup class="ref"><a href="#s12">[12]</a></sup></p>
-        <p>В июле 1941 года оркестр почти в полном составе, около шестидесяти музыкантов, записался в 6-ю дивизию народного ополчения Дзержинского района Москвы. Через два-три месяца музыканты пропали без вести в Вяземском котле. «Вечерняя Москва» ведёт поиск их имён.<sup class="ref"><a href="#s12">[12]</a></sup></p>
-        <p>В конце жизни он написал книгу о методике преподавания игры на тромбоне. Харламов цитирует её как «Методику» 1941 года, английская Википедия называет 1948 год, вероятно, это год издания. Есть у него и «Автобиография» 1939 года.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a></sup></p>
+        <h3>«Гознак» и Государственный духовой оркестр СССР</h3>
+        <p>По данным энциклопедии «Кругосвет», с 1920 года Блажевич руководил духовым оркестром фабрики «Гознак» и вёл его много лет.<sup class="ref"><a href="#s8">[8]</a></sup></p>
+        <p>Государственный духовой оркестр СССР Блажевич создал сам. Приказом Всесоюзного комитета по делам искусств при СНК СССР от 28 января 1937 года он был назначен художественным руководителем оркестра задним числом, с 1 января 1937 года. Расцвет оркестра пришёлся на 1937–1939 годы, когда им руководил Блажевич; после его ухода дирижёрская палочка перешла к Б. П. Мошкову.<sup class="ref"><a href="#s12">[12]</a></sup></p>
+        <p>В июле 1941 года оркестр почти в полном составе, около шестидесяти музыкантов, записался в 6-ю дивизию народного ополчения Дзержинского района Москвы. Через два-три месяца музыканты пропали без вести в Вяземском котле. «Вечерняя Москва» ведёт поиск их имён.<sup class="ref"><a href="#s12">[12]</a></sup></p>
+        <p>В конце жизни он написал книгу о методике преподавания игры на тромбоне. Харламов цитирует её как «Методику» 1941 года, английская Википедия называет 1948 год, вероятно, это год издания. Есть у него и «Автобиография» 1939 года.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a></sup></p>
       </div>
-    </article>
+    <aside class="ch-note"><b>≈ 60</b><span>Столько музыкантов Государственного духового оркестра ушли в народное ополчение в июле 1941 года.</span></aside></article>
 
     <article class="chapter reveal" id="ch-last">
       <div class="ch-mark"><span class="ch-years">1942</span><span class="ch-place">Москва</span></div>
       <div class="ch-body">
-        <h3>Последние годы и память</h3>
-        <p>Блажевич умер в Москве 10 апреля 1942 года и похоронен на Введенском кладбище (10-й участок). В 1980 году его имя получила московская детская музыкальная школа духовых и ударных инструментов № 80. 17 января 2011 года в Московской консерватории прошёл концерт к 130-летию со дня его рождения.<sup class="ref"><a href="#s2">[2]</a></sup></p>
+        <h3>Последние годы и память</h3>
+        <p>Блажевич умер в Москве 10 апреля 1942 года и похоронен на Введенском кладбище (10-й участок). В 1980 году его имя получила московская детская музыкальная школа духовых и ударных инструментов № 80. 17 января 2011 года в Московской консерватории прошёл концерт к 130-летию со дня его рождения.<sup class="ref"><a href="#s2">[2]</a></sup></p>
       </div>
     </article>
   </div>
 
   <aside class="insight reveal" aria-labelledby="insight-title">
     <h3 id="insight-title">Что сделало его таким</h3>
-    <div class="eyebrow">Редакционный вывод из источников</div>
+    <div class="eyebrow">Редакционный вывод из источников</div>
     <ul>
-      <li><b>Характер.</b> Рано осиротев и выросши в бедности, он привык полагаться только на себя. Коллеги видели в этом основу его успеха.</li>
-      <li><b>Ранняя практика.</b> С двенадцати лет он ежедневно играл в военных оркестрах, сначала на эуфониуме, потом на тромбоне.</li>
-      <li><b>Широкая учёба.</b> Строгий Борк, а вдобавок теория, инструментовка, фортепиано и уроки других инструментов.</li>
-      <li><b>Сцена высшего уровня.</b> Двадцать с лишним лет в Большом театре и десять лет в Персимфансе, где ансамбль держится без дирижёра.</li>
-      <li><b>Пустое место в репертуаре.</b> Учить было не по чему, и он написал материал сам: школы, этюды, дуэты, концерты.</li>
+      <li><b>Характер.</b> Рано осиротев и выросши в бедности, он привык полагаться только на себя. Коллеги видели в этом основу его успеха.</li>
+      <li><b>Ранняя практика.</b> С двенадцати лет он ежедневно играл в военных оркестрах, сначала на эуфониуме, потом на тромбоне.</li>
+      <li><b>Широкая учёба.</b> Строгий Борк, а вдобавок теория, инструментовка, фортепиано и уроки других инструментов.</li>
+      <li><b>Сцена высшего уровня.</b> Двадцать с лишним лет в Большом театре и десять лет в Персимфансе, где ансамбль держится без дирижёра.</li>
+      <li><b>Пустое место в репертуаре.</b> Учить было не по чему, и он написал материал сам: школы, этюды, дуэты, концерты.</li>
     </ul>
-    <p class="note">Это обобщение редакции по фактам выше, а не цитата из источника.</p>
+    <p class="note">Это обобщение редакции по фактам выше, а не цитата из источника.</p>
   </aside>
 
   <div class="timeline-wrap reveal">
     <h3>Хронология</h3>
     <ol class="timeline">
-      <li><strong>1881</strong><span>3 (15) августа — рождение. В том же году арестован отец.</span></li>
+      <li><strong>1881</strong><span>3 (15) августа — рождение. В том же году арестован отец.</span></li>
       <li><strong>1887</strong><span>Смерть матери. Опекуном становится дядя.</span></li>
-      <li><strong>≈1893</strong><span>Воспитанник оркестра 3-й артиллерийской бригады в Смоленске.</span></li>
-      <li><strong>1899–1900</strong><span>Служба в Астраханском гренадерском полку.</span></li>
-      <li><strong>1900–1905</strong><span>Московская консерватория, класс тромбона Х. Борка.</span></li>
-      <li><strong>1905/1906</strong><span>Поступает в оркестр Большого театра.</span></li>
-      <li><strong>1916</strong><span>Благотворительный концерт из собственных сочинений.</span></li>
+      <li><strong>≈1893</strong><span>Воспитанник оркестра 3-й артиллерийской бригады в Смоленске.</span></li>
+      <li><strong>1899–1900</strong><span>Служба в Астраханском гренадерском полку.</span></li>
+      <li><strong>1900–1905</strong><span>Московская консерватория, класс тромбона Х. Борка.</span></li>
+      <li><strong>1905/1906</strong><span>Поступает в оркестр Большого театра.</span></li>
+      <li><strong>1916</strong><span>Благотворительный концерт из собственных сочинений.</span></li>
       <li><strong>1920</strong><span>Ипполитов-Иванов приглашает его профессором консерватории.</span></li>
-      <li><strong>с 1920</strong><span>По «Кругосвету», руководит духовым оркестром фабрики «Гознак».</span></li>
-      <li><strong>1922–1932</strong><span>Играет в Персимфансе.</span></li>
-      <li><strong>1924–1926</strong><span>Рукописи концертов датированы 1924 годом. В 1926 году Музгиз издаёт концерт № 9, первый изданный концерт.</span></li>
-      <li><strong>1925</strong><span>Школа для тромбона в ключах, будущие американские «Clef Studies».</span></li>
-      <li><strong>1928</strong><span>Уходит из Большого театра первым тромбоном. Последний спектакль — «Князь Игорь».</span></li>
+      <li><strong>с 1920</strong><span>По «Кругосвету», руководит духовым оркестром фабрики «Гознак».</span></li>
+      <li><strong>1922–1932</strong><span>Играет в Персимфансе.</span></li>
+      <li><strong>1924–1926</strong><span>Рукописи концертов датированы 1924 годом. В 1926 году Музгиз издаёт концерт № 9, первый изданный концерт.</span></li>
+      <li><strong>1925</strong><span>Школа для тромбона в ключах, будущие американские «Clef Studies».</span></li>
+      <li><strong>1928</strong><span>Уходит из Большого театра первым тромбоном. Последний спектакль — «Князь Игорь».</span></li>
       <li><strong>1929–1936</strong><span>Заведует военно-капельмейстерской кафедрой.</span></li>
-      <li><strong>1930, 1933</strong><span>Музгиз издаёт концерты № 5 и № 2.</span></li>
+      <li><strong>1930, 1933</strong><span>Музгиз издаёт концерты № 5 и № 2.</span></li>
       <li><strong>1936</strong><span>Вторая школа для тромбона, для начинающих.</span></li>
-      <li><strong>1937</strong><span>Приказ от 28 января: художественный руководитель Государственного духового оркестра СССР с 1 января.</span></li>
+      <li><strong>1937</strong><span>Приказ от 28 января: художественный руководитель Государственного духового оркестра СССР с 1 января.</span></li>
       <li><strong>1937–1939</strong><span>Руководит Государственным духовым оркестром СССР.</span></li>
-      <li><strong>1941</strong><span>В июле оркестр уходит в 6-ю дивизию народного ополчения и пропадает без вести под Вязьмой.</span></li>
-      <li><strong>1942</strong><span>10 апреля — смерть в Москве.</span></li>
+      <li><strong>1941</strong><span>В июле оркестр уходит в 6-ю дивизию народного ополчения и пропадает без вести под Вязьмой.</span></li>
+      <li><strong>1942</strong><span>10 апреля — смерть в Москве.</span></li>
     </ol>
   </div>
 
   <details class="conflicts reveal">
     <summary>Где источники расходятся</summary>
     <ul>
-      <li><b>Начало работы в Большом театре.</b> Консерватория и русская Википедия называют 1905 год, Харламов и Гнесинское училище — 1906 год.</li>
-      <li><b>Дата смерти.</b> Обычно 10 апреля 1942 года, в карточке английской Википедии стоит 11 апреля.</li>
-      <li><b>Годы изданий.</b> Консерватория даёт «Школу легато» 1926 годом, дуэты 1928-м, «Секвенции» 1938-м. Харламов называет соответственно 1924, 1926 и 1924 годы, а classON — «Школу для раздвижного тромбона» 1935 годом и первую часть школы легато 1938-м. Возможно, одни даты относятся к написанию, другие к изданию. Английская Википедия называет первую школу 1916 годом, Харламов — 1925-м.</li>
-      <li><b>Школа для тубы.</b> По Харламову, «Школа для контрабасовой тубы» вышла в Музгизе в 1937 году. Консерватория относит «Школу игры на тубе» к изданиям после войны.</li>
-      <li><b>Райхман и Блажевич.</b> В английской Википедии сказано, что они занимались вместе «в начале 1940-х». Это расходится с другими данными: по Йео, Райхман работал в Бостоне с 1927 года, а по Харламову, ноты Блажевича он увёз из России в 1926 году.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></li>
+      <li><b>Начало работы в Большом театре.</b> Консерватория и русская Википедия называют 1905 год, Харламов и Гнесинское училище — 1906 год.</li>
+      <li><b>Дата смерти.</b> Обычно 10 апреля 1942 года, в карточке английской Википедии стоит 11 апреля.</li>
+      <li><b>Годы изданий.</b> Консерватория даёт «Школу легато» 1926 годом, дуэты 1928-м, «Секвенции» 1938-м. Харламов называет соответственно 1924, 1926 и 1924 годы, а classON — «Школу для раздвижного тромбона» 1935 годом и первую часть школы легато 1938-м. Возможно, одни даты относятся к написанию, другие к изданию. Английская Википедия называет первую школу 1916 годом, Харламов — 1925-м.</li>
+      <li><b>Школа для тубы.</b> По Харламову, «Школа для контрабасовой тубы» вышла в Музгизе в 1937 году. Консерватория относит «Школу игры на тубе» к изданиям после войны.</li>
+      <li><b>Райхман и Блажевич.</b> В английской Википедии сказано, что они занимались вместе «в начале 1940-х». Это расходится с другими данными: по Йео, Райхман работал в Бостоне с 1927 года, а по Харламову, ноты Блажевича он увёз из России в 1926 году.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></li>
     </ul>
   </details>
 </div></section>
 <section id="usa" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>Блажевич в Америке</h2><div class="eyebrow">Признание за океаном</div><p>Его этюды для тромбона в ключах известны в США как «Clef Studies» и десятилетиями остаются в числе основных учебных пособий для тромбонистов.</p></div>
+  <div class="section-head reveal" data-n="04"><h2>Блажевич в Америке</h2><div class="eyebrow">Признание за океаном</div><p>Его этюды для тромбона в ключах известны в США как «Clef Studies» и десятилетиями остаются в числе основных учебных пособий для тромбонистов.</p></div>
 
+<!-- routemap -->
+  <figure class="routemap reveal"><svg viewBox="0 0 1000 470" role="img" aria-labelledby="rm-t rm-d"><title id="rm-t">Схема: как ноты Блажевича попали в Америку</title><desc id="rm-d">Блажевич приехал из Смоленской губернии в Москву в 1900 году. Яков Райхман родился в Витебске, учился в Петербурге, играл в Москве и в 1926 году увёз ноты Блажевича в Бостон. В 1974 году Виктор Венгловский переслал из Ленинграда во Флориду все 13 концертов.</desc>
+  <g class="rm-grid"><path d="M0.0 30V440"/><path d="M71.1 30V440"/><path d="M142.2 30V440"/><path d="M213.3 30V440"/><path d="M284.4 30V440"/><path d="M355.6 30V440"/><path d="M426.7 30V440"/><path d="M497.8 30V440"/><path d="M568.9 30V440"/><path d="M640.0 30V440"/><path d="M0 440.0H640"/><path d="M0 337.5H640"/><path d="M0 235.0H640"/><path d="M0 132.5H640"/><path d="M0 30.0H640"/></g>
+  <rect class="rm-frame" x="0.5" y="30" width="639.5" height="410"/><rect class="rm-frame" x="680" y="60" width="310" height="360"/>
+  <path class="rm-grid" d="M680.0 60V420"/>
+  <path class="rm-grid" d="M724.3 60V420"/>
+  <path class="rm-grid" d="M768.6 60V420"/>
+  <path class="rm-grid" d="M812.9 60V420"/>
+  <path class="rm-grid" d="M857.1 60V420"/>
+  <path class="rm-grid" d="M901.4 60V420"/>
+  <path class="rm-grid" d="M945.7 60V420"/>
+  <path class="rm-grid" d="M990.0 60V420"/>
+  <path class="rm-grid" d="M680 380.0H990"/>
+  <path class="rm-grid" d="M680 300.0H990"/>
+  <path class="rm-grid" d="M680 220.0H990"/>
+  <path class="rm-grid" d="M680 140.0H990"/>
+  <text class="rm-sea" x="330" y="330" text-anchor="middle">Атлантический океан</text>
+  <text class="rm-land" x="60" y="200">Северная Америка</text>
+  <text class="rm-land" x="500" y="205">Европа</text>
+  <text class="rm-land" x="835" y="52" text-anchor="middle">Россия, крупнее</text>
+  <rect class="rm-inset" x="549.9" y="71.0" width="66.4" height="92.2"/><path class="rm-inset" d="M616.3 71.0L680 60M616.3 163.2L680 420"/>
+  <path class="rm-route" d="M605.0 124.8 Q347.4 14.799999999999997 89.8 262.1"/><path class="rm-route rm-route-2" d="M570.4 81.9 Q298.75 51.900000000000006 27.1 384.2"/>
+  <text class="rm-note" x="330" y="74" text-anchor="middle">1926 · Райхман увозит ноты в Бостон</text>
+  <text class="rm-note" x="300" y="246" text-anchor="middle">1974 · Венгловский: все 13 концертов</text>
+  <circle class="rm-dot rm-key" cx="89.8" cy="262.1" r="6"/><text class="rm-city" x="99.8" y="286.1" text-anchor="start">Бостон</text>
+  <text class="rm-sub" x="99.8" y="303.1">«Clef Studies», 1948</text>
+  <circle class="rm-dot" cx="27.1" cy="384.2" r="4.5"/><text class="rm-city" x="39.1" y="389.2" text-anchor="start">Таллахасси, Флорида</text>
+  <circle class="rm-dot" cx="605.0" cy="124.8" r="3.5"/><circle class="rm-dot" cx="570.4" cy="81.9" r="3.5"/>
+  <path class="rm-route" d="M814.0 308.8L937.3 270.0"/>
+  <path class="rm-route rm-route-2" d="M773.0 292.4L775.4 102.4L937.3 270.0"/>
+  <circle class="rm-dot rm-key" cx="937.3" cy="270.0" r="6"/><text class="rm-city" x="943.3" y="296.0" text-anchor="middle">Москва</text>
+  <circle class="rm-dot" cx="775.4" cy="102.4" r="4.5"/><text class="rm-city" x="787.4" y="107.4" text-anchor="start">Петербург</text>
+  <circle class="rm-dot" cx="814.0" cy="308.8" r="4.5"/><text class="rm-city" x="818.0" y="332.8" text-anchor="start">Трегубовка, Смоленск</text>
+  <circle class="rm-dot" cx="773.0" cy="292.4" r="4.5"/><text class="rm-city" x="763.0" y="284.4" text-anchor="end">Витебск</text>
+  <text class="rm-sub" x="845.65" y="275.4" text-anchor="middle">Блажевич, 1900</text>
+  <text class="rm-sub" x="787.4" y="124.4">Райхман, выпуск 1911</text>
+  </svg>
+  <figcaption>Схема, а не точная карта: города стоят по своим координатам, берега не показаны. Сплошная линия — путь Блажевича и его нот, пунктир — путь Райхмана и посылка Венгловского.</figcaption></figure>
+  <!-- /routemap -->
   <div class="usa-grid">
     <div class="usa-text reveal">
-      <h3>Как ноты попали в Бостон</h3>
-      <p>Тромбонист <a href="#raichman">Яков Райхман</a> играл с Блажевичем в Большом театре и какое-то время у него занимался. Уезжая из России в 1926 году, он увёз с собой школу 1925 года, 26 секвенций, концертные дуэты, школу легато и концерт № 9. В Бостоне он учил студентов по этой школе, а затем попросил у Блажевича новые материалы. Сохранились его письма из Бостона от 10 ноября 1927 и 19 апреля 1932 года, они хранятся в архиве Блажевича в Музее музыкальной культуры имени Глинки.<sup class="ref"><a href="#s3">[3]</a></sup></p>
-      <p>Первыми американскими изданиями Блажевича стали концерт № 2 (Cundy-Bettoney, Бостон, 1939) и Концертная пьеса № 5 (Belwin, 1939), вышедшая через год после русского издания.<sup class="ref"><a href="#s3">[3]</a></sup> По Харламову, ни на одно из них не было разрешения автора.<sup class="ref"><a href="#s3">[3]</a></sup> В 1948 году нью-йоркское издательство Leeds Music выпустило школу 1925 года под редакцией Райхмана и с новым названием «Clef Studies for Trombone».<sup class="ref"><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></p>
+      <h3>Как ноты попали в Бостон</h3>
+      <p>Тромбонист <a href="#raichman">Яков Райхман</a> играл с Блажевичем в Большом театре и какое-то время у него занимался. Уезжая из России в 1926 году, он увёз с собой школу 1925 года, 26 секвенций, концертные дуэты, школу легато и концерт № 9. В Бостоне он учил студентов по этой школе, а затем попросил у Блажевича новые материалы. Сохранились его письма из Бостона от 10 ноября 1927 и 19 апреля 1932 года, они хранятся в архиве Блажевича в Музее музыкальной культуры имени Глинки.<sup class="ref"><a href="#s3">[3]</a></sup></p>
+      <p>Первыми американскими изданиями Блажевича стали концерт № 2 (Cundy-Bettoney, Бостон, 1939) и Концертная пьеса № 5 (Belwin, 1939), вышедшая через год после русского издания.<sup class="ref"><a href="#s3">[3]</a></sup> По Харламову, ни на одно из них не было разрешения автора.<sup class="ref"><a href="#s3">[3]</a></sup> В 1948 году нью-йоркское издательство Leeds Music выпустило школу 1925 года под редакцией Райхмана и с новым названием «Clef Studies for Trombone».<sup class="ref"><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></p>
       <h3>Почему его там так ценят</h3>
-      <p>Этюды Блажевича идут от первого знакомства с теноровым и альтовым ключами до задач для профессионалов. Калеб Ламберт ставит Блажевича в один ряд с самыми влиятельными авторами пособий для медных: Арбаном, Бордони, Мюллером, Шлоссбергом и Копрашем.<sup class="ref"><a href="#s6">[6]</a></sup> Рецензент Международной ассоциации тромбонистов называет его этюды «неизменной основой» учебного репертуара. Американские педагоги даже выпускают вводные сборники с подзаголовком «Before Blazhevich», то есть «перед Блажевичем». Таков сборник Брэда Эдвардса 2002 года для подготовки ко второй части «Clef Studies».<sup class="ref"><a href="#s10">[10]</a></sup> Концертная пьеса № 5 стала обязательной конкурсной пьесой во многих американских летних музыкальных лагерях.<sup class="ref"><a href="#s3">[3]</a></sup></p>
-      <p>Есть у этой истории и тёмная сторона. По Харламову и английской Википедии, многие американские издания вышли без разрешения и без отчислений наследникам, а тексты сильно переделаны редакторами. В 2007 году издательство East-West International начало выпускать выверенные издания по оригиналам с согласия семьи Блажевича и с выплатой гонораров. Его основал тромбонист Андрей Харламов, сам ездивший в Россию разыскивать наследников. По словам рецензента ITA, Харламов закрепил права наследников с опорой на торговое соглашение ГАТТ, и теперь семья получает отчисления.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a><a href="#s10">[10]</a></sup></p>
+      <p>Этюды Блажевича идут от первого знакомства с теноровым и альтовым ключами до задач для профессионалов. Калеб Ламберт ставит Блажевича в один ряд с самыми влиятельными авторами пособий для медных: Арбаном, Бордони, Мюллером, Шлоссбергом и Копрашем.<sup class="ref"><a href="#s6">[6]</a></sup> Рецензент Международной ассоциации тромбонистов называет его этюды «неизменной основой» учебного репертуара. Американские педагоги даже выпускают вводные сборники с подзаголовком «Before Blazhevich», то есть «перед Блажевичем». Таков сборник Брэда Эдвардса 2002 года для подготовки ко второй части «Clef Studies».<sup class="ref"><a href="#s10">[10]</a></sup> Концертная пьеса № 5 стала обязательной конкурсной пьесой во многих американских летних музыкальных лагерях.<sup class="ref"><a href="#s3">[3]</a></sup></p>
+      <p>Есть у этой истории и тёмная сторона. По Харламову и английской Википедии, многие американские издания вышли без разрешения и без отчислений наследникам, а тексты сильно переделаны редакторами. В 2007 году издательство East-West International начало выпускать выверенные издания по оригиналам с согласия семьи Блажевича и с выплатой гонораров. Его основал тромбонист Андрей Харламов, сам ездивший в Россию разыскивать наследников. По словам рецензента ITA, Харламов закрепил права наследников с опорой на торговое соглашение ГАТТ, и теперь семья получает отчисления.<sup class="ref"><a href="#s2">[2]</a><a href="#s3">[3]</a><a href="#s10">[10]</a></sup></p>
     </div>
     <ol class="editions reveal">
-      <li><b>1926</b><span>Райхман увозит ноты Блажевича из России.</span></li>
-      <li><b>1927, 1932</b><span>Письма Райхмана Блажевичу из Бостона.</span></li>
-      <li><b>1939</b><span>Концерт № 2 (Cundy-Bettoney, Бостон) и Концертная пьеса № 5 (Belwin) — первые издания в США.</span></li>
-      <li><b>1948</b><span>«Clef Studies for Trombone», Leeds Music, ред. Я. Райхман.</span></li>
-      <li><b>1950, 1956</b><span>International Music Company переиздаёт концерты № 2 и № 5, позже № 10. Всего у IMC восемь изданий Блажевича.</span></li>
-      <li><b>1964</b><span>MCA покупает Leeds вместе с русским каталогом, позже его распространяют Hal Leonard и Warner.</span></li>
-      <li><b>1974</b><span>Ленинградский профессор Виктор Венгловский пересылает Уильяму Крамеру из Университета штата Флорида все 13 концертов.</span></li>
+      <li><b>1926</b><span>Райхман увозит ноты Блажевича из России.</span></li>
+      <li><b>1927, 1932</b><span>Письма Райхмана Блажевичу из Бостона.</span></li>
+      <li><b>1939</b><span>Концерт № 2 (Cundy-Bettoney, Бостон) и Концертная пьеса № 5 (Belwin) — первые издания в США.</span></li>
+      <li><b>1948</b><span>«Clef Studies for Trombone», Leeds Music, ред. Я. Райхман.</span></li>
+      <li><b>1950, 1956</b><span>International Music Company переиздаёт концерты № 2 и № 5, позже № 10. Всего у IMC восемь изданий Блажевича.</span></li>
       <li><b>1957</b><span>«Studies in Clefs», International Music Company, ред. Аллен Острандер.</span></li>
+      <li><b>1964</b><span>MCA покупает Leeds вместе с русским каталогом, позже его распространяют Hal Leonard и Warner.</span></li>
       <li><b>1965</b><span>«Clef Studies», MCA Music, ред. Дональд Хансбергер.</span></li>
-      <li><b>1991</b><span>«Advanced Musical Etudes» Реджинальда Финка (Accura) — переложение этюдов в ключах в басовый ключ.</span></li>
-      <li><b>Далее</b><span>«70 этюдов для тубы» в редакции Роберта Кинга (Alphonse Leduc).</span></li>
-      <li><b>2007–2012</b><span>East-West International: школа в ключах (ред. Харламов и Дерюгин, по изданию 1939 года, с 41 этюдом для альтового тромбона), «Секвенции» (с Малкахи), этюды для нижнего регистра (с Верноном). С согласия наследников.</span></li>
-      <li><b>2020</b><span>Диссертация Калеба Ламберта в Университете Айовы и запись первых четырёх концертов.</span></li>
+      <li><b>1974</b><span>Ленинградский профессор Виктор Венгловский пересылает Уильяму Крамеру из Университета штата Флорида все 13 концертов.</span></li>
+      <li><b>1991</b><span>«Advanced Musical Etudes» Реджинальда Финка (Accura) — переложение этюдов в ключах в басовый ключ.</span></li>
+      <li><b>Далее</b><span>«70 этюдов для тубы» в редакции Роберта Кинга (Alphonse Leduc).</span></li>
+      <li><b>2007–2012</b><span>East-West International: школа в ключах (ред. Харламов и Дерюгин, по изданию 1939 года, с 41 этюдом для альтового тромбона), «Секвенции» (с Малкахи), этюды для нижнего регистра (с Верноном). С согласия наследников.</span></li>
+      <li><b>2020</b><span>Диссертация Калеба Ламберта в Университете Айовы и запись первых четырёх концертов.</span></li>
     </ol>
   </div>
 
@@ -785,22 +1069,22 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
       <span class="node-years">1892–1982</span>
     </div>
     <div class="r-body">
-      <p><b>Детство.</b> Родился в Витебске, ныне Беларусь. В детстве играл на виолончели. Его отец был капельмейстером в русской армии и посоветовал сыну перейти на тромбон.<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p><b>Учёба в Петербурге.</b> Райхман окончил Петербургскую консерваторию в 1911 году в классе П. Н. Волкова. Надпись на футляре его тромбона гласит: «Премия имени Шуберта Я. А. Райхману, окончившему С.-Петербургскую консерваторию по классу П. Н. Волкова, 1911». Сам серебрёный инструмент работы немецкого мастера Хеккеля был выпускной наградой.<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p><b>Москва.</b> Затем он переехал в Москву, играл в оркестре Большого театра, познакомился с Блажевичем и какое-то время у него занимался. Скрипач Артур Штильман называет Райхмана «выдающимся тромбонистом» дореволюционного Большого театра.<sup class="ref"><a href="#s4">[4]</a><a href="#s9">[9]</a></sup></p>
-      <p><b>Путь в Америку.</b> Сергей Кусевицкий, сам бывший контрабасист Большого театра, взял Райхмана в Бостонский симфонический оркестр, по словам дочери, даже без прослушивания. Квота на въезд из России в США была исчерпана, поэтому в январе 1927 года Райхман приехал из Гаваны на пароходе «Орисаба». Позже из-за трудностей с документами ему пришлось вернуться на Кубу, и в декабре 1929 года он въехал снова, уже с женой Терезой и трёхмесячной дочерью Ириной. Гражданином США он стал в 1937 году. Часто он подписывался именем Jacques.<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p><b>Бостон.</b> В сезоне 1927–1928 года Райхман был четвёртым из пяти тромбонистов, в 1928 году стал солистом наравне с французом Жоаннесом Рошю, а в 1929-м получил прибавку, тогда как Рошю жалованье урезали. После отъезда Рошю в 1930 году Райхман был первым тромбоном до 1955 года, его преемником стал Уильям Гибсон. Он солировал в «Болеро» Равеля в записях 1937 года (с Бостонским поп-оркестром) и 1947 года.<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p><b>Кусевицкий.</b> В Библиотеке Конгресса хранятся четыре его письма Кусевицкому на русском языке. Три письма 1930 года касаются визы, а письмо 1945 года он закончил словами «оставаясь навсегда преданным Вам».<sup class="ref"><a href="#s4">[4]</a></sup></p>
-      <p><b>Мост для Блажевича.</b> В 1948 году Райхман издал школу Блажевича в ключах под названием «Clef Studies for Trombone». Его архив, переданный семьёй в Бостонский университет, по сообщению Харламова, частично погиб при протечке.<sup class="ref"><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></p>
+      <p><b>Детство.</b> Родился в Витебске, ныне Беларусь. В детстве играл на виолончели. Его отец был капельмейстером в русской армии и посоветовал сыну перейти на тромбон.<sup class="ref"><a href="#s4">[4]</a></sup></p>
+      <p><b>Учёба в Петербурге.</b> Райхман окончил Петербургскую консерваторию в 1911 году в классе П. Н. Волкова. Надпись на футляре его тромбона гласит: «Премия имени Шуберта Я. А. Райхману, окончившему С.-Петербургскую консерваторию по классу П. Н. Волкова, 1911». Сам серебрёный инструмент работы немецкого мастера Хеккеля был выпускной наградой.<sup class="ref"><a href="#s4">[4]</a></sup></p>
+      <p><b>Москва.</b> Затем он переехал в Москву, играл в оркестре Большого театра, познакомился с Блажевичем и какое-то время у него занимался. Скрипач Артур Штильман называет Райхмана «выдающимся тромбонистом» дореволюционного Большого театра.<sup class="ref"><a href="#s4">[4]</a><a href="#s9">[9]</a></sup></p>
+      <p><b>Путь в Америку.</b> Сергей Кусевицкий, сам бывший контрабасист Большого театра, взял Райхмана в Бостонский симфонический оркестр, по словам дочери, даже без прослушивания. Квота на въезд из России в США была исчерпана, поэтому в январе 1927 года Райхман приехал из Гаваны на пароходе «Орисаба». Позже из-за трудностей с документами ему пришлось вернуться на Кубу, и в декабре 1929 года он въехал снова, уже с женой Терезой и трёхмесячной дочерью Ириной. Гражданином США он стал в 1937 году. Часто он подписывался именем Jacques.<sup class="ref"><a href="#s4">[4]</a></sup></p>
+      <p><b>Бостон.</b> В сезоне 1927–1928 года Райхман был четвёртым из пяти тромбонистов, в 1928 году стал солистом наравне с французом Жоаннесом Рошю, а в 1929-м получил прибавку, тогда как Рошю жалованье урезали. После отъезда Рошю в 1930 году Райхман был первым тромбоном до 1955 года, его преемником стал Уильям Гибсон. Он солировал в «Болеро» Равеля в записях 1937 года (с Бостонским поп-оркестром) и 1947 года.<sup class="ref"><a href="#s4">[4]</a></sup></p>
+      <p><b>Кусевицкий.</b> В Библиотеке Конгресса хранятся четыре его письма Кусевицкому на русском языке. Три письма 1930 года касаются визы, а письмо 1945 года он закончил словами «оставаясь навсегда преданным Вам».<sup class="ref"><a href="#s4">[4]</a></sup></p>
+      <p><b>Мост для Блажевича.</b> В 1948 году Райхман издал школу Блажевича в ключах под названием «Clef Studies for Trombone». Его архив, переданный семьёй в Бостонский университет, по сообщению Харламова, частично погиб при протечке.<sup class="ref"><a href="#s3">[3]</a><a href="#s4">[4]</a></sup></p>
     </div>
   </article>
 </div></section>
 <section id="schools" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Две школы русского тромбона</h2><div class="eyebrow">Учитель → ученик</div><p>Московская и петербургская школы складывались параллельно, а Яков Райхман связал их обе с Америкой. Ниже показано, у кого учились профессора и кого выучили сами. Пробелы в источниках отмечены прямо в тексте.</p></div>
+  <div class="section-head reveal" data-n="05"><figure class="head-vignette" aria-hidden="true"><img src="assets/conservatory-1940s.webp" alt="" loading="lazy" decoding="async"></figure><h2>Две школы русского тромбона</h2><div class="eyebrow">Учитель → ученик</div><p>Московская и петербургская школы складывались параллельно, а Яков Райхман связал их обе с Америкой. Ниже показано, у кого учились профессора и кого выучили сами. Пробелы в источниках отмечены прямо в тексте.</p></div>
 
   <div class="school-links reveal">
-    <a class="explore-card" href="moscow.html"><b>Московская школа</b><span class="eyebrow">Досье</span><span>Витнебен и Борк, Блажевич по собственной анкете 1928 года, Щербинин и его ученики, гнесинская ветвь, ноты и записи.</span><i aria-hidden="true">→</i></a>
+    <a class="explore-card" href="moscow.html"><b>Московская школа</b><span class="eyebrow">Досье</span><span>Витнебен и Борк, Блажевич по собственной анкете 1928 года, Щербинин и его ученики, гнесинская ветвь, ноты и записи.</span><i aria-hidden="true">→</i></a>
     <a class="explore-card" href="leningrad.html"><b>Ленинградская школа</b><span class="eyebrow">Сборник</span><span>Тюрнер, Волков, Козлов, Венгловский; «поющая» манера, Квартет тромбонов филармонии, пластинки «Мелодии».</span><i aria-hidden="true">→</i></a>
   </div>
 
@@ -811,157 +1095,172 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
         <li class="node">
           <span class="node-years">1832–1916</span>
           <b>Христофор Иванович Борк</b>
-          <p>Родился в Хафельберге в Пруссии. В 1861 году принял российское подданство и поступил в оркестр Большого театра. До 1882 года он был первым тромбоном балетного оркестра, с 1875-го играл на литаврах, а с 1889-го только на них. Профессор консерватории с 1875 года. Вёл класс тромбона, тубы и ударных до своей смерти и составил пятилетнюю программу обучения игре на тромбоне. Кавалер ордена Святого Станислава 3-й степени.<sup class="ref"><a href="#s1">[1]</a><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Ученики: <em>В. М. Блажевич</em>, С. Диев, В. Держановский, К. Купинский, И. Пиорковский, А. Соболевский, С. Чесноков</span>
+          <p>Родился в Хафельберге в Пруссии. В 1861 году принял российское подданство и поступил в оркестр Большого театра. До 1882 года он был первым тромбоном балетного оркестра, с 1875-го играл на литаврах, а с 1889-го только на них. Профессор консерватории с 1875 года. <span class="warn">⚠</span> По личному делу в РГАЛИ даты иные: на литавры переведён с 1867 года, профессор с 1883-го; подробности — в <a href="moscow.html#m-bork">московском досье</a>. Вёл класс тромбона, тубы и ударных до своей смерти и составил пятилетнюю программу обучения игре на тромбоне. Кавалер ордена Святого Станислава 3-й степени.<sup class="ref"><a href="#s1">[1]</a><a href="#s5">[5]</a></sup></p>
+          <span class="pupils">Ученики: <em>В. М. Блажевич</em>, С. Диев, В. Держановский, К. Купинский, И. Пиорковский, А. Соболевский, С. Чесноков</span>
         </li>
         <li class="node node-key">
           <span class="node-years">1881–1942</span>
           <b>Владислав Михайлович Блажевич</b>
-          <p>Учился у Борка в 1900–1905 годах, профессор консерватории с 1920 года. Его школы и этюды стали учебной основой для следующих поколений.</p>
-          <span class="pupils">Ученики: В. А. Щербинин, Б. П. Григорьев, К. Г. Морейнис, Г. М. Воронин, а также <a href="#raichman">Я. Райхман</a> (какое-то время)</span>
+          <p>Учился у Борка в 1900–1905 годах, профессор консерватории с 1920 года. Его школы и этюды стали учебной основой для следующих поколений.</p>
+          <span class="pupils">Ученики: В. А. Щербинин, Б. П. Григорьев, К. Г. Морейнис, Г. М. Воронин, а также <a href="#raichman">Я. Райхман</a> (какое-то время)</span>
         </li>
         <li class="node">
           <span class="node-years">1896–1963</span>
-          <b>Владимир Щербинин (В. А. Щербинин)</b>
-          <p>Ученик Блажевича, солист оркестра Большого театра и профессор Московской консерватории. По сведениям Гнесинского училища, он создал собственную систему ежедневных занятий на тромбоне. У него окончил консерваторию А. К. Лебедев, с 1950 года основатель самостоятельного класса тубы.<sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup></p>
+          <b>Владимир Щербинин (В. А. Щербинин)</b>
+          <p>Ученик Блажевича, солист оркестра Большого театра и профессор Московской консерватории. По сведениям Гнесинского училища, он создал собственную систему ежедневных занятий на тромбоне. У него окончил консерваторию А. К. Лебедев, с 1950 года основатель самостоятельного класса тубы.<sup class="ref"><a href="#s1">[1]</a><a href="#s7">[7]</a></sup></p>
         </li>
         <li class="node">
-          <span class="node-years">с 1944</span>
-          <b>Б. П. Григорьев</b>
-          <p>Ученик Блажевича, солист оркестра Большого театра. С 1944 года вёл класс тромбона и тубы в только что открытом Гнесинском институте и стал там профессором. Так школа Блажевича продолжилась сразу в двух московских вузах.<sup class="ref"><a href="#s7">[7]</a></sup></p>
-          <span class="pupils">Ученики: В. Здоров, В. Досадин, В. Есипов, К. Локалин, М. Чепкой</span>
+          <span class="node-years">с 1944</span>
+          <b>Б. П. Григорьев</b>
+          <p>Ученик Блажевича, солист оркестра Большого театра. С 1944 года вёл класс тромбона и тубы в только что открытом Гнесинском институте и стал там профессором. Так школа Блажевича продолжилась сразу в двух московских вузах.<sup class="ref"><a href="#s7">[7]</a></sup></p>
+          <span class="pupils">Ученики: В. Здоров, В. Досадин, В. Есипов, К. Локалин, М. Чепкой</span>
         </li>
         <li class="node node-later">
           <span class="node-years">далее</span>
           <b>Ученики Щербинина</b>
-          <p>Ученики Щербинина: В. Б. Баташёв, профессор консерватории; М. М. Зейналов (1917–1993), солист Большого театра и профессор консерватории, редактор сборника этюдов Блажевича 1985 года; К. М. Ладилов, профессор Гнесинского института. В консерватории тромбон преподавал также П. И. Чумаков, а позже Баташёв и А. Т. Скобелев.</p>
+          <p>Ученики Щербинина: В. Б. Баташёв, профессор консерватории; М. М. Зейналов (1917–1993), солист Большого театра и профессор консерватории, редактор сборника этюдов Блажевича 1985 года; К. М. Ладилов, профессор Гнесинского института. В консерватории тромбон преподавал также П. И. Чумаков, а позже Баташёв и А. Т. Скобелев.</p>
         </li>
       </ol>
     </div>
 
     <div class="lineage reveal" aria-labelledby="spb-line">
-      <h3 id="spb-line">Петербург — Ленинград</h3>
+      <h3 id="spb-line">Петербург — Ленинград</h3>
       <ol class="gen">
         <li class="node">
           <span class="node-years">1831–1909</span>
           <b>Франц де Паула Тюрнер</b>
-          <p>Австриец; с 1855 года в оркестрах императорских театров Петербурга. В 1870–1909 годах вёл класс тромбона и тубы консерватории; автор «Элементарной школы» для медных духовых (1877, 1878). Подробнее — на странице <a href="leningrad.html">«Ленинградская школа»</a>.</p>
-          <span class="pupils">Ученики: П. Н. Волков, А. Ф. Казбирюк, К. Крээк, Р. Кулль</span>
+          <p>Австриец; с 1855 года в оркестрах императорских театров Петербурга. В 1870–1909 годах вёл класс тромбона и тубы консерватории; автор «Элементарной школы» для медных духовых (1877, 1878). Подробнее — на странице <a href="leningrad.html">«Ленинградская школа»</a>.</p>
+          <span class="pupils">Ученики: П. Н. Волков, А. Ф. Казбирюк, К. Крээк, Р. Кулль</span>
         </li>
         <li class="node node-key">
           <span class="node-years">1877–1933</span>
           <b>Пётр Наумович Волков</b>
-          <p>Первый тромбон оркестра Мариинского театра (1899–1933), где играл вместе с Рейхе; профессор консерватории (1917–1933). В 1911 году у него окончил консерваторию Яков Райхман, а в начале 1930-х на рабфаке учились Козлов и Коршунов. Умер 22 февраля 1933 года; класс принял Рейхе (доцент с 1933, и. о. профессора с 1935).<sup class="ref"><a href="#s4">[4]</a><a href="#s5">[5]</a></sup> Отчество и даты исправлены по энциклопедии Петербургской консерватории; прежде на сайте ошибочно стояло «Николаевич, умер около 1935».</p>
-          <span class="pupils">Ученики: <a href="#raichman">Я. А. Райхман</a> (выпуск 1911 года), А. А. Козлов и Н. С. Коршунов (рабфак), И. А. Гершкович и др.</span>
+          <p>Первый тромбон оркестра Мариинского театра (1899–1933), где играл вместе с Рейхе; профессор консерватории (1917–1933). В 1911 году у него окончил консерваторию Яков Райхман, а в начале 1930-х на рабфаке учились Козлов и Коршунов. Умер 22 февраля 1933 года; класс принял Рейхе (доцент с 1933, и. о. профессора с 1935).<sup class="ref"><a href="#s4">[4]</a><a href="#s5">[5]</a></sup> Отчество и даты исправлены по энциклопедии Петербургской консерватории; прежде на сайте ошибочно стояло «Николаевич, умер около 1935».</p>
+          <span class="pupils">Ученики: <a href="#raichman">Я. А. Райхман</a> (выпуск 1911 года), А. А. Козлов и Н. С. Коршунов (рабфак), И. А. Гершкович и др.</span>
         </li>
         <li class="node">
           <span class="node-years">1878–1946</span>
           <b>Евгений Адольфович Рейхе</b>
-          <p>Родился в Дрездене и в 1896 году окончил Дрезденскую консерваторию по классу тромбона. В 1897 году переехал в Петербург. В 1899 году выиграл конкурс на место бас-тромбона Мариинского театра у Направника, сыграв собственный концерт, и оставался в театре до 1941 года. Преподавал с 1906 года. В Ленинградской консерватории с 1933 года, профессор с 1940-го. Умер в эвакуации в Ташкенте.<sup class="ref"><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Ученики: А. А. Козлов, Н. С. Коршунов, И. М. Поляцкин (1-я премия Всесоюзного конкурса 1941 года), Л. А. Игнатьев (выпуск 1942 года; в списке выпускников педагог указан как «И. А. Рейхе», вероятно, опечатка)<sup class="ref"><a href="#s5">[5]</a><a href="#s9">[9]</a></sup></span>
+          <p>Родился в Дрездене и в 1896 году окончил Дрезденскую консерваторию по классу тромбона. В 1897 году переехал в Петербург. В 1899 году выиграл конкурс на место бас-тромбона Мариинского театра у Направника, сыграв собственный концерт, и оставался в театре до 1941 года. Преподавал с 1906 года. В Ленинградской консерватории с 1933 года, профессор с 1940-го. Умер в эвакуации в Ташкенте.<sup class="ref"><a href="#s5">[5]</a></sup></p>
+          <span class="pupils">Ученики: А. А. Козлов, Н. С. Коршунов, И. М. Поляцкин (1-я премия Всесоюзного конкурса 1941 года), Л. А. Игнатьев (выпуск 1942 года; в списке выпускников педагог указан как «И. А. Рейхе», вероятно, опечатка)<sup class="ref"><a href="#s5">[5]</a><a href="#s9">[9]</a></sup></span>
         </li>
         <li class="node node-pair">
           <div>
             <span class="node-years">1908–1992</span>
             <b>Аким Алексеевич Козлов</b>
-            <p>Родом со Смоленщины, воспитанник железнодорожного полка. Учился у Волкова, потом у Рейхе. С 1937 года в оркестре Ленинградской филармонии, пришёл туда одновременно с Мравинским. Преподавал в консерватории в 1946–1992 годах.<sup class="ref"><a href="#s5">[5]</a></sup></p>
-            <span class="pupils">Ученики: В. Венгловский, Б. Виноградов, Г. Данилов, А. Евтушенко, Г. Страутман</span>
+            <p>Родом со Смоленщины, воспитанник железнодорожного полка. Учился у Волкова, потом у Рейхе. С 1937 года в оркестре Ленинградской филармонии, пришёл туда одновременно с Мравинским. Преподавал в консерватории в 1946–1992 годах.<sup class="ref"><a href="#s5">[5]</a></sup></p>
+            <span class="pupils">Ученики: В. Венгловский, Б. Виноградов, Г. Данилов, А. Евтушенко, Г. Страутман</span>
           </div>
           <div>
             <span class="node-years">1910–1989</span>
             <b>Николай Сергеевич Коршунов</b>
-            <p>Учился у Волкова, потом у Рейхе (выпуск 1939 года). Солист оркестра Ленинградской филармонии в 1937–1972 годах. Преподавал в консерватории с 1948 года, профессор с 1972-го.<sup class="ref"><a href="#s5">[5]</a></sup></p>
-            <span class="pupils">Ученики: В. Сумеркин, А. Гжанянц, О. Королёв; тубисты Н. Новиков, В. Галузин</span>
+            <p>Учился у Волкова, потом у Рейхе (выпуск 1939 года). Солист оркестра Ленинградской филармонии в 1937–1972 годах. Преподавал в консерватории с 1948 года, профессор с 1972-го.<sup class="ref"><a href="#s5">[5]</a></sup></p>
+            <span class="pupils">Ученики: В. Сумеркин, А. Гжанянц, О. Королёв; тубисты Н. Новиков, В. Галузин</span>
           </div>
         </li>
         <li class="node">
           <span class="node-years">1926–1994</span>
           <b>Виктор Фёдорович Венгловский</b>
-          <p>Окончил консерваторию у Козлова в 1953 году, аспирантуру у валторниста М. Н. Буяновского. С 1950 года в оркестре Ленинградской филармонии, преподавал в консерватории с 1966 года, профессор с 1984-го. Автор широко известных «Ежедневных упражнений для тромбона». В 1974 году переслал в США все 13 концертов Блажевича.<sup class="ref"><a href="#s3">[3]</a><a href="#s5">[5]</a></sup></p>
-          <span class="pupils">Ученики: А. Н. Морозов (профессор Московской консерватории), В. В. Голиков и др.</span>
+          <p>Окончил консерваторию у Козлова в 1953 году, аспирантуру у валторниста М. Н. Буяновского. С 1950 года в оркестре Ленинградской филармонии, преподавал в консерватории с 1966 года (<span class="warn">⚠</span> в других материалах консерватории — с 1963-го), профессор с 1984-го. Автор широко известных «Ежедневных упражнений для тромбона». В 1974 году переслал в США все 13 концертов Блажевича.<sup class="ref"><a href="#s3">[3]</a><a href="#s5">[5]</a></sup></p>
+          <span class="pupils">Ученики: А. Н. Морозов (профессор Московской консерватории), В. В. Голиков и др.</span>
         </li>
       </ol>
     </div>
   </div>
 
-  <p class="note reveal school-note"><b>Наблюдение редакции:</b> Москву начал прусский тромбонист Христофор Борк. Петербург — австриец Франц Тюрнер (с 1870), за ним его ученик Пётр Волков и немец Евгений Рейхе из Дрездена. Ветви переплелись: петербургский выпускник Райхман занимался у москвича Блажевича и увёз его ноты в Америку, а ленинградец Венгловский через полвека переслал туда же его концерты.</p>
+  <p class="note reveal school-note"><b>Наблюдение редакции:</b> Москву начал прусский тромбонист Христофор Борк. Петербург — австриец Франц Тюрнер (с 1870), за ним его ученик Пётр Волков и немец Евгений Рейхе из Дрездена. Ветви переплелись: петербургский выпускник Райхман занимался у москвича Блажевича и увёз его ноты в Америку, а ленинградец Венгловский через полвека переслал туда же его концерты.</p>
 
-  <p class="note reveal">Биография Якова Райхмана, который связал обе школы с Америкой, — в разделе <a href="#raichman">«Блажевич в Америке»</a>. Подробные биографии московских педагогов и их учеников — в <a href="moscow.html">московском досье</a>, петербургских и ленинградских — в <a href="leningrad.html">ленинградском сборнике</a>.</p>
+  <p class="note reveal">Биография Якова Райхмана, который связал обе школы с Америкой, — в разделе <a href="#raichman">«Блажевич в Америке»</a>. Подробные биографии московских педагогов и их учеников — в <a href="moscow.html">московском досье</a>, петербургских и ленинградских — в <a href="leningrad.html">ленинградском сборнике</a>.</p>
 </div></section>
 <section id="concertos" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><figure class="head-vignette" aria-hidden="true"><img src="assets/bolshoi-1905.webp" alt="" loading="lazy" decoding="async"></figure><h2>13 концертов для тромбона</h2><div class="eyebrow">Сольный репертуар</div><p>Тринадцать концертов Блажевич писал для своих студентов в Московской консерватории. Сам он объяснял, что хотел «показать тромбон и все его технические и музыкальные возможности». Многие концерты при его жизни не вышли, а за пределами России их долго нельзя было достать.</p></div>
+  <div class="section-head reveal" data-n="06"><figure class="head-vignette" aria-hidden="true"><img src="assets/bolshoi-1905.webp" alt="" loading="lazy" decoding="async"></figure><h2>13 концертов для тромбона</h2><div class="eyebrow">Сольный репертуар</div><p>Тринадцать концертов Блажевич писал для своих студентов в Московской консерватории. Сам он объяснял, что хотел «показать тромбон и все его технические и музыкальные возможности». Многие концерты при его жизни не вышли, а за пределами России их долго нельзя было достать.</p></div>
 
   <div class="conc-intro reveal">
     <div>
       <h3>Как они устроены</h3>
-      <p>Все концерты играются без остановок. Части связаны фортепианными интерлюдиями. Сам Блажевич описывал их так: «Первая часть включает вступление, затем тему мелодического характера с развитием, за ней речитативную тему, переходящую в репризу первой темы, и заканчивается виртуозной каденцией. Вторая часть — всегда лирическое Andante в трёхчастной форме, для развития музыкальности и качества звука. Третья обычно написана в форме рондо или скерцо».</p>
-      <p>Образцом служил Концертино Фердинанда Давида. В учебной программе своего класса Блажевич называл его самым удачным произведением для тромбона. По словам исследователя Джеймса Спэрроу, оркестровых партий к концертам, насколько известно, нет, есть только фортепианные.<sup class="ref"><a href="#s6">[6]</a></sup></p>
+      <p>Все концерты играются без остановок. Части связаны фортепианными интерлюдиями. Сам Блажевич описывал их так:</p>
+      <blockquote class="quote"><p>«Первая часть включает вступление, затем тему мелодического характера с развитием, за ней речитативную тему, переходящую в репризу первой темы, и заканчивается виртуозной каденцией. Вторая часть — всегда лирическое Andante в трёхчастной форме, для развития музыкальности и качества звука. Третья обычно написана в форме рондо или скерцо».</p><footer>Владислав Блажевич о своих концертах</footer></blockquote>
+      <p>Образцом служил Концертино Фердинанда Давида. В учебной программе своего класса Блажевич называл его самым удачным произведением для тромбона. По словам исследователя Джеймса Спэрроу, оркестровых партий к концертам, насколько известно, нет, есть только фортепианные.<sup class="ref"><a href="#s6">[6]</a></sup></p>
     </div>
     <div>
-      <h3>Путь к концертам</h3>
-      <p>Блажевич выстраивал дорогу к концертам постепенно. Сначала 20 миниатюр с фортепиано для фразировки и навыков игры с аккомпаниатором, затем концертные пьесы и только потом сами концерты. Программа его класса сохранилась в рукописи в Музее музыкальной культуры имени Глинки. Кроме этюдов и концертов, в неё входили оперные арии, оркестровые отрывки и игра на басовой трубе.<sup class="ref"><a href="#s6">[6]</a></sup></p>
-      <p>Концертных пьес у него было десять (по Фридману) или пять (по Харламову). Из них при жизни автора вышла только Концертная пьеса № 5, в 1938 году. Сегодня это самое популярное его сольное сочинение в США.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p>
+      <h3>Путь к концертам</h3>
+      <p>Блажевич выстраивал дорогу к концертам постепенно. Сначала 20 миниатюр с фортепиано для фразировки и навыков игры с аккомпаниатором, затем концертные пьесы и только потом сами концерты. Программа его класса сохранилась в рукописи в Музее музыкальной культуры имени Глинки. Кроме этюдов и концертов, в неё входили оперные арии, оркестровые отрывки и игра на басовой трубе.<sup class="ref"><a href="#s6">[6]</a></sup></p>
+      <p>Концертных пьес у него было десять (по Фридману) или пять (по Харламову). Из них при жизни автора вышла только Концертная пьеса № 5, в 1938 году. Сегодня это самое популярное его сольное сочинение в США.<sup class="ref"><a href="#s3">[3]</a><a href="#s6">[6]</a></sup></p>
     </div>
   </div>
 
   <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Таблица концертов">
     <table class="conc">
-      <thead><tr><th scope="col">№</th><th scope="col">Тональность</th><th scope="col">Дата</th><th scope="col">Издания и судьба</th></tr></thead>
+      <thead><tr><th scope="col">№</th><th scope="col">Тональность</th><th scope="col">Дата</th><th scope="col">Издания и судьба</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>Ми-бемоль мажор</td><td>1923</td><td>Опубликован только в Edition BIM. Тромбонист Бенни Слюшен получил копию рукописи в 1981 году в Москве, по Харламову, соглашения с семьёй не было. <span class="chip">запись Ламберта</span></td></tr>
-        <tr><td>2</td><td>Ре-бемоль мажор</td><td>1924</td><td>Музгиз, 1933. В 1939 году вышел в Бостоне (Cundy-Bettoney) — одно из двух первых американских изданий Блажевича. IMC, 1950. <span class="chip">запись Ламберта</span></td></tr>
+        <tr><td>1</td><td>Ми-бемоль мажор</td><td>1923</td><td>Опубликован только в Edition BIM. Тромбонист Бенни Слюшен получил копию рукописи в 1981 году в Москве, по Харламову, соглашения с семьёй не было. <span class="chip">запись Ламберта</span></td></tr>
+        <tr><td>2</td><td>Ре-бемоль мажор</td><td>1924</td><td>Музгиз, 1933. В 1939 году вышел в Бостоне (Cundy-Bettoney) — одно из двух первых американских изданий Блажевича. IMC, 1950. <span class="chip">запись Ламберта</span></td></tr>
         <tr><td>3</td><td>Ми-бемоль мажор</td><td>1924</td><td>Одно опубликованное издание. <span class="chip">запись Ламберта</span></td></tr>
         <tr><td>4</td><td>Си-бемоль мажор</td><td>1924</td><td>Одно опубликованное издание. <span class="chip">запись Ламберта</span></td></tr>
-        <tr><td>5</td><td>Ми-бемоль мажор</td><td>1924</td><td>Музгиз, 1930; IMC, 1956. Часто был обязательной пьесой на конкурсах тромбонистов в Восточной Европе.</td></tr>
+        <tr><td>5</td><td>Ми-бемоль мажор</td><td>1924</td><td>Музгиз, 1930; IMC, 1956. Часто был обязательной пьесой на конкурсах тромбонистов в Восточной Европе.</td></tr>
         <tr><td>6</td><td>Си-бемоль мажор</td><td>1924</td><td>—</td></tr>
         <tr><td>7</td><td>Ми-бемоль мажор</td><td>1924</td><td>—</td></tr>
         <tr><td>8</td><td>Ля-бемоль мажор</td><td>1925</td><td>—</td></tr>
-        <tr><td>9</td><td>ми минор</td><td>1925 (в рукописи 1924)</td><td>Первый изданный концерт (Музгиз, 1926). Райхман увёз его в Америку, но за пределами России концерт так и не издали.</td></tr>
-        <tr><td>10</td><td>фа минор</td><td>1924</td><td>Впервые издан в России в 1963 году, по Харламову, Leeds продавала русское издание в США без ведома семьи. Сам Блажевич считал его самым трудным.</td></tr>
-        <tr><td>11</td><td>—</td><td>1926 или 1930-е</td><td>Единственный концерт в сонатной форме. Написан для тромбона, а не для тубы, как иногда считают в США. Есть в архиве Уильяма Крамера в Университете штата Флорида.</td></tr>
-        <tr><td>12</td><td>—</td><td>1926 или 1930-е</td><td>Существует только в рукописи.</td></tr>
-        <tr><td>13</td><td>Ля-бемоль мажор</td><td>1927 или 1930-е</td><td>Существует только в рукописи. Одна из рукописей озаглавлена «Концерт-фантазия».</td></tr>
+        <tr><td>9</td><td>ми минор</td><td>1925 (в рукописи 1924)</td><td>Первый изданный концерт (Музгиз, 1926). Райхман увёз его в Америку, но за пределами России концерт так и не издали.</td></tr>
+        <tr><td>10</td><td>фа минор</td><td>1924</td><td>Впервые издан в России в 1963 году, по Харламову, Leeds продавала русское издание в США без ведома семьи. Сам Блажевич считал его самым трудным.</td></tr>
+        <tr><td>11</td><td>—</td><td>1926 или 1930-е</td><td>Единственный концерт в сонатной форме. Написан для тромбона, а не для тубы, как иногда считают в США. Есть в архиве Уильяма Крамера в Университете штата Флорида.</td></tr>
+        <tr><td>12</td><td>—</td><td>1926 или 1930-е</td><td>Существует только в рукописи.</td></tr>
+        <tr><td>13</td><td>Ля-бемоль мажор</td><td>1927 или 1930-е</td><td>Существует только в рукописи. Одна из рукописей озаглавлена «Концерт-фантазия».</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note reveal">Тональности и даты взяты из списка сочинений английской Википедии. Харламов пишет, что все найденные рукописи датированы 1924 годом, а № 11–13, вероятно, написаны в 1930-е: в учебной программе середины 1920-х их ещё нет. По данным Ламберта (2020), концерты № 1–10 изданы. Первые четыре концерта и Миниатюру № 6 Ламберт впервые записал для открытого доступа, записи бесплатно слушаются на его сайте (раздел «Слушать»).</p>
+  <p class="note reveal">Тональности и даты взяты из списка сочинений английской Википедии. Харламов пишет, что все найденные рукописи датированы 1924 годом, а № 11–13, вероятно, написаны в 1930-е: в учебной программе середины 1920-х их ещё нет. По данным Ламберта (2020), концерты № 1–10 изданы. Первые четыре концерта и Миниатюру № 6 Ламберт впервые записал для открытого доступа, записи бесплатно слушаются на его сайте (раздел «Слушать»).</p>
 </div></section>
 <section id="about" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal"><h2>О проекте</h2><div class="eyebrow">Прозрачность и источники</div></div>
+  <div class="section-head reveal" data-n="07"><h2>О проекте</h2><div class="eyebrow">Прозрачность и источники</div></div>
   <div class="about">
     <div class="reveal">
-      <p>Независимый проект о жизни, музыке и педагогическом наследии Владислава Блажевича. Он не представляет Московскую консерваторию, библиотеки или исполнителей, на которых ссылается.</p>
-      <p>В этой версии нет регистрации, сбора пожертвований и приёма конкурсных заявок. Проект не заявляет связи с историческими конкурсами имени Блажевича. Личный помощник и идея нового конкурса не входят в первый выпуск.</p>
-      <p class="note">Картинка на первом экране — художественная композиция, предоставленная владельцем сайта: Блажевич с тромбоном на фоне Большого зала консерватории и Большого театра; это не историческая фотография. Портрет в ней — художественное изображение, созданное с помощью ИИ по мотивам фотографии Блажевича 1903 года и тонированное в одну гамму с архивными снимками; это не историческая фотография. Исходная фотография 1903 года: <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, общественное достояние (источник на Commons: А. Г. Харламов, ITA Journal, т. 36, № 3, 2008, с. 30–34). Здания в ней и в других местах сайта — по тонированным фотографиям из Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория имени Чайковского, 1940-е</a> и <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905 года</a> (общественное достояние).</p>
+      <p>Независимый проект о жизни, музыке и педагогическом наследии Владислава Блажевича. Он не представляет Московскую консерваторию, библиотеки или исполнителей, на которых ссылается.</p>
+      <p>В этой версии нет регистрации, сбора пожертвований и приёма конкурсных заявок. Проект не заявляет связи с историческими конкурсами имени Блажевича. Личный помощник и идея нового конкурса не входят в первый выпуск.</p>
     </div>
-    <div class="reveal">
-      <h3>Прочитанные источники</h3>
-      <p class="src-group">Открывались и читались целиком при подготовке текста (8 ноября 2026 года)</p>
-      <ol class="sources">
-        <li id="s1"><a href="https://www.mosconsv.ru/ru/groups/11202">Московская консерватория — история кафедры медных духовых инструментов</a>; <a href="https://www.mosconsv.ru/ru/person/131869">персоналия Х. И. Борка</a>.</li>
-        <li id="s2"><a href="https://ru.wikipedia.org/wiki/Блажевич,_Владислав_Михайлович">Википедия (рус.): Блажевич</a>; <a href="https://en.wikipedia.org/wiki/Vladislav_Blazhevich">Wikipedia (англ.)</a> и <a href="https://en.wikipedia.org/wiki/List_of_compositions_by_Vladislav_Blazhevich">список сочинений</a>. Ранняя биография в английской статье ссылается на: А. Г. Харламов, «Blazhevich: His life and work», ITA Journal, т. 36, № 3, 2008, с. 30–34.</li>
-        <li id="s3">A. Kharlamov, <a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">Blazhevich: The History of Selected Works</a> и <a href="https://www.jayfriedman.net/blazhevich-destiny-of-works-in-the-west/">Destiny of Works in the West</a> (блог Джея Фридмана, 2009). Главы диссертации Харламова (Северо-Западный университет, 2005).</li>
-        <li id="s4">D. Yeo, <a href="https://www.yeodoug.com/Yeo_ITAJ_January_2025_Joannes_Rochut.pdf">«Joannès Rochut…», ITA Journal, январь 2025</a>, с. 74 и далее, примеч. 159–194 (опирается на архив Бостонского симфонического оркестра и интервью дочери Райхмана, 1994); <a href="https://thelasttrombone.com/2020/10/02/joannes-rochut-the-boston-symphony-and-his-trombone/">The Last Trombone, 2020</a>; <a href="https://thelasttrombone.com/2025/01/">The Last Trombone, январь 2025</a>.</li>
-        <li id="s5">Википедия: <a href="https://ru.wikipedia.org/wiki/Борк,_Христофор_Иванович">Борк</a>, <a href="https://ru.wikipedia.org/wiki/Рейхе,_Евгений_Адольфович">Рейхе</a>, <a href="https://ru.wikipedia.org/wiki/Коршунов,_Николай_Сергеевич">Коршунов</a>. Энциклопедия Санкт-Петербургской консерватории: <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">Козлов</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">Венгловский</a>.</li>
-        <li id="s6">C. Lambert, <a href="https://static1.squarespace.com/static/5f68ca3f4f54480b7bf578b0/t/5f6a4799bd059e17895aa1db/1600800678933/The+Solo+Trombone+Works+of+Vladislav+Blazhevich.pdf">The Solo Trombone Works of Vladislav Blazhevich</a>, Университет Айовы, 2020; <a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Blazhevich Recording Project</a>.</li>
-        <li id="s7"><a href="https://www.gnesin.ru/mediateka/metodicheskie_materialy/metodicheskie_posobiya/maslov_dukhovaya_shkola">Музыкальное училище имени Гнесиных: «К истории московской духовой исполнительской школы»</a>; <a href="https://www.classon.ru/lib/catalog/blazhevich/">classON</a>.</li>
-      </ol>
-      <p class="src-group">Дополнительные источники (статус проверки указан у каждого)</p>
-      <ol class="sources" start="8">
-        <li id="s8"><a href="https://www.krugosvet.ru/enc/kultura_i_obrazovanie/muzyka/BLAZHEVICH_VLADISLAV_MIHALOVICH.html">Энциклопедия «Кругосвет»</a>. <em class="st st-no">не открылась: сервер отклоняет подключение</em> Сведения из неё (годы в Большом театре и Персимфансе, кафедра) совпадают с источниками [1], [2] и [7]. Сведение об оркестре фабрики «Гознак» (с 1920 года) приведено по поисковой выдаче 9 ноября 2026 года; другими прочитанными источниками оно не подтверждено.</li>
-        <li id="s9">А. Штильман, <a href="https://www.litres.ru/book/artur-shtilman/v-bolshom-teatre-i-metropoliten-opera-gody-zhizni-v-moskve-11961952/chitat-onlayn/">«В Большом театре и Метрополитен-опера»</a> (фрагмент о Райхмане); <a href="https://cyclowiki.org/wiki/Циклопедия:Списки:Преподаватели_Санкт-Петербургской_консерватории">Циклопедия: преподаватели Санкт-Петербургской консерватории</a> (Волков в этом списке отсутствует); <a href="https://conservatory.ru/x-letka/ads/vypusk-1942-goda-orkestrovye-dukhovye-i-udarnye-instrumenty">выпуск 1942 года</a>. <em class="st st-ok">прочитаны 8 ноября 2026</em></li>
-        <li id="s10">J. M. Thompson, <a href="https://trombone.net/resources-events/reviews-list/review/?reviewid=1706">рецензия на «School for Trombone in Clefs» (East-West)</a>, ITA Journal 39:1, 2011, со списком американских изданий; <a href="https://trombone.org/reviews/view.php?id=224">Online Trombone Journal — рецензия на сборник «Before Blazhevich»</a>; библиотечная запись <a href="https://vaara.finna.fi/Record/vaarakirjastot.11126370">«Studies in Clefs», IMC, 1957</a>. <em class="st st-ok">прочитаны 8 ноября 2026</em></li>
-        <li id="s11">Иллюстрации (Wikimedia Commons): <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">фотография 1903 года с автографом (основа портрета; сама фотография — в биографии, глава «Консерватория и класс Борка»)</a>, <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905</a>, <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория, 1940-е</a>. Шапка досье «Московская тромбоновая школа» — коллаж из двух последних снимков на фоне нарисованной площади; так здания рядом не снимали.</li>
-        <li id="s12">«Вечерняя Москва»: Е. Пятунина, В. Богданов, <a href="https://vm.ru/society/114265-trubachi-pod-zvuki-marsha-bojcy-vyhodili-na-ulicy-stolicy">«Трубачи. Под звуки марша бойцы выходили на улицы столицы»</a>, 17 октября 2012; Е. Пятунина, <a href="https://vm.ru/society/551256-orkestr-nashej-pamyati">«Оркестр нашей памяти»</a>, 9 ноября 2017. <em class="st st-ok">прочитаны 9 ноября 2026</em></li>
-      </ol>
-      <p class="note">Номера в квадратных скобках в тексте ведут к этому списку. Пометка «читались целиком» означает только, что редакция сайта открывала эти страницы. Независимую проверку перед публикацией стоит провести отдельно, особенно для энциклопедии «Кругосвет» [8], которую открыть не удалось. Расхождения источников показаны в разделе биографии, а не исправлены молча. Права на конкретные нотные издания проверяются отдельно.</p>
+    <div class="reveal about-credit">
+      <p class="note">Картинка на первом экране — художественная композиция, предоставленная владельцем сайта: Блажевич с тромбоном на фоне Большого зала консерватории и Большого театра; это не историческая фотография. Портрет в ней — художественное изображение, созданное с помощью ИИ по мотивам фотографии Блажевича 1903 года и тонированное в одну гамму с архивными снимками; это не историческая фотография. Исходная фотография 1903 года: <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">Wikimedia Commons</a>, общественное достояние (источник на Commons: А. Г. Харламов, ITA Journal, т. 36, № 3, 2008, с. 30–34). Здания в ней и в других местах сайта — по тонированным фотографиям из Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория имени Чайковского, 1940-е</a> и <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905 года</a> (общественное достояние).</p>
     </div>
+  </div>
+  <div class="src-block reveal">
+    <h3>Источники</h3>
+    <p class="src-lead">Двенадцать источников по темам. Номера те же, что в квадратных скобках в тексте. Источники 1–7 открывались и читались целиком при подготовке текста (8 ноября 2026 года), у остальных статус проверки указан рядом.</p>
+    <div class="src-groups">
+      <section class="src-group"><h4>Жизнь и биография</h4><ol class="sources">
+        <li id="s1" value="1"><a href="https://www.mosconsv.ru/ru/groups/11202">Московская консерватория — история кафедры медных духовых инструментов</a>; <a href="https://www.mosconsv.ru/ru/person/131869">персоналия Х. И. Борка</a>.</li>
+        <li id="s2" value="2"><a href="https://ru.wikipedia.org/wiki/Блажевич,_Владислав_Михайлович">Википедия (рус.): Блажевич</a>; <a href="https://en.wikipedia.org/wiki/Vladislav_Blazhevich">Wikipedia (англ.)</a> и <a href="https://en.wikipedia.org/wiki/List_of_compositions_by_Vladislav_Blazhevich">список сочинений</a>. Ранняя биография в английской статье ссылается на: А. Г. Харламов, «Blazhevich: His life and work», ITA Journal, т. 36, № 3, 2008, с. 30–34.</li>
+        <li id="s8" value="8"><a href="https://www.krugosvet.ru/enc/kultura_i_obrazovanie/muzyka/BLAZHEVICH_VLADISLAV_MIHALOVICH.html">Энциклопедия «Кругосвет»</a>. <em class="st st-no">не открылась: сервер отклоняет подключение</em> Сведения из неё (годы в Большом театре и Персимфансе, кафедра) совпадают с источниками [1], [2] и [7]. Сведение об оркестре фабрики «Гознак» (с 1920 года) приведено по поисковой выдаче 9 ноября 2026 года; другими прочитанными источниками оно не подтверждено.</li>
+        <li id="s12" value="12">«Вечерняя Москва»: Е. Пятунина, В. Богданов, <a href="https://vm.ru/society/114265-trubachi-pod-zvuki-marsha-bojcy-vyhodili-na-ulicy-stolicy">«Трубачи. Под звуки марша бойцы выходили на улицы столицы»</a>, 17 октября 2012; Е. Пятунина, <a href="https://vm.ru/society/551256-orkestr-nashej-pamyati">«Оркестр нашей памяти»</a>, 9 ноября 2017. <em class="st st-ok">прочитаны 9 ноября 2026</em></li>
+      </ol></section>
+      <section class="src-group"><h4>Сочинения и издания</h4><ol class="sources">
+        <li id="s3" value="3">A. Kharlamov, <a href="https://www.jayfriedman.net/blazhevich-the-history-of-selected-works/">Blazhevich: The History of Selected Works</a> и <a href="https://www.jayfriedman.net/blazhevich-destiny-of-works-in-the-west/">Destiny of Works in the West</a> (блог Джея Фридмана, 2009). Главы диссертации Харламова (Северо-Западный университет, 2005).</li>
+        <li id="s6" value="6">C. Lambert, <a href="https://static1.squarespace.com/static/5f68ca3f4f54480b7bf578b0/t/5f6a4799bd059e17895aa1db/1600800678933/The+Solo+Trombone+Works+of+Vladislav+Blazhevich.pdf">The Solo Trombone Works of Vladislav Blazhevich</a>, Университет Айовы, 2020; <a href="https://www.caleblambertlowbrass.com/blazhevich-recording-project">Blazhevich Recording Project</a>.</li>
+        <li id="s10" value="10">J. M. Thompson, <a href="https://trombone.net/resources-events/reviews-list/review/?reviewid=1706">рецензия на «School for Trombone in Clefs» (East-West)</a>, ITA Journal 39:1, 2011, со списком американских изданий; <a href="https://trombone.org/reviews/view.php?id=224">Online Trombone Journal — рецензия на сборник «Before Blazhevich»</a>; библиотечная запись <a href="https://vaara.finna.fi/Record/vaarakirjastot.11126370">«Studies in Clefs», IMC, 1957</a>. <em class="st st-ok">прочитаны 8 ноября 2026</em></li>
+      </ol></section>
+      <section class="src-group"><h4>Школы и педагоги</h4><ol class="sources">
+        <li id="s5" value="5">Википедия: <a href="https://ru.wikipedia.org/wiki/Борк,_Христофор_Иванович">Борк</a>, <a href="https://ru.wikipedia.org/wiki/Рейхе,_Евгений_Адольфович">Рейхе</a>, <a href="https://ru.wikipedia.org/wiki/Коршунов,_Николай_Сергеевич">Коршунов</a>. Энциклопедия Санкт-Петербургской консерватории: <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">Козлов</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">Венгловский</a>.</li>
+        <li id="s7" value="7"><a href="https://www.gnesin.ru/mediateka/metodicheskie_materialy/metodicheskie_posobiya/maslov_dukhovaya_shkola">Музыкальное училище имени Гнесиных: «К истории московской духовой исполнительской школы»</a>; <a href="https://www.classon.ru/lib/catalog/blazhevich/">classON</a>.</li>
+        <li id="s9" value="9">А. Штильман, <a href="https://www.litres.ru/book/artur-shtilman/v-bolshom-teatre-i-metropoliten-opera-gody-zhizni-v-moskve-11961952/chitat-onlayn/">«В Большом театре и Метрополитен-опера»</a> (фрагмент о Райхмане); <a href="https://cyclowiki.org/wiki/Циклопедия:Списки:Преподаватели_Санкт-Петербургской_консерватории">Циклопедия: преподаватели Санкт-Петербургской консерватории</a> (Волков в этом списке отсутствует); <a href="https://conservatory.ru/x-letka/ads/vypusk-1942-goda-orkestrovye-dukhovye-i-udarnye-instrumenty">выпуск 1942 года</a>. <em class="st st-ok">прочитаны 8 ноября 2026</em></li>
+      </ol></section>
+      <section class="src-group"><h4>Райхман и Бостон</h4><ol class="sources">
+        <li id="s4" value="4">D. Yeo, <a href="https://www.yeodoug.com/Yeo_ITAJ_January_2025_Joannes_Rochut.pdf">«Joannès Rochut…», ITA Journal, январь 2025</a>, с. 74 и далее, примеч. 159–194 (опирается на архив Бостонского симфонического оркестра и интервью дочери Райхмана, 1994); <a href="https://thelasttrombone.com/2020/10/02/joannes-rochut-the-boston-symphony-and-his-trombone/">The Last Trombone, 2020</a>; <a href="https://thelasttrombone.com/2025/01/">The Last Trombone, январь 2025</a>.</li>
+      </ol></section>
+      <section class="src-group"><h4>Иллюстрации</h4><ol class="sources">
+        <li id="s11" value="11">Иллюстрации (Wikimedia Commons): <a href="https://commons.wikimedia.org/wiki/File:VM_Blazhevich_1903_Portrait_w-Signature.jpg">фотография 1903 года с автографом (основа портрета; сама фотография — в биографии, глава «Консерватория и класс Борка»)</a>, <a href="https://commons.wikimedia.org/wiki/File:Bolshoi_Theatre_1905.jpg">Большой театр, около 1905</a>, <a href="https://commons.wikimedia.org/wiki/File:Moscow_Cnservatory_1940-e.JPG">Московская консерватория, 1940-е</a>. Шапка досье «Московская тромбоновая школа» — коллаж из двух последних снимков на фоне нарисованной площади; так здания рядом не снимали.</li>
+      </ol></section>
+    </div>
+    <p class="note">Номера в квадратных скобках в тексте ведут к этому списку. Пометка «читались целиком» означает только, что редакция сайта открывала эти страницы. Независимую проверку перед публикацией стоит провести отдельно, особенно для энциклопедии «Кругосвет» [8], которую открыть не удалось. Расхождения источников показаны в разделе биографии, а не исправлены молча. Права на конкретные нотные издания проверяются отдельно.</p>
   </div>
 </div></section>
 </main>
-<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a><span>Владислав Блажевич, Vladislav Blazhevich</span><a href="en/index.html" hreflang="en" lang="en">English</a></div></footer>
+<footer><div class="wrap foot">
+  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">Владислав Блажевич <span>1881–1942</span></p><p>Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.</p></div>
+  <div class="foot-col" role="navigation" aria-label="Подвал"><h2>Разделы</h2><ul class="foot-secs"><li><a href="index.html#scores">Ноты</a></li><li><a href="index.html#listen">Слушать</a></li><li><a href="index.html#biography">Биография</a></li><li><a href="index.html#usa">В США</a></li><li><a href="index.html#schools">Школы</a></li><li><a href="index.html#concertos">Концерты</a></li><li><a href="index.html#about">О проекте</a></li></ul></div>
+  <div class="foot-col"><h2>Досье школ</h2><ul><li><a href="moscow.html">Московская тромбоновая школа</a></li><li><a href="leningrad.html">Ленинградская тромбоновая школа</a></li></ul><h2>Язык</h2><ul><li><a href="en/index.html" hreflang="en" lang="en">English version</a></li></ul></div>
+  <p class="foot-fine">Источники и права на изображения указаны в разделе <a href="index.html#about">«О проекте»</a>.</p>
+</div></footer>
 <button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>
 <script>
 'use strict';
@@ -969,20 +1268,9 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Каталог: поиск и фильтр */
-  const search=document.getElementById('search'), instrument=document.getElementById('instrument');
-  const cards=[...document.querySelectorAll('#catalog .card')];
-  const norm=s=>s.toLocaleLowerCase().replaceAll('ё','е').trim();
-  const countEl=document.getElementById('count');
-  const extraFilters=[...document.querySelectorAll('[data-catalog-filter]')];
-  function filterCatalog(){
-    const q=norm(search.value); let n=0;
-    for(const c of cards){const ok=norm(c.textContent).includes(q)&&(instrument.value==='all'||c.dataset.instrument===instrument.value)&&extraFilters.every(f=>f.value==='all'||c.dataset[f.dataset.catalogFilter]===f.value);c.hidden=!ok;if(ok)n++}
-    countEl.textContent=(countEl.dataset.tpl||'Показано: {n} из {t}').replace('{n}',n).replace('{t}',cards.length);
-    document.getElementById('empty').hidden=n!==0;
-  }
-  if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
-
+  /* Плеер: внешний iframe (Яндекс Музыка) подгружается только по нажатию кнопки */
+  document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
+    btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
 
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
@@ -991,9 +1279,12 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
   if(!totop)return;
+  /* тонкая линия прочитанного вверху общей страницы и название текущего раздела на вкладке меню у края */
+  const prog=document.querySelector('.progress'), edge=document.querySelector('.rail-edge span'), edgeWord=edge?edge.textContent:'';
   /* главная — одна длинная страница: боковое меню и кнопка «Меню» появляются, когда первый экран ушёл вверх */
   const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700);
-    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6)};
+    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6);
+    if(prog){const max=document.documentElement.scrollHeight-innerHeight;prog.style.setProperty('--p',max>0?Math.min(1,y/max):0)}};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
@@ -1002,7 +1293,8 @@ html:not(.js) .rail,html:not(.js) .fab{opacity:1;pointer-events:auto}
     const here=location.pathname.split('/').pop()||'index.html';
     const pageLink=links.find(a=>a.getAttribute('href')===here);
     if(pageLink) pageLink.classList.add('active');
-    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))})}}},{rootMargin:'-45% 0px -50% 0px'});
+    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))});
+      const cur=document.querySelector('.rail a.active');if(edge&&cur)edge.textContent=edgeWord+' · '+cur.textContent}}},{rootMargin:'-45% 0px -50% 0px'});
     links.map(a=>a.getAttribute('href').split('#')[1]).filter(Boolean).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el)});
 
     /* Плавное появление: прячем только то, что ниже первого экрана */
