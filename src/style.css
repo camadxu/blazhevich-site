@@ -538,3 +538,27 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
   background:radial-gradient(130% 100% at 50% 40%,transparent 62%,rgb(74 48 20/.16) 100%)}
 @media print{body::after{display:none}}
 .rail .lang{margin-right:var(--s-4)}
+
+/* ---------- Ноты как библиотечные карточки (13.11.2026): две колонки, у каждой карточки номер, красная линейка
+   и строки каталожной карточки; источник — «штампом» внизу. Вся карточка по-прежнему ссылка. ---------- */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0;counter-reset:card}
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-5) var(--s-4);
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
+  background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
+  box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
+.card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+.card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
+  border-bottom:1px solid color-mix(in srgb,#8a2b1c 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
+.card h3{font-size:26px;margin-top:var(--s-2)}
+.card p{font-size:16px;line-height:32px;margin:0}
+.card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
+  background:var(--paper);font-size:13px;letter-spacing:.06em;text-transform:uppercase;rotate:-1.2deg}
+.card:hover a{text-decoration:none;border-color:var(--accent)}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
+main > section.block{position:relative}
+main > section.block + section.block::before{content:"◆";position:absolute;top:0;left:50%;translate:-50% -50%;width:min(460px,70vw);
+  text-align:center;font-size:11px;line-height:1;color:var(--rule);
+  background:linear-gradient(to right,transparent,var(--rule) 18%,var(--rule) 44%,transparent 44% 56%,var(--rule) 56%,var(--rule) 82%,transparent) center/100% 1px no-repeat}
