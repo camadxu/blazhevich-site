@@ -24,7 +24,7 @@ for pg in ['en/index.html']:  # на русском карточки повто�
  assert s.count('id="v3-source-')==4
  assert s.count('class="provisional"')==3
 # Происхождение портрета (ИИ) и источники фото указаны на странице «О проекте» и в английской версии.
-assert 'созданное с помощью ИИ' in (ROOT/'site/index.html').read_text()
+assert 'созданное с помощью ИИ' in (ROOT/'site/index.html').read_text().replace('\u00a0',' ')  # сборщик ставит неразрывные пробелы
 assert 'AI-generated' in (ROOT/'site/en/index.html').read_text()
 for pg in ['index.html','en/index.html']:
  s=(ROOT/'site'/pg).read_text()
