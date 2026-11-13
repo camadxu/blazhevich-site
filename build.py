@@ -46,7 +46,7 @@ CSS = CSS + EXTRA_CSS
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
                 '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;600&display=swap">')
-FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4eee1'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
+FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
 
 def sec(name, lang='ru'):
     return (SRC / lang / f'{name}.html').read_text()
@@ -131,7 +131,9 @@ def deco(h, prefix=''):
 
 def rail(items, lang_link, label):
     """Боковое меню общей страницы (на узких экранах вместо него кнопка «Меню»)."""
-    return (f'<nav class="rail" aria-label="{label}">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in items)
+    edge = 'Разделы' if label == 'Разделы' else 'Sections'
+    return (f'<div class="rail-edge" aria-hidden="true"><span>{edge}</span></div>\n'
+            f'<nav class="rail" aria-label="{label}">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in items)
             + f'{lang_link}</nav>\n')
 
 def stub(target, title, lang):
@@ -161,7 +163,7 @@ def head(title, desc, path, lang, prefix, fonts):
     m = [f'<title>{title}</title>',
          f'<meta name="description" content="{desc}">',
          f'<meta name="robots" content="{"index,follow" if a.release else "noindex,nofollow"}">',
-         '<meta name="theme-color" content="#f4eee1">', FAVICON,
+         '<meta name="theme-color" content="#e8dbbf">', FAVICON,
          '<meta property="og:type" content="website">',
          f'<meta property="og:locale" content="{"ru_RU" if lang == "ru" else "en_US"}">',
          '<meta property="og:site_name" content="Blazhevich">',
@@ -270,7 +272,7 @@ if a.release:
 one = ''.join(sec(s_) for s_ in ['scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about'])
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
 art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-       '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#f4eee1">\n' + FAVICON + '\n' + FONTS_GOOGLE
+       '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#e8dbbf">\n' + FAVICON + '\n' + FONTS_GOOGLE
        + f'\n<style>\n{CSS}</style>\n\n'
        + header(nav, '', '#scores')
        + f'<main id="main">\n{one}</main>\n'

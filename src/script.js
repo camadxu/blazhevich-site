@@ -3,21 +3,6 @@
   document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Каталог: поиск и фильтр */
-  const search=document.getElementById('search'), instrument=document.getElementById('instrument');
-  const cards=[...document.querySelectorAll('#catalog .card')];
-  const norm=s=>s.toLocaleLowerCase().replaceAll('ё','е').trim();
-  const countEl=document.getElementById('count');
-  const extraFilters=[...document.querySelectorAll('[data-catalog-filter]')];
-  function filterCatalog(){
-    const q=norm(search.value); let n=0;
-    for(const c of cards){const ok=norm(c.textContent).includes(q)&&(instrument.value==='all'||c.dataset.instrument===instrument.value)&&extraFilters.every(f=>f.value==='all'||c.dataset[f.dataset.catalogFilter]===f.value);c.hidden=!ok;if(ok)n++}
-    countEl.textContent=(countEl.dataset.tpl||'Показано: {n} из {t}').replace('{n}',n).replace('{t}',cards.length);
-    document.getElementById('empty').hidden=n!==0;
-  }
-  if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
-
-
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
   if(menu&&menu.hidePopover)menu.addEventListener('click',e=>{if(e.target.closest('a'))menu.hidePopover()});
