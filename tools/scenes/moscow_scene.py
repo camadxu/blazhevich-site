@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageChops, ImageFilter
 A = Path(__file__).resolve().parents[2] / 'assets'
 W, H, HZ = 1920, 1150, 900
-TOP, BOT = (247, 241, 228), (238, 228, 206)
+TOP, BOT = (232, 219, 191), (224, 208, 176)  # = --paper и чуть темнее (гамма 13.11.2026)
 
 def lerp(a, b, t): return tuple(round(x + (y - x) * t) for x, y in zip(a, b))
 img = Image.new('RGBA', (W, H)); d = ImageDraw.Draw(img)

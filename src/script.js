@@ -3,20 +3,9 @@
   document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Каталог: поиск и фильтр */
-  const search=document.getElementById('search'), instrument=document.getElementById('instrument');
-  const cards=[...document.querySelectorAll('#catalog .card')];
-  const norm=s=>s.toLocaleLowerCase().replaceAll('ё','е').trim();
-  const countEl=document.getElementById('count');
-  const extraFilters=[...document.querySelectorAll('[data-catalog-filter]')];
-  function filterCatalog(){
-    const q=norm(search.value); let n=0;
-    for(const c of cards){const ok=norm(c.textContent).includes(q)&&(instrument.value==='all'||c.dataset.instrument===instrument.value)&&extraFilters.every(f=>f.value==='all'||c.dataset[f.dataset.catalogFilter]===f.value);c.hidden=!ok;if(ok)n++}
-    countEl.textContent=(countEl.dataset.tpl||'Показано: {n} из {t}').replace('{n}',n).replace('{t}',cards.length);
-    document.getElementById('empty').hidden=n!==0;
-  }
-  if(search&&instrument){search.addEventListener('input',filterCatalog); instrument.addEventListener('change',filterCatalog); extraFilters.forEach(f=>f.addEventListener('change',filterCatalog)); filterCatalog();}
-
+  /* Плеер: внешний iframe (Яндекс Музыка) подгружается только по нажатию кнопки */
+  document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
+    btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
 
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
@@ -25,9 +14,12 @@
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
   if(!totop)return;
+  /* тонкая линия прочитанного вверху общей страницы и название текущего раздела на вкладке меню у края */
+  const prog=document.querySelector('.progress'), edge=document.querySelector('.rail-edge span'), edgeWord=edge?edge.textContent:'';
   /* главная — одна длинная страница: боковое меню и кнопка «Меню» появляются, когда первый экран ушёл вверх */
   const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700);
-    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6)};
+    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6);
+    if(prog){const max=document.documentElement.scrollHeight-innerHeight;prog.style.setProperty('--p',max>0?Math.min(1,y/max):0)}};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
   totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
@@ -36,7 +28,8 @@
     const here=location.pathname.split('/').pop()||'index.html';
     const pageLink=links.find(a=>a.getAttribute('href')===here);
     if(pageLink) pageLink.classList.add('active');
-    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))})}}},{rootMargin:'-45% 0px -50% 0px'});
+    const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))});
+      const cur=document.querySelector('.rail a.active');if(edge&&cur)edge.textContent=edgeWord+' · '+cur.textContent}}},{rootMargin:'-45% 0px -50% 0px'});
     links.map(a=>a.getAttribute('href').split('#')[1]).filter(Boolean).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el)});
 
     /* Плавное появление: прячем только то, что ниже первого экрана */

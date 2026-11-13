@@ -46,7 +46,7 @@ CSS = CSS + EXTRA_CSS
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
                 '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;600&display=swap">')
-FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4eee1'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
+FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
 
 def sec(name, lang='ru'):
     return (SRC / lang / f'{name}.html').read_text()
@@ -120,18 +120,22 @@ def inner(h, crumb, href='index.html', prefix=''):
                   f'<div class="section-head{cls} reveal"{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
-def deco(h, prefix=''):
-    """Раздел на общей странице: заголовок остаётся h2, справа — архивная виньетка."""
+def deco(h, prefix='', n=0):
+    """Раздел на общей странице: заголовок остаётся h2, справа — архивная виньетка, над заголовком — номер раздела."""
+    if n:
+        h = h.replace('<div class="section-head reveal">', f'<div class="section-head reveal" data-n="{n:02d}">', 1)
     sid = re.match(r'\s*<section id="([\w-]+)"', h)
     v = VIGNETTE.get(sid.group(1)) if sid else None
     if not v:
         return h
     fig = f'<figure class="head-vignette" aria-hidden="true"><img src="{prefix}assets/{v}" alt="" loading="lazy" decoding="async"></figure>'
-    return h.replace('<div class="section-head reveal">', f'<div class="section-head reveal">{fig}', 1)
+    return re.sub(r'(<div class="section-head reveal"[^>]*>)', lambda m: m.group(1) + fig, h, count=1)
 
 def rail(items, lang_link, label):
     """Боковое меню общей страницы (на узких экранах вместо него кнопка «Меню»)."""
-    return (f'<nav class="rail" aria-label="{label}">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in items)
+    edge = 'Меню' if label == 'Разделы' else 'Menu'   # то же слово, что на кнопках первого экрана и телефона
+    return (f'<div class="rail-edge" aria-hidden="true"><span>{edge}</span></div>\n'
+            f'<nav class="rail" aria-label="{label}">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in items)
             + f'{lang_link}</nav>\n')
 
 def stub(target, title, lang):
@@ -148,12 +152,45 @@ def en_words(html):
         html = html.replace(ru, en_)
     return html
 
-FOOTER_RU = ('<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a>'
-             '<span>Владислав Блажевич, Vladislav Blazhevich</span><a href="en/index.html" hreflang="en" lang="en">English</a></div></footer>\n'
-             '<button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>\n')
-FOOTER_EN = ('<footer><div class="wrap foot"><a href="index.html" class="brand">Blazhevich</a>'
-             '<span>Vladislav Blazhevich, Владислав Блажевич</span><a href="../index.html" hreflang="ru" lang="ru">Русский</a></div></footer>\n'
-             '<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>\n')
+def site_footer(lang):
+    """Подвал: имя и годы, разделы, досье школ, язык. Ссылки с адресом страницы — подвал общий для главной и досье."""
+    ru = lang == 'ru'
+    nav = NAV_RU if ru else [(k, v[0]) for k, v in EN_PAGES.items()]
+    secs = ''.join(f'<li><a href="index.html#{i}">{t}</a></li>' for i, t in nav)
+    T = (dict(who='Владислав Блажевич', about='Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.',
+              s='Разделы', d='Досье школ', m='Московская тромбоновая школа', l='Ленинградская тромбоновая школа',
+              o='Язык', other='<a href="en/index.html" hreflang="en" lang="en">English version</a>',
+              fine='Источники и права на изображения указаны в разделе <a href="index.html#about">«О проекте»</a>.', top='Наверх', nav='Подвал')
+         if ru else
+         dict(who='Vladislav Blazhevich', about='Trombonist, teacher, composer. An independent project about his life, scores and school.',
+              s='Sections', d='School dossiers', m='The Moscow trombone school', l='The Leningrad trombone school',
+              o='Language', other='<a href="../index.html" hreflang="ru" lang="ru">Русская версия</a>',
+              fine='Sources and image credits are listed under <a href="index.html#about">About</a>.', top='Back to top', nav='Footer'))
+    return ('<footer><div class="wrap foot">\n'
+            f'  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">{T["who"]} <span>1881–1942</span></p><p>{T["about"]}</p></div>\n'
+            f'  <div class="foot-col" role="navigation" aria-label="{T["nav"]}"><h2>{T["s"]}</h2><ul class="foot-secs">{secs}</ul></div>\n'
+            f'  <div class="foot-col"><h2>{T["d"]}</h2><ul><li><a href="moscow.html">{T["m"]}</a></li><li><a href="leningrad.html">{T["l"]}</a></li></ul>'
+            f'<h2>{T["o"]}</h2><ul><li>{T["other"]}</li></ul></div>\n'
+            f'  <p class="foot-fine">{T["fine"]}</p>\n'
+            '</div></footer>\n'
+            f'<button class="totop" id="totop" type="button" aria-label="{T["top"]}">↑</button>\n')
+
+# ---- типографика русских страниц ----
+_NB = ' '
+_SHORT = re.compile(r'(?<![\w-])(в|во|к|ко|с|со|о|об|у|и|а|на|по|из|за|от|до|не|ни|но) (?=\S)', re.I)
+def typo(html):
+    """Неразрывные пробелы в русском тексте: после коротких предлогов и союзов, после №, между инициалами,
+    перед тире и между числом и словом «год/лет» — чтобы строка не кончалась на «в», «и», «№» или «1905». Теги не трогаются."""
+    def fix(t):
+        t = t.replace('№ ', '№' + _NB)
+        t = re.sub(r'(?<![А-Яа-яЁё])([А-ЯЁ]\.) (?=[А-ЯЁ])', r'\1' + _NB, t)
+        t = re.sub(r'(\d) (год[а-я]{0,2}|лет|г\.|гг\.)(?![а-яё])', r'\1' + _NB + r'\2', t)
+        t = _SHORT.sub(lambda m: m.group(1) + _NB, t)
+        return t.replace(' —', _NB + '—')
+    return ''.join(x if x.startswith('<') else fix(x) for x in re.split(r'(<[^>]+>)', html))
+
+FOOTER_RU = lambda: site_footer('ru')
+FOOTER_EN = lambda: site_footer('en')
 
 def head(title, desc, path, lang, prefix, fonts):
     url = f'{DOM}/{path}'.replace('/index.html', '/') if DOM else ''
@@ -161,7 +198,7 @@ def head(title, desc, path, lang, prefix, fonts):
     m = [f'<title>{title}</title>',
          f'<meta name="description" content="{desc}">',
          f'<meta name="robots" content="{"index,follow" if a.release else "noindex,nofollow"}">',
-         '<meta name="theme-color" content="#f4eee1">', FAVICON,
+         '<meta name="theme-color" content="#e8dbbf">', FAVICON,
          '<meta property="og:type" content="website">',
          f'<meta property="og:locale" content="{"ru_RU" if lang == "ru" else "en_US"}">',
          '<meta property="og:site_name" content="Blazhevich">',
@@ -183,6 +220,8 @@ def head(title, desc, path, lang, prefix, fonts):
     return '\n'.join(m)
 
 def page(lang, title, desc, path, prefix, body, fonts, footer):
+    if lang == 'ru':
+        body, footer = typo(body), typo(footer)
     return ('<!doctype html>\n'
             f'<html lang="{lang}">\n<head>\n<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
@@ -207,15 +246,15 @@ for f, (ss, title, desc) in PAGES.items():
     if f == 'index.html':   # весь сайт одной страницей: первый экран, разделы подряд, боковое меню
         body = (f'<a class="skip" href="#scores">Перейти к содержимому</a>\n' + DRAFT
                 + rail(NAV_RU, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'Разделы')
-                + '<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
-                + '<main id="main">\n' + ''.join(deco(sec(s_)) for s_ in ss) + '</main>\n')
-        footer = FOOTER_RU
+                + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
+                + '<main id="main">\n' + ''.join(deco(sec(s_), n=i) for i, s_ in enumerate(ss)) + '</main>\n')
+        footer = FOOTER_RU()
     else:
         crumb = (par[1], f'index.html#{par[0]}') if par else ('Главная', 'index.html')
         en_href = f'en/{f}' if f in EN_DOSSIERS else 'en/index.html'
         body = header(nav, f'<a class="lang" href="{en_href}" hreflang="en" lang="en">EN</a>', 'index.html') \
             + '<main id="main">\n' + ''.join(inner(sec(s_), *crumb) for s_ in ss) + '</main>\n'
-        footer = FOOTER_RU
+        footer = FOOTER_RU()
     body = relink(body, f, id_page)
     if f != 'index.html':
         body = body.replace(f'<a href="#{ss[0]}">', f'<a href="{f}">', 1)
@@ -244,12 +283,12 @@ nav_en = ''.join(f'<a href="#{k}">{v[0]}</a>' for k, v in EN_PAGES.items())
 FONTS_EN = '<link rel="stylesheet" href="../assets/fonts.css">'
 body = ('<a class="skip" href="#scores">Skip to content</a>\n' + DRAFT
         + rail([(k, v[0]) for k, v in EN_PAGES.items()], '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'Sections')
-        + '<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
-        + '<main id="main">\n' + en_secs['hero'] + ''.join(deco(en_secs[k], '../') for k in EN_PAGES) + '</main>\n')
+        + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
+        + '<main id="main">\n' + en_secs['hero'] + ''.join(deco(en_secs[k], '../', i) for i, k in enumerate(EN_PAGES, 1)) + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Blazhevich — Vladislav Blazhevich, trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
-    'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en)), FONTS_EN, FOOTER_EN))
+    'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en)), FONTS_EN, FOOTER_EN()))
 for k, (label, title, _) in EN_PAGES.items():   # старые адреса английских разделов
     (OUT / 'en' / f'{k}.html').write_text(stub(f'index.html#{k}', title, 'en'))
 act = ' class="active"'  # вне f-string-выражения: бэкслеш внутри выражения валиден только с Python 3.12
@@ -258,7 +297,7 @@ for f, (title, desc) in EN_DOSSIERS.items():
     src = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec(f[:-5], 'en'))
     body = (header(nav_en_idx, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')
             + '<main id="main">\n' + inner(src, 'Schools', 'index.html#schools', '../') + '</main>\n')
-    (OUT / 'en' / f).write_text(page('en', title, desc, f'en/{f}', '../', en_words(body), FONTS_EN, FOOTER_EN))
+    (OUT / 'en' / f).write_text(page('en', title, desc, f'en/{f}', '../', en_words(body), FONTS_EN, FOOTER_EN()))
 
 if a.release:
     today = datetime.date.fromisoformat(a.lastmod).isoformat() if a.lastmod else datetime.date.today().isoformat()
@@ -271,7 +310,7 @@ if a.release:
 one = ''.join(sec(s_) for s_ in ['scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about'])
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
 art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
-       '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#f4eee1">\n' + FAVICON + '\n' + FONTS_GOOGLE
+       '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#e8dbbf">\n' + FAVICON + '\n' + FONTS_GOOGLE
        + f'\n<style>\n{CSS}</style>\n\n'
        + header(nav, '', '#scores')
        + f'<main id="main">\n{one}</main>\n'

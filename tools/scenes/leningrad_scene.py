@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageChops, ImageFilter
 A = Path(__file__).resolve().parents[2] / 'assets'
 SRC = Path(__file__).resolve().parent  # исходный снимок лежит рядом со скриптом — в прод не попадает
 W, H, HZ = 1920, 1150, 900
-TOP, BOT = (247, 241, 228), (238, 228, 206)
+TOP, BOT = (232, 219, 191), (224, 208, 176)  # = --paper и чуть темнее (гамма 13.11.2026)
 
 def lerp(a, b, t): return tuple(round(x + (y - x) * t) for x, y in zip(a, b))
 img = Image.new('RGBA', (W, H)); d = ImageDraw.Draw(img)
@@ -32,7 +32,7 @@ w = 1080; h = round(src.height * w / src.width)
 src = src.resize((w, h), Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.4, percent=60, threshold=2))
 g = np.asarray(src).astype(float) / 255
 g = np.clip((g - 0.06) / 0.88, 0, 1) ** 0.9
-stops = np.array([[62, 47, 33], [150, 132, 108], [242, 234, 216]], float)
+stops = np.array([[62, 47, 33], [150, 132, 108], [238, 228, 206]], float)
 t = g[..., None]
 rgb = np.where(t < .5, stops[0] + (stops[1] - stops[0]) * (t / .5), stops[1] + (stops[2] - stops[1]) * ((t - .5) / .5))
 # края растворяются в бумаге: слева и сверху мягко, справа и снизу чуть-чуть
