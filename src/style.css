@@ -692,3 +692,57 @@ body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background
 .progress{position:fixed;z-index:31;top:0;left:0;right:0;height:2px;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));pointer-events:none}
 html:not(.past-hero) .progress{opacity:0}
 @media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
+
+/* ---------- «Слушать» (13.11.2026): записи как конверты пластинок — диск слева, подпись и ссылки справа ---------- */
+.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5)}
+.record{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-5);align-items:start;padding:var(--s-6);min-width:0;
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--surface) var(--grain);box-shadow:0 12px 26px -20px var(--shadow)}
+.record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
+.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
+.record-main .record-body{gap:var(--s-4)}
+.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.record h3{font-size:28px}
+.record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
+.record p{color:var(--muted)}
+/* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
+.disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
+  background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
+    radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
+    conic-gradient(from 20deg,transparent 0 8%,rgb(255 240 210/.16) 12%,transparent 18% 50%,rgb(255 240 210/.12) 62%,transparent 68%),
+    repeating-radial-gradient(circle,#2b1d10 0 1.5px,#3b2a19 1.5px 3px);
+  box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
+.disc-sm{width:84px}
+.record:hover .disc{rotate:18deg}
+.disc{transition:rotate .8s var(--ease)}
+.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
+.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.record-links b{font-weight:600;font-size:16px;line-height:1.35}
+.record-links span{font-size:var(--t-small);color:var(--accent)}
+.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
+.record .player iframe{max-width:none}
+@media(max-width:900px){.records{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:620px){
+  .record,.record-main{grid-template-columns:minmax(0,1fr);padding:var(--s-5);gap:var(--s-4)}
+  .disc{width:112px}.disc-sm{width:72px}
+}
+
+/* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
+.ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
+.ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
+.ch-note span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.nw{white-space:nowrap}
+.ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
+.ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
+.ch-plate figcaption{font-size:13px;line-height:1.5;color:var(--muted);max-width:62ch}
+@media(min-width:1021px){
+  .chapter{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  .ch-mark{grid-column:1;grid-row:1}
+  .ch-body{grid-column:2;grid-row:1}
+  .ch-note,.chapter .ch-photo{grid-column:3;grid-row:1}
+  .ch-note{margin-top:var(--s-2)}
+  .ch-plate{grid-column:2 / -1;grid-row:2}
+}
+@media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
+@media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
+@media(prefers-reduced-motion:reduce){.record:hover .disc{rotate:none}}
