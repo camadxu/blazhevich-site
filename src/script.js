@@ -10,6 +10,10 @@
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
   if(menu&&menu.hidePopover)menu.addEventListener('click',e=>{if(e.target.closest('a'))menu.hidePopover()});
+  /* кнопка «Меню» сообщает экранному диктору, открыто меню или закрыто */
+  const fab=document.querySelector('.fab');
+  if(fab&&menu&&menu.hidePopover){fab.setAttribute('aria-controls','menu');fab.setAttribute('aria-expanded','false');
+    menu.addEventListener('toggle',e=>fab.setAttribute('aria-expanded',String(e.newState==='open')))}
 
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');

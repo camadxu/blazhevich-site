@@ -216,6 +216,8 @@ def head(title, desc, path, lang, prefix, fonts):
             f_ = path.removeprefix('en/')
             m += [f'<link rel="alternate" hreflang="ru" href="{DOM}/{f_}">',
                   f'<link rel="alternate" hreflang="en" href="{DOM}/en/{f_}">']
+    if path in ('index.html', 'en/index.html'):   # снимок первого экрана браузер начинает качать сразу, не дожидаясь разбора встроенных стилей
+        m.append(f'<link rel="preload" as="image" type="image/webp" href="{prefix}assets/hero-home.webp" fetchpriority="high">')
     m.append(fonts)
     return '\n'.join(m)
 
