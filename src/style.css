@@ -681,7 +681,7 @@ html:not(.js) .player{display:none}
 .src-lead{color:var(--muted)}
 .src-groups{columns:2;column-gap:var(--col-gap)}
 .src-group{break-inside:avoid;margin:0 0 var(--s-6);font-weight:400}
-.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .src-group .sources{font-size:15.5px;line-height:1.6;gap:var(--s-3)}
 .src-group .sources li::marker{font:italic 600 17px var(--display);color:var(--gold)}
 .sources li:target{outline:1px solid var(--rule);outline-offset:6px}
@@ -694,7 +694,7 @@ body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background
 .foot .brand{font-size:20px;padding:0}
 .foot-name{font:500 24px/1.2 var(--display);color:var(--ink)}
 .foot-name span{color:var(--gold);font-style:italic;font-variant-numeric:lining-nums;white-space:nowrap}
-.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .foot ul + h2{margin-top:var(--s-5)}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-2)}
 .foot-secs{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s-5)}
@@ -780,3 +780,16 @@ html:not(.past-hero) .progress{opacity:0}
 .js .totop:focus-visible{opacity:1;transform:none;pointer-events:auto}
 .record-links a:focus-visible b{text-decoration:underline;text-decoration-thickness:1px}
 a.ll-span:focus-visible{background:var(--band);border-color:var(--accent)}
+
+/* ---------- Доводка сверх плана (15.11.2026, п.14) — отдельным коммитом, откатывается целиком ---------- */
+/* абзац не кончается одним коротким словом на последней строке */
+p,li,figcaption,dd{text-wrap:pretty}
+/* печать досье и главной: без меню, плеера и служебной плашки; карточки и главы не рвутся между листами */
+@media print{
+  body{background:none}
+  header,.draft,.skip,.player,.foot-col{display:none!important}
+  .reveal.pre{opacity:1!important;transform:none!important}
+  .card,.record,.person,.tnode,.conc tr{break-inside:avoid}
+  h2,h3,h4{break-after:avoid}
+  section.block{padding-block:var(--s-6)}
+}
