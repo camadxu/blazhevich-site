@@ -22,6 +22,17 @@
   --select:#cdb27a;
   --tint:color-mix(in srgb,var(--rule) 12%,transparent);
   --shadow:color-mix(in srgb,var(--ink) 14%,transparent);
+  /* служебные цвета: значения прежние, собраны в одном месте (15.11.2026) */
+  --mask:#000;                          /* непрозрачная часть CSS-масок */
+  --paving:rgb(122 90 23/.20);          /* швы мостовой на прежнем первом экране */
+  --scrim:rgb(42 33 24/.28);            /* затемнение под меню-поповером */
+  --edge-shade:rgb(74 48 20/.16);       /* края листа чуть темнее */
+  --tag-line:#8a2b1c;                   /* красная линейка каталожной карточки */
+  --disc-a:var(--ink);--disc-b:#3b2a19; /* бороздки пластинки */
+  --disc-glint:rgb(255 240 210/.16);--disc-glint-2:rgb(255 240 210/.12);
+  /* кнопка языка поверх снимка первого экрана */
+  --over-bg:rgb(42 33 24/.18);--over-bg-hi:rgb(42 33 24/.35);
+  --over-ink:#f4ead2;--over-ink-hi:#fff8e6;--over-edge:rgb(241 226 189/.7);
 
   --display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
   --body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -92,15 +103,15 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
   background:radial-gradient(120% 90% at 16% -10%,var(--surface) 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),var(--band) calc(var(--horizon) + 5svh),var(--paper) 100%)}
 /* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
 .hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
-  background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
-  -webkit-mask-image:linear-gradient(transparent,#000 10%,transparent 62%);mask-image:linear-gradient(transparent,#000 10%,transparent 62%)}
+  background:repeating-linear-gradient(90deg,transparent 0 119px,var(--paving) 119px 120px),repeating-linear-gradient(transparent 0 119px,var(--paving) 119px 120px);
+  -webkit-mask-image:linear-gradient(transparent,var(--mask) 10%,transparent 62%);mask-image:linear-gradient(transparent,var(--mask) 10%,transparent 62%)}
 /* both views stand on the horizon, small and hazy with distance, lit by the same light */
 .city{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--horizon);pointer-events:none}
 /* консерватория и Большой театр крупно, во всю ширину за фигурой: от верха окна до горизонта (сейчас фон — один снимок, см. правила «Первый экран» ниже) */
 .city-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;opacity:.92;animation:hero-fade 1.6s ease both}
 .hero-stage{display:grid;justify-items:center}
 /* bust crop: the box shows the top of the full-length file and the chest melts into the paper */
-.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
+.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(var(--mask) 74%,transparent);mask-image:linear-gradient(var(--mask) 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
 .portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}
 .hero-copy{display:grid;justify-items:center;gap:var(--s-5);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
 .hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
@@ -112,7 +123,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
 .hero-menu:not(:popover-open){display:none}
 .hero-menu:popover-open{display:grid;width:min(92vw,400px)}
-.hero-menu::backdrop{background:rgb(42 33 24/.28)}
+.hero-menu::backdrop{background:var(--scrim)}
 .hero-menu a{display:block;padding:var(--s-3);font-family:var(--display);font-size:28px;font-weight:500;line-height:1.15;color:var(--ink);text-decoration:none}
 .hero-menu a+a{border-top:1px solid var(--line)}
 .hero-menu a:hover{color:var(--accent)}
@@ -398,7 +409,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 }
 @media(max-width:1100px){
   .head-vignette{height:clamp(140px,34vw,220px);margin-block:var(--s-2) var(--s-3)}
-  .head-vignette img{object-position:center 40%;object-fit:cover;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 75%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 75%,transparent)}
+  .head-vignette img{object-position:center 40%;object-fit:cover;-webkit-mask-image:linear-gradient(to bottom,transparent,var(--mask) 18%,var(--mask) 75%,transparent);mask-image:linear-gradient(to bottom,transparent,var(--mask) 18%,var(--mask) 75%,transparent)}
 }
 
 /* сцена во всю ширину: здание вблизи, второе вдали, площадь; текст шапки поверх неба */
@@ -503,13 +514,13 @@ ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
-.hero-lang{background:rgb(42 33 24/.18);color:#f4ead2;border-color:rgb(241 226 189/.7);position:absolute;z-index:2;top:calc(var(--s-5) + env(safe-area-inset-top,0px));right:calc(var(--s-5) + env(safe-area-inset-right,0px))}
+.hero-lang{background:var(--over-bg);color:var(--over-ink);border-color:var(--over-edge);position:absolute;z-index:2;top:calc(var(--s-5) + env(safe-area-inset-top,0px));right:calc(var(--s-5) + env(safe-area-inset-right,0px))}
 @media(max-width:620px){
   /* узкий экран: в кадре фигура с тромбоном, здания по краям */
   .city-scene{object-position:55% 30%}
   .hero-lang{top:var(--s-3);right:var(--s-3)}
 }
-.hero-lang:hover{background:rgb(42 33 24/.35);color:#fff8e6;border-color:#f4ead2}
+.hero-lang:hover{background:var(--over-bg-hi);color:var(--over-ink-hi);border-color:var(--over-ink)}
 
 /* ---------- Шапка досье о Москве по макету владельца (12.11.2026): оглавление 2×2, автограф 1903 года, консерватория справа внизу ---------- */
 .scene .eyebrow a{color:inherit;text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-color:var(--rule)}
@@ -532,7 +543,7 @@ ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 
 /* ---------- Старинная гамма (13.11.2026): весь сайт в тон первого экрана — кремовая бумага с зерном, сепия, края листа чуть темнее ---------- */
 body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
-  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,rgb(74 48 20/.16) 100%)}
+  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,var(--edge-shade) 100%)}
 @media print{body::after{display:none}}
 .rail .lang{margin-right:var(--s-4)}
 
@@ -545,7 +556,7 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
   box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
 .card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
 .card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
-  border-bottom:1px solid color-mix(in srgb,#8a2b1c 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  border-bottom:1px solid color-mix(in srgb,var(--tag-line) 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
 .card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
 .card h3{font-size:26px;margin-top:var(--s-2)}
 .card p{font-size:16px;line-height:32px;margin:0}
@@ -708,8 +719,8 @@ html:not(.past-hero) .progress{opacity:0}
 .disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
   background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
     radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
-    conic-gradient(from 20deg,transparent 0 8%,rgb(255 240 210/.16) 12%,transparent 18% 50%,rgb(255 240 210/.12) 62%,transparent 68%),
-    repeating-radial-gradient(circle,#2b1d10 0 1.5px,#3b2a19 1.5px 3px);
+    conic-gradient(from 20deg,transparent 0 8%,var(--disc-glint) 12%,transparent 18% 50%,var(--disc-glint-2) 62%,transparent 68%),
+    repeating-radial-gradient(circle,var(--disc-a) 0 1.5px,var(--disc-b) 1.5px 3px);
   box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
 .disc-sm{width:84px}
 .record:hover .disc{rotate:18deg}
