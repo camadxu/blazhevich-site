@@ -118,7 +118,7 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
 .hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
 .hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
-.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.06em;text-indent:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
 .hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
 /* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
 .hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
@@ -174,7 +174,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .card h3{grid-column:2;font-size:24px}
 .card p{grid-column:2;color:var(--muted);font-size:16px;max-width:var(--measure)}
 .card a{grid-column:3;grid-row:1 / span 2;align-self:start;padding-top:var(--s-1);font-weight:600;font-size:15px;white-space:nowrap;text-decoration:none}
-.card a::after{content:"";position:absolute;inset:0}
+.card a::before{content:"";position:absolute;inset:0}
 .card:hover a{text-decoration:underline}
 .tag{font-size:15px;color:var(--gold);font-weight:500}
 
@@ -435,7 +435,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   display:none;flex-direction:column;align-items:flex-end;gap:0;padding:var(--s-3) 0;border-right:1px solid var(--rule);
   opacity:0;pointer-events:none;transition:opacity .4s ease}
 .rail a{position:relative;display:block;padding:var(--s-2) var(--s-4);color:var(--muted);text-decoration:none;
-  font:500 12px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:color .2s}
+  font:500 12px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:color .2s}
 .rail a::after{content:"";position:absolute;right:-1px;top:50%;width:1px;height:70%;background:var(--ink);translate:0 -50%;scale:1 0;transition:scale .25s var(--ease)}
 .rail a:hover{color:var(--ink)}
 .rail a.active{color:var(--ink)}
@@ -444,7 +444,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .fab{position:fixed;z-index:22;top:calc(var(--s-3) + env(safe-area-inset-top,0px));right:calc(var(--s-3) + env(safe-area-inset-right,0px));
   display:none;min-height:40px;padding:0 var(--s-4);border:1px solid var(--rule);border-radius:var(--radius);
   background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+  color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-menu{position:fixed}
 /* Меню разделов (13.11.2026, просьба владельца): на компьютере с мышью оно спрятано за правым краем
    и само выезжает, когда курсор подходит к краю окна; у края всегда видна тонкая вкладка «Разделы».
@@ -555,15 +555,18 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
   border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
   background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
   box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
-.card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+.card:has(a):hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
 .card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
-  border-bottom:1px solid color-mix(in srgb,var(--tag-line) 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
-.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
+  border-bottom:1px solid color-mix(in srgb,var(--tag-line) 55%,transparent);font-size:var(--t-small)}
+.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold)}
 .card h3{font-size:26px;margin-top:var(--s-2)}
 .card p{font-size:16px;line-height:32px;margin:0}
 .card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
-  background:var(--paper);font-size:13px;letter-spacing:.06em;text-transform:uppercase;rotate:-1.2deg}
+  background:var(--paper);font-size:var(--t-small);rotate:-1.2deg}
 .card:hover a{text-decoration:none;border-color:var(--accent)}
+/* знак внешней ссылки «↗» ставит CSS, в разметке его нет; для экранного диктора знак пустой */
+.ext::after,.card a[href^="http"]::after,.btn[href^="http"]::after{content:"\2197";content:"\2197"/"";margin-inline-start:.35em;font-size:.9em;text-decoration:none}
+.btn[href^="http"]::after{margin-inline-start:0}
 @media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
@@ -605,6 +608,7 @@ a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--in
 .rm-sub,.rm-note{font:500 12.5px var(--body);fill:var(--muted)}
 .rm-note{fill:var(--accent);font-weight:600}
 .rm-sea,.rm-land{font:italic 500 19px var(--display);fill:var(--rule);letter-spacing:.28em}
+/* разрядка подписей морей и земель — картографическая традиция, оставлена намеренно (сверено по скриншотам 15.11.2026) */
 .rm-land{font-size:15px;letter-spacing:.2em}
 @media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
 .ll-short{overflow:visible;padding:0}
@@ -626,7 +630,7 @@ html:not(.js) .player{display:none}
 .lede{padding-block:var(--s-9) var(--s-8);border-bottom:1px solid var(--line)}
 .lede-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--col-gap);align-items:start}
 .lede-copy{display:grid;gap:var(--s-5);align-content:start}
-.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .lede-kicker::after{content:"";flex:1;max-width:120px;height:1px;background:var(--rule)}
 .lede-text{font:500 clamp(28px,3.3vw,44px)/1.16 var(--display);letter-spacing:-.005em;color:var(--ink);text-wrap:balance}
 .lede-sub{color:var(--muted);max-width:52ch}
@@ -667,7 +671,7 @@ html:not(.js) .player{display:none}
 /* ---------- Цитата: слова самого Блажевича набраны антиквой с золочёной линейкой ---------- */
 .quote{margin:var(--s-2) 0 var(--s-3);padding:var(--s-2) 0 var(--s-2) var(--s-5);border-left:2px solid var(--rule);display:grid;gap:var(--s-3)}
 .quote p{font:italic 500 21px/1.45 var(--display);color:var(--ink)!important;max-width:none}
-.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 
 /* ---------- О проекте: источники по темам, во всю ширину, в две колонки ---------- */
 .about{margin-bottom:var(--s-8)}
@@ -712,8 +716,9 @@ html:not(.past-hero) .progress{opacity:0}
 .record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
 .record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
 .record-main .record-body{gap:var(--s-4)}
-.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .record h3{font-size:28px}
+.record-sub{margin-top:calc(-1 * var(--s-2));font-size:var(--t-small);line-height:1.4}
 .record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
 .record p{color:var(--muted)}
 /* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
@@ -741,7 +746,12 @@ html:not(.past-hero) .progress{opacity:0}
 /* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
 .ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
 .ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
-.ch-note span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.ch-note > span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.ch-nums{display:flex;flex-wrap:wrap;row-gap:var(--s-2)}
+.ch-nums i{font-style:normal;padding-inline:var(--s-3)}
+.ch-nums i:first-child{padding-left:0}
+.ch-nums i + .sep + i{border-left:1px solid var(--line)}
+.ch-nums .sep{display:none}
 .nw{white-space:nowrap}
 .ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
 .ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
