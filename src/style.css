@@ -26,8 +26,13 @@
   --mask:#000;                          /* непрозрачная часть CSS-масок */
   --paving:rgb(122 90 23/.20);          /* швы мостовой на прежнем первом экране */
   --scrim:rgb(42 33 24/.28);            /* затемнение под меню-поповером */
-  --edge-shade:rgb(74 48 20/.16);       /* края листа чуть темнее */
-  --tag-line:#8a2b1c;                   /* красная линейка каталожной карточки */
+  --edge-shade:rgb(58 38 16/.30);       /* края листа темнее, как углы снимка первого экрана (V6) */
+  /* тёмная сепия (V6): тени костюма и латунь со снимка первого экрана; ею набраны «Слушать» и подвал */
+  --deep-paper:#3a2a17;--deep-surface:#47341f;--deep-band:#2e2010;--deep-ink:#f0e6cf;--deep-muted:#d2c1a1;
+  --deep-accent:#e3c98f;--deep-accent-hi:#f6ecd2;--deep-gold:#cdb078;--deep-rule:#93794a;--deep-line:#5e4931;--deep-field:#a89270;
+  --deep-shadow:rgb(20 12 4/.45);
+  --tone-2:#e9dcbe;--tone-3:#e1d0ac;--tone-4:#d8c49b; /* оттенки полок каталога: та же сепия, шаг темнее */
+  --gold-deep:#59400d;                  /* золото для подписей на тёмных оттенках, 5.4:1 на --tone-4 */
   --disc-a:var(--ink);--disc-b:#3b2a19; /* бороздки пластинки */
   --disc-glint:rgb(255 240 210/.16);--disc-glint-2:rgb(255 240 210/.12);
   /* кнопка языка поверх снимка первого экрана */
@@ -179,7 +184,6 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .tag{font-size:15px;color:var(--gold);font-weight:500}
 
 /* ---------- Listen: a band ---------- */
-#listen{background:var(--band)}
 .listen{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-4);max-width:var(--measure)}
 .listen > div{display:grid;gap:var(--s-4);min-width:0}
 .listen p{color:var(--muted)}
@@ -337,7 +341,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   .explore-grid{grid-template-columns:minmax(0,1fr)}
   .explore-card:nth-child(odd),.explore-card:nth-child(even){padding:var(--s-5) 0;border-right:0}
   .card{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}
-  .card .tag,.card h3,.card p,.card a{grid-column:1;grid-row:auto}
+  .card .tag,.card h4,.card p,.card a{grid-column:1;grid-row:auto}
   .people-v3{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:620px){
@@ -548,26 +552,36 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
 @media print{body::after{display:none}}
 .rail .lang{margin-right:var(--s-4)}
 
-/* ---------- Ноты как библиотечные карточки (13.11.2026): две колонки, у каждой карточки номер, красная линейка
-   и строки каталожной карточки; источник — «штампом» внизу. Вся карточка по-прежнему ссылка. ---------- */
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0;counter-reset:card}
-.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-5) var(--s-4);
-  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
-  background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
+/* ---------- Ноты: полки каталога (15.11.2026, V6). Карточки разложены по группам, у каждой группы свой оттенок
+   той же сепии; линеек под текстом нет, всё стоит по одной линии. Вся карточка со ссылкой по-прежнему нажимается.
+   Первая строка низа карточки — своя база (a.card-file, файл из assets/library/), вторая — внешний источник. ---------- */
+.shelves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7) var(--s-5);counter-reset:card}
+.shelf{grid-column:1 / -1;display:grid;gap:var(--s-4);align-content:start;min-width:0;--card-bg:var(--surface)}
+.shelf-2{--card-bg:var(--tone-2)}
+.shelf-3{--card-bg:var(--tone-3);grid-column:auto}
+.shelf-4{--card-bg:var(--tone-4);grid-column:auto;--gold:var(--gold-deep)}
+.shelf-3 .grid,.shelf-4 .grid{grid-template-columns:minmax(0,1fr);height:100%}
+.shelf-title{display:flex;align-items:baseline;gap:var(--s-4);font-size:32px;font-weight:500}
+.shelf-title::after{content:"";flex:1;height:1px;background:var(--rule)}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0}
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5);
+  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--card-bg);
   box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
-.card:has(a):hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+.card:hover{background:var(--card-bg)}
+.card:has(a):hover{translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
 .card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
-  border-bottom:1px solid color-mix(in srgb,var(--tag-line) 55%,transparent);font-size:var(--t-small)}
+  border-bottom:1px solid var(--line);font-size:var(--t-small)}
 .card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold)}
-.card h3{font-size:26px;margin-top:var(--s-2)}
-.card p{font-size:16px;line-height:32px;margin:0}
-.card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
-  background:var(--paper);font-size:var(--t-small);rotate:-1.2deg}
-.card:hover a{text-decoration:none;border-color:var(--accent)}
+.card h4{margin:var(--s-2) 0 0;font:600 26px/1.15 var(--display);color:var(--ink);text-wrap:balance}
+.card p{font-size:16px;line-height:1.6;margin:0}
+.card a{display:block;align-self:stretch;margin-top:auto;padding-top:var(--s-3);border-top:1px solid var(--line);font-size:15px;white-space:normal}
+.card p + a{margin-top:auto}
+.card p{padding-bottom:var(--s-3)}
+.card:hover a{text-decoration:underline;text-decoration-thickness:1px}
 /* знак внешней ссылки «↗» ставит CSS, в разметке его нет; для экранного диктора знак пустой */
 .ext::after,.card a[href^="http"]::after,.btn[href^="http"]::after{content:"\2197";content:"\2197"/"";margin-inline-start:.35em;font-size:.9em;text-decoration:none}
 .btn[href^="http"]::after{margin-inline-start:0}
-@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:820px){.shelves,.grid{grid-template-columns:minmax(0,1fr)}.shelf-3,.shelf-4{grid-column:1 / -1}}
 
 /* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
 main > section.block{position:relative}
@@ -709,40 +723,6 @@ body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background
 html:not(.past-hero) .progress{opacity:0}
 @media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
 
-/* ---------- «Слушать» (13.11.2026): записи как конверты пластинок — диск слева, подпись и ссылки справа ---------- */
-.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5)}
-.record{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-5);align-items:start;padding:var(--s-6);min-width:0;
-  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--surface) var(--grain);box-shadow:0 12px 26px -20px var(--shadow)}
-.record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
-.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
-.record-main .record-body{gap:var(--s-4)}
-.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
-.record h3{font-size:28px}
-.record-sub{margin-top:calc(-1 * var(--s-2));font-size:var(--t-small);line-height:1.4}
-.record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
-.record p{color:var(--muted)}
-/* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
-.disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
-  background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
-    radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
-    conic-gradient(from 20deg,transparent 0 8%,var(--disc-glint) 12%,transparent 18% 50%,var(--disc-glint-2) 62%,transparent 68%),
-    repeating-radial-gradient(circle,var(--disc-a) 0 1.5px,var(--disc-b) 1.5px 3px);
-  box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
-.disc-sm{width:84px}
-.record:hover .disc{rotate:18deg}
-.disc{transition:rotate .8s var(--ease)}
-.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
-.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
-.record-links b{font-weight:600;font-size:16px;line-height:1.35}
-.record-links span{font-size:var(--t-small);color:var(--accent)}
-.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
-.record .player iframe{max-width:none}
-@media(max-width:900px){.records{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:620px){
-  .record,.record-main{grid-template-columns:minmax(0,1fr);padding:var(--s-5);gap:var(--s-4)}
-  .disc{width:112px}.disc-sm{width:72px}
-}
-
 /* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
 .ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
 .ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
@@ -767,7 +747,6 @@ html:not(.past-hero) .progress{opacity:0}
 }
 @media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
 @media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
-@media(prefers-reduced-motion:reduce){.record:hover .disc{rotate:none}}
 
 /* ---------- Клавиатура (15.11.2026): фокус виден на всём, что нажимается ---------- */
 /* вся карточка нот — одна ссылка, поэтому рамка фокуса обводит карточку целиком */
@@ -793,3 +772,44 @@ p,li,figcaption,dd{text-wrap:pretty}
   h2,h3,h4{break-after:avoid}
   section.block{padding-block:var(--s-6)}
 }
+
+/* ============================================================================================
+   V6 (15.11.2026): весь сайт в тоне отреставрированного первого экрана — где-то светлее, где-то темнее.
+   Бумага --paper прежняя; разделы чередуются: бумага, полоса на тон темнее, тёмная сепия.
+   ============================================================================================ */
+/* тёмная сепия: роли токенов те же, значения — из --deep-*; всё внутри перекрашивается само */
+#listen,body > footer{--paper:var(--deep-paper);--surface:var(--deep-surface);--band:var(--deep-band);--ink:var(--deep-ink);--muted:var(--deep-muted);
+  --accent:var(--deep-accent);--accent-hi:var(--deep-accent-hi);--gold:var(--deep-gold);--rule:var(--deep-rule);--line:var(--deep-line);--field:var(--deep-field);
+  --on-accent:var(--deep-paper);--tint:color-mix(in srgb,var(--deep-rule) 18%,transparent);--shadow:var(--deep-shadow);
+  background:var(--paper) var(--grain);color:var(--ink)}
+#listen ::selection,body > footer ::selection{background:var(--deep-rule);color:var(--deep-ink)}
+/* полоса на тон темнее бумаги */
+#usa,#concertos{background:var(--band) var(--grain)}
+/* первый экран: низ снимка уходит в бумагу без полосы на любой ширине */
+.hero::after{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;height:24svh;pointer-events:none;
+  background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 70%,transparent) 55%,var(--paper))}
+
+/* ---------- «Слушать»: фонотека без картинок. Слева кто и когда, справа запись, плеер и другие источники.
+   Свой файл ставится тегом <audio controls preload="none"> внутри .record-body (см. LIBRARY.md) ---------- */
+#listen .shelf-title{margin-bottom:var(--s-4)}
+#listen .records + .shelf-title{margin-top:var(--s-8)}
+.records{display:grid;border-top:1px solid var(--rule)}
+.record{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:var(--s-4) var(--col-gap);padding-block:var(--s-6);border-bottom:1px solid var(--line);min-width:0}
+.record-head{display:grid;gap:var(--s-2);align-content:start;min-width:0}
+.record h4{margin:0;font:500 30px/1.12 var(--display);color:var(--ink);text-wrap:balance}
+.record-sub{font-size:var(--t-small);line-height:1.4;color:var(--gold)}
+.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start;max-width:var(--measure)}
+.record p{color:var(--muted)}
+.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
+.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.record-links b{font-weight:600;font-size:16px;line-height:1.35}
+.record-links span{font-size:var(--t-small);color:var(--accent)}
+.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
+.videos{margin:0;max-width:var(--measure);border-top-color:var(--rule)}
+.record .player iframe{max-width:none}
+.record audio,.record video,.videos video{display:block;width:100%;border-radius:var(--radius)}
+.record video,.videos video{border:1px solid var(--rule);background:var(--band)}
+@media(max-width:820px){.record{grid-template-columns:minmax(0,1fr);padding-block:var(--s-5)}.record h4{font-size:26px}}
+/* файл из своей базы в карточке нот: первая строка низа карточки, внешний источник — второй строкой */
+.card a.card-file{font-weight:600}
+.card a.card-file + a{margin-top:0;border-top:0;padding-top:var(--s-1);font-size:var(--t-small)}

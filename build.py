@@ -57,7 +57,7 @@ PAGES = {  # файл: (секции, заголовок, описание)
                    'Blazhevich — Владислав Блажевич: тромбон, ноты, история',
                    'Владислав Блажевич (1881–1942): ноты, записи, биография, 13 концертов для тромбона, школы тромбона и признание в США.'),
     'moscow.html': (['moscow'], 'Московская тромбоновая школа — Blazhevich',
-                    'Досье о московской школе тромбона: Витнебен, Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь, ноты и записи.'),
+                    'Московская школа тромбона: Витнебен, Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь, ноты и записи.'),
     'leningrad.html': (['leningrad'], 'Ленинградская тромбоновая школа — Blazhevich',
                        'Петербургско-ленинградская школа тромбона: Тюрнер, Волков, Козлов, Венгловский, Квартет тромбонов филармонии, дискография.'),
 }
@@ -68,7 +68,7 @@ PARENT_RU = {'moscow.html': ('schools', 'Школы'), 'leningrad.html': ('schoo
 # английские досье: src/en/<имя>.html → en/<имя>.html (заголовок, описание)
 EN_DOSSIERS = {
     'moscow.html': ('The Moscow trombone school — Blazhevich',
-                    'A dossier on the Moscow trombone school: Wittneben, Bork, Blazhevich, Shcherbinin and his pupils, the Gnesin branch, scores and recordings.'),
+                    'The Moscow trombone school: Wittneben, Bork, Blazhevich, Shcherbinin and his pupils, the Gnesin branch, scores and recordings.'),
     'leningrad.html': ('The Leningrad trombone school — Blazhevich',
                        'The St. Petersburg–Leningrad trombone school: Türner, Volkov, Kozlov, Venglovsky, the Philharmonic Trombone Quartet, discography.'),
 }
@@ -158,12 +158,12 @@ def site_footer(lang):
     nav = NAV_RU if ru else [(k, v[0]) for k, v in EN_PAGES.items()]
     secs = ''.join(f'<li><a href="index.html#{i}">{t}</a></li>' for i, t in nav)
     T = (dict(who='Владислав Блажевич', about='Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.',
-              s='Разделы', d='Досье школ', m='Московская тромбоновая школа', l='Ленинградская тромбоновая школа',
+              s='Разделы', d='Школы тромбона', m='Московская тромбоновая школа', l='Ленинградская тромбоновая школа',
               o='Язык', other='<a href="en/index.html" hreflang="en" lang="en">English version</a>',
               fine='Источники и права на изображения указаны в разделе <a href="index.html#about">«О проекте»</a>.', top='Наверх', nav='Подвал')
          if ru else
          dict(who='Vladislav Blazhevich', about='Trombonist, teacher, composer. An independent project about his life, scores and school.',
-              s='Sections', d='School dossiers', m='The Moscow trombone school', l='The Leningrad trombone school',
+              s='Sections', d='Trombone schools', m='The Moscow trombone school', l='The Leningrad trombone school',
               o='Language', other='<a href="../index.html" hreflang="ru" lang="ru">Русская версия</a>',
               fine='Sources and image credits are listed under <a href="index.html#about">About</a>.', top='Back to top', nav='Footer'))
     return ('<footer><div class="wrap foot">\n'
