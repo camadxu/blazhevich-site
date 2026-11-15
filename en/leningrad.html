@@ -264,12 +264,35 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .ch-photo figcaption{font-size:13px;line-height:1.45;color:var(--muted)}
 .ch-body{display:grid;gap:var(--s-4);align-content:start;max-width:var(--measure);min-width:0}
 .ch-body h3{font-size:32px}
-.insight{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding-block:var(--s-6);margin-bottom:var(--s-8);display:grid;gap:var(--s-4)}
-.insight h3{font-size:36px}
-.insight ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:var(--s-4) var(--s-6)}
-.insight li{position:relative;padding-left:var(--s-5);color:var(--muted)}
-.insight li::before{content:"";position:absolute;left:2px;top:.7em;width:6px;height:6px;background:var(--rule);transform:rotate(45deg)}
+/* «Редакционный вывод»: плашка с двойной линейкой сверху, шапка слева, тезисы газетной колонкой */
+.insight{position:relative;display:block;
+  margin-block:var(--s-8);padding:var(--s-6) clamp(var(--s-5),3vw,var(--s-7));
+  background:var(--surface);border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-1)}
+.insight-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem);gap:var(--s-3) var(--s-7);align-items:end}
+.insight-head .insight-kicker,.insight-head h3{grid-column:1}
+.insight-head h3{margin:0}
+.insight-kicker{display:flex;align-items:center;gap:var(--s-3);font:600 11px/1.35 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.insight-kicker::before{content:"";flex:none;width:var(--s-5);height:1px;background:var(--rule)}
+.insight h3{font-size:clamp(28px,2.3vw,34px)}
+.insight .note{grid-column:2;grid-row:1 / span 2;align-self:end;margin:0;
+  font:italic 500 13.5px/1.5 var(--display);color:var(--muted);max-width:32ch}
+.insight ol,.insight ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s-8);list-style:none;
+  margin:var(--s-6) 0 0;padding:var(--s-5) 0 0;border-top:1px solid var(--line)}
+.insight ol{counter-reset:ins}
+.insight li{counter-increment:ins;position:relative;padding:var(--s-4) 0 var(--s-4) 2.6em;break-inside:avoid;
+  color:var(--muted);line-height:1.6}
+.insight li:last-child{grid-column:1 / -1;margin-top:var(--s-2);border-top:1px solid var(--line)}
+.insight li::before{content:counter(ins,decimal-leading-zero);position:absolute;left:0;top:calc(var(--s-4) + .12em);
+  font:600 14px/1.6 var(--display);letter-spacing:.06em;color:var(--gold);font-variant-numeric:lining-nums tabular-nums}
 .insight li b{color:var(--ink)}
+.insight > p{margin:var(--s-5) 0 0;color:var(--muted);max-width:62ch}
+@media(max-width:1023px){
+  .insight-head{grid-template-columns:minmax(0,1fr);gap:var(--s-3)}
+  .insight-head .note{grid-column:1;grid-row:auto;align-self:start;margin-top:var(--s-2)}
+  .insight ol,.insight ul{grid-template-columns:minmax(0,1fr)}
+  .insight{padding:var(--s-5) var(--s-4) var(--s-5)}
+  .insight li{padding-left:2em;max-width:62ch}
+}
 .timeline-wrap{display:grid;gap:var(--s-5);margin-bottom:var(--s-6)}
 .timeline-wrap > h3{font-size:32px}
 .timeline-wrap .timeline{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:var(--s-5) var(--s-6);border-left:0}
@@ -834,7 +857,7 @@ main > section#usa,main > section#concertos{background:radial-gradient(70% 40rem
 .table-scroll{border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-2);
   background:linear-gradient(160deg,var(--glow),transparent 40%),var(--surface)}
 .ll-track{box-shadow:inset 0 14px 18px -16px var(--shade-deep),inset 0 -14px 18px -16px var(--shade-deep)}
-.facts,.insight,.raichman{background:linear-gradient(to bottom,var(--tint),transparent 30%,transparent 70%,var(--tint))}
+.facts,.raichman{background:linear-gradient(to bottom,var(--tint),transparent 30%,transparent 70%,var(--tint))}
 .ch-photo .mat{box-shadow:var(--lift-2)}
 /* архивный снимок под главой: тень под нижним краем, как у фотографии, вклеенной в альбом */
 .ch-plate{position:relative}
@@ -952,10 +975,12 @@ body > footer{position:relative;margin-top:0;border-top:0;padding-top:calc(var(-
   </figure>
 
   <aside class="insight reveal" aria-labelledby="l-core">
+  <div class="insight-head">
+    <div class="insight-kicker">The common thread</div>
     <h3 id="l-core">The “singing” manner</h3>
-    <div class="eyebrow">The common thread</div>
-    <p>The “Volkov method” grew out of Russian operatic singing: well-developed breathing, a singing tone and a clear, “bell-like” attack. Volkov passed these principles on to his pupils, Kozlov to his, and Venglovsky fixed them in his teaching manuals and repertoire editions.</p>
-  </aside>
+  </div>
+  <p>The “Volkov method” grew out of Russian operatic singing: well-developed breathing, a singing tone and a clear, “bell-like” attack. Volkov passed these principles on to his pupils, Kozlov to his, and Venglovsky fixed them in his teaching manuals and repertoire editions.</p>
+</aside>
 
   <h3 class="sub-h">Trombone teachers of the St. Petersburg — Leningrad Conservatory</h3>
   <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Trombone teachers">
