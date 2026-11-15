@@ -26,13 +26,30 @@
   --mask:#000;                          /* непрозрачная часть CSS-масок */
   --paving:rgb(122 90 23/.20);          /* швы мостовой на прежнем первом экране */
   --scrim:rgb(42 33 24/.28);            /* затемнение под меню-поповером */
-  --edge-shade:rgb(58 38 16/.30);       /* края листа темнее, как углы снимка первого экрана (V6) */
+  --edge-shade:rgb(58 38 16/.20);       /* края листа темнее, как углы снимка первого экрана (V6) */
   /* тёмная сепия (V6): тени костюма и латунь со снимка первого экрана; ею набраны «Слушать» и подвал */
   --deep-paper:#3a2a17;--deep-surface:#47341f;--deep-band:#2e2010;--deep-ink:#f0e6cf;--deep-muted:#d2c1a1;
   --deep-accent:#e3c98f;--deep-accent-hi:#f6ecd2;--deep-gold:#cdb078;--deep-rule:#93794a;--deep-line:#5e4931;--deep-field:#a89270;
   --deep-shadow:rgb(20 12 4/.45);
-  --tone-2:#e9dcbe;--tone-3:#e1d0ac;--tone-4:#d8c49b; /* оттенки полок каталога: та же сепия, шаг темнее */
-  --gold-deep:#59400d;                  /* золото для подписей на тёмных оттенках, 5.4:1 на --tone-4 */
+  /* свет и тень (V6.1): одно солнце сверху слева, как на снимке первого экрана */
+  --glow:rgb(255 247 226/.62);          /* свет на бумаге */
+  --shade:rgb(72 48 20/.20);            /* тень к краям раздела */
+  --shade-deep:rgb(46 29 11/.42);       /* глубокая тень: стыки разделов, под карточками */
+  --deep-glow:rgb(255 222 160/.17);     /* свет рампы в тёмном разделе */
+  --hi:rgb(255 251 238/.75);            /* блик по верхней кромке листа */
+  --lift-1:inset 0 1px 0 var(--hi),0 1px 2px rgb(72 48 20/.22),0 10px 18px -10px rgb(72 48 20/.38);
+  --lift-2:inset 0 1px 0 var(--hi),0 2px 3px rgb(72 48 20/.24),0 18px 30px -14px rgb(46 29 11/.48),0 34px 60px -36px rgb(46 29 11/.5);
+  --lift-deep:0 2px 4px rgb(10 6 2/.5),0 22px 40px -16px rgb(10 6 2/.7);
+  /* убранство: рамка с вогнутыми углами, меандр, розетка, лавр — рисунки в золоте и умбре */
+  --frame-gold:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M10 1.5H50A8.5 8.5 0 0 0 58.5 10V50A8.5 8.5 0 0 0 50 58.5H10A8.5 8.5 0 0 0 1.5 50V10A8.5 8.5 0 0 0 10 1.5Z' fill='none' stroke='%239c7a3c'/%3E%3Cg fill='%239c7a3c'%3E%3Ccircle cx='4.6' cy='4.6' r='1.5'/%3E%3Ccircle cx='55.4' cy='4.6' r='1.5'/%3E%3Ccircle cx='4.6' cy='55.4' r='1.5'/%3E%3Ccircle cx='55.4' cy='55.4' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --frame-umber:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M10 1.5H50A8.5 8.5 0 0 0 58.5 10V50A8.5 8.5 0 0 0 50 58.5H10A8.5 8.5 0 0 0 1.5 50V10A8.5 8.5 0 0 0 10 1.5Z' fill='none' stroke='%236a3418'/%3E%3Cg fill='%236a3418'%3E%3Ccircle cx='4.6' cy='4.6' r='1.5'/%3E%3Ccircle cx='55.4' cy='4.6' r='1.5'/%3E%3Ccircle cx='4.6' cy='55.4' r='1.5'/%3E%3Ccircle cx='55.4' cy='55.4' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --frame-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M10 1.5H50A8.5 8.5 0 0 0 58.5 10V50A8.5 8.5 0 0 0 50 58.5H10A8.5 8.5 0 0 0 1.5 50V10A8.5 8.5 0 0 0 10 1.5Z' fill='none' stroke='%2393794a'/%3E%3Cg fill='%2393794a'%3E%3Ccircle cx='4.6' cy='4.6' r='1.5'/%3E%3Ccircle cx='55.4' cy='4.6' r='1.5'/%3E%3Ccircle cx='4.6' cy='55.4' r='1.5'/%3E%3Ccircle cx='55.4' cy='55.4' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --meander:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 12.5H20.5V2.5H6.5V8.5H14.5M24 12.5H20.5' fill='none' stroke='%239c7a3c'/%3E%3Cpath d='M0 .5H24M0 14.5H24' stroke='%239c7a3c' stroke-opacity='.55'/%3E%3C/svg%3E");
+  --meander-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 12.5H20.5V2.5H6.5V8.5H14.5M24 12.5H20.5' fill='none' stroke='%2393794a'/%3E%3Cpath d='M0 .5H24M0 14.5H24' stroke='%2393794a' stroke-opacity='.55'/%3E%3C/svg%3E");
+  --rosette:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='none' stroke='%239c7a3c'%3E%3Cpath d='M0 8H40M80 8H120'/%3E%3Cpath d='M60 1.5 66.5 8 60 14.5 53.5 8Z'/%3E%3Cpath d='M46 4.5 49.5 8 46 11.5 42.5 8ZM74 4.5 77.5 8 74 11.5 70.5 8Z'/%3E%3C/g%3E%3Ccircle cx='60' cy='8' r='1.6' fill='%239c7a3c'/%3E%3C/svg%3E");
+  --rosette-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='none' stroke='%23cdb078'%3E%3Cpath d='M0 8H40M80 8H120'/%3E%3Cpath d='M60 1.5 66.5 8 60 14.5 53.5 8Z'/%3E%3Cpath d='M46 4.5 49.5 8 46 11.5 42.5 8ZM74 4.5 77.5 8 74 11.5 70.5 8Z'/%3E%3C/g%3E%3Ccircle cx='60' cy='8' r='1.6' fill='%23cdb078'/%3E%3C/svg%3E");
+  --laurel:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='%239c7a3c'%3E%3Cpath d='M8 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M8 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M22 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M22 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M36 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M36 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M112 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M112 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M98 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M98 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M84 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M84 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Ccircle cx='60' cy='8' r='2.4'/%3E%3C/g%3E%3Cpath d='M4 8H52M68 8H116' stroke='%239c7a3c' stroke-opacity='.6'/%3E%3C/svg%3E");
+  --laurel-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='%23cdb078'%3E%3Cpath d='M8 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M8 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M22 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M22 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M36 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M36 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M112 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M112 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M98 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M98 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M84 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M84 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Ccircle cx='60' cy='8' r='2.4'/%3E%3C/g%3E%3Cpath d='M4 8H52M68 8H116' stroke='%23cdb078' stroke-opacity='.6'/%3E%3C/svg%3E");
   --disc-a:var(--ink);--disc-b:#3b2a19; /* бороздки пластинки */
   --disc-glint:rgb(255 240 210/.16);--disc-glint-2:rgb(255 240 210/.12);
   /* кнопка языка поверх снимка первого экрана */
@@ -555,28 +572,31 @@ body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
 /* ---------- Ноты: полки каталога (15.11.2026, V6). Карточки разложены по группам, у каждой группы свой оттенок
    той же сепии; линеек под текстом нет, всё стоит по одной линии. Вся карточка со ссылкой по-прежнему нажимается.
    Первая строка низа карточки — своя база (a.card-file, файл из assets/library/), вторая — внешний источник. ---------- */
-.shelves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7) var(--s-5);counter-reset:card}
-.shelf{grid-column:1 / -1;display:grid;gap:var(--s-4);align-content:start;min-width:0;--card-bg:var(--surface)}
-.shelf-2{--card-bg:var(--tone-2)}
-.shelf-3{--card-bg:var(--tone-3);grid-column:auto}
-.shelf-4{--card-bg:var(--tone-4);grid-column:auto;--gold:var(--gold-deep)}
+.shelves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-8) var(--s-6);counter-reset:card}
+.shelf{grid-column:1 / -1;display:grid;gap:var(--s-5);align-content:start;min-width:0;--frame:var(--frame-gold);--orn:var(--rosette)}
+.shelf-2{--frame:var(--frame-umber);--orn:var(--laurel)}
+.shelf-3{grid-column:auto}
+.shelf-4{grid-column:auto;--frame:var(--frame-umber);--orn:var(--laurel)}
 .shelf-3 .grid,.shelf-4 .grid{grid-template-columns:minmax(0,1fr);height:100%}
-.shelf-title{display:flex;align-items:baseline;gap:var(--s-4);font-size:32px;font-weight:500}
-.shelf-title::after{content:"";flex:1;height:1px;background:var(--rule)}
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0}
-.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5);
-  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--card-bg);
-  box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
-.card:hover{background:var(--card-bg)}
-.card:has(a):hover{translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+/* заголовок полки: по центру, под ним орнамент — розетка или лавр, через одну */
+.shelf-title{display:grid;justify-items:center;gap:var(--s-3);text-align:center;font-size:34px;font-weight:500}
+.shelf-title::after{content:"";width:min(240px,60%);height:16px;background:var(--orn) center/120px 16px no-repeat,linear-gradient(to right,transparent,var(--rule) 30%,var(--rule) 70%,transparent) center/100% 1px no-repeat;
+  -webkit-mask-image:linear-gradient(to right,var(--mask),var(--mask));mask-image:linear-gradient(to right,var(--mask),var(--mask))}
+.shelf-2 .shelf-title,.shelf-4 .shelf-title{font-style:italic;color:var(--accent-hi)}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);border-top:0}
+/* карточка: лист плотной бумаги, приподнятый над столом; внутри отпечатана рамка с вогнутыми углами */
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-4);
+  border:14px solid transparent;border-image:var(--frame) 14 / 14px / 0 stretch;border-radius:var(--radius);
+  background:linear-gradient(160deg,var(--glow),transparent 46%),var(--surface);background-origin:border-box;
+  box-shadow:var(--lift-1);transition:translate .3s var(--ease),box-shadow .3s}
+.card:hover{background:linear-gradient(160deg,var(--glow),transparent 46%) border-box,var(--surface)}
+.card:has(a):hover{translate:0 -3px;box-shadow:var(--lift-2)}
 .card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
   border-bottom:1px solid var(--line);font-size:var(--t-small)}
 .card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold)}
 .card h4{margin:var(--s-2) 0 0;font:600 26px/1.15 var(--display);color:var(--ink);text-wrap:balance}
-.card p{font-size:16px;line-height:1.6;margin:0}
+.card p{font-size:16px;line-height:1.6;margin:0;padding-bottom:var(--s-3)}
 .card a{display:block;align-self:stretch;margin-top:auto;padding-top:var(--s-3);border-top:1px solid var(--line);font-size:15px;white-space:normal}
-.card p + a{margin-top:auto}
-.card p{padding-bottom:var(--s-3)}
 .card:hover a{text-decoration:underline;text-decoration-thickness:1px}
 /* знак внешней ссылки «↗» ставит CSS, в разметке его нет; для экранного диктора знак пустой */
 .ext::after,.card a[href^="http"]::after,.btn[href^="http"]::after{content:"\2197";content:"\2197"/"";margin-inline-start:.35em;font-size:.9em;text-decoration:none}
@@ -774,28 +794,72 @@ p,li,figcaption,dd{text-wrap:pretty}
 }
 
 /* ============================================================================================
-   V6 (15.11.2026): весь сайт в тоне отреставрированного первого экрана — где-то светлее, где-то темнее.
-   Бумага --paper прежняя; разделы чередуются: бумага, полоса на тон темнее, тёмная сепия.
+   V6.1 (15.11.2026): весь сайт в стиле отреставрированного первого экрана — не заливки, а свет и тень.
+   Одно солнце сверху слева, края каждого раздела уходят в тень, листы и снимки приподняты над бумагой,
+   убранство — как в императорских театрах: меандр, розетки, лавр, рамки с вогнутыми углами.
    ============================================================================================ */
-/* тёмная сепия: роли токенов те же, значения — из --deep-*; всё внутри перекрашивается само */
-#listen,body > footer{--paper:var(--deep-paper);--surface:var(--deep-surface);--band:var(--deep-band);--ink:var(--deep-ink);--muted:var(--deep-muted);
-  --accent:var(--deep-accent);--accent-hi:var(--deep-accent-hi);--gold:var(--deep-gold);--rule:var(--deep-rule);--line:var(--deep-line);--field:var(--deep-field);
-  --on-accent:var(--deep-paper);--tint:color-mix(in srgb,var(--deep-rule) 18%,transparent);--shadow:var(--deep-shadow);
-  background:var(--paper) var(--grain);color:var(--ink)}
-#listen ::selection,body > footer ::selection{background:var(--deep-rule);color:var(--deep-ink)}
-/* полоса на тон темнее бумаги */
-#usa,#concertos{background:var(--band) var(--grain)}
+/* бумажные разделы: пятно света сверху слева и тень к краям */
+main > section.block:not(:has(.scene)),.lede{background:radial-gradient(70% 44rem at 16% 0,var(--glow),transparent 70%),
+  radial-gradient(140% 100% at 50% 42%,transparent 52%,var(--shade) 100%),var(--paper) var(--grain)}
+/* полоса на тон темнее: лист лежит ниже соседних, сверху и снизу на него падает тень */
+main > section#usa,main > section#concertos{background:radial-gradient(70% 40rem at 16% 0,var(--glow),transparent 72%),
+  radial-gradient(140% 100% at 50% 42%,transparent 48%,var(--shade) 100%),var(--band) var(--grain);
+  box-shadow:inset 0 26px 34px -26px var(--shade-deep),inset 0 -26px 34px -26px var(--shade-deep)}
 /* первый экран: низ снимка уходит в бумагу без полосы на любой ширине */
 .hero::after{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;height:24svh;pointer-events:none;
   background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 70%,transparent) 55%,var(--paper))}
 
-/* ---------- «Слушать»: фонотека без картинок. Слева кто и когда, справа запись, плеер и другие источники.
-   Свой файл ставится тегом <audio controls preload="none"> внутри .record-body (см. LIBRARY.md) ---------- */
-#listen .shelf-title{margin-bottom:var(--s-4)}
-#listen .records + .shelf-title{margin-top:var(--s-8)}
-.records{display:grid;border-top:1px solid var(--rule)}
-.record{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:var(--s-4) var(--col-gap);padding-block:var(--s-6);border-bottom:1px solid var(--line);min-width:0}
+/* ---------- приподнятые листы: всё, что лежит на бумаге, отбрасывает мягкую тёплую тень ---------- */
+.table-scroll,.dossier-tree,.person,.person-v3,.conflicts,.node-pair > div,.lineage-v3 li,.ll-span{box-shadow:var(--lift-1)}
+.table-scroll{border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-2);
+  background:linear-gradient(160deg,var(--glow),transparent 40%),var(--surface)}
+.ll-track{box-shadow:inset 0 14px 18px -16px var(--shade-deep),inset 0 -14px 18px -16px var(--shade-deep)}
+.facts,.insight,.raichman{background:linear-gradient(to bottom,var(--tint),transparent 30%,transparent 70%,var(--tint))}
+.ch-photo .mat{box-shadow:var(--lift-2)}
+/* архивный снимок под главой: тень под нижним краем, как у фотографии, вклеенной в альбом */
+.ch-plate{position:relative}
+.ch-plate::before{content:"";position:absolute;z-index:-1;left:8%;right:8%;top:60%;height:30%;border-radius:50%;background:var(--shade-deep);filter:blur(28px);opacity:.55}
+.head-vignette img{filter:drop-shadow(0 18px 22px var(--shade-deep))}
+.toc ol{box-shadow:0 22px 30px -28px var(--shade-deep)}
+.editions,.src-block{box-shadow:0 -1px 0 var(--hi)}
+.btn-brass{box-shadow:0 8px 16px -8px var(--shade-deep)}
+.btn-ghost,.totop,.fab{box-shadow:var(--lift-1)}
+h2{text-shadow:0 1px 0 var(--hi)}
+/* орнамент между разделами: розетка на золочёной линейке */
+main > section.block + section.block::before{content:"";height:16px;translate:-50% -50%;width:min(520px,76vw);font-size:0;
+  background:var(--rosette) center/120px 16px no-repeat,linear-gradient(to right,transparent,var(--rule) 22%,var(--rule) 78%,transparent) center/100% 1px no-repeat;
+  -webkit-mask-image:linear-gradient(to right,var(--mask) 0 calc(50% - 64px),transparent calc(50% - 64px) calc(50% - 60px),var(--mask) calc(50% - 60px) calc(50% + 60px),transparent calc(50% + 60px) calc(50% + 64px),var(--mask) calc(50% + 64px));
+  mask-image:linear-gradient(to right,var(--mask) 0 calc(50% - 64px),transparent calc(50% - 64px) calc(50% - 60px),var(--mask) calc(50% - 60px) calc(50% + 60px),transparent calc(50% + 60px) calc(50% + 64px),var(--mask) calc(50% + 64px))}
+
+/* ---------- «Слушать»: зал. Тёмная сепия, свет рампы сверху, по краям темно; внутри — программка в золочёной рамке ---------- */
+#listen,body > footer{--paper:var(--deep-paper);--surface:var(--deep-surface);--band:var(--deep-band);--ink:var(--deep-ink);--muted:var(--deep-muted);
+  --accent:var(--deep-accent);--accent-hi:var(--deep-accent-hi);--gold:var(--deep-gold);--rule:var(--deep-rule);--line:var(--deep-line);--field:var(--deep-field);
+  --on-accent:var(--deep-paper);--tint:color-mix(in srgb,var(--deep-rule) 18%,transparent);--shadow:var(--deep-shadow);--hi:transparent;
+  color:var(--ink)}
+main > section#listen{background:radial-gradient(60% 34rem at 50% 0,var(--deep-glow),transparent 72%),
+  radial-gradient(120% 100% at 50% 40%,transparent 40%,var(--deep-band) 100%),var(--deep-paper) var(--grain);
+  box-shadow:inset 0 30px 40px -24px var(--deep-shadow),inset 0 -30px 40px -24px var(--deep-shadow)}
+#listen ::selection,body > footer ::selection{background:var(--deep-rule);color:var(--deep-ink)}
+/* меандр по верхнему и нижнему краю зала */
+main > section#listen::after{content:"";position:absolute;left:0;right:0;top:var(--s-5);bottom:var(--s-5);pointer-events:none;
+  background:var(--meander-deep) 0 0/24px 15px repeat-x,var(--meander-deep) 0 100%/24px 15px repeat-x;opacity:.7}
+#listen > .wrap{position:relative;z-index:1}
+#listen .section-head{max-width:none;align-items:center;text-align:center;margin-bottom:var(--s-6)}
+#listen .section-head::before{align-self:center;text-align:center}
+#listen .head-vignette{display:none}
+#listen h2{text-shadow:0 2px 18px var(--deep-shadow)}
+/* программка: лист в рамке, приподнятый над тёмным залом */
+.records,.videos{border:14px solid transparent;border-image:var(--frame-deep) 14 / 14px / 0 stretch;
+  background:linear-gradient(170deg,var(--deep-glow),transparent 40%) border-box,var(--deep-surface);box-shadow:var(--lift-deep)}
+.records{display:grid;padding:var(--s-2) var(--s-6)}
+#listen .shelf-title{margin:var(--s-7) 0 var(--s-5);--orn:var(--laurel-deep);color:var(--deep-gold);font-style:italic}
+#listen .section-head + .shelf-title{margin-top:0}
+.record{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:var(--s-4) var(--col-gap);padding-block:var(--s-6);border-bottom:1px solid var(--line);min-width:0;counter-increment:rec}
+.records{counter-reset:rec}
+.record:last-child{border-bottom:0}
 .record-head{display:grid;gap:var(--s-2);align-content:start;min-width:0}
+/* номер отделения программы римской цифрой */
+.record-head::before{content:counter(rec,upper-roman);font:italic 600 20px/1 var(--display);color:var(--gold);padding-bottom:var(--s-2);margin-bottom:var(--s-1);border-bottom:1px solid var(--rule);width:max-content;min-width:40px}
 .record h4{margin:0;font:500 30px/1.12 var(--display);color:var(--ink);text-wrap:balance}
 .record-sub{font-size:var(--t-small);line-height:1.4;color:var(--gold)}
 .record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start;max-width:var(--measure)}
@@ -805,11 +869,23 @@ p,li,figcaption,dd{text-wrap:pretty}
 .record-links b{font-weight:600;font-size:16px;line-height:1.35}
 .record-links span{font-size:var(--t-small);color:var(--accent)}
 .record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
-.videos{margin:0;max-width:var(--measure);border-top-color:var(--rule)}
+.videos{margin:0;padding:var(--s-2) var(--s-6);border-top-color:transparent}
+.videos li:last-child a{border-bottom:0}
+#listen .btn-brass{box-shadow:var(--lift-deep)}
 .record .player iframe{max-width:none}
 .record audio,.record video,.videos video{display:block;width:100%;border-radius:var(--radius)}
 .record video,.videos video{border:1px solid var(--rule);background:var(--band)}
-@media(max-width:820px){.record{grid-template-columns:minmax(0,1fr);padding-block:var(--s-5)}.record h4{font-size:26px}}
+@media(max-width:820px){.record{grid-template-columns:minmax(0,1fr);padding-block:var(--s-5)}.record h4{font-size:26px}.records,.videos{padding-inline:var(--s-3)}}
 /* файл из своей базы в карточке нот: первая строка низа карточки, внешний источник — второй строкой */
 .card a.card-file{font-weight:600}
 .card a.card-file + a{margin-top:0;border-top:0;padding-top:var(--s-1);font-size:var(--t-small)}
+
+/* ---------- подвал: та же тёмная сепия, меандр по верхней кромке, свет сверху ---------- */
+body > footer{position:relative;margin-top:0;border-top:0;padding-top:calc(var(--s-8) + var(--s-4));
+  background:var(--meander-deep) 0 var(--s-5)/24px 15px repeat-x,radial-gradient(60% 22rem at 50% 0,var(--deep-glow),transparent 72%),
+    radial-gradient(120% 100% at 50% 40%,transparent 40%,var(--deep-band) 100%),var(--deep-paper) var(--grain);
+  box-shadow:inset 0 30px 40px -24px var(--deep-shadow)}
+/* хронология изданий «В США»: отдельный лист в рамке, приподнятый над полосой */
+.editions{padding:var(--s-2) var(--s-5);border:14px solid transparent;border-image:var(--frame-gold) 14 / 14px / 0 stretch;
+  background:linear-gradient(160deg,var(--glow),transparent 46%) border-box,var(--surface);box-shadow:var(--lift-2)}
+.editions li:last-child{border-bottom:0}
