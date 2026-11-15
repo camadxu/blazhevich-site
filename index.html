@@ -321,16 +321,21 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .lineages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7);margin-bottom:var(--s-6)}
 .lineage{min-width:0}
 .lineage > h3{font-size:var(--t-title-l);margin-bottom:var(--s-5);padding-bottom:var(--s-3);border-bottom:1px solid var(--ink)}
-.gen{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-5);position:relative}
+.gen{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-6);position:relative}
 .gen::before{content:"";position:absolute;left:7px;top:var(--s-3);bottom:var(--s-3);width:1px;background:var(--rule)}
-.node{position:relative;padding-left:var(--s-6);display:grid;gap:var(--s-1)}
-.node::before{content:"";position:absolute;left:3px;top:10px;width:9px;height:9px;background:var(--paper);border:1px solid var(--rule);transform:rotate(45deg)}
+.node{position:relative;padding-left:var(--s-6);padding-top:var(--s-5);display:grid;gap:var(--s-1)}
+/* линейка между людьми начинается от текста, а не режет вертикаль времени */
+.node::after{content:"";position:absolute;left:var(--s-6);right:0;top:0;height:1px;background:var(--line)}
+.gen > .node:first-child{padding-top:0}
+.gen > .node:first-child::after{display:none}
+.node::before{content:"";position:absolute;left:3px;top:calc(var(--s-5) + 8px);width:9px;height:9px;background:var(--paper);border:1px solid var(--rule);transform:rotate(45deg)}
+.gen > .node:first-child::before{top:8px}
 .node-key::before{background:var(--rule)}
 .node-gap::before,.node-later::before{border-style:dashed;border-color:var(--field)}
 .node b{font-family:var(--display);font-size:24px;font-weight:600;line-height:1.15;color:var(--ink)}
-.node p{font-size:16px;color:var(--muted);line-height:1.6}
+.node p{font-size:15.5px;color:var(--muted);line-height:1.55}
 .node-years{font-size:15px;color:var(--gold);font-variant-numeric:tabular-nums}
-.pupils{font-size:15px;color:var(--ink);border-left:1px solid var(--field);padding-left:var(--s-3)}
+.pupils{font-size:14.5px;line-height:1.5;color:var(--ink);border-left:1px solid var(--field);padding-left:var(--s-3);margin-top:var(--s-3)}
 .pupils em{font-style:normal;color:var(--gold);font-weight:600}
 .node-pair{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4)}
 .node-pair > div{display:grid;gap:var(--s-1);align-content:start;padding:var(--s-4);border:1px solid var(--line);background:var(--surface);min-width:0}
@@ -357,8 +362,10 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .conc td:last-child .chip{display:block;width:max-content;margin:var(--s-2) 0 0}
 .conc tbody tr:hover td{background:var(--tint)}
 .chip{display:inline-block;margin-left:var(--s-2);padding:0 var(--s-2);border:1px solid var(--rule);border-radius:var(--radius);font-size:var(--t-small);font-weight:600;color:var(--gold);white-space:nowrap}
-.st{display:inline-block;margin-left:var(--s-2);padding:0 var(--s-2);border:1px solid currentColor;border-radius:var(--radius);font-size:var(--t-small);font-style:normal;font-weight:600;white-space:nowrap}
-.st-ok{color:var(--accent)}
+/* отметка о проверке источника: не кнопка, а ремарка в строку */
+.st{display:inline;margin:0;padding:0;border:0;font:italic 500 13.5px/1.5 var(--display);white-space:normal}
+.st::before{content:"— "}
+.st-ok{color:var(--muted)}
 .st-no{color:var(--gold)}
 
 /* ---------- About and sources ---------- */
