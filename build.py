@@ -11,7 +11,7 @@ assets/. Старые адреса разделов (scores.html, en/scores.html
 С флагом --single-page дополнительно собирается artifact.html — вся русская версия одной
 страницей (нужна только для предпросмотра в Claude, на сервер не загружается; шрифты берёт с Google Fonts).
 """
-import argparse, datetime, pathlib, re, shutil
+import argparse, datetime, hashlib, pathlib, re, shutil
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -42,6 +42,10 @@ CSS = (SRC / 'style.css').read_text()
 JS = (SRC / 'script.js').read_text()
 EXTRA_CSS = ""  # всё оформление в src/style.css
 CSS = CSS + EXTRA_CSS
+# Стили живут отдельным файлом с хэшем содержимого в имени: страницы не таскают стили при каждом
+# переходе, а .deploy/htaccess кэширует такой файл навсегда (immutable). Инлайн остаётся только
+# в artifact.html — он собирается одним файлом для предпросмотра вне сайта.
+CSS_FILE = 'main.' + hashlib.sha256(CSS.encode('utf-8')).hexdigest()[:10] + '.css'
 
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
@@ -228,12 +232,13 @@ def page(lang, title, desc, path, prefix, body, fonts, footer):
             f'<html lang="{lang}">\n<head>\n<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
             + head(title, desc, path, lang, prefix, fonts)
-            + f'\n<style>\n{CSS}</style>\n</head>\n<body>\n{body}{footer}<script>\n{JS}</script>\n</body>\n</html>\n')
+            + f'\n<link rel="stylesheet" href="{prefix}assets/{CSS_FILE}">\n</head>\n<body>\n{body}{footer}<script>\n{JS}</script>\n</body>\n</html>\n')
 
 OUT = ROOT / 'site'
 shutil.rmtree(OUT, ignore_errors=True)
 (OUT / 'en').mkdir(parents=True)
 shutil.copytree(ROOT / 'assets', OUT / 'assets')
+(OUT / 'assets' / CSS_FILE).write_text(CSS)
 
 # карта «id → (страница, главная секция страницы)»
 id_page = {}

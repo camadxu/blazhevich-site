@@ -40,6 +40,13 @@ RedirectMatch 404 (?i)^/\.github
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 
+  # Основной CSS собирается в assets/main.<хэш от содержимого>.css: содержимое меняется —
+  # меняется имя файла, поэтому его тоже можно кэшировать навсегда. fonts.css без хэша —
+  # остаётся на обычном «1 день» из mod_expires выше.
+  <FilesMatch "main\.[0-9a-f]+\.css$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
   # ---------- безопасность ----------
   # HSTS без includeSubDomains и preload: откат — снять строку и дождаться max-age.
   Header always set Strict-Transport-Security "max-age=31536000"
