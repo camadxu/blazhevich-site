@@ -42,6 +42,39 @@
   --select:#cdb27a;
   --tint:color-mix(in srgb,var(--rule) 12%,transparent);
   --shadow:color-mix(in srgb,var(--ink) 14%,transparent);
+  /* служебные цвета: значения прежние, собраны в одном месте (15.11.2026) */
+  --mask:#000;                          /* непрозрачная часть CSS-масок */
+  --paving:rgb(122 90 23/.20);          /* швы мостовой на прежнем первом экране */
+  --scrim:rgb(42 33 24/.28);            /* затемнение под меню-поповером */
+  --edge-shade:rgb(58 38 16/.20);       /* края листа темнее, как углы снимка первого экрана (V6) */
+  /* тёмная сепия (V6): тени костюма и латунь со снимка первого экрана; ею набраны «Слушать» и подвал */
+  --deep-paper:#3a2a17;--deep-surface:#47341f;--deep-band:#2e2010;--deep-ink:#f0e6cf;--deep-muted:#d2c1a1;
+  --deep-accent:#e3c98f;--deep-accent-hi:#f6ecd2;--deep-gold:#cdb078;--deep-rule:#93794a;--deep-line:#5e4931;--deep-field:#a89270;
+  --deep-shadow:rgb(20 12 4/.45);
+  /* свет и тень (V6.1): одно солнце сверху слева, как на снимке первого экрана */
+  --glow:rgb(255 247 226/.62);          /* свет на бумаге */
+  --shade:rgb(72 48 20/.20);            /* тень к краям раздела */
+  --shade-deep:rgb(46 29 11/.42);       /* глубокая тень: стыки разделов, под карточками */
+  --deep-glow:rgb(255 222 160/.17);     /* свет рампы в тёмном разделе */
+  --hi:rgb(255 251 238/.75);            /* блик по верхней кромке листа */
+  --lift-1:inset 0 1px 0 var(--hi),0 1px 2px rgb(72 48 20/.22),0 10px 18px -10px rgb(72 48 20/.38);
+  --lift-2:inset 0 1px 0 var(--hi),0 2px 3px rgb(72 48 20/.24),0 18px 30px -14px rgb(46 29 11/.48),0 34px 60px -36px rgb(46 29 11/.5);
+  --lift-deep:0 2px 4px rgb(10 6 2/.5),0 22px 40px -16px rgb(10 6 2/.7);
+  /* убранство: рамка с вогнутыми углами, меандр, розетка, лавр — рисунки в золоте и умбре */
+  --frame-gold:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M10 1.5H50A8.5 8.5 0 0 0 58.5 10V50A8.5 8.5 0 0 0 50 58.5H10A8.5 8.5 0 0 0 1.5 50V10A8.5 8.5 0 0 0 10 1.5Z' fill='none' stroke='%239c7a3c'/%3E%3Cg fill='%239c7a3c'%3E%3Ccircle cx='4.6' cy='4.6' r='1.5'/%3E%3Ccircle cx='55.4' cy='4.6' r='1.5'/%3E%3Ccircle cx='4.6' cy='55.4' r='1.5'/%3E%3Ccircle cx='55.4' cy='55.4' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --frame-umber:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M10 1.5H50A8.5 8.5 0 0 0 58.5 10V50A8.5 8.5 0 0 0 50 58.5H10A8.5 8.5 0 0 0 1.5 50V10A8.5 8.5 0 0 0 10 1.5Z' fill='none' stroke='%236a3418'/%3E%3Cg fill='%236a3418'%3E%3Ccircle cx='4.6' cy='4.6' r='1.5'/%3E%3Ccircle cx='55.4' cy='4.6' r='1.5'/%3E%3Ccircle cx='4.6' cy='55.4' r='1.5'/%3E%3Ccircle cx='55.4' cy='55.4' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --frame-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M10 1.5H50A8.5 8.5 0 0 0 58.5 10V50A8.5 8.5 0 0 0 50 58.5H10A8.5 8.5 0 0 0 1.5 50V10A8.5 8.5 0 0 0 10 1.5Z' fill='none' stroke='%2393794a'/%3E%3Cg fill='%2393794a'%3E%3Ccircle cx='4.6' cy='4.6' r='1.5'/%3E%3Ccircle cx='55.4' cy='4.6' r='1.5'/%3E%3Ccircle cx='4.6' cy='55.4' r='1.5'/%3E%3Ccircle cx='55.4' cy='55.4' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --meander:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 12.5H20.5V2.5H6.5V8.5H14.5M24 12.5H20.5' fill='none' stroke='%239c7a3c'/%3E%3Cpath d='M0 .5H24M0 14.5H24' stroke='%239c7a3c' stroke-opacity='.55'/%3E%3C/svg%3E");
+  --meander-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='15' viewBox='0 0 24 15'%3E%3Cpath d='M0 12.5H20.5V2.5H6.5V8.5H14.5M24 12.5H20.5' fill='none' stroke='%2393794a'/%3E%3Cpath d='M0 .5H24M0 14.5H24' stroke='%2393794a' stroke-opacity='.55'/%3E%3C/svg%3E");
+  --rosette:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='none' stroke='%239c7a3c'%3E%3Cpath d='M0 8H40M80 8H120'/%3E%3Cpath d='M60 1.5 66.5 8 60 14.5 53.5 8Z'/%3E%3Cpath d='M46 4.5 49.5 8 46 11.5 42.5 8ZM74 4.5 77.5 8 74 11.5 70.5 8Z'/%3E%3C/g%3E%3Ccircle cx='60' cy='8' r='1.6' fill='%239c7a3c'/%3E%3C/svg%3E");
+  --rosette-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='none' stroke='%23cdb078'%3E%3Cpath d='M0 8H40M80 8H120'/%3E%3Cpath d='M60 1.5 66.5 8 60 14.5 53.5 8Z'/%3E%3Cpath d='M46 4.5 49.5 8 46 11.5 42.5 8ZM74 4.5 77.5 8 74 11.5 70.5 8Z'/%3E%3C/g%3E%3Ccircle cx='60' cy='8' r='1.6' fill='%23cdb078'/%3E%3C/svg%3E");
+  --laurel:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='%239c7a3c'%3E%3Cpath d='M8 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M8 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M22 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M22 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M36 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M36 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M112 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M112 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M98 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M98 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M84 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M84 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Ccircle cx='60' cy='8' r='2.4'/%3E%3C/g%3E%3Cpath d='M4 8H52M68 8H116' stroke='%239c7a3c' stroke-opacity='.6'/%3E%3C/svg%3E");
+  --laurel-deep:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='16' viewBox='0 0 120 16'%3E%3Cg fill='%23cdb078'%3E%3Cpath d='M8 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M8 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M22 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M22 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M36 8q5 -6 11 -4q-3 5 -11 4z'/%3E%3Cpath d='M36 8q5 6 11 4q-3 -5 -11 -4z'/%3E%3Cpath d='M112 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M112 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M98 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M98 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Cpath d='M84 8q-5 -6 -11 -4q3 5 11 4z'/%3E%3Cpath d='M84 8q-5 6 -11 4q3 -5 -11 -4z'/%3E%3Ccircle cx='60' cy='8' r='2.4'/%3E%3C/g%3E%3Cpath d='M4 8H52M68 8H116' stroke='%23cdb078' stroke-opacity='.6'/%3E%3C/svg%3E");
+  --disc-a:var(--ink);--disc-b:#3b2a19; /* бороздки пластинки */
+  --disc-glint:rgb(255 240 210/.16);--disc-glint-2:rgb(255 240 210/.12);
+  /* кнопка языка поверх снимка первого экрана */
+  --over-bg:rgb(42 33 24/.18);--over-bg-hi:rgb(42 33 24/.35);
+  --over-ink:#f4ead2;--over-ink-hi:#fff8e6;--over-edge:rgb(241 226 189/.7);
 
   --display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
   --body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -57,6 +90,7 @@
   /* 4px spacing scale */
   --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;--s-10:128px;
 
+  --col-gap:var(--s-8);     /* просвет между колонками текста на широком экране; на ≤820px секции сами ставят 32px */
   --radius:2px;
   --measure:65ch;
   --container:1200px;
@@ -112,27 +146,27 @@ nav a.active::after{content:"";position:absolute;left:var(--s-3);right:var(--s-3
   background:radial-gradient(120% 90% at 16% -10%,var(--surface) 0,transparent 60%),linear-gradient(var(--paper) 0 var(--horizon),var(--band) calc(var(--horizon) + 5svh),var(--paper) 100%)}
 /* the square: a paved plane tilted away from the viewer, its joints meeting on the horizon behind the figure */
 .hero::before{content:"";position:absolute;z-index:-2;top:var(--horizon);left:-100vw;right:-100vw;height:80svh;transform-origin:50% 0;transform:perspective(34svh) rotateX(62deg);
-  background:repeating-linear-gradient(90deg,transparent 0 119px,rgb(122 90 23/.20) 119px 120px),repeating-linear-gradient(transparent 0 119px,rgb(122 90 23/.20) 119px 120px);
-  -webkit-mask-image:linear-gradient(transparent,#000 10%,transparent 62%);mask-image:linear-gradient(transparent,#000 10%,transparent 62%)}
+  background:repeating-linear-gradient(90deg,transparent 0 119px,var(--paving) 119px 120px),repeating-linear-gradient(transparent 0 119px,var(--paving) 119px 120px);
+  -webkit-mask-image:linear-gradient(transparent,var(--mask) 10%,transparent 62%);mask-image:linear-gradient(transparent,var(--mask) 10%,transparent 62%)}
 /* both views stand on the horizon, small and hazy with distance, lit by the same light */
 .city{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--horizon);pointer-events:none}
 /* консерватория и Большой театр крупно, во всю ширину за фигурой: от верха окна до горизонта (сейчас фон — один снимок, см. правила «Первый экран» ниже) */
 .city-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;opacity:.92;animation:hero-fade 1.6s ease both}
 .hero-stage{display:grid;justify-items:center}
 /* bust crop: the box shows the top of the full-length file and the chest melts into the paper */
-.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
+.portrait{margin:0;width:clamp(260px,70svh,640px);aspect-ratio:1/.86;overflow:hidden;-webkit-mask-image:linear-gradient(var(--mask) 74%,transparent);mask-image:linear-gradient(var(--mask) 74%,transparent);animation:hero-rise 1.1s var(--ease) both}
 .portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}
 .hero-copy{display:grid;justify-items:center;gap:var(--s-5);margin-top:calc(var(--s-4) * -1);position:relative;min-width:0}
 .hero-mark{display:flex;align-items:center;gap:var(--s-4);font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);line-height:1.2;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--gold);animation:hero-gather 1.4s var(--ease) .25s both}
 .hero-mark::before,.hero-mark::after{content:"";width:clamp(28px,7vw,96px);height:1px;background:var(--rule)}
 .hero-nav{display:flex;gap:var(--s-3);animation:hero-rise .9s var(--ease) .6s both}
-.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--s-5);border:1px solid var(--rule);border-radius:var(--radius);background:color-mix(in srgb,var(--paper) 72%,transparent);color:var(--ink);font:600 13px/1 var(--body);letter-spacing:.06em;text-indent:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
 .hero-btn:hover{border-color:var(--ink);background:var(--surface);color:var(--ink)}
 /* the menu is a native popover; where popover is unknown the links simply stay visible under the buttons */
 .hero-menu{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:var(--s-5) var(--s-7)}
 .hero-menu:not(:popover-open){display:none}
 .hero-menu:popover-open{display:grid;width:min(92vw,400px)}
-.hero-menu::backdrop{background:rgb(42 33 24/.28)}
+.hero-menu::backdrop{background:var(--scrim)}
 .hero-menu a{display:block;padding:var(--s-3);font-family:var(--display);font-size:28px;font-weight:500;line-height:1.15;color:var(--ink);text-decoration:none}
 .hero-menu a+a{border-top:1px solid var(--line)}
 .hero-menu a:hover{color:var(--accent)}
@@ -182,12 +216,11 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .card h3{grid-column:2;font-size:24px}
 .card p{grid-column:2;color:var(--muted);font-size:16px;max-width:var(--measure)}
 .card a{grid-column:3;grid-row:1 / span 2;align-self:start;padding-top:var(--s-1);font-weight:600;font-size:15px;white-space:nowrap;text-decoration:none}
-.card a::after{content:"";position:absolute;inset:0}
+.card a::before{content:"";position:absolute;inset:0}
 .card:hover a{text-decoration:underline}
 .tag{font-size:15px;color:var(--gold);font-weight:500}
 
 /* ---------- Listen: a band ---------- */
-#listen{background:var(--band)}
 .listen{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-4);max-width:var(--measure)}
 .listen > div{display:grid;gap:var(--s-4);min-width:0}
 .listen p{color:var(--muted)}
@@ -205,7 +238,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .explore-card:hover b{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.15em}
 
 /* ---------- Biography ---------- */
-.bio{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s-8);align-items:start}
+.bio{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--col-gap);align-items:start}
 .bio-text{display:grid;gap:var(--s-4);min-width:0;max-width:var(--measure)}
 .bio-text p:first-child::first-letter{font-family:var(--display);float:left;font-size:72px;line-height:.8;padding:var(--s-2) var(--s-2) 0 0;color:var(--gold)}
 .timeline{list-style:none;padding:0;margin:0;display:grid;gap:var(--s-5);border-left:1px solid var(--rule);min-width:0}
@@ -345,7 +378,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   .explore-grid{grid-template-columns:minmax(0,1fr)}
   .explore-card:nth-child(odd),.explore-card:nth-child(even){padding:var(--s-5) 0;border-right:0}
   .card{grid-template-columns:minmax(0,1fr);gap:var(--s-2)}
-  .card .tag,.card h3,.card p,.card a{grid-column:1;grid-row:auto}
+  .card .tag,.card h4,.card p,.card a{grid-column:1;grid-row:auto}
   .people-v3{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:620px){
@@ -385,15 +418,15 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .warn{color:var(--gold);font-weight:700;cursor:help}
 .dossier-tree{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:var(--s-5) var(--s-6);margin-bottom:var(--s-7);overflow-x:auto}
 .dossier-tree h3{margin-bottom:var(--s-3)}
-.facts-list{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--muted)}
+.facts-list{margin:0;padding-left:20px;display:grid;gap:var(--s-2);color:var(--muted)}
 .sub-h{font-family:var(--display);font-weight:500;font-size:var(--t-title);margin:var(--s-7) 0 var(--s-4)}
 .persons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin-bottom:var(--s-7)}
 .person{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:var(--s-5);display:grid;gap:var(--s-2);align-content:start;min-width:0}
 .person h4{font-family:var(--display);font-size:24px;font-weight:600;margin:0;color:var(--ink)}
-.person ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:15px;color:var(--muted)}
+.person ul{margin:0;padding-left:var(--s-4);display:grid;gap:var(--s-2);font-size:15px;color:var(--muted)}
 .two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7);margin:var(--s-6) 0}
 .two-col > div{min-width:0;display:grid;gap:var(--s-3);align-content:start}
-.plain-list{padding-left:18px}
+.plain-list{padding-left:var(--s-4)}
 .conc.plain{min-width:560px}
 .conc.plain td,.conc.plain td:nth-child(2),.conc.plain td:nth-child(3){white-space:normal}
 .conc.plain td:first-child{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink);width:auto;white-space:nowrap}
@@ -418,7 +451,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 }
 @media(max-width:1100px){
   .head-vignette{height:clamp(140px,34vw,220px);margin-block:var(--s-2) var(--s-3)}
-  .head-vignette img{object-position:center 40%;object-fit:cover;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 75%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 75%,transparent)}
+  .head-vignette img{object-position:center 40%;object-fit:cover;-webkit-mask-image:linear-gradient(to bottom,transparent,var(--mask) 18%,var(--mask) 75%,transparent);mask-image:linear-gradient(to bottom,transparent,var(--mask) 18%,var(--mask) 75%,transparent)}
 }
 
 /* сцена во всю ширину: здание вблизи, второе вдали, площадь; текст шапки поверх неба */
@@ -443,16 +476,16 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   display:none;flex-direction:column;align-items:flex-end;gap:0;padding:var(--s-3) 0;border-right:1px solid var(--rule);
   opacity:0;pointer-events:none;transition:opacity .4s ease}
 .rail a{position:relative;display:block;padding:var(--s-2) var(--s-4);color:var(--muted);text-decoration:none;
-  font:500 12px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:color .2s}
-.rail a::after{content:"";position:absolute;right:-1px;top:50%;width:1px;height:0;background:var(--ink);translate:0 -50%;transition:height .25s var(--ease)}
+  font:500 12px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:color .2s}
+.rail a::after{content:"";position:absolute;right:-1px;top:50%;width:1px;height:70%;background:var(--ink);translate:0 -50%;scale:1 0;transition:scale .25s var(--ease)}
 .rail a:hover{color:var(--ink)}
 .rail a.active{color:var(--ink)}
-.rail a.active::after{height:70%;width:2px;right:-1.5px}
+.rail a.active::after{scale:1;width:2px;right:-1.5px}
 .rail .lang{margin-top:var(--s-3);color:var(--gold)}
 .fab{position:fixed;z-index:22;top:calc(var(--s-3) + env(safe-area-inset-top,0px));right:calc(var(--s-3) + env(safe-area-inset-right,0px));
   display:none;min-height:40px;padding:0 var(--s-4);border:1px solid var(--rule);border-radius:var(--radius);
   background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+  color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-menu{position:fixed}
 /* Меню разделов (13.11.2026, просьба владельца): на компьютере с мышью оно спрятано за правым краем
    и само выезжает, когда курсор подходит к краю окна; у края всегда видна тонкая вкладка «Разделы».
@@ -523,13 +556,13 @@ ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 .hero::before{display:none}
 .city{inset:0;height:auto}
 .city-scene{object-position:50% 30%;opacity:1}
-.hero-lang{background:rgb(42 33 24/.18);color:#f4ead2;border-color:rgb(241 226 189/.7);position:absolute;z-index:2;top:calc(var(--s-5) + env(safe-area-inset-top,0px));right:calc(var(--s-5) + env(safe-area-inset-right,0px))}
+.hero-lang{background:var(--over-bg);color:var(--over-ink);border-color:var(--over-edge);position:absolute;z-index:2;top:calc(var(--s-5) + env(safe-area-inset-top,0px));right:calc(var(--s-5) + env(safe-area-inset-right,0px))}
 @media(max-width:620px){
   /* узкий экран: в кадре фигура с тромбоном, здания по краям */
   .city-scene{object-position:55% 30%}
   .hero-lang{top:var(--s-3);right:var(--s-3)}
 }
-.hero-lang:hover{background:rgb(42 33 24/.35);color:#fff8e6;border-color:#f4ead2}
+.hero-lang:hover{background:var(--over-bg-hi);color:var(--over-ink-hi);border-color:var(--over-ink)}
 
 /* ---------- Шапка досье о Москве по макету владельца (12.11.2026): оглавление 2×2, автограф 1903 года, консерватория справа внизу ---------- */
 .scene .eyebrow a{color:inherit;text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-color:var(--rule)}
@@ -552,27 +585,43 @@ ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 
 /* ---------- Старинная гамма (13.11.2026): весь сайт в тон первого экрана — кремовая бумага с зерном, сепия, края листа чуть темнее ---------- */
 body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
-  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,rgb(74 48 20/.16) 100%)}
+  background:radial-gradient(130% 100% at 50% 40%,transparent 62%,var(--edge-shade) 100%)}
 @media print{body::after{display:none}}
 .rail .lang{margin-right:var(--s-4)}
 
-/* ---------- Ноты как библиотечные карточки (13.11.2026): две колонки, у каждой карточки номер, красная линейка
-   и строки каталожной карточки; источник — «штампом» внизу. Вся карточка по-прежнему ссылка. ---------- */
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);border-top:0;counter-reset:card}
-.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-5) var(--s-4);
-  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
-  background:var(--surface) repeating-linear-gradient(transparent 0 31px,color-mix(in srgb,var(--rule) 16%,transparent) 31px 32px) 0 62px;
-  box-shadow:0 1px 0 var(--line),0 10px 24px -18px var(--shadow);transition:translate .25s var(--ease),box-shadow .25s}
-.card:hover{background-color:var(--surface);translate:0 -2px;box-shadow:0 1px 0 var(--line),0 16px 28px -16px var(--shadow)}
+/* ---------- Ноты: полки каталога (15.11.2026, V6). Карточки разложены по группам, у каждой группы свой оттенок
+   той же сепии; линеек под текстом нет, всё стоит по одной линии. Вся карточка со ссылкой по-прежнему нажимается.
+   Первая строка низа карточки — своя база (a.card-file, файл из assets/library/), вторая — внешний источник. ---------- */
+.shelves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-8) var(--s-6);counter-reset:card}
+.shelf{grid-column:1 / -1;display:grid;gap:var(--s-5);align-content:start;min-width:0;--frame:var(--frame-gold);--orn:var(--rosette)}
+.shelf-2{--frame:var(--frame-umber);--orn:var(--laurel)}
+.shelf-3{grid-column:auto}
+.shelf-4{grid-column:auto;--frame:var(--frame-umber);--orn:var(--laurel)}
+.shelf-3 .grid,.shelf-4 .grid{grid-template-columns:minmax(0,1fr);height:100%}
+/* заголовок полки: по центру, под ним орнамент — розетка или лавр, через одну */
+.shelf-title{display:grid;justify-items:center;gap:var(--s-3);text-align:center;font-size:34px;font-weight:500}
+.shelf-title::after{content:"";width:min(240px,60%);height:16px;background:var(--orn) center/120px 16px no-repeat,linear-gradient(to right,transparent,var(--rule) 30%,var(--rule) 70%,transparent) center/100% 1px no-repeat;
+  -webkit-mask-image:linear-gradient(to right,var(--mask),var(--mask));mask-image:linear-gradient(to right,var(--mask),var(--mask))}
+.shelf-2 .shelf-title,.shelf-4 .shelf-title{font-style:italic;color:var(--accent-hi)}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);border-top:0}
+/* карточка: лист плотной бумаги, приподнятый над столом; внутри отпечатана рамка с вогнутыми углами */
+.card{counter-increment:card;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-4);
+  border:14px solid transparent;border-image:var(--frame) 14 / 14px / 0 stretch;border-radius:var(--radius);
+  background:linear-gradient(160deg,var(--glow),transparent 46%),var(--surface);background-origin:border-box;
+  box-shadow:var(--lift-1);transition:translate .3s var(--ease),box-shadow .3s}
+.card:hover{background:linear-gradient(160deg,var(--glow),transparent 46%) border-box,var(--surface)}
+.card:has(a):hover{translate:0 -3px;box-shadow:var(--lift-2)}
 .card .tag{order:-1;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-3);padding:0 0 var(--s-2);
-  border-bottom:1px solid color-mix(in srgb,#8a2b1c 55%,transparent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
-.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);letter-spacing:0;text-transform:none;color:var(--gold)}
-.card h3{font-size:26px;margin-top:var(--s-2)}
-.card p{font-size:16px;line-height:32px;margin:0}
-.card a{align-self:flex-start;margin-top:auto;padding:var(--s-2) var(--s-3);border:1px solid var(--rule);border-radius:var(--radius);
-  background:var(--paper);font-size:13px;letter-spacing:.06em;text-transform:uppercase;rotate:-1.2deg}
-.card:hover a{text-decoration:none;border-color:var(--accent)}
-@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+  border-bottom:1px solid var(--line);font-size:var(--t-small)}
+.card .tag::after{content:"№ " counter(card,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold)}
+.card h4{margin:var(--s-2) 0 0;font:600 26px/1.15 var(--display);color:var(--ink);text-wrap:balance}
+.card p{font-size:16px;line-height:1.6;margin:0;padding-bottom:var(--s-3)}
+.card a{display:block;align-self:stretch;margin-top:auto;padding-top:var(--s-3);border-top:1px solid var(--line);font-size:15px;white-space:normal}
+.card:hover a{text-decoration:underline;text-decoration-thickness:1px}
+/* знак внешней ссылки «↗» ставит CSS, в разметке его нет; для экранного диктора знак пустой */
+.ext::after,.card a[href^="http"]::after,.btn[href^="http"]::after{content:"\2197";content:"\2197"/"";margin-inline-start:.35em;font-size:.9em;text-decoration:none}
+.btn[href^="http"]::after{margin-inline-start:0}
+@media(max-width:820px){.shelves,.grid{grid-template-columns:minmax(0,1fr)}.shelf-3,.shelf-4{grid-column:1 / -1}}
 
 /* ---------- Орнамент между разделами общей страницы: тонкая золочёная линейка с ромбом, как в старых изданиях ---------- */
 main > section.block{position:relative}
@@ -613,6 +662,7 @@ a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--in
 .rm-sub,.rm-note{font:500 12.5px var(--body);fill:var(--muted)}
 .rm-note{fill:var(--accent);font-weight:600}
 .rm-sea,.rm-land{font:italic 500 19px var(--display);fill:var(--rule);letter-spacing:.28em}
+/* разрядка подписей морей и земель — картографическая традиция, оставлена намеренно (сверено по скриншотам 15.11.2026) */
 .rm-land{font-size:15px;letter-spacing:.2em}
 @media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
 .ll-short{overflow:visible;padding:0}
@@ -632,22 +682,22 @@ html:not(.js) .player{display:none}
 
 /* ---------- Вступление: кто это, одной фразой, и оглавление семи разделов ---------- */
 .lede{padding-block:var(--s-9) var(--s-8);border-bottom:1px solid var(--line)}
-.lede-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--s-8);align-items:start}
+.lede-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--col-gap);align-items:start}
 .lede-copy{display:grid;gap:var(--s-5);align-content:start}
-.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.lede-kicker{display:flex;align-items:center;gap:var(--s-4);font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .lede-kicker::after{content:"";flex:1;max-width:120px;height:1px;background:var(--rule)}
 .lede-text{font:500 clamp(28px,3.3vw,44px)/1.16 var(--display);letter-spacing:-.005em;color:var(--ink);text-wrap:balance}
 .lede-sub{color:var(--muted);max-width:52ch}
 .toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);counter-reset:toc}
 .toc li{counter-increment:toc;border-bottom:1px solid var(--line)}
 .toc a{display:grid;grid-template-columns:44px minmax(0,auto) minmax(0,1fr) 20px;align-items:baseline;gap:var(--s-3);padding:var(--s-3) var(--s-2) var(--s-3) 0;
-  color:var(--ink);text-decoration:none;transition:background-color .2s,padding .25s var(--ease)}
+  color:var(--ink);text-decoration:none;transition:background-color .2s,translate .25s var(--ease)}
 .toc a::before{content:counter(toc,decimal-leading-zero);font:italic 600 18px/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums}
 .toc a::after{content:"↓";justify-self:end;color:var(--rule);transition:translate .25s var(--ease),color .2s}
 .toc b{font:600 26px/1.15 var(--display)}
 .toc span{font-size:15px;line-height:1.4;color:var(--muted);text-align:right}
-.toc a:hover{background:var(--tint);padding-left:var(--s-3);color:var(--ink)}
-.toc a:hover::after{translate:0 3px;color:var(--accent)}
+.toc a:hover,.toc a:focus-visible{background:var(--tint);translate:2px 0;color:var(--ink)}
+.toc a:hover::after,.toc a:focus-visible::after{translate:0 3px;color:var(--accent)}
 @media(max-width:900px){
   .lede{padding-block:var(--s-8) var(--s-7)}
   .lede-grid{grid-template-columns:minmax(0,1fr);gap:var(--s-7)}
@@ -675,7 +725,7 @@ html:not(.js) .player{display:none}
 /* ---------- Цитата: слова самого Блажевича набраны антиквой с золочёной линейкой ---------- */
 .quote{margin:var(--s-2) 0 var(--s-3);padding:var(--s-2) 0 var(--s-2) var(--s-5);border-left:2px solid var(--rule);display:grid;gap:var(--s-3)}
 .quote p{font:italic 500 21px/1.45 var(--display);color:var(--ink)!important;max-width:none}
-.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.quote footer{border:0;padding:0;font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 
 /* ---------- О проекте: источники по темам, во всю ширину, в две колонки ---------- */
 .about{margin-bottom:var(--s-8)}
@@ -683,9 +733,9 @@ html:not(.js) .player{display:none}
 .src-block{border-top:1px solid var(--ink);padding-top:var(--s-6);display:grid;gap:var(--s-5)}
 .src-block > h3{font-size:36px}
 .src-lead{color:var(--muted)}
-.src-groups{columns:2;column-gap:var(--s-8)}
+.src-groups{columns:2;column-gap:var(--col-gap)}
 .src-group{break-inside:avoid;margin:0 0 var(--s-6);font-weight:400}
-.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.src-group h4{margin:0 0 var(--s-3);padding-bottom:var(--s-2);border-bottom:1px solid var(--rule);font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .src-group .sources{font-size:15.5px;line-height:1.6;gap:var(--s-3)}
 .src-group .sources li::marker{font:italic 600 17px var(--display);color:var(--gold)}
 .sources li:target{outline:1px solid var(--rule);outline-offset:6px}
@@ -693,12 +743,12 @@ html:not(.js) .player{display:none}
 
 /* ---------- Подвал: имя и годы, разделы, досье, язык ---------- */
 body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background:var(--band);padding-block:var(--s-8) var(--s-7);color:var(--muted);font-size:15px}
-.foot{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr);gap:var(--s-6) var(--s-8);align-items:start}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr) minmax(0,1fr);gap:var(--s-6) var(--col-gap);align-items:start}
 .foot-id{display:grid;gap:var(--s-3);max-width:38ch}
 .foot .brand{font-size:20px;padding:0}
 .foot-name{font:500 24px/1.2 var(--display);color:var(--ink)}
 .foot-name span{color:var(--gold);font-style:italic;font-variant-numeric:lining-nums;white-space:nowrap}
-.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.foot h2{margin:0 0 var(--s-3);font:600 12px/1.4 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
 .foot ul + h2{margin-top:var(--s-5)}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-2)}
 .foot-secs{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s-5)}
@@ -713,43 +763,15 @@ body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background
 html:not(.past-hero) .progress{opacity:0}
 @media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
 
-/* ---------- «Слушать» (13.11.2026): записи как конверты пластинок — диск слева, подпись и ссылки справа ---------- */
-.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5)}
-.record{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-5);align-items:start;padding:var(--s-6);min-width:0;
-  border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);background:var(--surface) var(--grain);box-shadow:0 12px 26px -20px var(--shadow)}
-.record-main{grid-column:1 / -1;gap:var(--s-7);align-items:center;padding:var(--s-7)}
-.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start}
-.record-main .record-body{gap:var(--s-4)}
-.record-tag{font:600 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-.record h3{font-size:28px}
-.record-main h3{font-size:clamp(32px,3.4vw,44px);font-weight:500}
-.record p{color:var(--muted)}
-/* пластинка: бороздки, блик и этикетка цвета умбры — рисунок на CSS, без картинок */
-.disc{width:clamp(140px,16vw,200px);aspect-ratio:1;border-radius:50%;flex:none;
-  background:radial-gradient(circle,var(--surface) 0 2.5%,transparent 3%),
-    radial-gradient(circle,var(--accent) 0 30%,transparent 30.6%),
-    conic-gradient(from 20deg,transparent 0 8%,rgb(255 240 210/.16) 12%,transparent 18% 50%,rgb(255 240 210/.12) 62%,transparent 68%),
-    repeating-radial-gradient(circle,#2b1d10 0 1.5px,#3b2a19 1.5px 3px);
-  box-shadow:0 0 0 1px var(--ink),0 10px 22px -10px var(--shadow)}
-.disc-sm{width:84px}
-.record:hover .disc{rotate:18deg}
-.disc{transition:rotate .8s var(--ease)}
-.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
-.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
-.record-links b{font-weight:600;font-size:16px;line-height:1.35}
-.record-links span{font-size:var(--t-small);color:var(--accent)}
-.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
-.record .player iframe{max-width:none}
-@media(max-width:900px){.records{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:620px){
-  .record,.record-main{grid-template-columns:minmax(0,1fr);padding:var(--s-5);gap:var(--s-4)}
-  .disc{width:112px}.disc-sm{width:72px}
-}
-
 /* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
 .ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
 .ch-note b{font:600 clamp(34px,3.4vw,46px)/1 var(--display);color:var(--gold);font-variant-numeric:lining-nums;white-space:nowrap}
-.ch-note span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.ch-note > span{font-size:var(--t-small);line-height:1.5;color:var(--muted)}
+.ch-nums{display:flex;flex-wrap:wrap;row-gap:var(--s-2)}
+.ch-nums i{font-style:normal;padding-inline:var(--s-3)}
+.ch-nums i:first-child{padding-left:0}
+.ch-nums i + .sep + i{border-left:1px solid var(--line)}
+.ch-nums .sep{display:none}
 .nw{white-space:nowrap}
 .ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
 .ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
@@ -765,7 +787,128 @@ html:not(.past-hero) .progress{opacity:0}
 }
 @media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
 @media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
-@media(prefers-reduced-motion:reduce){.record:hover .disc{rotate:none}}
+
+/* ---------- Клавиатура (15.11.2026): фокус виден на всём, что нажимается ---------- */
+/* вся карточка нот — одна ссылка, поэтому рамка фокуса обводит карточку целиком */
+.card:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:var(--s-1)}
+.card a:focus-visible{outline:0}
+/* на снимке первого экрана рамка светлая: тёмная умбра на фасаде не читается */
+.hero-lang:focus-visible{outline-color:var(--over-ink-hi)}
+/* кнопки, спрятанные до прокрутки, показываются, когда на них приходит фокус с клавиатуры */
+.fab:focus-visible{opacity:1;pointer-events:auto}
+.js .totop:focus-visible{opacity:1;transform:none;pointer-events:auto}
+.record-links a:focus-visible b{text-decoration:underline;text-decoration-thickness:1px}
+a.ll-span:focus-visible{background:var(--band);border-color:var(--accent)}
+
+/* ---------- Доводка сверх плана (15.11.2026, п.14) — отдельным коммитом, откатывается целиком ---------- */
+/* абзац не кончается одним коротким словом на последней строке */
+p,li,figcaption,dd{text-wrap:pretty}
+/* печать досье и главной: без меню, плеера и служебной плашки; карточки и главы не рвутся между листами */
+@media print{
+  body{background:none}
+  header,.draft,.skip,.player,.foot-col{display:none!important}
+  .reveal.pre{opacity:1!important;transform:none!important}
+  .card,.record,.person,.tnode,.conc tr{break-inside:avoid}
+  h2,h3,h4{break-after:avoid}
+  section.block{padding-block:var(--s-6)}
+}
+
+/* ============================================================================================
+   V6.1 (15.11.2026): весь сайт в стиле отреставрированного первого экрана — не заливки, а свет и тень.
+   Одно солнце сверху слева, края каждого раздела уходят в тень, листы и снимки приподняты над бумагой,
+   убранство — как в императорских театрах: меандр, розетки, лавр, рамки с вогнутыми углами.
+   ============================================================================================ */
+/* бумажные разделы: пятно света сверху слева и тень к краям */
+main > section.block:not(:has(.scene)),.lede{background:radial-gradient(70% 44rem at 16% 0,var(--glow),transparent 70%),
+  radial-gradient(140% 100% at 50% 42%,transparent 52%,var(--shade) 100%),var(--paper) var(--grain)}
+/* полоса на тон темнее: лист лежит ниже соседних, сверху и снизу на него падает тень */
+main > section#usa,main > section#concertos{background:radial-gradient(70% 40rem at 16% 0,var(--glow),transparent 72%),
+  radial-gradient(140% 100% at 50% 42%,transparent 48%,var(--shade) 100%),var(--band) var(--grain);
+  box-shadow:inset 0 26px 34px -26px var(--shade-deep),inset 0 -26px 34px -26px var(--shade-deep)}
+/* первый экран: низ снимка уходит в бумагу без полосы на любой ширине */
+.hero::after{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;height:24svh;pointer-events:none;
+  background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 70%,transparent) 55%,var(--paper))}
+
+/* ---------- приподнятые листы: всё, что лежит на бумаге, отбрасывает мягкую тёплую тень ---------- */
+.table-scroll,.dossier-tree,.person,.person-v3,.conflicts,.node-pair > div,.lineage-v3 li,.ll-span{box-shadow:var(--lift-1)}
+.table-scroll{border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-2);
+  background:linear-gradient(160deg,var(--glow),transparent 40%),var(--surface)}
+.ll-track{box-shadow:inset 0 14px 18px -16px var(--shade-deep),inset 0 -14px 18px -16px var(--shade-deep)}
+.facts,.insight,.raichman{background:linear-gradient(to bottom,var(--tint),transparent 30%,transparent 70%,var(--tint))}
+.ch-photo .mat{box-shadow:var(--lift-2)}
+/* архивный снимок под главой: тень под нижним краем, как у фотографии, вклеенной в альбом */
+.ch-plate{position:relative}
+.ch-plate::before{content:"";position:absolute;z-index:-1;left:8%;right:8%;top:60%;height:30%;border-radius:50%;background:var(--shade-deep);filter:blur(28px);opacity:.55}
+.head-vignette img{filter:drop-shadow(0 18px 22px var(--shade-deep))}
+.toc ol{box-shadow:0 22px 30px -28px var(--shade-deep)}
+.editions,.src-block{box-shadow:0 -1px 0 var(--hi)}
+.btn-brass{box-shadow:0 8px 16px -8px var(--shade-deep)}
+.btn-ghost,.totop,.fab{box-shadow:var(--lift-1)}
+h2{text-shadow:0 1px 0 var(--hi)}
+/* орнамент между разделами: розетка на золочёной линейке */
+main > section.block + section.block::before{content:"";height:16px;translate:-50% -50%;width:min(520px,76vw);font-size:0;
+  background:var(--rosette) center/120px 16px no-repeat,linear-gradient(to right,transparent,var(--rule) 22%,var(--rule) 78%,transparent) center/100% 1px no-repeat;
+  -webkit-mask-image:linear-gradient(to right,var(--mask) 0 calc(50% - 64px),transparent calc(50% - 64px) calc(50% - 60px),var(--mask) calc(50% - 60px) calc(50% + 60px),transparent calc(50% + 60px) calc(50% + 64px),var(--mask) calc(50% + 64px));
+  mask-image:linear-gradient(to right,var(--mask) 0 calc(50% - 64px),transparent calc(50% - 64px) calc(50% - 60px),var(--mask) calc(50% - 60px) calc(50% + 60px),transparent calc(50% + 60px) calc(50% + 64px),var(--mask) calc(50% + 64px))}
+
+/* ---------- «Слушать»: зал. Тёмная сепия, свет рампы сверху, по краям темно; внутри — программка в золочёной рамке ---------- */
+#listen,body > footer{--paper:var(--deep-paper);--surface:var(--deep-surface);--band:var(--deep-band);--ink:var(--deep-ink);--muted:var(--deep-muted);
+  --accent:var(--deep-accent);--accent-hi:var(--deep-accent-hi);--gold:var(--deep-gold);--rule:var(--deep-rule);--line:var(--deep-line);--field:var(--deep-field);
+  --on-accent:var(--deep-paper);--tint:color-mix(in srgb,var(--deep-rule) 18%,transparent);--shadow:var(--deep-shadow);--hi:transparent;
+  color:var(--ink)}
+main > section#listen{background:radial-gradient(60% 34rem at 50% 0,var(--deep-glow),transparent 72%),
+  radial-gradient(120% 100% at 50% 40%,transparent 40%,var(--deep-band) 100%),var(--deep-paper) var(--grain);
+  box-shadow:inset 0 30px 40px -24px var(--deep-shadow),inset 0 -30px 40px -24px var(--deep-shadow)}
+#listen ::selection,body > footer ::selection{background:var(--deep-rule);color:var(--deep-ink)}
+/* меандр по верхнему и нижнему краю зала */
+main > section#listen::after{content:"";position:absolute;left:0;right:0;top:var(--s-5);bottom:var(--s-5);pointer-events:none;
+  background:var(--meander-deep) 0 0/24px 15px repeat-x,var(--meander-deep) 0 100%/24px 15px repeat-x;opacity:.7}
+#listen > .wrap{position:relative;z-index:1}
+#listen .section-head{max-width:none;align-items:center;text-align:center;margin-bottom:var(--s-6)}
+#listen .section-head::before{align-self:center;text-align:center}
+#listen .head-vignette{display:none}
+#listen h2{text-shadow:0 2px 18px var(--deep-shadow)}
+/* программка: лист в рамке, приподнятый над тёмным залом */
+.records,.videos{border:14px solid transparent;border-image:var(--frame-deep) 14 / 14px / 0 stretch;
+  background:linear-gradient(170deg,var(--deep-glow),transparent 40%) border-box,var(--deep-surface);box-shadow:var(--lift-deep)}
+.records{display:grid;padding:var(--s-2) var(--s-6)}
+#listen .shelf-title{margin:var(--s-7) 0 var(--s-5);--orn:var(--laurel-deep);color:var(--deep-gold);font-style:italic}
+#listen .section-head + .shelf-title{margin-top:0}
+.record{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:var(--s-4) var(--col-gap);padding-block:var(--s-6);border-bottom:1px solid var(--line);min-width:0;counter-increment:rec}
+.records{counter-reset:rec}
+.record:last-child{border-bottom:0}
+.record-head{display:grid;gap:var(--s-2);align-content:start;min-width:0}
+/* номер отделения программы римской цифрой */
+.record-head::before{content:counter(rec,upper-roman);font:italic 600 20px/1 var(--display);color:var(--gold);padding-bottom:var(--s-2);margin-bottom:var(--s-1);border-bottom:1px solid var(--rule);width:max-content;min-width:40px}
+.record h4{margin:0;font:500 30px/1.12 var(--display);color:var(--ink);text-wrap:balance}
+.record-sub{font-size:var(--t-small);line-height:1.4;color:var(--gold)}
+.record-body{display:grid;gap:var(--s-3);min-width:0;align-content:start;max-width:var(--measure)}
+.record p{color:var(--muted)}
+.record-links{list-style:none;margin:var(--s-1) 0 0;padding:0;border-top:1px solid var(--line)}
+.record-links a{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.record-links b{font-weight:600;font-size:16px;line-height:1.35}
+.record-links span{font-size:var(--t-small);color:var(--accent)}
+.record-links a:hover b{text-decoration:underline;text-decoration-thickness:1px}
+.videos{margin:0;padding:var(--s-2) var(--s-6);border-top-color:transparent}
+.videos li:last-child a{border-bottom:0}
+#listen .btn-brass{box-shadow:var(--lift-deep)}
+.record .player iframe{max-width:none}
+.record audio,.record video,.videos video{display:block;width:100%;border-radius:var(--radius)}
+.record video,.videos video{border:1px solid var(--rule);background:var(--band)}
+@media(max-width:820px){.record{grid-template-columns:minmax(0,1fr);padding-block:var(--s-5)}.record h4{font-size:26px}.records,.videos{padding-inline:var(--s-3)}}
+/* файл из своей базы в карточке нот: первая строка низа карточки, внешний источник — второй строкой */
+.card a.card-file{font-weight:600}
+.card a.card-file + a{margin-top:0;border-top:0;padding-top:var(--s-1);font-size:var(--t-small)}
+
+/* ---------- подвал: та же тёмная сепия, меандр по верхней кромке, свет сверху ---------- */
+body > footer{position:relative;margin-top:0;border-top:0;padding-top:calc(var(--s-8) + var(--s-4));
+  background:var(--meander-deep) 0 var(--s-5)/24px 15px repeat-x,radial-gradient(60% 22rem at 50% 0,var(--deep-glow),transparent 72%),
+    radial-gradient(120% 100% at 50% 40%,transparent 40%,var(--deep-band) 100%),var(--deep-paper) var(--grain);
+  box-shadow:inset 0 30px 40px -24px var(--deep-shadow)}
+/* хронология изданий «В США»: отдельный лист в рамке, приподнятый над полосой */
+.editions{padding:var(--s-2) var(--s-5);border:14px solid transparent;border-image:var(--frame-gold) 14 / 14px / 0 stretch;
+  background:linear-gradient(160deg,var(--glow),transparent 46%) border-box,var(--surface);box-shadow:var(--lift-2)}
+.editions li:last-child{border-bottom:0}
 </style>
 </head>
 <body>
@@ -778,7 +921,7 @@ html:not(.past-hero) .progress{opacity:0}
 <main id="main">
 <section id="leningrad" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head scene scene-leningrad reveal" style="--scene:url(../assets/scene-leningrad.webp);--scene-sm:url(../assets/scene-leningrad-960.webp)"><a class="crumb" href="index.html#schools">← Schools</a><h1 class="page-title">The Leningrad trombone school</h1><div class="eyebrow">Dossier · <a href="#l-origins">Türner</a> → <a href="#l-volkov">Volkov</a> → <a href="#l-kozlov">Kozlov</a> → <a href="#l-venglovsky">Venglovsky</a></div><p>The St. Petersburg–Leningrad school is one of the oldest lines of Russian brass playing. Its documented history begins in 1870, when the Austrian Franz Türner took over the trombone class of the St. Petersburg Conservatory. Direct teacher-to-pupil succession carried the tradition through a century, up to 1994. This reference dossier was compiled in November 2026 from the St. Petersburg Conservatory, the St. Petersburg Philharmonia and other open sources.</p><nav class="dossier-toc" aria-label="Dossier sections"><ol><li><a href="#l-origins"><span>01.</span> Origins and Franz Türner</a></li><li><a href="#l-volkov"><span>02.</span> P. N. Volkov</a></li><li><a href="#l-kozlov"><span>03.</span> A. A. Kozlov</a></li><li><a href="#l-venglovsky"><span>04.</span> V. F. Venglovsky</a></li></ol></nav><p class="scene-credit">The St. Petersburg Conservatory on Theatre Square, archival photograph</p></div>
+  <div class="section-head scene scene-leningrad reveal" style="--scene:url(../assets/scene-leningrad.webp);--scene-sm:url(../assets/scene-leningrad-960.webp)"><a class="crumb" href="index.html#schools">← Schools</a><h1 class="page-title">The Leningrad trombone school</h1><div class="eyebrow"><a href="#l-origins">Türner</a> → <a href="#l-volkov">Volkov</a> → <a href="#l-kozlov">Kozlov</a> → <a href="#l-venglovsky">Venglovsky</a></div><p>The St. Petersburg–Leningrad school is one of the oldest lines of Russian brass playing. Its documented history begins in 1870, when the Austrian Franz Türner took over the trombone class of the St. Petersburg Conservatory. Direct teacher-to-pupil succession carried the tradition through a century, up to 1994. This reference page was compiled in November 2026 from the St. Petersburg Conservatory, the St. Petersburg Philharmonia and other open sources.</p><nav class="dossier-toc" aria-label="Page sections"><ol><li><a href="#l-origins"><span>01.</span> Origins and Franz Türner</a></li><li><a href="#l-volkov"><span>02.</span> P. N. Volkov</a></li><li><a href="#l-kozlov"><span>03.</span> A. A. Kozlov</a></li><li><a href="#l-venglovsky"><span>04.</span> V. F. Venglovsky</a></li></ol></nav><p class="scene-credit">The St. Petersburg Conservatory on Theatre Square, archival photograph</p></div>
 
   <figure class="dossier-tree reveal" aria-labelledby="tree-title">
     <h3 id="tree-title">Lineage of the school</h3>
@@ -923,7 +1066,7 @@ html:not(.past-hero) .progress{opacity:0}
       <div class="player" data-src="https://music.yandex.ru/iframe/album/42318197" data-title="Leningrad Philharmonic Trombone Quartet — Yandex Music player"><button class="btn btn-brass" type="button">▶ Play the album here</button><p class="note">The Yandex Music player loads only after you press the button.</p></div>
     </div>
     <div>
-      <h3>Sources of the dossier</h3>
+      <h3>Sources</h3>
       <ul class="sources plain-list">
         <li>St. Petersburg Conservatory encyclopedia (in Russian): <a href="https://www.conservatory.ru/esweb/volkov-pyotr-naumovich-1877-1933">Volkov</a>, <a href="https://www.conservatory.ru/esweb/kozlov-akim-alekseevich-1908-1992">Kozlov</a>, <a href="https://www.conservatory.ru/esweb/venglovskiy-viktor-fyodorovich-1926-1994">Venglovsky</a>, <a href="https://www.conservatory.ru/esweb/tyurner-franc-franz-de-paula-turner-1831-1909">Türner</a>.</li>
         <li>“100 Years of the St. Petersburg Philharmonia” (in Russian): <a href="https://100philharmonia.spb.ru/persons/4151/">Volkov</a>, <a href="https://100philharmonia.spb.ru/persons/10654/">Kozlov</a>, <a href="https://100philharmonia.spb.ru/persons/33314/">Venglovsky</a>.</li>
@@ -939,13 +1082,13 @@ html:not(.past-hero) .progress{opacity:0}
       </ul>
     </div>
   </div>
-  <p class="note">Dossier compiled in November 2026 from open sources. Portraits and archival photographs from the source collection have not been reproduced here: the rights to publish them have not been confirmed.</p>
+  <p class="note">Page compiled in November 2026 from open sources. Portraits and archival photographs from the source collection have not been reproduced here: the rights to publish them have not been confirmed.</p>
 </div></section>
 </main>
 <footer><div class="wrap foot">
   <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">Vladislav Blazhevich <span>1881–1942</span></p><p>Trombonist, teacher, composer. An independent project about his life, scores and school.</p></div>
   <div class="foot-col" role="navigation" aria-label="Footer"><h2>Sections</h2><ul class="foot-secs"><li><a href="index.html#scores">Scores</a></li><li><a href="index.html#listen">Listen</a></li><li><a href="index.html#biography">Biography</a></li><li><a href="index.html#usa">In America</a></li><li><a href="index.html#schools">Schools</a></li><li><a href="index.html#concertos">Concertos</a></li><li><a href="index.html#about">About</a></li></ul></div>
-  <div class="foot-col"><h2>School dossiers</h2><ul><li><a href="moscow.html">The Moscow trombone school</a></li><li><a href="leningrad.html">The Leningrad trombone school</a></li></ul><h2>Language</h2><ul><li><a href="../index.html" hreflang="ru" lang="ru">Русская версия</a></li></ul></div>
+  <div class="foot-col"><h2>Trombone schools</h2><ul><li><a href="moscow.html">The Moscow trombone school</a></li><li><a href="leningrad.html">The Leningrad trombone school</a></li></ul><h2>Language</h2><ul><li><a href="../index.html" hreflang="ru" lang="ru">Русская версия</a></li></ul></div>
   <p class="foot-fine">Sources and image credits are listed under <a href="index.html#about">About</a>.</p>
 </div></footer>
 <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
@@ -962,6 +1105,10 @@ html:not(.past-hero) .progress{opacity:0}
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
   if(menu&&menu.hidePopover)menu.addEventListener('click',e=>{if(e.target.closest('a'))menu.hidePopover()});
+  /* кнопка «Меню» сообщает экранному диктору, открыто меню или закрыто */
+  const fab=document.querySelector('.fab');
+  if(fab&&menu&&menu.hidePopover){fab.setAttribute('aria-controls','menu');fab.setAttribute('aria-expanded','false');
+    menu.addEventListener('toggle',e=>fab.setAttribute('aria-expanded',String(e.newState==='open')))}
 
   /* Шапка, кнопка «наверх», активный пункт меню */
   const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
