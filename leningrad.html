@@ -84,6 +84,9 @@
   --t-body:17px;
   --t-lead:19px;
   --t-title:28px;
+  --t-title-s:24px;         /* мелкий заголовок: карточки, мобильный */
+  --t-title-m:32px;         /* заголовок главы */
+  --t-title-l:36px;         /* заголовок списка, досье, источников */
   --t-section:clamp(40px,4.6vw,56px);
   --t-hero:clamp(48px,6.2vw,88px);
 
@@ -213,7 +216,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .card{position:relative;display:grid;grid-template-columns:180px minmax(0,1fr) auto;gap:var(--s-2) var(--s-6);padding:var(--s-5) var(--s-3);border-bottom:1px solid var(--line);transition:background-color .2s;min-width:0}
 .card:hover{background:var(--surface)}
 .card .tag{grid-column:1;grid-row:1 / span 2;padding-top:var(--s-1)}
-.card h3{grid-column:2;font-size:24px}
+.card h3{grid-column:2;font-size:var(--t-title-s)}
 .card p{grid-column:2;color:var(--muted);font-size:16px;max-width:var(--measure)}
 .card a{grid-column:3;grid-row:1 / span 2;align-self:start;padding-top:var(--s-1);font-weight:600;font-size:15px;white-space:nowrap;text-decoration:none}
 .card a::before{content:"";position:absolute;inset:0}
@@ -263,7 +266,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .ch-photo img{display:block;width:100%;height:auto}
 .ch-photo figcaption{font-size:13px;line-height:1.45;color:var(--muted)}
 .ch-body{display:grid;gap:var(--s-4);align-content:start;max-width:var(--measure);min-width:0}
-.ch-body h3{font-size:32px}
+.ch-body h3{font-size:var(--t-title-m)}
 /* «Редакционный вывод»: плашка с двойной линейкой сверху, шапка слева, тезисы газетной колонкой */
 .insight{position:relative;display:block;
   margin-block:var(--s-8);padding:var(--s-6) clamp(var(--s-5),3vw,var(--s-7));
@@ -294,7 +297,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   .insight li{padding-left:2em;max-width:62ch}
 }
 .timeline-wrap{display:grid;gap:var(--s-5);margin-bottom:var(--s-6)}
-.timeline-wrap > h3{font-size:32px}
+.timeline-wrap > h3{font-size:var(--t-title-m)}
 .timeline-wrap .timeline{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:var(--s-5) var(--s-6);border-left:0}
 .timeline-wrap .timeline li{border-left:1px solid var(--rule)}
 .conflicts{border:1px solid var(--field);padding:0 var(--s-5);background:var(--surface)}
@@ -316,7 +319,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .school-note b{color:var(--ink)}
 .lineages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-7);margin-bottom:var(--s-6)}
 .lineage{min-width:0}
-.lineage > h3{font-size:36px;margin-bottom:var(--s-5);padding-bottom:var(--s-3);border-bottom:1px solid var(--ink)}
+.lineage > h3{font-size:var(--t-title-l);margin-bottom:var(--s-5);padding-bottom:var(--s-3);border-bottom:1px solid var(--ink)}
 .gen{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-5);position:relative}
 .gen::before{content:"";position:absolute;left:7px;top:var(--s-3);bottom:var(--s-3);width:1px;background:var(--rule)}
 .node{position:relative;padding-left:var(--s-6);display:grid;gap:var(--s-1)}
@@ -332,7 +335,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .node-pair > div{display:grid;gap:var(--s-1);align-content:start;padding:var(--s-4);border:1px solid var(--line);background:var(--surface);min-width:0}
 .raichman{display:grid;grid-template-columns:260px minmax(0,1fr);gap:var(--s-6);padding-block:var(--s-6);border-block:1px solid var(--ink)}
 .r-head{display:grid;gap:var(--s-2);align-content:start}
-.r-head h3{font-size:36px}
+.r-head h3{font-size:var(--t-title-l)}
 .r-body{display:grid;gap:var(--s-4);min-width:0;max-width:var(--measure)}
 .r-body p{color:var(--muted)}
 .r-body b{color:var(--ink)}
@@ -349,6 +352,8 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .conc td:first-child{font-family:var(--display);font-size:28px;font-weight:600;color:var(--gold);width:56px;font-variant-numeric:lining-nums tabular-nums}
 .conc td:nth-child(2){color:var(--ink);white-space:nowrap}
 .conc td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
+/* плашка об издании/записи — своей строкой: в потоке текста они съезжали то вправо, то влево */
+.conc td:last-child .chip{display:block;width:max-content;margin:var(--s-2) 0 0}
 .conc tbody tr:hover td{background:var(--tint)}
 .chip{display:inline-block;margin-left:var(--s-2);padding:0 var(--s-2);border:1px solid var(--rule);border-radius:var(--radius);font-size:var(--t-small);font-weight:600;color:var(--gold);white-space:nowrap}
 .st{display:inline-block;margin-left:var(--s-2);padding:0 var(--s-2);border:1px solid currentColor;border-radius:var(--radius);font-size:var(--t-small);font-style:normal;font-weight:600;white-space:nowrap}
@@ -371,7 +376,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 /* ---------- Teachers and pupils (v3 additions) ---------- */
 .people-v3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5);margin:var(--s-6) 0}
 .person-v3{padding:var(--s-5);border:1px solid var(--line);background:var(--surface)}
-.person-v3 h3{font-size:26px}
+.person-v3 h3{font-size:var(--t-title-s)}
 .person-v3 dt{font-weight:600;margin-top:var(--s-3)}
 .person-v3 dd{margin:var(--s-1) 0;color:var(--muted);overflow-wrap:break-word}
 .lineage-v3{padding:0;list-style:none;display:grid;gap:var(--s-2);margin-block:var(--s-4)}
@@ -410,7 +415,7 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   .hero-copy{margin-top:var(--s-2)}
   .portrait{width:min(92vw,62svh)}
   .btn{padding:0 var(--s-4);font-size:14px}
-  .about h3{font-size:24px}
+  .about h3{font-size:var(--t-title-s)}
   section.block{padding-block:var(--s-8)}
   .bar{justify-content:center;padding-block:var(--s-2)}
   nav{justify-content:center}
@@ -754,7 +759,7 @@ html:not(.js) .player{display:none}
 .about{margin-bottom:var(--s-8)}
 .about-credit{padding-left:var(--s-5);border-left:1px solid var(--line)}
 .src-block{border-top:1px solid var(--ink);padding-top:var(--s-6);display:grid;gap:var(--s-5)}
-.src-block > h3{font-size:36px}
+.src-block > h3{font-size:var(--t-title-l)}
 .src-lead{color:var(--muted)}
 .src-groups{columns:2;column-gap:var(--col-gap)}
 .src-group{break-inside:avoid;margin:0 0 var(--s-6);font-weight:400}
@@ -815,6 +820,11 @@ html:not(.past-hero) .progress{opacity:0}
 /* вся карточка нот — одна ссылка, поэтому рамка фокуса обводит карточку целиком */
 .card:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:var(--s-1)}
 .card a:focus-visible{outline:0}
+/* без :has() рамка карточки не рисуется — ссылка обязана остаться видимой */
+@supports not selector(:has(a)){.card a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}}
+/* нажатие должно подтверждаться и на тач-экране, где :hover залипает */
+.toc a:active,.card a:active,.rail a:active,.foot ul a:active,.record-links a:active,
+.hero-btn:active,.hero-menu a:active,.fab:active,.card:active{translate:0 1px}
 /* на снимке первого экрана рамка светлая: тёмная умбра на фасаде не читается */
 .hero-lang:focus-visible{outline-color:var(--over-ink-hi)}
 /* кнопки, спрятанные до прокрутки, показываются, когда на них приходит фокус с клавиатуры */
@@ -932,6 +942,33 @@ body > footer{position:relative;margin-top:0;border-top:0;padding-top:calc(var(-
 .editions{padding:var(--s-2) var(--s-5);border:14px solid transparent;border-image:var(--frame-gold) 14 / 14px / 0 stretch;
   background:linear-gradient(160deg,var(--glow),transparent 46%) border-box,var(--surface);box-shadow:var(--lift-2)}
 .editions li:last-child{border-bottom:0}
+
+/* ---------- печать: тёмные разделы перестают быть тёмными, таблицы не режутся ---------- */
+@media print{
+  @page{margin:16mm}
+  body{background:#fff}
+  /* «Слушать» и подвал задают светлые токены на тёмном фоне; на бумаге фон не печатается,
+     и без этого блок уходит пустой полосой с контрастом 1.2:1 */
+  #listen,body > footer{--paper:#fff;--surface:#fff;--band:#fff;--ink:#2b1d10;--muted:#56432e;
+    --accent:#6a3418;--accent-hi:#4a220e;--gold:#6b4d12;--rule:#9c7a3c;--line:#c8b48d;--field:#7d6748;
+    --deep-ink:#2b1d10;--deep-muted:#56432e;--deep-gold:#6b4d12;--deep-rule:#9c7a3c;--deep-line:#c8b48d;
+    background:none!important;box-shadow:none!important}
+  main > section#listen::after,#listen .shelf-title{color:var(--ink);background:none}
+  .records,.videos{border:1px solid #c8b48d;border-image:none;box-shadow:none;background:none}
+  /* кнопки на бумаге — контур, а не залитая плашка: иначе на лист уходит сплошной тон */
+  .btn-brass,.btn-ghost,.btn,.hero-btn{background:none!important;color:#2b1d10!important;box-shadow:none!important;
+    border:1px solid #9c7a3c!important;padding:6px 12px}
+  main > section,.card,.facts,.insight,.raichman,.table-scroll,.editions{background-image:none!important;box-shadow:none!important}
+  .ch-plate::before,.head-vignette img{filter:none!important;background:none!important}
+  h2{text-shadow:none}
+  .hero{min-height:0}
+  /* горизонтальные прокрутки на бумаге не работают — таблица и шкала должны влезать */
+  .table-scroll,.ll-scroll,.dossier-tree{overflow:visible}
+  .conc,.ll-track{min-width:0}
+  /* адрес источника печатается рядом со ссылкой: в распечатке досье иначе не проверить факт */
+  .ch-body a[href^="http"]::after,.src-block a[href^="http"]::after,.record p a[href^="http"]::after{
+    content:" (" attr(href) ")";font-size:10px;color:#56432e;word-break:break-all}
+}
 </style>
 </head>
 <body>
