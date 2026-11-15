@@ -76,18 +76,25 @@ GitHub → репозиторий → **Settings → Actions → General → Wor
 
    | Тип | Имя | Значение | Прокси |
    |---|---|---|---|
-   | A | `@` | `2.57.91.103` | оранжевое облако |
-   | A | `@` | `88.222.222.215` | оранжевое облако |
-   | AAAA | `@` | `2a02:4780:84:7c9c:39f8:e856:34ac:291b` | оранжевое облако |
-   | AAAA | `@` | `2a02:4780:84:f695:7ebc:56ba:172a:961e` | оранжевое облако |
+   | A | `@` | `92.113.23.53` | оранжевое облако |
+   | A | `@` | `92.113.23.11` | оранжевое облако |
+   | AAAA | `@` | `2a02:4780:45:d103:3536:4d52:44ed:2d4f` | оранжевое облако |
+   | AAAA | `@` | `2a02:4780:43:bafa:4f69:f22e:5c26:4435` | оранжевое облако |
    | CNAME | `www` | `www.blazhevich.tech.cdn.hstgr.net` | **серое** (иначе два CDN друг на друге) |
-   | A | `test` | `2.57.91.15` | оранжевое облако |
-   | A | `test` | `84.32.84.75` | оранжевое облако |
+   | A | `test` | `92.113.23.68` | оранжевое облако |
+   | A | `test` | `92.113.23.69` | оранжевое облако |
    | MX | `@` | `mx1.hostinger.com` (5), `mx2.hostinger.com` (10) | — |
    | CNAME | `hostingermail-a._domainkey` | `hostingermail-a.dkim.mail.hostinger.com` | серое |
    | CNAME | `hostingermail-b._domainkey` | `hostingermail-b.dkim.mail.hostinger.com` | серое |
+   | CNAME | `autoconfig` | `autoconfig.mail.hostinger.com` | серое |
+   | CNAME | `autodiscover` | `autodiscover.mail.hostinger.com` | серое |
    | TXT | `@` | `v=spf1 include:_spf.mail.hostinger.com ~all` | — |
    | TXT | `_dmarc` | `v=DMARC1; p=none` | — |
+
+   Значения сняты с живого DNS 16.11.2026: Hostinger мигрировал серверы, старые адреса
+   из ранних ревизий этого файла (`2.57.91.x`, `88.222.222.x`, `2a02:4780:84:…`) уже не отвечают.
+   Перед переносом сверьте ещё раз: `nslookup blazhevich.tech`, `nslookup test.blazhevich.tech`,
+   `nslookup -type=mx blazhevich.tech` — и перенесите то, что вернёт DNS, а не старую таблицу.
 
 3. **Заменить NS у регистратора** на выданные Cloudflare. До этого момента всё работает по-старому.
 4. **SSL/TLS → Overview → Full (strict).** Режим Flexible даёт петлю редиректов, Off — ломает HTTPS.
