@@ -43,3 +43,11 @@ else
 fi
 
 git -C "$GITHUB_WORKSPACE" worktree remove --force "$WT" || true
+
+# Сброс кэша Cloudflare — необязательный шаг: без секретов CLOUDFLARE_API_TOKEN и
+# CLOUDFLARE_ZONE_ID скрипт выходит с кодом 0 и пишет notice. Живёт здесь, а не в workflow,
+# чтобы публикацию можно было менять без прав токена GitHub (scope workflow).
+purge="$GITHUB_WORKSPACE/.github/scripts/purge-cloudflare.sh"
+if [ -f "$purge" ]; then
+  bash "$purge" || echo "::warning::сброс кэша Cloudflare завершился с ошибкой"
+fi
