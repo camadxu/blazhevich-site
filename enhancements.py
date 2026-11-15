@@ -57,5 +57,6 @@ def apply():
  for page in out.rglob('*.html'):
   text=page.read_text();page.write_text(text.replace('</head>',css+'</head>',1))
  # Standalone error page; activation on hosting requires verified server config.
- (out/'404.html').write_text('''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Страница не найдена — Blazhevich</title><style>body{max-width:48rem;margin:10vh auto;padding:24px;background:#e8dbbf;color:#2b1d10;font:18px/1.6 system-ui}a{color:#6a3418}</style></head><body><main><h1>Страница не найдена / Page not found</h1><p>Проверьте адрес или вернитесь к каталогу.</p><a href="/">Главная / Home</a> · <a href="/#scores">Ноты / Scores</a> · <a href="/en/">English</a></main></body></html>''')
+ # Разметка живёт в 404.html в корне репозитория, здесь только копирование в сборку.
+ (out/'404.html').write_text((ROOT/'404.html').read_text(encoding='utf-8'))
 if __name__=='__main__':apply()
