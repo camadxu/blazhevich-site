@@ -293,7 +293,7 @@ for i, t in NAV_RU:   # старые адреса разделов
     (OUT / f'{i}.html').write_text(stub(f'index.html#{i}', f'{t} — Blazhevich', 'ru'))
 
 # ---------------- Английские страницы: один исходник, по странице на секцию ----------------
-en = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec('page', 'en'))  # пути к картинкам из папки en/
+en = re.sub(r'(src="|href="|srcset="|, )assets/', r'\1../assets/', sec('page', 'en'))  # пути к картинкам и файлам из папки en/
 EN_PAGES = {  # id секции: (подпись в меню, заголовок, описание)
     'scores': ('Scores', 'Scores by Vladislav Blazhevich — Blazhevich', 'Method books, studies, duets and concertos by Vladislav Blazhevich for trombone and tuba, with links to libraries.'),
     'listen': ('Listen', 'Listen to Blazhevich — Blazhevich', 'Recordings of music by Vladislav Blazhevich and where to hear them.'),

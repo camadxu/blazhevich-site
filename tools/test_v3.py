@@ -14,10 +14,11 @@ class Cards(HTMLParser):
   if t=='article':self.current=None
 results=[]
 for page in ['index.html','en/index.html']:
- p=Cards();s=(ROOT/'site'/page).read_text();p.feed(s);assert len(p.cards)==10
+ p=Cards();s=(ROOT/'site'/page).read_text();p.feed(s);assert len(p.cards)==12
  # панель поиска и фильтров убрана по просьбе владельца (13.11.2026): карточки показаны все сразу
+ # 12 карточек с 16.11.2026: 10 прежних + концерты № 2 и № 5 (ноты на Яндекс.Диске, заявка владельца)
  assert 'data-catalog-filter' not in s and 'id="search"' not in s and 'id="count"' not in s
- results.append({'page':page,'catalog_cards':10,'filters':'removed'})
+ results.append({'page':page,'catalog_cards':12,'filters':'removed'})
 for pg in ['en/index.html']:  # на русском карточки повторяли бы московское досье
  s=(ROOT/'site'/pg).read_text()
  assert all('id="person-'+n+'"' in s for n in ['blazhevich','shcherbinin','batashev','turusin','ladilov'])
