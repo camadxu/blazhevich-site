@@ -11,7 +11,7 @@ assets/. Старые адреса разделов (scores.html, en/scores.html
 С флагом --single-page дополнительно собирается artifact.html — вся русская версия одной
 страницей (нужна только для предпросмотра в Claude, на сервер не загружается; шрифты берёт с Google Fonts).
 """
-import argparse, datetime, hashlib, pathlib, re, shutil
+import argparse, datetime, hashlib, pathlib, re, shutil, time
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -242,8 +242,18 @@ def page(lang, title, desc, path, prefix, body, fonts, footer):
             + head(title, desc, path, lang, prefix, fonts)
             + f'\n<link rel="stylesheet" href="{prefix}assets/{CSS_FILE}">\n</head>\n<body>\n{body}{footer}<script>\n{JS}</script>\n</body>\n</html>\n')
 
+def clean_out(path, tries=5):
+    """Очистка site/. На Windows свежие файлы иногда заняты антивирусом или индексатором — повторяем."""
+    for i in range(tries):
+        shutil.rmtree(path, ignore_errors=True)
+        if not path.exists():
+            return
+        time.sleep(0.3 * (i + 1))
+    raise SystemExit(f'Не удалось очистить {path}: файлы заняты другим процессом, закройте просмотр и повторите')
+
+
 OUT = ROOT / 'site'
-shutil.rmtree(OUT, ignore_errors=True)
+clean_out(OUT)
 (OUT / 'en').mkdir(parents=True)
 shutil.copytree(ROOT / 'assets', OUT / 'assets')
 (OUT / 'assets' / CSS_FILE).write_text(CSS)
