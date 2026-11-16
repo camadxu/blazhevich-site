@@ -1,0 +1,58 @@
+# Служебный .htaccess для деплой-веток (deploy/test, deploy/prod).
+# CI кладёт этот файл в корень артефакт-ветки при публикации (см. DEPLOY.md).
+# Все директивы — внутри <IfModule>: если модуль на хостинге выключен, строка просто пропускается,
+# а не роняет сайт в 500.
+
+# Страница 404 входит в сборку (404.html).
+ErrorDocument 404 /404.html
+
+# Хостинг клонирует репозиторий в папку сайта — не отдавать наружу служебные каталоги Git.
+RedirectMatch 404 (?i)^/\.git
+RedirectMatch 404 (?i)^/\.github
+
+# ---------- кэш ----------
+# LiteSpeed на Hostinger кэширует HTML и после деплоя отдаёт старую страницу
+# (так тест-сайт два дня показывал удалённый раздел). Кэш выключаем здесь,
+# а раздачу с края делает Cloudflare — правила в DEPLOY.md.
+<IfModule LiteSpeed>
+  CacheLookup off
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # HTML меняется каждым деплоем: браузер обязан спросить ETag
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/plain "access plus 1 hours"
+  ExpiresByType application/xml "access plus 1 hours"
+  ExpiresByType text/css "access plus 1 days"
+  # снимки и og-image: месяц. Заменяя файл, меняйте имя или добавляйте ?v=2 в src
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 years"
+  ExpiresByType font/woff "access plus 1 years"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Шрифты не меняются под тем же именем — можно кэшировать навсегда.
+  <FilesMatch "\.(woff2|woff)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Основной CSS собирается в assets/main.<хэш от содержимого>.css: содержимое меняется —
+  # меняется имя файла, поэтому его тоже можно кэшировать навсегда. fonts.css без хэша —
+  # остаётся на обычном «1 день» из mod_expires выше.
+  <FilesMatch "main\.[0-9a-f]+\.css$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # ---------- безопасность ----------
+  # HSTS без includeSubDomains и preload: откат — снять строку и дождаться max-age.
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+  # Запрет встраивать сайт в чужие фреймы; полный CSP не ставим — на страницах есть инлайн-стили и плеер.
+  Header always set Content-Security-Policy "frame-ancestors 'self'"
+</IfModule>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://blazhevich.tech/sitemap.xml
