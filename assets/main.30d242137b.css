@@ -796,6 +796,7 @@ html:not(.past-hero) .progress{opacity:0}
 .us-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
 .us-plate figcaption{font-size:13px;line-height:1.5;color:var(--muted);max-width:62ch}
 .us-plate.is-small{max-width:440px}
+.table-scroll table.wide{min-width:860px}
 .faces{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s-4);margin-top:var(--s-4)}
 .face{margin:0;display:grid;gap:var(--s-3);align-content:start}
 .face img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
