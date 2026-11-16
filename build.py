@@ -64,9 +64,11 @@ PAGES = {  # файл: (секции, заголовок, описание)
                     'Московская школа тромбона: Витнебен, Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь, ноты и записи.'),
     'leningrad.html': (['leningrad'], 'Ленинградская тромбоновая школа — Blazhevich',
                        'Петербургско-ленинградская школа тромбона: Тюрнер, Волков, Козлов, Венгловский, Квартет тромбонов филармонии, дискография.'),
+    'us-schools.html': (['us-schools'], 'Американские школы тромбона — Blazhevich',
+                        'Истмен и Ремингтон, Чикаго и Джейкобс, Curtis и Алесси, Northwestern: как устроены американские тромбоновые школы и чем они похожи на московскую и ленинградскую.'),
 }
 NAV_RU = [('scores', 'Ноты'), ('listen', 'Слушать'), ('biography', 'Биография'), ('usa', 'В США'),
-          ('schools', 'Школы'), ('concertos', 'Концерты'), ('about', 'О проекте')]
+          ('us-schools', 'Школы США'), ('schools', 'Школы'), ('concertos', 'Концерты'), ('about', 'О проекте')]
 # досье-подстраницы: крошка ведёт на родительский раздел, в меню подсвечен он же
 PARENT_RU = {'moscow.html': ('schools', 'Школы'), 'leningrad.html': ('schools', 'Школы')}
 # английские досье: src/en/<имя>.html → en/<имя>.html (заголовок, описание)
@@ -160,20 +162,26 @@ def site_footer(lang):
     """Подвал: имя и годы, разделы, досье школ, язык. Ссылки с адресом страницы — подвал общий для главной и досье."""
     ru = lang == 'ru'
     nav = NAV_RU if ru else [(k, v[0]) for k, v in EN_PAGES.items()]
-    secs = ''.join(f'<li><a href="index.html#{i}">{t}</a></li>' for i, t in nav)
+
+    def nav_href(i):
+        if f'{i}.html' in PAGES:                 # отдельная страница: из папки en/ путь на уровень выше
+            return ('../' if not ru else '') + f'{i}.html'
+        return f'index.html#{i}'
+
+    secs = ''.join(f'<li><a href="{nav_href(i)}">{t}</a></li>' for i, t in nav)
     T = (dict(who='Владислав Блажевич', about='Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.',
-              s='Разделы', d='Школы тромбона', m='Московская тромбоновая школа', l='Ленинградская тромбоновая школа',
+              s='Разделы', d='Школы тромбона', m='Московская тромбоновая школа', l='Ленинградская тромбоновая школа', u='Американские школы',
               o='Язык', other='<a href="en/index.html" hreflang="en" lang="en">English version</a>',
               fine='Источники и права на изображения указаны в разделе <a href="index.html#about">«О проекте»</a>.', top='Наверх', nav='Подвал')
          if ru else
          dict(who='Vladislav Blazhevich', about='Trombonist, teacher, composer. An independent project about his life, scores and school.',
-              s='Sections', d='Trombone schools', m='The Moscow trombone school', l='The Leningrad trombone school',
+              s='Sections', d='Trombone schools', m='The Moscow trombone school', l='The Leningrad trombone school', u='American schools',
               o='Language', other='<a href="../index.html" hreflang="ru" lang="ru">Русская версия</a>',
               fine='Sources and image credits are listed under <a href="index.html#about">About</a>.', top='Back to top', nav='Footer'))
     return ('<footer><div class="wrap foot">\n'
             f'  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">{T["who"]} <span>1881–1942</span></p><p>{T["about"]}</p></div>\n'
             f'  <div class="foot-col" role="navigation" aria-label="{T["nav"]}"><h2>{T["s"]}</h2><ul class="foot-secs">{secs}</ul></div>\n'
-            f'  <div class="foot-col"><h2>{T["d"]}</h2><ul><li><a href="moscow.html">{T["m"]}</a></li><li><a href="leningrad.html">{T["l"]}</a></li></ul>'
+            f'  <div class="foot-col"><h2>{T["d"]}</h2><ul><li><a href="moscow.html">{T["m"]}</a></li><li><a href="leningrad.html">{T["l"]}</a></li><li><a href="{(T["u"] == "American schools" and "../" or "")}us-schools.html">{T["u"]}</a></li></ul>'
             f'<h2>{T["o"]}</h2><ul><li>{T["other"]}</li></ul></div>\n'
             f'  <p class="foot-fine">{T["fine"]}</p>\n'
             '</div></footer>\n'
@@ -270,6 +278,8 @@ for f, (ss, title, desc) in PAGES.items():
     (OUT / f).write_text(page('ru', title, desc, f, '', body,
                               '<link rel="stylesheet" href="assets/fonts.css">', footer))
 for i, t in NAV_RU:   # старые адреса разделов
+    if f'{i}.html' in PAGES:   # отдельная страница уже собрана — стаб не нужен
+        continue
     (OUT / f'{i}.html').write_text(stub(f'index.html#{i}', f'{t} — Blazhevich', 'ru'))
 
 # ---------------- Английские страницы: один исходник, по странице на секцию ----------------

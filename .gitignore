@@ -26,3 +26,6 @@ Desktop.ini
 
 # Эталон первого экрана для V6-рестайла — 466 КБ, в сборку не нужен
 /assets/hero-home-restored.png
+
+# Исходники фото до обработки (tools/photo_tone.py)
+/_originals/
