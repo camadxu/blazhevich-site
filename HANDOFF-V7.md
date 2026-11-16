@@ -30,6 +30,7 @@
 - `9fa6b89` — инфраструктура: `.deploy/htaccess` (LiteSpeed `CacheLookup off`, `Cache-Control` по типам, HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors`), `.github/scripts/purge-cloudflare.sh` (вызывается из `publish-artifact.sh`, без секретов пропускается), `DEPLOY.md` шаг 8.
 - `50e138d` — стили вынесены в `assets/main.<хэш>.css`: инлайн-`<style>` в страницах больше нет (главная 188 → 104 КБ), CSS кэшируется навсегда (`immutable` в `.htaccess`), `artifact.html` остался одностраничным.
 - `bf11276` — DNS-таблица шага 8 переписана по живым IP Hostinger на 16.11.2026 (apex `92.113.23.53/.11`, test `92.113.23.68/.69`, AAAA `2a02:4780:45/43:…`), добавлены CNAME `autoconfig` и `autodiscover` — без них ломается автонастройка почтовых клиентов.
+- `8c13fca` (ветка `library/scores-first-files`, в `main` не влита) — первые свои ноты в библиотеке сайта по заявке владельца от 16.11.2026: скан «Школы для раздвижного тромбона» (1936, 9,5 МБ) в `assets/library/scores/` и карточки концертов № 2 и № 5 со ссылками на публичную коллекцию Яндекс.Диска Папы; карточек в каталоге стало 12 (`test_v3.py` обновлён), правило путей `assets/` в EN-исходнике распространено на `href`. Сборка release 2026-11-16, check_site и test_v3 зелёные.
 
 ### Состояние веток и сайтов на 16.11.2026
 
