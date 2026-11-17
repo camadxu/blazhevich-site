@@ -327,7 +327,10 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 /* блок Райхмана: четыре снимка сеткой 2×2 — столбиком они вытягивают статью на три экрана */
 .raichman .r-body{max-width:none}
 .raichman .r-body > p{max-width:var(--measure)}
-.r-plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5) var(--s-6);margin-top:var(--s-4);align-items:start;max-width:760px}
+.r-plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5) var(--s-6);margin-top:var(--s-4);max-width:760px}
+/* карточки в ряду одной высоты, подпись прижата к нижнему краю паспарту — низ сетки не рвётся */
+.r-plates .ch-plate{grid-template-rows:auto 1fr}
+.r-plates figcaption{align-self:end}
 .r-plates .ch-plate{margin-top:0;max-width:none;padding:var(--s-3);background:var(--surface);border:1px solid var(--line);outline:1px solid var(--rule);outline-offset:calc(var(--s-1) * -1);box-shadow:0 14px 30px -18px var(--shadow)}
 /* на паспарту снимок лежит отпечатком, а не тушью: multiply оставляем только свободным плашкам */
 .r-plates .ch-plate img{mix-blend-mode:normal}
@@ -799,7 +802,9 @@ html:not(.past-hero) .progress{opacity:0}
 .nw{white-space:nowrap}
 .ch-plate{margin:calc(-1 * var(--s-4)) 0 0;display:grid;gap:var(--s-3);max-width:760px}
 .ch-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}
-.ch-plate figcaption{font-size:13px;line-height:1.5;color:var(--muted);max-width:62ch}
+.ch-plate figcaption{font-size:14px;line-height:1.5;color:var(--muted);max-width:62ch}
+/* источник снимка — отдельной строкой, как нижняя строка музейной этикетки */
+.ch-plate figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;letter-spacing:.01em;color:var(--muted);opacity:.85}
 /* фото на странице «Американские школы тромбона»: та же плашка без отрицательного отступа */
 .us-plate{margin:var(--s-6) 0;display:grid;gap:var(--s-3);max-width:760px}
 .us-plate img{display:block;width:100%;height:auto;mix-blend-mode:multiply}

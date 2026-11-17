@@ -38,7 +38,8 @@ JOBS = [
     ('mail/raichman-portrait.webp', 'raichman-portrait.webp', PORTRAIT, 0.45, 'fit', 0.50),
     ('mail/hunsberger-usmc.webp', 'hunsberger-usmc.webp', PORTRAIT, 0.40, 'crop', 0.50),
     ('mail/edwards-trombone.webp', 'edwards-trombone.webp', PLATE, 0.42, 'crop', 0.50),
-    ('mail/bso-trombones-1928.webp', 'bso-trombones-1928.webp', PLATE, 0.50, 'fit', 0.50),
+    # у этого скана медиана сидит в тенях, общий level() до него не достаёт — подъём задан отдельно
+    ('mail/bso-trombones-1928.webp', 'bso-trombones-1928.webp', PLATE, 0.50, 'fit', 0.50, 0.72),
     ('mail/lindberg-960.webp', 'lindberg-960.webp', PORTRAIT, 0.40, 'crop', 0.50),
     # снимки школ США (загрузки из Wikimedia, исходники сохранены в _originals/wiki)
     ('wiki/eastman.webp', 'us-schools/eastman.webp', PLATE, 0.50, 'crop', 0.50),
@@ -143,7 +144,7 @@ def level(img: Image.Image, target: int = 138) -> Image.Image:
     return ImageEnhance.Brightness(img).enhance(gain)
 
 
-def process(src: Path, dst: Path, size: tuple[int, int], anchor_y: float, mode: str, anchor_x: float) -> tuple[int, int]:
+def process(src: Path, dst: Path, size: tuple[int, int], anchor_y: float, mode: str, anchor_x: float, lift: float = 1.0) -> tuple[int, int]:
     img = Image.open(src).convert('RGB')
     if mode == 'fit':
         img = fit_to(img, size)
@@ -151,6 +152,9 @@ def process(src: Path, dst: Path, size: tuple[int, int], anchor_y: float, mode: 
         img = crop_to(img, size, anchor_y).resize(size, Image.LANCZOS)
     img = ImageEnhance.Contrast(duotone(img)).enhance(1.02)
     img = level(img)
+    if lift != 1.0:                                   # подъём теней: гамма меньше единицы светлит низы
+        table = [min(255, int(round(255 * (v / 255) ** lift))) for v in range(256)]
+        img = img.point(table * 3)
     img = vignette(img)
     img = grain(img, 4.0)
     img = ImageEnhance.Sharpness(img).enhance(1.15)
@@ -162,16 +166,21 @@ def process(src: Path, dst: Path, size: tuple[int, int], anchor_y: float, mode: 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--sheet', action='store_true', help='собрать контактный лист для просмотра')
+    ap.add_argument('--only', default='', help='обработать только файлы, в имени которых есть подстрока')
     a = ap.parse_args()
 
     missing, done = [], []
-    for src_name, dst_name, size, anchor, mode, ax in JOBS:
+    for job in JOBS:
+        src_name, dst_name, size, anchor, mode, ax = job[:6]
+        lift = job[6] if len(job) > 6 else 1.0
+        if a.only and a.only not in dst_name:
+            continue
         src = ORIG / src_name
         if not src.exists():
             missing.append(src_name)
             continue
         dst = ROOT / 'assets' / dst_name
-        w, h = process(src, dst, size, anchor, mode, ax)
+        w, h = process(src, dst, size, anchor, mode, ax, lift)
         done.append((dst_name, w, h, dst.stat().st_size))
 
     for name, w, h, size in done:
