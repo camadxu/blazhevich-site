@@ -231,7 +231,8 @@ def head(title, desc, path, lang, prefix, fonts):
             m += [f'<link rel="alternate" hreflang="ru" href="{DOM}/{f_}">',
                   f'<link rel="alternate" hreflang="en" href="{DOM}/en/{f_}">']
     if path in ('index.html', 'en/index.html'):   # снимок первого экрана браузер начинает качать сразу, не дожидаясь разбора встроенных стилей
-        m.append(f'<link rel="preload" as="image" type="image/webp" href="{prefix}assets/hero-home.webp" fetchpriority="high">')
+        m.append(f'<link rel="preload" as="image" type="image/webp" href="{prefix}assets/hero-home-1440.webp" '
+             f'imagesrcset="{prefix}assets/hero-home-960.webp 960w, {prefix}assets/hero-home-1440.webp 1440w, {prefix}assets/hero-home.webp 2880w" imagesizes="100vw" fetchpriority="high">')
     m.append(fonts)
     return '\n'.join(m)
 
