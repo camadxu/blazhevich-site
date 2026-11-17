@@ -312,8 +312,11 @@ def head(title, desc, path, lang, prefix, fonts):
                   f'<link rel="alternate" hreflang="x-default" href="{url}">']
         m.append(jsonld(path, lang, url, title, desc))
     if path in ('index.html', 'en/index.html'):   # снимок первого экрана браузер начинает качать сразу, не дожидаясь разбора встроенных стилей
-        m.append(f'<link rel="preload" as="image" type="image/webp" href="{prefix}assets/hero-home-1440.webp" '
-             f'imagesrcset="{prefix}assets/hero-home-960.webp 960w, {prefix}assets/hero-home-1440.webp 1440w, {prefix}assets/hero-home.webp 2880w" imagesizes="100vw" fetchpriority="high">')
+        hs = ', '.join(f'{prefix}assets/hero-home-{w}.avif {w}w' for w in (960, 1440, 2880))   # те же srcset и sizes, что у <source> в hero
+        m.append(f'<link rel="preload" as="image" type="image/avif" imagesrcset="{hs}" '
+                 'imagesizes="(max-aspect-ratio: 2880/1568) 184vh, 100vw" fetchpriority="high">')
+        # шрифт надписи BLAZHEVICH на первом экране: без preload браузер узнаёт о нём только после разбора fonts.css
+        m.append(f'<link rel="preload" as="font" type="font/woff2" href="{prefix}assets/fonts/cormorant-garamond-500-normal-latin.woff2" crossorigin>')
     m.append(fonts)
     return '\n'.join(m)
 
