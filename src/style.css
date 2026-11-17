@@ -372,8 +372,12 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .sources li:has(> b:only-child){list-style:none;margin:var(--s-2) 0 0 calc(var(--s-5) * -1);color:var(--ink)}
 .sources li:target{background:var(--tint)}
 .src-group{font-weight:600;color:var(--ink);margin:var(--s-4) 0 var(--s-2)}
-.ref{font-size:.7em;line-height:0;margin-left:1px;white-space:nowrap}
-.ref a{text-decoration:none}
+/* сноски: знак остаётся мелким, но зона нажатия расширена невидимой областью
+   и соседние ссылки раздвинуты, чтобы палец не попадал в чужую */
+.ref{font-size:.72em;line-height:0;margin-left:2px;white-space:nowrap}
+.ref a{position:relative;text-decoration:none}
+.ref a::after{content:"";position:absolute;left:-3px;right:-3px;top:-9px;bottom:-9px}
+.ref a + a{margin-left:5px}
 .ref a:hover{text-decoration:underline}
 
 /* ---------- Teachers and pupils (v3 additions) ---------- */
