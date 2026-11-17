@@ -35,6 +35,7 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps, ImageStat
 
 ROOT = Path(__file__).resolve().parent.parent
+# по умолчанию — исходные сканы; --src переключает на каталог с реставрированными
 ORIG = ROOT / '_originals' / '2026-11-16'
 DEFAULT_OUT = ROOT / '_incoming' / 'retouch'
 
@@ -71,7 +72,7 @@ JOBS = [
     ('mail/hunsberger-usmc.webp', 'hunsberger-usmc.webp', PORTRAIT, 0.40, 'crop', 0.50),
     # снимок живёт в ячейке сетки 364 CSS px — ему хватает 972 px
     ('mail/edwards-trombone.webp', 'edwards-trombone.webp', (972, 648), 0.42, 'crop', 0.50),
-    ('mail/bso-trombones-1928.webp', 'bso-trombones-1928.webp', PLATE, 0.50, 'fit', 0.50),
+    ('mail/bso-trombones-1928.webp', 'bso-trombones-1928.webp', (972, 648), 0.50, 'fit', 0.50),
     ('mail/lindberg-960.webp', 'lindberg-960.webp', PORTRAIT, 0.40, 'crop', 0.50),
     # снимки школ США (загрузки из Wikimedia, исходники сохранены в _originals/wiki)
     ('wiki/eastman.webp', 'us-schools/eastman.webp', PLATE, 0.50, 'crop', 0.50),
@@ -571,7 +572,11 @@ def main() -> int:
     ap.add_argument('--asset-dir', default=str(ROOT / 'assets'), help='откуда брать «до» для метрик')
     ap.add_argument('--sheet', action='store_true', help='собрать контактный лист до/после')
     ap.add_argument('--only', default='', help='обработать только файлы, в имени которых есть подстрока')
+    ap.add_argument('--src', default='', help='каталог исходников внутри _originals (например restored-2026-11-17)')
     a = ap.parse_args()
+    global ORIG
+    if a.src:
+        ORIG = ROOT / '_originals' / a.src
 
     out_dir = Path(a.out)
     if not out_dir.is_absolute():
