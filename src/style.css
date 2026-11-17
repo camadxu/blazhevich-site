@@ -816,7 +816,7 @@ html:not(.past-hero) .progress{opacity:0}
   .ch-note{margin-top:var(--s-2)}
   .chapter > .ch-plate{grid-column:2 / -1;grid-row:2}
 }
-@media(min-width:821px) and (max-width:1020px){.ch-note,.ch-plate{grid-column:2}.ch-note{max-width:360px}}
+@media(min-width:821px) and (max-width:1020px){.ch-note,.chapter > .ch-plate{grid-column:2}.ch-note{max-width:360px}}
 @media(max-width:820px){.ch-note{grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:var(--s-4);margin-top:var(--s-3)}}
 
 /* ---------- Клавиатура (15.11.2026): фокус виден на всём, что нажимается ---------- */
