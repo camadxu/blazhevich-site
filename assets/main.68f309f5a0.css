@@ -328,7 +328,10 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .raichman .r-body{max-width:none}
 .raichman .r-body > p{max-width:var(--measure)}
 .r-plates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5) var(--s-6);margin-top:var(--s-4);align-items:start;max-width:760px}
-.r-plates .ch-plate{margin-top:0;max-width:none}
+.r-plates .ch-plate{margin-top:0;max-width:none;padding:var(--s-3);background:var(--surface);border:1px solid var(--line);outline:1px solid var(--rule);outline-offset:calc(var(--s-1) * -1);box-shadow:0 14px 30px -18px var(--shadow)}
+/* на паспарту снимок лежит отпечатком, а не тушью: multiply оставляем только свободным плашкам */
+.r-plates .ch-plate img{mix-blend-mode:normal}
+.r-plates .ch-plate::before{content:none}
 @media(max-width:820px){.r-plates{grid-template-columns:minmax(0,1fr);gap:var(--s-5)}}
 
 /* ---------- Concertos ---------- */
