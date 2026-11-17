@@ -64,6 +64,7 @@ for pg, p in list(parsed.items()):
             continue
         if url.startswith(('data:', 'mailto:', 'tel:')): continue
         path, _, frag = url.partition('#')
+        path = path.split('?', 1)[0]
         target = (base / path).resolve() if path else (SITE / pg)
         checked += 1
         if path.endswith('/'): target = target / 'index.html'

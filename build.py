@@ -50,6 +50,15 @@ CSS_FILE = 'main.' + hashlib.sha256(CSS.encode('utf-8')).hexdigest()[:10] + '.cs
 # чистки дублей исчезают — версия в имени избавляет от 404 у тех, у кого старый CSS в кэше.
 FONTS_CSS = (ROOT / 'assets' / 'fonts.css').read_text()
 FONTS_FILE = 'fonts.' + hashlib.sha256(FONTS_CSS.encode('utf-8')).hexdigest()[:10] + '.css'
+# Картинки кэшируются браузером на 30 дней (см. .deploy/htaccess), а имена у них постоянные.
+# Версия от содержимого каталога assets даёт новый адрес, когда файл меняется.
+_asset_index = sorted((q.relative_to(ROOT / 'assets').as_posix(), q.stat().st_size)
+                      for q in (ROOT / 'assets').rglob('*') if q.is_file())
+ASSET_VER = hashlib.sha256(repr(_asset_index).encode('utf-8')).hexdigest()[:8]
+_ASSET_RE = re.compile(r'((?:\.\./)?assets/[A-Za-z0-9_./-]+\.(?:webp|png|jpg|jpeg|svg))(?=["\s,)\\])')
+def asset_urls(html):
+    """К адресам картинок добавляется ?v=<версия>, чтобы кэш не показывал старый снимок."""
+    return _ASSET_RE.sub(lambda m: m.group(1) + '?v=' + ASSET_VER, html)
 
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
@@ -243,11 +252,13 @@ def head(title, desc, path, lang, prefix, fonts):
 def page(lang, title, desc, path, prefix, body, fonts, footer):
     if lang == 'ru':
         body, footer = typo(body), typo(footer)
-    return ('<!doctype html>\n'
+    html = ('<!doctype html>\n'
             f'<html lang="{lang}">\n<head>\n<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
             + head(title, desc, path, lang, prefix, fonts)
             + f'\n<link rel="stylesheet" href="{prefix}assets/{CSS_FILE}">\n</head>\n<body>\n{body}{footer}<script>\n{JS}</script>\n</body>\n</html>\n')
+    return asset_urls(html)
+
 
 def clean_out(path, tries=5):
     """Очистка site/. На Windows свежие файлы иногда заняты антивирусом или индексатором — повторяем."""
