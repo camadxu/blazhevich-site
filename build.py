@@ -46,6 +46,10 @@ CSS = CSS + EXTRA_CSS
 # переходе, а .deploy/htaccess кэширует такой файл навсегда (immutable). Инлайн остаётся только
 # в artifact.html — он собирается одним файлом для предпросмотра вне сайта.
 CSS_FILE = 'main.' + hashlib.sha256(CSS.encode('utf-8')).hexdigest()[:10] + '.css'
+# Шрифтовой CSS тоже с хэшем: text/css кэшируется на сутки, а старые имена шрифтов после
+# чистки дублей исчезают — версия в имени избавляет от 404 у тех, у кого старый CSS в кэше.
+FONTS_CSS = (ROOT / 'assets' / 'fonts.css').read_text()
+FONTS_FILE = 'fonts.' + hashlib.sha256(FONTS_CSS.encode('utf-8')).hexdigest()[:10] + '.css'
 
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
@@ -260,6 +264,7 @@ clean_out(OUT)
 (OUT / 'en').mkdir(parents=True)
 shutil.copytree(ROOT / 'assets', OUT / 'assets')
 (OUT / 'assets' / CSS_FILE).write_text(CSS)
+(OUT / 'assets' / FONTS_FILE).write_text(FONTS_CSS)
 
 # карта «id → (страница, главная секция страницы)»
 id_page = {}
@@ -289,7 +294,7 @@ for f, (ss, title, desc) in PAGES.items():
     if par:
         body = body.replace(f'<a href="index.html#{par[0]}">', f'<a href="index.html#{par[0]}" class="active">', 1)
     (OUT / f).write_text(page('ru', title, desc, f, '', body,
-                              '<link rel="stylesheet" href="assets/fonts.css">', footer))
+                              f'<link rel="stylesheet" href="assets/{FONTS_FILE}">', footer))
 for i, t in NAV_RU:   # старые адреса разделов
     if f'{i}.html' in PAGES:   # отдельная страница уже собрана — стаб не нужен
         continue
@@ -310,7 +315,7 @@ en_secs = {re.match(r'<section id="([\w-]+)"', p).group(1): p for p in re.split(
 assert set(en_secs) == {'hero', *EN_PAGES}, sorted(en_secs)
 id_page_en = {i: ('index.html', k) for k in EN_PAGES for i in ids_in(en_secs[k])}
 nav_en = ''.join(f'<a href="#{k}">{v[0]}</a>' for k, v in EN_PAGES.items())
-FONTS_EN = '<link rel="stylesheet" href="../assets/fonts.css">'
+FONTS_EN = f'<link rel="stylesheet" href="../assets/{FONTS_FILE}">'
 body = ('<a class="skip" href="#scores">Skip to content</a>\n' + DRAFT
         + rail([(k, v[0]) for k, v in EN_PAGES.items()], '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'Sections')
         + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
