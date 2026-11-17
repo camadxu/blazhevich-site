@@ -77,6 +77,8 @@ EN_DOSSIERS = {
                     'The Moscow trombone school: Wittneben, Bork, Blazhevich, Shcherbinin and his pupils, the Gnesin branch, scores and recordings.'),
     'leningrad.html': ('The Leningrad trombone school — Blazhevich',
                        'The St. Petersburg–Leningrad trombone school: Türner, Volkov, Kozlov, Venglovsky, the Philharmonic Trombone Quartet, discography.'),
+    'us-schools.html': ('American trombone schools — Blazhevich',
+                        'Eastman and Remington, Chicago and Jacobs, Curtis and Alessi, New York and Northwestern: how American trombone schools are organised and how they compare with Moscow and Leningrad.'),
 }
 PAGE_OF_SECTION = {s: f for f, (ss, _, _) in PAGES.items() for s in ss}
 
@@ -181,7 +183,7 @@ def site_footer(lang):
     return ('<footer><div class="wrap foot">\n'
             f'  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">{T["who"]} <span>1881–1942</span></p><p>{T["about"]}</p></div>\n'
             f'  <div class="foot-col" role="navigation" aria-label="{T["nav"]}"><h2>{T["s"]}</h2><ul class="foot-secs">{secs}</ul></div>\n'
-            f'  <div class="foot-col"><h2>{T["d"]}</h2><ul><li><a href="moscow.html">{T["m"]}</a></li><li><a href="leningrad.html">{T["l"]}</a></li><li><a href="{(T["u"] == "American schools" and "../" or "")}us-schools.html">{T["u"]}</a></li></ul>'
+            f'  <div class="foot-col"><h2>{T["d"]}</h2><ul><li><a href="moscow.html">{T["m"]}</a></li><li><a href="leningrad.html">{T["l"]}</a></li><li><a href="us-schools.html">{T["u"]}</a></li></ul>'
             f'<h2>{T["o"]}</h2><ul><li>{T["other"]}</li></ul></div>\n'
             f'  <p class="foot-fine">{T["fine"]}</p>\n'
             '</div></footer>\n'

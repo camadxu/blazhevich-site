@@ -18,7 +18,7 @@ from html.parser import HTMLParser
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
 # Сайт — одна общая страница (index.html, en/index.html) и два досье на каждом языке; старые адреса разделов — переадресации
-PAGES = ['index.html', 'moscow.html', 'leningrad.html', 'en/index.html', 'en/moscow.html', 'en/leningrad.html']
+PAGES = ['index.html', 'us-schools.html', 'moscow.html', 'leningrad.html', 'en/index.html', 'en/us-schools.html', 'en/moscow.html', 'en/leningrad.html']
 SECTIONS = ('scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about')
 errors, external = [], set()
 

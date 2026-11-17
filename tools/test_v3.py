@@ -42,5 +42,5 @@ def digest():return {str(p.relative_to(ROOT/'site')):hashlib.sha256(p.read_bytes
 # сразу после сборки с теми же параметрами (по умолчанию — параметры релиза v3).
 _lastmod=os.environ.get('BLZ_LASTMOD','2026-11-09');_domain=os.environ.get('BLZ_DOMAIN','https://blazhevich.tech')
 before=digest();subprocess.run([sys.executable,'build.py','--release','--domain',_domain,'--lastmod',_lastmod],cwd=ROOT,check=True);assert before==digest()
-report={'tests':results,'repeat_build_identical':True,'file_count':len(before),'content_pages':6,'error_page':True,'browser_test':'NOT RUN','live_publication':'NOT PERFORMED'}
+report={'tests':results,'repeat_build_identical':True,'file_count':len(before),'content_pages':7,'error_page':True,'browser_test':'NOT RUN','live_publication':'NOT PERFORMED'}
 (ROOT/'TEST-RESULTS.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False))
