@@ -665,14 +665,14 @@ main > section.block + section.block::before{content:"◆";position:absolute;top
 .lifeline{margin:var(--s-7) 0;max-width:none}
 .lifeline figcaption,.routemap figcaption{font:italic 500 17px/1.4 var(--display);color:var(--gold);margin-bottom:var(--s-3)}
 .ll-scroll{overflow-x:auto;padding-bottom:var(--s-2)}
-.ll-track{position:relative;min-width:860px;height:252px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
-  background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--rule) 22%,transparent) 0 1px,transparent 1px calc(100% / 6.1)) calc(900% / 61) 0}
-.ll-span{position:absolute;left:var(--a);width:var(--w);top:calc(34px + var(--lane) * 46px);height:38px;display:flex;flex-direction:column;justify-content:center;
-  padding:0 var(--s-2);overflow:hidden;white-space:nowrap;border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:var(--radius);
-  background:var(--surface);color:var(--ink);text-decoration:none;line-height:1.15;transition:background .2s,border-color .2s}
-a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--ink)}
-.ll-span b{font:600 15px/1.1 var(--display);overflow:hidden;text-overflow:ellipsis}
-.ll-span i{font:500 11px/1.2 var(--body);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.ll-track{position:relative;min-width:860px;height:310px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--rule) 22%,transparent) 0 1px,transparent 1px calc(100% / 6.1)) calc(900% / 61) 0}
+.ll-span{position:absolute;left:var(--a);width:var(--w);top:calc(26px + var(--lane) * 64px);height:56px;display:block;color:var(--ink);text-decoration:none;overflow:visible}
+.ll-span::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:3px;box-shadow:var(--lift-1)}
+.ll-span:hover::after{background:var(--band);border-color:var(--accent)}
+.ll-span:hover b{color:var(--accent)}
+.ll-span b{position:absolute;left:0;bottom:36px;font:600 15px/1.1 var(--display);white-space:nowrap;overflow:visible}
+.ll-span i{position:absolute;left:0;bottom:18px;font:500 11px/1.2 var(--body);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .ll-axis span{position:absolute;top:6px;left:var(--a);translate:-50% 0;font:500 12px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
 .ll-marks span{position:absolute;bottom:8px;left:var(--a);padding-left:var(--s-2);border-left:1px solid var(--accent);font:500 12px/1.3 var(--body);color:var(--muted);white-space:nowrap}
 .ll-marks span:last-child{translate:-100% 0;padding:0 var(--s-2) 0 0;border-left:0;border-right:1px solid var(--accent)}
@@ -696,10 +696,8 @@ a.ll-span:hover{background:var(--band);border-color:var(--accent);color:var(--in
 /* разрядка подписей морей и земель — картографическая традиция, оставлена намеренно (сверено по скриншотам 15.11.2026) */
 .rm-land{font-size:15px;letter-spacing:.2em}
 @media(max-width:700px){.routemap svg{min-width:680px}.routemap{overflow-x:auto}}
-.ll-short{overflow:visible;padding:0}
-.ll-short b,.ll-short i{position:relative;left:calc(100% + var(--s-2));overflow:visible}
-.ll-left b,.ll-left i{left:auto;right:calc(100% + var(--s-2));position:absolute}
-.ll-left b{top:4px}.ll-left i{top:21px}
+/* узкая полоса и подпись у правого края: подпись прижимается к концу полосы и растёт влево */
+.ll-left b,.ll-left i{left:auto;right:0;text-align:right}
 
 /* ---------- Плеер в «Слушать»: до нажатия — только кнопка, после — iframe Яндекс Музыки (YouTube не встраиваем: в РФ он недоступен) ---------- */
 .player{margin-top:var(--s-4);display:grid;gap:var(--s-2);justify-items:start}
@@ -856,7 +854,8 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
 .fab:focus-visible{opacity:1;pointer-events:auto}
 .js .totop:focus-visible{opacity:1;transform:none;pointer-events:auto}
 .record-links a:focus-visible b{text-decoration:underline;text-decoration-thickness:1px}
-a.ll-span:focus-visible{background:var(--band);border-color:var(--accent)}
+a.ll-span:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a.ll-span:focus-visible::after{background:var(--band);border-color:var(--accent)}
 
 /* ---------- Доводка сверх плана (15.11.2026, п.14) — отдельным коммитом, откатывается целиком ---------- */
 /* абзац не кончается одним коротким словом на последней строке */
@@ -888,7 +887,7 @@ main > section#usa,main > section#concertos{background:radial-gradient(70% 40rem
   background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 70%,transparent) 55%,var(--paper))}
 
 /* ---------- приподнятые листы: всё, что лежит на бумаге, отбрасывает мягкую тёплую тень ---------- */
-.table-scroll,.dossier-tree,.person,.person-v3,.conflicts,.node-pair > div,.lineage-v3 li,.ll-span{box-shadow:var(--lift-1)}
+.table-scroll,.dossier-tree,.person,.person-v3,.conflicts,.node-pair > div,.lineage-v3 li
 .table-scroll{border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-2);
   background:linear-gradient(160deg,var(--glow),transparent 40%),var(--surface)}
 .ll-track{box-shadow:inset 0 14px 18px -16px var(--shade-deep),inset 0 -14px 18px -16px var(--shade-deep)}
