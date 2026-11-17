@@ -42,8 +42,12 @@ DEFAULT_OUT = ROOT / '_incoming' / 'retouch'
 STOPS = [(0.00, (0x1b, 0x12, 0x08)), (0.32, (0x43, 0x2e, 0x19)),
          (0.62, (0x7d, 0x67, 0x4c)), (1.00, (0xea, 0xdf, 0xcb))]
 
-PORTRAIT = (600, 750)   # 4:5
-PLATE = (900, 600)      # 3:2
+# Размер отдачи под экраны с двойной плотностью: портрет 4:5 и снимок 3:2.
+# Плашка на странице — 760 CSS px, ячейка сетки — 364 CSS px, то есть на ретине
+# нужно 1520 и 728 соответственно; 900×1125 и 1350×900 это покрывают.
+PORTRAIT = (760, 950)   # 4:5 — ячейка сетки 364 CSS px, на ретине нужно 728
+PLATE = (1500, 1000)    # 3:2 — плашка в главе 760 CSS px, на ретине нужно 1520
+MAX_UPSCALE = 2.2       # предел увеличения к исходнику: дальше только мыло
 
 # тон: все снимки в одной полосе средней яркости (по серому 0–255)
 TARGET_MEAN = 105.0      # средняя яркость самого снимка
@@ -65,7 +69,8 @@ JOBS = [
     ('mail/trombonist-hersonsky.webp', 'trombonist-hersonsky.webp', PORTRAIT, 0.45, 'crop', 0.50),
     ('mail/raichman-portrait.webp', 'raichman-portrait.webp', PORTRAIT, 0.45, 'fit', 0.50),
     ('mail/hunsberger-usmc.webp', 'hunsberger-usmc.webp', PORTRAIT, 0.40, 'crop', 0.50),
-    ('mail/edwards-trombone.webp', 'edwards-trombone.webp', PLATE, 0.42, 'crop', 0.50),
+    # снимок живёт в ячейке сетки 364 CSS px — ему хватает 972 px
+    ('mail/edwards-trombone.webp', 'edwards-trombone.webp', (972, 648), 0.42, 'crop', 0.50),
     ('mail/bso-trombones-1928.webp', 'bso-trombones-1928.webp', PLATE, 0.50, 'fit', 0.50),
     ('mail/lindberg-960.webp', 'lindberg-960.webp', PORTRAIT, 0.40, 'crop', 0.50),
     # снимки школ США (загрузки из Wikimedia, исходники сохранены в _originals/wiki)
@@ -406,6 +411,11 @@ def luma_mean(img: Image.Image) -> float:
 def process(src: Path, dst: Path, size: tuple[int, int], anchor_y: float, mode: str,
             anchor_x: float, target: float = TARGET_MEAN) -> dict:
     img = Image.open(src).convert('RGB')
+    # мелкий скан не тянем до полного размера: больше 2.2× исходника деталей всё равно нет
+    limit = int(round(img.width * MAX_UPSCALE))
+    if size[0] > limit:
+        k = limit / size[0]
+        size = (limit, max(1, int(round(size[1] * k))))
     img, cropped = autocrop(img)
 
     # остаток бумаги после обрезки — им задаётся ширина мягкого края
