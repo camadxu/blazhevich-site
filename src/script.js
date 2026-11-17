@@ -7,6 +7,24 @@
   document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
     btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
 
+  /* Снимок в статье: клик открывает крупный просмотр. Без JS ссылка ведёт на сам файл */
+  const zooms=[...document.querySelectorAll('.plate-zoom')];
+  if(zooms.length&&typeof HTMLDialogElement==='function'&&HTMLDialogElement.prototype.showModal){
+    const dlg=document.createElement('dialog');dlg.className='plate-view';dlg.setAttribute('aria-label','Просмотр снимка');
+    const view=document.createElement('figure'),pic=document.createElement('img'),cap=document.createElement('figcaption');
+    view.append(pic,cap);dlg.append(view);document.body.append(dlg);
+    let opener=null;
+    zooms.forEach(a=>a.addEventListener('click',e=>{
+      if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+      const inner=a.querySelector('img'),cap0=a.parentElement.querySelector('figcaption');
+      e.preventDefault();
+      pic.src=a.getAttribute('href');pic.alt=inner?inner.alt:'';
+      cap.innerHTML=cap0?cap0.innerHTML:'';
+      opener=a;dlg.showModal();
+    }));
+    dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+    dlg.addEventListener('close',()=>{pic.removeAttribute('src');cap.textContent='';if(opener){opener.focus({preventScroll:true});opener=null}});
+  }
   /* Меню-поповер: после перехода к разделу закрывается, чтобы не висеть над текстом */
   const menu=document.getElementById('menu');
   if(menu&&menu.hidePopover)menu.addEventListener('click',e=>{if(e.target.closest('a'))menu.hidePopover()});
