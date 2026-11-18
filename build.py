@@ -276,6 +276,9 @@ clean_out(OUT)
 shutil.copytree(ROOT / 'assets', OUT / 'assets')
 (OUT / 'assets' / CSS_FILE).write_text(CSS)
 (OUT / 'assets' / FONTS_FILE).write_text(FONTS_CSS)
+# статические файлы для прямых ссылок (ноты и т.п.): files/ → site/files/ как есть, без обработки
+if (ROOT / 'files').is_dir():
+    shutil.copytree(ROOT / 'files', OUT / 'files')
 
 # карта «id → (страница, главная секция страницы)»
 id_page = {}
