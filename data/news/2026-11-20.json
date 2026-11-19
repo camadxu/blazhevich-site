@@ -1,0 +1,29 @@
+{
+ "release": "2026-11-20",
+ "generated_at": "2026-11-19T23:15:00Z",
+ "counts": {
+  "fetched": 230,
+  "kept": 1,
+  "dropped_dupes": 0
+ },
+ "items": [
+  {
+   "title": "Noel Langley – ‘Syzygy’",
+   "url": "https://ukjazznews.com/noel-langley-syzygy/",
+   "source": "UK Jazz News",
+   "source_weight": 2,
+   "lang": "en",
+   "published": "2026-11-18",
+   "summary": "",
+   "instruments": [
+    "brass-band"
+   ],
+   "kinds": [
+    "album"
+   ],
+   "score": 2.86,
+   "cluster": [],
+   "id": "2026-11-20-01"
+  }
+ ]
+}
