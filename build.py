@@ -353,7 +353,7 @@ if a.release:
     urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/'] + [f'en/{f}' for f in EN_DOSSIERS]
     (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + ''.join(f'  <url><loc>{DOM}/{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls) + '</urlset>\n')
-    (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {DOM}/sitemap.xml\n')
+    (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nContent-Signal: search=yes, ai-train=no\n\nSitemap: {DOM}/sitemap.xml\n')
 
 # ---------------- Одностраничная версия для предпросмотра на claude.ai ----------------
 one = ''.join(sec(s_) for s_ in ['scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about'])
