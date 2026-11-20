@@ -49,9 +49,12 @@ def people_section(en=False):
  return s+'</ol></div></section>'
 def apply():
  out=ROOT/'site'
- # Каталог нот — 10 карточек без панели поиска и фильтров (убрана по просьбе владельца 13.11.2026).
- # Карточки людей: на русском они повторяли бы московское досье, поэтому остаются только в английской версии.
- p=out/'en/index.html';s=p.read_text();m='<section id="concertos"';assert s.count(m)==1;s=s.replace(m,people_section(True)+m);p.write_text(s)
+ # Карточки людей — на странице «Труды» (в одностраничнике жили перед секцией концертов).
+ p=out/'en'/'works.html';s=p.read_text()
+ for m in ('<section id="concertos"','<h3 id="concertos"'):
+  if s.count(m)==1:s=s.replace(m,people_section(True)+m);break
+ else:s=s.replace('</main>',people_section(True)+'</main>',1)
+ p.write_text(s)
  # Styling additions inherit the existing palette and typography.
  css=''  # styles for these additions live in src/style.css
  for page in out.rglob('*.html'):

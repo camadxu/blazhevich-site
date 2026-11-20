@@ -4,11 +4,14 @@
   python3 tools/check_site.py путь/к/site
 
 Что проверяется:
-  • все страницы на месте;
+  • все страницы на месте: витрина, пять разделов, три досье — на обоих языках;
   • каждая внутренняя ссылка (href/src/srcset и url() в fonts.css) ведёт на существующий файл,
     а ссылка с #якорем — на существующий id в целевой странице;
   • нет повторяющихся id на странице, у каждой страницы ровно один <h1>;
   • ни одна страница не загружает внешние ресурсы (скрипты, стили, картинки, шрифты с http/https);
+  • витрина: карточки пяти разделов и полоса досье на месте, бокового меню (rail) нет;
+  • переадресации со старых адресов (scores, concertos, usa) ведут на существующие страницы;
+  • страница 404 собрана и ведёт на разделы;
   • состояние публикации: robots, плашка черновика, canonical, sitemap.xml, robots.txt.
 Внешние ссылки (<a href="https://…">) только перечисляются; их доступность не проверяется.
 Код выхода 1 — если найдены ошибки.
@@ -17,9 +20,12 @@ import pathlib, re, sys
 from html.parser import HTMLParser
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
-# Сайт — одна общая страница (index.html, en/index.html) и два досье на каждом языке; старые адреса разделов — переадресации
-PAGES = ['index.html', 'us-schools.html', 'moscow.html', 'leningrad.html', 'en/index.html', 'en/us-schools.html', 'en/moscow.html', 'en/leningrad.html']
-SECTIONS = ('scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about')
+# Сайт — витрина index.html, пять разделов и три досье на каждом языке; старые адреса разделов — переадресации
+HUB = ['works.html', 'listen.html', 'biography.html', 'schools.html', 'about.html']
+PAGES = ['index.html', *HUB, 'moscow.html', 'leningrad.html', 'us-schools.html',
+         'en/index.html', *[f'en/{p}' for p in HUB], 'en/moscow.html', 'en/leningrad.html', 'en/us-schools.html']
+# старый адрес → (страница, обязательный якорь; '?' = якорь optional, пока глава переносится)
+STUBS = (('scores.html', 'works.html', ''), ('concertos.html', 'works.html', 'concertos'), ('usa.html', 'us-schools.html', '?'))
 errors, external = [], set()
 
 class P(HTMLParser):
@@ -73,17 +79,40 @@ for pg, p in list(parsed.items()):
         if frag and target.suffix == '.html' and frag not in ids_of(target):
             errors.append(f'{pg}: нет якоря #{frag} в {target.relative_to(SITE)}')
 
-# переадресации со старых адресов ведут на существующий раздел общей страницы
+# витрина: карточки всех пяти разделов и трёх досье; боковое меню одностраничника убрано
+if 'index.html' in parsed:
+    s = (SITE / 'index.html').read_text(encoding='utf-8')
+    for p_ in HUB + ['moscow.html', 'leningrad.html', 'us-schools.html']:
+        if f'href="{p_}"' not in s: errors.append(f'index.html: нет ссылки на {p_}')
+    if 'class="rail"' in s or 'rail-edge' in s: errors.append('index.html: осталось боковое меню rail')
+    if 'class="hub-cards"' not in s: errors.append('index.html: нет сетки карточек разделов')
+    if 'class="dossiers-strip"' not in s: errors.append('index.html: нет полосы досье')
+
+# переадресации со старых адресов ведут на существующую страницу (и якорь, если он указан)
 for pre in ('', 'en/'):
-    for k in SECTIONS:
-        f = SITE / f'{pre}{k}.html'
+    for k, base_, frag in STUBS:
+        f = SITE / f'{pre}{k}'
         if not f.exists():
-            errors.append(f'нет переадресации {pre}{k}.html'); continue
+            errors.append(f'нет переадресации {pre}{k}'); continue
         m = re.search(r'url=([^"]+)"', f.read_text(encoding='utf-8'))
-        tgt, _, frag = (m.group(1) if m else '').partition('#')
-        if not m or not (f.parent / tgt).exists() or frag not in ids_of(f.parent / tgt):
-            errors.append(f'{pre}{k}.html: переадресация ведёт не туда ({m.group(1) if m else "нет"})')
+        tgt, _, got = (m.group(1) if m else '').partition('#')
+        if not m or tgt != base_ or not (f.parent / tgt).exists():
+            errors.append(f'{pre}{k}: переадресация ведёт не туда ({m.group(1) if m else "нет"})'); continue
+        if got and got not in ids_of(f.parent / tgt):
+            errors.append(f'{pre}{k}: нет якоря #{got} в {tgt}')
+        if frag != '?' and got != frag:
+            errors.append(f'{pre}{k}: ожидался адрес {base_}#{frag}, получено #{got}')
         checked += 1
+
+# страница 404 входит в сборку (копирует её enhancements.py из 404.html в корне репозитория)
+f404 = SITE / '404.html'
+if not f404.exists():
+    errors.append('нет 404.html')
+else:
+    t = f404.read_text(encoding='utf-8')
+    if 'noindex' not in t: errors.append('404.html: нет noindex')
+    for p_ in ('/works.html', '/about.html'):
+        if f'href="{p_}"' not in t: errors.append(f'404.html: нет ссылки {p_}')
 
 # sitemap.xml (публичная сборка) не должен перечислять переадресации с noindex
 sm = SITE / 'sitemap.xml'

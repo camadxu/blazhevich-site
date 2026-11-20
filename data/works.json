@@ -1,0 +1,13 @@
+[
+  {
+    "id": "valse-de-concert",
+    "title": "Вальс-концерт",
+    "title_en": "Valse de concert",
+    "type": "concert",
+    "year": "",
+    "notes_url": "files/blazhevich-valse-de-concert-partitur.pdf",
+    "audio_url": "",
+    "comment": "Партитура из локальной базы проекта; первая запись реестра трудов.",
+    "comment_en": "The score from the project’s local base; the first entry in the works registry."
+  }
+]
