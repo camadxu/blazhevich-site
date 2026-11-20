@@ -4,9 +4,11 @@
   python3 build.py --release --domain https://site   публичная версия: индексация, canonical,
                                                      Open Graph с полными адресами, sitemap.xml, robots.txt
 
-Результат в папке site/: index.html — весь сайт одной страницей (первый экран и все разделы подряд,
-боковое меню), досье moscow.html и leningrad.html, en/index.html — английская версия одной страницей,
-assets/. Старые адреса разделов (scores.html, en/scores.html, …) остаются короткими страницами-переадресациями. Эту папку целиком загружают на хостинг.
+Результат в папке site/: index.html — витрина (первый экран, вступление, карточки пяти разделов,
+полоса досье школ и лента новостей), страницы разделов works.html, listen.html, biography.html,
+schools.html, about.html, досье moscow.html, leningrad.html, us-schools.html и английские зеркала
+всех страниц в en/. Старые адреса разделов (scores.html, en/scores.html, …) остаются короткими
+страницами-переадресациями. Эту папку целиком загружают на хостинг.
 Для зеркал (РФ и США) собирайте обе копии с одним --domain — адресом основного сайта.
 С флагом --single-page дополнительно собирается artifact.html — вся русская версия одной
 страницей (нужна только для предпросмотра в Claude, на сервер не загружается; шрифты берёт с Google Fonts).
@@ -70,10 +72,23 @@ def sec(name, lang='ru'):
     return (SRC / lang / f'{name}.html').read_text()
 
 # ---------------- Русские страницы ----------------
+# «Труды» собираются из src/ru/works.html (контентёр волны hub-pages). Пока файла нет,
+# действует временный фолбэк волны: страница клеится из концертов и каталога нот.
+WORKS_SECS = ['works'] if (SRC / 'ru' / 'works.html').exists() else ['concertos', 'scores']
 PAGES = {  # файл: (секции, заголовок, описание)
-    'index.html': (['hero', 'scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about'],
+    'index.html': (['hero'],
                    'Blazhevich — Владислав Блажевич: тромбон, ноты, история',
                    'Владислав Блажевич (1881–1942): ноты, записи, биография, 13 концертов для тромбона, школы тромбона и признание в США.'),
+    'works.html': (WORKS_SECS, 'Труды Блажевича — концерты, школы, этюды',
+                   '13 концертов для тромбона, «Школа игры», этюды и ансамбли: каталог трудов Владислава Блажевича со ссылками на ноты.'),
+    'listen.html': (['listen'], 'Слушать Блажевича — записи и видео',
+                    'Аудиозаписи и видео произведений Владислава Блажевича.'),
+    'biography.html': (['biography'], 'Биография — Владислав Блажевич',
+                       'Жизнь тромбониста и педагога: Москва, Большой театр, консерватория.'),
+    'schools.html': (['schools'], 'Школа и традиция — две школы русского тромбона',
+                     'Московская и ленинградская школы тромбона и их досье: Москва, Петербург, американская линия.'),
+    'about.html': (['about'], 'О проекте — Blazhevich',
+                   'Источники, права на изображения и принципы работы сайта.'),
     'moscow.html': (['moscow'], 'Московская тромбоновая школа — Blazhevich',
                     'Московская школа тромбона: Витнебен, Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь, ноты и записи.'),
     'leningrad.html': (['leningrad'], 'Ленинградская тромбоновая школа — Blazhevich',
@@ -81,10 +96,18 @@ PAGES = {  # файл: (секции, заголовок, описание)
     'us-schools.html': (['us-schools'], 'Американские школы тромбона — Blazhevich',
                         'Истмен и Ремингтон, Чикаго и Джейкобс, Curtis и Алесси, Northwestern: как устроены американские тромбоновые школы и чем они похожи на московскую и ленинградскую.'),
 }
-NAV_RU = [('scores', 'Ноты'), ('listen', 'Слушать'), ('biography', 'Биография'), ('usa', 'В США'),
-          ('us-schools', 'Школы США'), ('schools', 'Школы'), ('concertos', 'Концерты'), ('about', 'О проекте')]
+# реестр пяти разделов (порядок 01–05): меню шапки, витрина и пейджер; третья колонка — строка карточки на главной
+HUB_RU = [('works', 'Труды', 'Каталог: 13 концертов, школы, этюды и ансамбли — со ссылками на ноты'),
+          ('listen', 'Слушать', 'Записи и видео: как его музыка звучит сегодня'),
+          ('biography', 'Биография', 'Москва, Большой театр, консерватория — по документам и источникам'),
+          ('schools', 'Школа и традиция', 'Две школы русского тромбона и досье: Москва, Петербург, Америка'),
+          ('about', 'О проекте', 'Источники, права на изображения и принципы работы')]
+NAV_RU = [(i, t) for i, t, _ in HUB_RU]
+# английские зеркала есть у всех страниц, кроме витрины (у неё — en/index.html)
+EN_TWINS = {'works.html', 'listen.html', 'biography.html', 'schools.html', 'about.html',
+            'moscow.html', 'leningrad.html', 'us-schools.html'}
 # досье-подстраницы: крошка ведёт на родительский раздел, в меню подсвечен он же
-PARENT_RU = {'moscow.html': ('schools', 'Школы'), 'leningrad.html': ('schools', 'Школы')}
+PARENT_RU = {f: ('schools', 'Школа и традиция') for f in ('moscow.html', 'leningrad.html', 'us-schools.html')}
 # английские досье: src/en/<имя>.html → en/<имя>.html (заголовок, описание)
 EN_DOSSIERS = {
     'moscow.html': ('The Moscow trombone school — Blazhevich',
@@ -99,32 +122,50 @@ PAGE_OF_SECTION = {s: f for f, (ss, _, _) in PAGES.items() for s in ss}
 def ids_in(html):
     return set(re.findall(r'\bid="([\w-]+)"', html))
 
-def relink(html, page, id_page):
-    """#id → нужная страница: якорь своей страницы остаётся, чужой становится page.html#id."""
+def relink(html, page, id_page, old=None):
+    """#id → нужная страница: якорь своей страницы остаётся, чужой становится page.html#id;
+    старые якоря одностраничника (#scores, #usa, …) разводятся по словарю old."""
     here = ids_in(html)
     def fix(m):
         i = m.group(1)
         if i in here:
             return m.group(0)
         tgt = id_page.get(i)
-        if not tgt:
-            return m.group(0)
-        if i == tgt[1] and tgt[0] != 'index.html':   # главная секция страницы → просто страница
-            return f'href="{tgt[0]}"'
-        return f'href="{tgt[0]}#{i}"'
-    return re.sub(r'href="#([\w-]+)"', fix, html)
+        if tgt:
+            if i == tgt[1] and tgt[0] != 'index.html':   # главная секция страницы → просто страница
+                return f'href="{tgt[0]}"'
+            return f'href="{tgt[0]}#{i}"'
+        old = OLD.get(i)   # старые якоря одностраничника (#scores, #usa, …)
+        return f'href="{old}"' if old else m.group(0)
+    def fix_idx(m):
+        pre, i = m.group(1), m.group(2)   # зашитые ссылки времён одностраничника: index.html#id и ../index.html#id
+        if i in here:
+            return f'href="{pre}#{i}"' if pre else m.group(0)
+        tgt = id_page.get(i)
+        if tgt:
+            if i == tgt[1] and tgt[0] != 'index.html':
+                return f'href="{pre}{tgt[0]}"'
+            return f'href="{pre}{tgt[0]}#{i}"'
+        old = OLD.get(i)
+        return f'href="{pre}{old}"' if old else m.group(0)
+    html = re.sub(r'href="#([\w-]+)"', fix, html)
+    return re.sub(r'href="((?:\.\./)?)index\.html#([\w-]+)"', fix_idx, html)
 
 DRAFT = '' if a.release else '<div class="draft">Предварительный просмотр · не опубликовано</div>\n'
 
-def header(nav_html, lang_link, home):
+def header(nav_html, lang_link, home, hero_page=False):
+    bar_cls = ' class="on-hero"' if hero_page else ''   # витрина: шапка стоит под первым экраном
     return (f'<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
-            + f'<header id="top-bar"><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
+            + f'<header id="top-bar"{bar_cls}><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
             f'  <nav aria-label="Основная навигация">{nav_html}{lang_link}</nav>\n</div></header>\n')
 
 # архивная виньетка в шапке раздела: декоративная (alt=""), источники снимков — в «О проекте»
-VIGNETTE = {'scores': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
+VIGNETTE = {'works': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
             'biography': 'conservatory-1940s.webp', 'concertos': 'bolshoi-1905.webp',
             'schools': 'conservatory-1940s.webp'}
+# виньетки карточек витрины: «Труды» наследуют порттик консерватории, «О проекте» — снимок Большого 1905 года
+HUB_IMG = {'works': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
+           'biography': 'conservatory-1940s.webp', 'schools': 'conservatory-1940s.webp', 'about': 'bolshoi-1905.webp'}
 # размеры файлов виньеток: с width/height браузер резервирует место до загрузки, вёрстка не прыгает
 VIGNETTE_WH = {'v-conservatory-portico.webp': (420, 490), 'v-bolshoi-colonnade.webp': (470, 460),
                'conservatory-1940s.webp': (960, 600), 'bolshoi-1905.webp': (960, 600)}
@@ -135,7 +176,7 @@ def vignette(v, prefix=''):
 # сцена во всю ширину с текстом поверх (assets/scene-*.webp делает tools/scenes/*.py)
 SCENE = {'moscow', 'leningrad'}
 
-def inner(h, crumb, href='index.html', prefix=''):
+def inner(h, crumb, href='index.html', prefix='', n=0):
     """На внутренней странице заголовок секции становится h1 с «хлебной крошкой»."""
     sid = re.match(r'\s*<section id="([\w-]+)"', h)
     v = VIGNETTE.get(sid.group(1)) if sid else None
@@ -144,8 +185,9 @@ def inner(h, crumb, href='index.html', prefix=''):
     # url() во встроенном CSS считается от страницы: из папки en/ картинку сцены даём с префиксом
     sty = (f' style="--scene:url({prefix}assets/scene-{sid.group(1)}.webp);--scene-sm:url({prefix}assets/scene-{sid.group(1)}-960.webp)"'
            if cls and prefix else '')
+    n_attr = f' data-n="{n:02d}"' if n else ''   # номер раздела 01–05 над заголовком
     h = h.replace('<div class="section-head reveal">',
-                  f'<div class="section-head{cls} reveal"{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
+                  f'<div class="section-head{cls} reveal"{n_attr}{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
 def deco(h, prefix='', n=0):
@@ -159,12 +201,95 @@ def deco(h, prefix='', n=0):
     fig = vignette(v, prefix)
     return re.sub(r'(<div class="section-head reveal"[^>]*>)', lambda m: m.group(1) + fig, h, count=1)
 
-def rail(items, lang_link, label):
-    """Боковое меню общей страницы (на узких экранах вместо него кнопка «Меню»)."""
-    edge = 'Меню' if label == 'Разделы' else 'Menu'   # то же слово, что на кнопках первого экрана и телефона
-    return (f'<div class="rail-edge" aria-hidden="true"><span>{edge}</span></div>\n'
-            f'<nav class="rail" aria-label="{label}">' + ''.join(f'<a href="#{i}">{t}</a>' for i, t in items)
-            + f'{lang_link}</nav>\n')
+def hub_cards(lang, prefix=''):
+    """Витрина: сетка пяти разделов — номер, архивная виньетка, название и строка-описание."""
+    ru = lang == 'ru'
+    hub = HUB_RU if ru else EN_HUB
+    T = ('Разделы', 'Пять глав сайта') if ru else ('Sections', 'The five chapters of the site')
+    cards = ''
+    for n, (i, t, d) in enumerate(hub, 1):
+        w, h = VIGNETTE_WH[HUB_IMG[i]]
+        cards += (f'    <a class="hub-card" href="{prefix}{i}.html" data-n="{n:02d}">\n'
+                  f'      <span class="hub-fig" aria-hidden="true"><img src="{prefix}assets/{HUB_IMG[i]}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async"></span>\n'
+                  f'      <b>{t}</b><span>{d}</span></a>\n')
+    return ('<section id="hub" class="block hub" aria-labelledby="hub-title"><div class="wrap">\n'
+            f'  <div class="section-head reveal"><h2 id="hub-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div></div>\n'
+            f'  <div class="hub-cards">\n{cards}  </div>\n'
+            '</div></section>\n')
+
+DOSSIERS_RU = (('moscow.html', 'Московская школа', 'Очерк', 'Витнебен и Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь'),
+               ('leningrad.html', 'Ленинградская школа', 'Сборник', 'Тюрнер, Волков, Козлов, Венгловский; Квартет тромбонов филармонии'),
+               ('us-schools.html', 'Американская линия', 'Досье', 'Райхман, Clef Studies и издания, связавшие русскую школу с США'))
+DOSSIERS_EN = (('moscow.html', 'The Moscow school', 'Essay', 'Wittneben and Bork, Blazhevich, Shcherbinin and his pupils'),
+               ('leningrad.html', 'The Leningrad school', 'Collection', 'Türner, Volkov, Kozlov, Venglovsky; the Philharmonic Trombone Quartet'),
+               ('us-schools.html', 'The American line', 'Dossier', 'Raichman, the Clef Studies and the editions that linked the Russian school with the USA'))
+
+def dossiers_strip(lang, prefix=''):
+    """Витрина: полоса трёх досье школ — выходы из раздела «Школа и традиция»."""
+    ru = lang == 'ru'
+    T = ('Досье школ', 'Из раздела «Школа и традиция»') if ru else ('School dossiers', 'From “The school and its lineage”')
+    D = DOSSIERS_RU if ru else DOSSIERS_EN
+    cards = ''.join(f'    <a class="dossier-card" href="{prefix}{f}"><span class="eyebrow">{k}</span><b>{t}</b><span>{d}</span><i aria-hidden="true">→</i></a>\n'
+                    for f, t, k, d in D)
+    return ('<section id="dossiers" class="block dossiers" aria-labelledby="dossiers-title"><div class="wrap">\n'
+            f'  <div class="section-head reveal"><h2 id="dossiers-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div></div>\n'
+            f'  <div class="dossiers-strip">\n{cards}  </div>\n'
+            '</div></section>\n')
+
+def pager(idx, lang, prefix=''):
+    """Пейджер разделельной страницы: ← предыдущий · все разделы · следующий → (порядок 01–05)."""
+    ru = lang == 'ru'
+    hub = HUB_RU if ru else EN_HUB
+    T = ('Все разделы', 'Переход между разделами') if ru else ('All sections', 'Section navigation')
+    links = ''
+    if idx > 0:
+        p = hub[idx - 1]
+        links += f'<a class="pg-way" rel="prev" href="{prefix}{p[0]}.html">← {p[1]}</a>'
+    links += f'<a class="pg-all" href="{prefix}index.html">{T[0]}</a>'
+    if idx < len(hub) - 1:
+        n_ = hub[idx + 1]
+        links += f'<a class="pg-way" rel="next" href="{prefix}{n_[0]}.html">{n_[1]} →</a>'
+    return f'<nav class="pager wrap reveal" aria-label="{T[1]}">{links}</nav>\n'
+
+# ---------------- База файлов (этап 1): реестр трудов и загрузки ----------------
+FILES_BASE = ''   # адрес файлового сервера; пока пусто — пути files/… отдаются как есть
+WORKS_REGISTRY_PATH = ROOT / 'data' / 'works.json'
+WORKS_REGISTRY = json.loads(WORKS_REGISTRY_PATH.read_text(encoding='utf-8')) if WORKS_REGISTRY_PATH.exists() else []
+WORK_TYPE = {'concert': ('Концерт', 'Concert'), 'school': ('Школа', 'School'), 'etudes': ('Этюды', 'Studies'),
+             'ensemble': ('Ансамбль', 'Ensemble'), 'arrangement': ('Обработка', 'Arrangement')}
+
+def files_block(lang, prefix=''):
+    """Блок «Файлы для скачивания» на странице «Труды»: рендерится из data/works.json."""
+    rows = [w for w in WORKS_REGISTRY if w.get('notes_url') or w.get('audio_url')]
+    if not rows:
+        return ''
+    ru = lang == 'ru'
+    e = lambda t: html.escape(str(t), quote=True)
+    T = (('Файлы для скачивания', 'Локальная база нот и аудио',
+          'Файлы хранятся в собственной базе проекта и отдаются напрямую; записи появляются здесь по мере наполнения реестра.',
+          'Партитура (PDF)', 'Аудио') if ru else
+         ('Downloads', 'The local score and audio base',
+          'The files live in the project’s own base and are served directly; entries appear here as the registry grows.',
+          'Score (PDF)', 'Audio'))
+    items = ''
+    for w in rows:
+        kind = WORK_TYPE.get(w.get('type'), ('', ''))[0 if ru else 1]
+        title = w.get('title') if ru else (w.get('title_en') or w.get('title', ''))
+        note = w.get('comment') if ru else (w.get('comment_en') or w.get('comment', ''))
+        year = f' <span class="tag">{e(w["year"])}</span>' if w.get('year') else ''
+        links = ''
+        if w.get('notes_url'):
+            links += f'<a href="{e((FILES_BASE + w["notes_url"]) if FILES_BASE else (prefix + w["notes_url"]))}">{T[3]}</a>'
+        if w.get('audio_url'):
+            links += f'<a href="{e((FILES_BASE + w["audio_url"]) if FILES_BASE else (prefix + w["audio_url"]))}">{T[4]}</a>'
+        items += (f'    <li class="file-row"><p class="file-name"><b>{e(title)}</b>'
+                  + (f' <span class="tag">{e(kind)}</span>' if kind else '') + year + '</p>'
+                  + (f'<p>{note}</p>' if note else '')
+                  + (f'<p class="file-links">{links}</p>' if links else '') + '</li>\n')
+    return ('<section id="files" class="block files-block" aria-labelledby="files-title"><div class="wrap">\n'
+            f'  <div class="section-head reveal"><h2 id="files-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div><p>{T[2]}</p></div>\n'
+            f'  <ul class="files-list">\n{items}  </ul>\n'
+            '</div></section>\n')
 
 def stub(target, title, lang):
     """Старый адрес раздела → раздел общей страницы."""
@@ -181,25 +306,26 @@ def en_words(html):
     return html
 
 def site_footer(lang):
-    """Подвал: имя и годы, разделы, досье школ, язык. Ссылки с адресом страницы — подвал общий для главной и досье."""
+    """Подвал: имя и годы, разделы, досье школ, язык. Ссылки с адресом страницы — подвал общий для витрины, разделов и досье."""
     ru = lang == 'ru'
-    nav = NAV_RU if ru else [(k, v[0]) for k, v in EN_PAGES.items()]
+    nav = NAV_RU if ru else [(i, t) for i, t, _ in EN_HUB]
 
     def nav_href(i):
-        if f'{i}.html' in PAGES:                 # отдельная страница: из папки en/ путь на уровень выше
-            return ('../' if not ru else '') + f'{i}.html'
+        pages = PAGES if ru else EN_PAGES
+        if f'{i}.html' in pages:                 # настоящая страница раздела
+            return f'{i}.html'
         return f'index.html#{i}'
 
     secs = ''.join(f'<li><a href="{nav_href(i)}">{t}</a></li>' for i, t in nav)
     T = (dict(who='Владислав Блажевич', about='Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.',
               s='Разделы', d='Школы тромбона', m='Московская тромбоновая школа', l='Ленинградская тромбоновая школа', u='Американские школы',
               o='Язык', other='<a href="en/index.html" hreflang="en" lang="en">English version</a>',
-              fine='Источники и права на изображения указаны в разделе <a href="index.html#about">«О проекте»</a>.', top='Наверх', nav='Подвал')
+              fine='Источники и права на изображения указаны в разделе <a href="about.html">«О проекте»</a>.', top='Наверх', nav='Подвал')
          if ru else
          dict(who='Vladislav Blazhevich', about='Trombonist, teacher, composer. An independent project about his life, scores and school.',
               s='Sections', d='Trombone schools', m='The Moscow trombone school', l='The Leningrad trombone school', u='American schools',
               o='Language', other='<a href="../index.html" hreflang="ru" lang="ru">Русская версия</a>',
-              fine='Sources and image credits are listed under <a href="index.html#about">About</a>.', top='Back to top', nav='Footer'))
+              fine='Sources and image credits are listed under <a href="about.html">About</a>.', top='Back to top', nav='Footer'))
     return ('<footer><div class="wrap foot">\n'
             f'  <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">{T["who"]} <span>1881–1942</span></p><p>{T["about"]}</p></div>\n'
             f'  <div class="foot-col" role="navigation" aria-label="{T["nav"]}"><h2>{T["s"]}</h2><ul class="foot-secs">{secs}</ul></div>\n'
@@ -231,17 +357,21 @@ PERSON_SAME_AS = ['https://ru.wikipedia.org/wiki/Блажевич,_Владис�
                   'https://en.wikipedia.org/wiki/Vladislav_Blazhevich',
                   'https://imslp.org/wiki/Category:Blazhevich,_Vladislav']
 CRUMBS = {  # страница: цепочка «хлебных крошек» (подпись, адрес от корня сайта)
-    'moscow.html': [('Главная', ''), ('Школы', '#schools'), ('Московская тромбоновая школа', 'moscow.html')],
-    'leningrad.html': [('Главная', ''), ('Школы', '#schools'), ('Ленинградская тромбоновая школа', 'leningrad.html')],
-    'us-schools.html': [('Главная', ''), ('Американские школы тромбона', 'us-schools.html')],
-    'en/moscow.html': [('Home', 'en/'), ('Schools', 'en/#schools'), ('The Moscow trombone school', 'en/moscow.html')],
-    'en/leningrad.html': [('Home', 'en/'), ('Schools', 'en/#schools'), ('The Leningrad trombone school', 'en/leningrad.html')],
+    'moscow.html': [('Главная', ''), ('Школа и традиция', 'schools.html'), ('Московская тромбоновая школа', 'moscow.html')],
+    'leningrad.html': [('Главная', ''), ('Школа и традиция', 'schools.html'), ('Ленинградская тромбоновая школа', 'leningrad.html')],
+    'us-schools.html': [('Главная', ''), ('Школа и традиция', 'schools.html'), ('Американские школы тромбона', 'us-schools.html')],
+    'en/moscow.html': [('Home', 'en/'), ('The school and its lineage', 'en/schools.html'), ('The Moscow trombone school', 'en/moscow.html')],
+    'en/leningrad.html': [('Home', 'en/'), ('The school and its lineage', 'en/schools.html'), ('The Leningrad trombone school', 'en/leningrad.html')],
+    'en/us-schools.html': [('Home', 'en/'), ('The school and its lineage', 'en/schools.html'), ('American trombone schools', 'en/us-schools.html')],
 }
 _plain = lambda t: re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', t)).strip()
 
 def concerto_rows(lang):
-    """Номер, тональность и дата каждого концерта — из таблицы раздела «Концерты», чтобы разметка не расходилась с текстом."""
-    src = sec('concertos') if lang == 'ru' else sec('page', 'en')
+    """Номер, тональность и дата каждого концерта — из таблицы раздела «Труды», чтобы разметка не расходилась с текстом."""
+    if lang == 'ru':
+        src = ''.join(sec(s) for s in PAGES['works.html'][0])
+    else:
+        src = ''.join(en_secs[s] for s in EN_PAGES['works.html'][0])
     body = re.search(r'<table class="conc">.*?<tbody>(.*?)</tbody>', src, re.S).group(1)
     return [tuple(_plain(c) for c in re.findall(r'<td>(.*?)</td>', r, re.S)[:3]) for r in re.findall(r'<tr>(.*?)</tr>', body, re.S)]
 
@@ -259,6 +389,14 @@ def jsonld(path, lang, url, title, desc):
         g.append({'@type': 'WebSite', '@id': f'{DOM}/#website', 'url': f'{DOM}/', 'name': 'Blazhevich',
                   'inLanguage': ['ru', 'en'], 'about': {'@id': person['@id']}})
         g.append(person)
+    else:
+        wp = {'@type': 'WebPage', '@id': f'{url}#page', 'url': url, 'name': title, 'description': desc,
+              'inLanguage': lang, 'isPartOf': {'@id': f'{DOM}/#website'}}
+        if path.startswith('news/'):   # лента — новости медных, а не страница о Блажевиче
+            g.append(wp)
+        else:
+            g += [{**wp, 'about': {'@id': person['@id']}}, person]
+    if path in ('works.html', 'en/works.html'):   # список концертов живёт на странице «Трудов»
         items = []
         for n, key, date in concerto_rows(lang):
             c = {'@type': 'MusicComposition', '@id': f'{url}#concerto-{n}',
@@ -272,13 +410,6 @@ def jsonld(path, lang, url, title, desc):
         g.append({'@type': 'ItemList', '@id': f'{url}#concertos-list',
                   'name': '13 концертов для тромбона' if ru else 'The 13 trombone concertos',
                   'numberOfItems': len(items), 'itemListElement': items})
-    else:
-        wp = {'@type': 'WebPage', '@id': f'{url}#page', 'url': url, 'name': title, 'description': desc,
-              'inLanguage': lang, 'isPartOf': {'@id': f'{DOM}/#website'}}
-        if path.startswith('news/'):   # лента — новости медных, а не страница о Блажевиче
-            g.append(wp)
-        else:
-            g += [{**wp, 'about': {'@id': person['@id']}}, person]
     if path in CRUMBS:
         g.append({'@type': 'BreadcrumbList', 'itemListElement': [
             {'@type': 'ListItem', 'position': i, 'name': n_, 'item': f'{DOM}/{u}'} for i, (n_, u) in enumerate(CRUMBS[path], 1)]})
@@ -401,7 +532,7 @@ def head(title, desc, path, lang, prefix, fonts):
             m += [f'<link rel="alternate" hreflang="ru" href="{DOM}/">',
                   f'<link rel="alternate" hreflang="en" href="{DOM}/en/">',
                   f'<link rel="alternate" hreflang="x-default" href="{DOM}/">']
-        elif path.removeprefix('en/') in EN_DOSSIERS:
+        elif path.removeprefix('en/') in EN_TWINS:   # раздел или досье с английским зеркалом
             f_ = path.removeprefix('en/')
             m += [f'<link rel="alternate" hreflang="ru" href="{DOM}/{f_}">',
                   f'<link rel="alternate" hreflang="en" href="{DOM}/en/{f_}">',
@@ -458,28 +589,42 @@ for f, (ss, _, _) in PAGES.items():
     for s_ in ss:
         for i in ids_in(sec(s_)):
             id_page[i] = (f, s_)
+# старые якоря одностраничника: куда теперь ведёт каждый раздел (ссылки из контента и стабы).
+# «В США» переехала в досье us-schools.html; якорь #usa появляется вместе с главой.
+OLD_RU = {'scores': 'works.html', 'concertos': 'works.html#concertos', 'listen': 'listen.html',
+          'biography': 'biography.html', 'schools': 'schools.html', 'about': 'about.html',
+          'usa': 'us-schools.html#usa' if 'usa' in id_page else 'us-schools.html'}
+STUB_TITLE_RU = {'scores': 'Ноты', 'concertos': 'Концерты', 'usa': 'В США'}
 
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
+HUB_N = {f'{i}.html': n for n, (i, _, _) in enumerate(HUB_RU)}   # номер страницы в порядке разделов 01–05
 for f, (ss, title, desc) in PAGES.items():
     par = PARENT_RU.get(f)
-    if f == 'index.html':   # весь сайт одной страницей: первый экран, разделы подряд, боковое меню
-        body = (f'<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
-                + rail(NAV_RU + ([('news', 'Лента')] if NEWS else []), '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'Разделы')
+    en_href = 'en/index.html' if f == 'index.html' else f'en/{f}'
+    if f == 'index.html':   # витрина: первый экран, вступление, карточки разделов, досье, лента
+        hdr = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html', hero_page=True)
+        hero = sec('hero')
+        # шапка стоит сразу под первым экраном; с JS выезжает раньше — когда экран пройден (класс past-hero)
+        hero = hero.replace('<div class="lede">', hdr + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr
+        body = ('<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
                 + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
-                + '<main id="main">\n' + ''.join(deco(sec(s_), n=i) + (news_panel(NEWS[0]) if NEWS and s_ == 'hero' else '')
-                                                 for i, s_ in enumerate(ss)) + '</main>\n')
+                + '<main id="main">\n' + hero + hub_cards('ru') + dossiers_strip('ru')
+                + (news_panel(NEWS[0]) if NEWS else '') + '</main>\n')
         footer = FOOTER_RU()
     else:
-        crumb = (par[1], f'index.html#{par[0]}') if par else ('Главная', 'index.html')
-        en_href = f'en/{f}' if f in EN_DOSSIERS else 'en/index.html'
+        n_ = 0 if par else HUB_N[f] + 1   # досье без номера, разделы нумеруются 01–05
+        crumb = (par[1], f'{par[0]}.html') if par else ('Разделы', 'index.html')
         body = header(nav, f'<a class="lang" href="{en_href}" hreflang="en" lang="en">EN</a>', 'index.html') \
-            + '<main id="main">\n' + ''.join(inner(sec(s_), *crumb) for s_ in ss) + '</main>\n'
+            + '<main id="main">\n' + inner(sec(ss[0]), crumb[0], crumb[1], n=n_) + ''.join(sec(s_) for s_ in ss[1:]) \
+            + (files_block('ru') if f == 'works.html' else '') \
+            + (pager(HUB_N[f], 'ru') if f in HUB_N else '') + '</main>\n'
         footer = FOOTER_RU()
-    body = relink(body, f, id_page)
-    if f != 'index.html':
-        body = body.replace(f'<a href="#{ss[0]}">', f'<a href="{f}">', 1)
-    if par:
-        body = body.replace(f'<a href="index.html#{par[0]}">', f'<a href="index.html#{par[0]}" class="active">', 1)
+    body = relink(body, f, id_page, OLD_RU)
+    key = (par[0] if par else f[:-5]) + '.html'   # какой пункт меню подсвечен
+    for pat in (f'<a href="#{key[:-5]}">', f'<a href="{key}">'):
+        if pat in body:
+            body = body.replace(pat, pat[:-1] + ' class="active">', 1)
+            break
     (OUT / f).write_text(page('ru', title, desc, f, '', body,
                               f'<link rel="stylesheet" href="assets/{FONTS_FILE}">', footer))
 if NEWS:   # «Лента»: свежий выпуск с архивом, постоянные адреса выпусков, RSS и снимок для живого обновления
@@ -499,48 +644,86 @@ if NEWS:   # «Лента»: свежий выпуск с архивом, пос
     (OUT / 'feed.xml').write_text(news_feed(NEWS))
     (OUT / 'news' / 'today.json').write_text(json.dumps(NEWS[0], ensure_ascii=False, separators=(',', ':')) + '\n')
 
-for i, t in NAV_RU:   # старые адреса разделов
-    if f'{i}.html' in PAGES:   # отдельная страница уже собрана — стаб не нужен
+for k, tgt in OLD_RU.items():   # старые адреса разделов одностраничника
+    if f'{k}.html' in PAGES:    # настоящий раздел — не переадресация
         continue
-    (OUT / f'{i}.html').write_text(stub(f'index.html#{i}', f'{t} — Blazhevich', 'ru'))
+    (OUT / f'{k}.html').write_text(stub(tgt, f'{STUB_TITLE_RU[k]} — Blazhevich', 'ru'))
 
-# ---------------- Английские страницы: один исходник, по странице на секцию ----------------
+# ---------------- Английские страницы: один исходник, по странице на раздел ----------------
 en = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec('page', 'en'))  # пути к картинкам из папки en/
-EN_PAGES = {  # id секции: (подпись в меню, заголовок, описание)
-    'scores': ('Scores', 'Scores by Vladislav Blazhevich — Blazhevich', 'Method books, studies, duets and concertos by Vladislav Blazhevich for trombone and tuba, with links to libraries.'),
-    'listen': ('Listen', 'Listen to Blazhevich — Blazhevich', 'Recordings of music by Vladislav Blazhevich and where to hear them.'),
-    'biography': ('Biography', 'Vladislav Blazhevich: biography — Blazhevich', 'The life of Vladislav Blazhevich (1881–1942): military bands, the Moscow Conservatory, the Bolshoi Theatre, his professorship.'),
-    'usa': ('In America', 'Blazhevich in America — Blazhevich', 'How the music of Blazhevich reached the United States: Jacob Raichman, the Clef Studies and the American editions.'),
-    'schools': ('Schools', 'The Moscow and St Petersburg trombone schools — Blazhevich', 'Who studied with whom: the Moscow and St Petersburg lines of Russian trombone teaching.'),
-    'concertos': ('Concertos', 'The 13 trombone concertos of Blazhevich — Blazhevich', 'All 13 trombone concertos by Vladislav Blazhevich: keys, dates, first editions and recordings.'),
-    'about': ('About', 'About the project and sources — Blazhevich', 'An independent project about Vladislav Blazhevich: principles, sources and image credits.'),
-}
 en_secs = {re.match(r'<section id="([\w-]+)"', p).group(1): p for p in re.split(r'(?=<section id=")', en) if p.strip()}
-assert set(en_secs) == {'hero', *EN_PAGES}, sorted(en_secs)
-id_page_en = {i: ('index.html', k) for k in EN_PAGES for i in ids_in(en_secs[k])}
-nav_en = ''.join(f'<a href="#{k}">{v[0]}</a>' for k, v in EN_PAGES.items())
+# «Труды» по-английски — одна секция works (контентёр волны hub-pages); пока её нет, склейка концертов и каталога
+EN_WORKS_SECS = ['works'] if 'works' in en_secs else ['concertos', 'scores']
+EN_PAGES = {  # файл en/<имя>: (секции, заголовок, описание)
+    'works.html': (EN_WORKS_SECS, 'Works by Vladislav Blazhevich — Blazhevich',
+                   'The catalogue: 13 trombone concertos, method books, studies and ensembles — with links to the scores.'),
+    'listen.html': (['listen'], 'Listen to Blazhevich — Blazhevich', 'Recordings and video: how his music sounds today.'),
+    'biography.html': (['biography'], 'Vladislav Blazhevich: biography — Blazhevich', 'Moscow, the Bolshoi, the Conservatory — by documents and sources.'),
+    'schools.html': (['schools'], 'The Moscow and St Petersburg trombone schools — Blazhevich', 'Two Russian trombone schools and the dossiers: Moscow, St Petersburg, America.'),
+    'about.html': (['about'], 'About the project — Blazhevich', 'Sources, image credits and how this project works.'),
+}
+EN_HUB = [('works', 'Works', 'The catalogue: 13 concertos, schools, studies and ensembles — with links to the scores'),
+          ('listen', 'Listen', 'Recordings and video: how his music sounds today'),
+          ('biography', 'Biography', 'Moscow, the Bolshoi, the Conservatory — by documents and sources'),
+          ('schools', 'The school and its lineage', 'Two Russian trombone schools and the dossiers: Moscow, St Petersburg, America'),
+          ('about', 'About', 'Sources, image credits and how this project works')]
+EN_STUB_TITLE = {'scores': 'Scores', 'concertos': 'Concertos', 'usa': 'In America'}
+need = {s_ for ss, _, _ in EN_PAGES.values() for s_ in ss}
+if need - set(en_secs):
+    raise SystemExit(f'В src/en/page.html нет секций: {", ".join(sorted(need - set(en_secs)))}')
+id_page_en = {}
+for f_, (ss_, _, _) in EN_PAGES.items():
+    for s_ in ss_:
+        for i in ids_in(en_secs[s_]):
+            id_page_en[i] = (f_, s_)
+for f_ in EN_DOSSIERS:   # идентификаторы досье (m-bork, raichman, …) тоже разводятся по страницам
+    for i in ids_in(sec(f_[:-5], 'en')):
+        id_page_en.setdefault(i, (f_, f_[:-5]))
+if 'usa' in en_secs:   # глава ждёт переноса в en/us-schools.html: её якоря пока ведут на досье американских школ
+    for i in ids_in(en_secs['usa']):
+        id_page_en.setdefault(i, ('us-schools.html', i))
+OLD_EN = {'scores': 'works.html', 'concertos': 'works.html#concertos', 'listen': 'listen.html',
+          'biography': 'biography.html', 'schools': 'schools.html', 'about': 'about.html',
+          'usa': 'us-schools.html#usa' if 'usa' in id_page_en else 'us-schools.html'}
+nav_en = ''.join(f'<a href="{i}.html">{t}</a>' for i, t, _ in EN_HUB)
 FONTS_EN = f'<link rel="stylesheet" href="../assets/{FONTS_FILE}">'
+hdr_en = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html', hero_page=True)
+hero = en_secs['hero']   # шапка — сразу под первым экраном, как в русской витрине
+hero = hero.replace('<div class="lede">', hdr_en + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr_en
 body = ('<a class="skip" href="#main">Skip to content</a>\n' + DRAFT
-        + rail([(k, v[0]) for k, v in EN_PAGES.items()], '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'Sections')
         + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
-        + '<main id="main">\n' + en_secs['hero'] + ''.join(deco(en_secs[k], '../', i) for i, k in enumerate(EN_PAGES, 1)) + '</main>\n')
+        + '<main id="main">\n' + hero + hub_cards('en', '../') + dossiers_strip('en', '../') + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
-    'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en)), FONTS_EN, FOOTER_EN()))
-for k, (label, title, _) in EN_PAGES.items():   # старые адреса английских разделов
-    (OUT / 'en' / f'{k}.html').write_text(stub(f'index.html#{k}', title, 'en'))
-act = ' class="active"'  # вне f-string-выражения: бэкслеш внутри выражения валиден только с Python 3.12
-nav_en_idx = ''.join(f'<a href="index.html#{k}"{act if k == "schools" else ""}>{v[0]}</a>' for k, v in EN_PAGES.items())
+    'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en, OLD_EN)), FONTS_EN, FOOTER_EN()))
+for n_, (f_, (ss_, title, desc)) in enumerate(EN_PAGES.items()):   # страницы разделов
+    body = (header(nav_en, f'<a class="lang" href="../{f_}" hreflang="ru" lang="ru">RU</a>', 'index.html')
+            + '<main id="main">\n' + inner(en_secs[ss_[0]], 'Sections', 'index.html', '../', n=n_ + 1)
+            + ''.join(en_secs[s_] for s_ in ss_[1:])
+            + (files_block('en', '../') if f_ == 'works.html' else '')
+            + pager(n_, 'en') + '</main>\n')
+    body = relink(body, f_, id_page_en, OLD_EN)
+    for pat in (f'<a href="#{f_[:-5]}">', f'<a href="{f_}">'):
+        if pat in body:
+            body = body.replace(pat, pat[:-1] + ' class="active">', 1)
+            break
+    (OUT / 'en' / f_).write_text(page('en', title, desc, f'en/{f_}', '../', en_words(body), FONTS_EN, FOOTER_EN()))
+for k, tgt in OLD_EN.items():   # старые адреса английских разделов
+    if f'{k}.html' in EN_PAGES:
+        continue
+    (OUT / 'en' / f'{k}.html').write_text(stub(tgt, f'{EN_STUB_TITLE[k]} — Blazhevich', 'en'))
+nav_en_dossier = nav_en.replace('<a href="schools.html">', '<a href="schools.html" class="active">', 1)
 for f, (title, desc) in EN_DOSSIERS.items():
     src = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec(f[:-5], 'en'))
-    body = (header(nav_en_idx, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')
-            + '<main id="main">\n' + inner(src, 'Schools', 'index.html#schools', '../') + '</main>\n')
+    body = (header(nav_en_dossier, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')
+            + '<main id="main">\n' + inner(src, 'The school and its lineage', 'schools.html', '../') + '</main>\n')
+    body = relink(body, f, id_page_en, OLD_EN)
     (OUT / 'en' / f).write_text(page('en', title, desc, f'en/{f}', '../', en_words(body), FONTS_EN, FOOTER_EN()))
 
 if a.release:
     today = datetime.date.fromisoformat(a.lastmod).isoformat() if a.lastmod else datetime.date.today().isoformat()
-    urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/'] + [f'en/{f}' for f in EN_DOSSIERS]
+    urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/'] + [f'en/{f}' for f in (*EN_PAGES, *EN_DOSSIERS)]
     (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + ''.join(f'  <url><loc>{DOM}/{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls)
         + (f'  <url><loc>{DOM}/news/</loc><lastmod>{NEWS[0]["release"]}</lastmod></url>\n' if NEWS else '')
@@ -548,12 +731,12 @@ if a.release:
     (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nContent-Signal: search=yes, ai-train=no\n\nSitemap: {DOM}/sitemap.xml\n')
 
 # ---------------- Одностраничная версия для предпросмотра на claude.ai ----------------
-one = ''.join(sec(s_) for s_ in ['scores', 'listen', 'biography', 'usa', 'schools', 'concertos', 'about'])
-nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
+one = ''.join(deco(sec(s_), n=i) for i, s_ in enumerate(WORKS_SECS + ['listen', 'biography', 'schools', 'about'], 1))
+nav = ''.join(f'<a href="#{PAGES[f"{i}.html"][0][0]}">{t}</a>' for i, t, _ in HUB_RU)
 art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
        '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#e8dbbf">\n' + FAVICON + '\n' + FONTS_GOOGLE
        + f'\n<style>\n{CSS}</style>\n\n'
-       + header(nav, '', '#scores')
+       + header(nav, '', f'#{PAGES["works.html"][0][0]}')
        + f'<main id="main">\n{one}</main>\n'
        + '<footer><div class="wrap foot"><a href="#scores" class="brand">Blazhevich</a><span>Владислав Блажевич · Vladislav Blazhevich</span></div></footer>\n'
        + '<button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>\n'

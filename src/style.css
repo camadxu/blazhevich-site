@@ -505,43 +505,70 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
   .scene-leningrad{--scene-sm:url(assets/scene-leningrad-960.webp)}
 }
 
-/* ---------- Общая страница: боковое меню справа (десктоп) и кнопка «Меню» (телефон, планшет) ----------
-   Оба появляются, когда первый экран ушёл вверх (класс past-hero ставит скрипт) — над портретом ничего не висит. */
-.rail{position:fixed;z-index:22;right:calc(var(--s-5) + env(safe-area-inset-right,0px));top:50%;translate:0 -50%;
-  display:none;flex-direction:column;align-items:flex-end;gap:0;padding:var(--s-3) 0;border-right:1px solid var(--rule);
-  opacity:0;pointer-events:none;transition:opacity .4s ease}
-.rail a{position:relative;display:block;padding:var(--s-2) var(--s-4);color:var(--muted);text-decoration:none;
-  font:500 12px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:color .2s}
-.rail a::after{content:"";position:absolute;right:-1px;top:50%;width:1px;height:70%;background:var(--ink);translate:0 -50%;scale:1 0;transition:scale .25s var(--ease)}
-.rail a:hover{color:var(--ink)}
-.rail a.active{color:var(--ink)}
-.rail a.active::after{scale:1;width:2px;right:-1.5px}
-.rail .lang{margin-top:var(--s-3);color:var(--gold)}
+/* ---------- Витрина: шапка под первым экраном и кнопка «Меню» (телефон, планшет) ----------
+   Шапка и кнопка появляются, когда первый экран ушёл вверх (класс past-hero ставит скрипт) — над портретом ничего не висит.
+   Без JS шапка остаётся в потоке под первым экраном и прилипает к верху после него. */
+#top-bar.on-hero{position:static}
+.js #top-bar.on-hero{position:fixed;inset:0 0 auto;translate:0 -110%;visibility:hidden;
+  transition:translate .3s var(--ease),visibility 0s .3s}
+.js.past-hero #top-bar.on-hero{translate:0 0;visibility:visible;transition:translate .3s var(--ease)}
+html:not(.js) #top-bar.on-hero{position:sticky;top:0}
 .fab{position:fixed;z-index:22;top:calc(var(--s-3) + env(safe-area-inset-top,0px));right:calc(var(--s-3) + env(safe-area-inset-right,0px));
   display:none;min-height:40px;padding:0 var(--s-4);border:1px solid var(--rule);border-radius:var(--radius);
   background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   color:var(--ink);font:600 12px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-menu{position:fixed}
-/* Меню разделов (13.11.2026, просьба владельца): на компьютере с мышью оно спрятано за правым краем
-   и само выезжает, когда курсор подходит к краю окна; у края всегда видна тонкая вкладка «Разделы».
-   С клавиатуры меню открывается по Tab (focus-within). Без мыши (телефон, планшет) — кнопка «Меню». */
-.rail-edge{display:none}
-@media(min-width:1101px) and (hover:hover) and (pointer:fine){
-  .rail-edge{display:flex;position:fixed;z-index:21;top:0;bottom:0;right:0;width:44px;align-items:center;justify-content:center}
-  .rail-edge span{writing-mode:vertical-rl;padding:var(--s-4) var(--s-2);border:1px solid var(--rule);border-right:0;border-radius:var(--radius) 0 0 var(--radius);
-    background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-    color:var(--gold);font:600 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;transition:opacity .25s}
-  .rail{display:flex;right:0;padding:var(--s-4) 0 var(--s-4) var(--s-3);border:1px solid var(--rule);border-right:3px solid var(--rule);
-    border-radius:var(--radius) 0 0 var(--radius);background:var(--surface) var(--grain);box-shadow:-10px 0 28px -12px var(--shadow);
-    opacity:0;translate:calc(100% + 24px) -50%;pointer-events:none;transition:opacity .25s ease,translate .35s var(--ease)}
-  .rail-edge:hover + .rail,.rail:hover,.rail:focus-within{opacity:1;translate:0 -50%;pointer-events:auto}
-  .rail-edge:has(+ .rail:hover) span,.rail-edge:hover span{opacity:0}
-}
+/* Кнопка «Меню» (телефон, планшет): на компьютере разделы всегда в шапке, кнопка не нужна. */
 @media not all and (min-width:1101px) and (hover:hover) and (pointer:fine){
   .fab{display:inline-flex;align-items:center}
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
 html:not(.js) .fab{opacity:1;pointer-events:auto}
+
+/* ---------- Витрина: сетка пяти разделов и полоса досье (в бумажной гамме V6) ---------- */
+.hub-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--s-4)}
+.hub-card{position:relative;display:flex;flex-direction:column;gap:var(--s-3);padding:var(--s-5) var(--s-5) var(--s-6);
+  background:var(--surface) var(--grain);border:1px solid var(--line);border-top:3px double var(--rule);border-radius:var(--radius);
+  text-decoration:none;color:var(--muted);transition:border-color .2s,translate .2s}
+.hub-card::before{content:attr(data-n);font:600 12px/1 var(--body);letter-spacing:.14em;color:var(--gold)}
+.hub-card .hub-fig{display:block;aspect-ratio:5/4;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius)}
+.hub-card .hub-fig img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 38%;
+  filter:drop-shadow(0 14px 18px var(--shade-deep))}
+.hub-card b{font-family:var(--display);font-size:clamp(22px,2.2vw,27px);font-weight:600;line-height:1.12;color:var(--ink)}
+.hub-card span{font-size:15px;line-height:1.5;max-width:34ch}
+.hub-card:hover{border-color:var(--rule);translate:0 -2px}
+.hub-card:hover b{color:var(--accent)}
+.hub-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.dossiers-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-4)}
+.dossier-card{position:relative;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-6);border:1px solid var(--line);
+  border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:color-mix(in srgb,var(--surface) 60%,transparent) var(--grain);text-decoration:none;color:var(--muted)}
+.dossier-card .eyebrow{margin:0}
+.dossier-card b{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15;color:var(--ink)}
+.dossier-card > span:not(.eyebrow){font-size:15px;line-height:1.5}
+.dossier-card i{position:absolute;right:var(--s-5);bottom:var(--s-5);font-style:normal;color:var(--gold);opacity:0;transition:opacity .2s}
+.dossier-card:hover b{color:var(--accent)}
+.dossier-card:hover i,.dossier-card:focus-visible i{opacity:1}
+.dossier-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(max-width:640px){.hub-card .hub-fig{aspect-ratio:16/8}}
+
+/* ---------- Пейджер разделов: ← пред · все разделы · след → ---------- */
+.pager{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s-3) var(--s-5);
+  padding-block:var(--s-6);border-top:1px solid var(--line)}
+.pager a{color:var(--muted);text-decoration:none;font-size:15px;padding:var(--s-2) 0;transition:color .2s}
+.pager .pg-all{font:600 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.pager .pg-way{font-family:var(--display);font-size:19px;font-weight:500;color:var(--ink)}
+.pager a:hover{color:var(--accent)}
+.pager a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ---------- Блок «Файлы для скачивания» на странице «Труды» ---------- */
+.files-list{display:grid;gap:var(--s-4);margin:0;padding:0;list-style:none;max-width:var(--measure)}
+.file-row{display:grid;gap:var(--s-2);padding:var(--s-4) 0;border-bottom:1px solid var(--line)}
+.file-row .file-name{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s-3);margin:0}
+.file-row .file-name b{font-family:var(--display);font-size:21px;font-weight:600;color:var(--ink)}
+.file-row .file-links{display:flex;flex-wrap:wrap;gap:var(--s-4);margin:0}
+.file-row .file-links a{color:var(--accent);font-weight:600;text-decoration-thickness:1px;text-underline-offset:.15em}
+.file-row p:not(.file-name):not(.file-links){margin:0;color:var(--muted)}
 
 /* надпись и кнопки на первом экране лежат на снимке: под ними мягкая бумажная подложка, чтобы буквы не путались с фасадом */
 .hero-copy{position:relative}
@@ -622,7 +649,8 @@ ol.lineage .role{font-size:14px;line-height:1.45;color:var(--muted)}
 body::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;
   background:radial-gradient(130% 100% at 50% 40%,transparent 62%,var(--edge-shade) 100%)}
 @media print{body::after{display:none}}
-.rail .lang{margin-right:var(--s-4)}
+/* языковая кнопка в шапке не прилипает к последнему разделу */
+#top-bar .lang{margin-left:var(--s-2)}
 
 /* ---------- Ноты: полки каталога (15.11.2026, V6). Карточки разложены по группам, у каждой группы свой оттенок
    той же сепии; линеек под текстом нет, всё стоит по одной линии. Вся карточка со ссылкой по-прежнему нажимается.
@@ -781,7 +809,7 @@ body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background
 /* ---------- Линия прочитанного: тонкая золочёная полоска вверху общей страницы ---------- */
 .progress{position:fixed;z-index:31;top:0;left:0;right:0;height:2px;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0));pointer-events:none}
 html:not(.past-hero) .progress{opacity:0}
-@media print{.progress,.rail,.rail-edge,.fab,.totop{display:none!important}}
+@media print{.progress,#top-bar.on-hero,.fab,.totop{display:none!important}}
 
 /* ---------- Биография: цифра на полях и архивный снимок под главой ---------- */
 .ch-note{display:grid;gap:var(--s-2);align-content:start;padding-top:var(--s-3);border-top:1px solid var(--ink)}
@@ -837,7 +865,7 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
 /* без :has() рамка карточки не рисуется — ссылка обязана остаться видимой */
 @supports not selector(:has(a)){.card a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}}
 /* нажатие должно подтверждаться и на тач-экране, где :hover залипает */
-.toc a:active,.card a:active,.rail a:active,.foot ul a:active,.record-links a:active,
+.toc a:active,.card a:active,.hub-card:active,.dossier-card:active,.foot ul a:active,.record-links a:active,
 .hero-btn:active,.hero-menu a:active,.fab:active,.card:active{translate:0 1px}
 /* на снимке первого экрана рамка светлая: тёмная умбра на фасаде не читается */
 .hero-lang:focus-visible{outline-color:var(--over-ink-hi)}
