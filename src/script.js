@@ -68,7 +68,7 @@
 
   /* Витрина: старые якоря одностраничника (#scores, #concertos, …) ведут на страницы разделов.
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
-  if(document.querySelector('.twin-band')){
+  if(document.querySelector('.school-strip')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
              '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
