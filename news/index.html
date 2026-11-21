@@ -8,28 +8,28 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#e8dbbf">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=cf00f6e6">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=0f0b898b">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:site_name" content="Blazhevich">
 <meta property="og:title" content="Лента — новости медных инструментов — Blazhevich">
 <meta property="og:description" content="Новости медных духовых, выпуск от 20 ноября 2026: Noel Langley – ‘Syzygy’">
-<meta property="og:image" content="../assets/og-image.jpg?v=cf00f6e6">
+<meta property="og:image" content="../assets/og-image.jpg?v=0f0b898b">
 <meta property="og:image:alt" content="Владислав Блажевич с тромбоном перед Большим залом консерватории и Большим театром">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-image.jpg?v=cf00f6e6">
+<meta name="twitter:image" content="../assets/og-image.jpg?v=0f0b898b">
 <meta name="twitter:image:alt" content="Владислав Блажевич с тромбоном перед Большим залом консерватории и Большим театром">
 <link rel="alternate" type="application/rss+xml" title="Blazhevich — Лента" href="../feed.xml">
 <link rel="stylesheet" href="../assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="../assets/main.b3d8cb5d26.css">
+<link rel="stylesheet" href="../assets/main.3f3c3af763.css">
 </head>
 <body>
 <a class="skip" href="#main">Перейти к содержимому</a>
 <div class="draft">Предварительный просмотр · не опубликовано</div>
 <header id="top-bar"><div class="wrap bar">
   <a href="../index.html" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>
-  <nav aria-label="Основная навигация"><a href="../works.html">Труды</a><a href="../listen.html">Слушать</a><a href="../biography.html">Биография</a><a href="../schools.html">Школа и традиция</a><a href="../about.html">О проекте</a><a href="index.html" class="active">Лента</a><a class="lang" href="../en/index.html" hreflang="en" lang="en">EN</a></nav>
+  <nav aria-label="Основная навигация"><a href="../works.html">Труды</a><a href="../listen.html">Слушать</a><a href="../index.html#biography">Биография</a><a href="../schools.html">Школа и традиция</a><a href="../about.html">О проекте</a><a href="index.html" class="active">Лента</a><a class="lang" href="../en/index.html" hreflang="en" lang="en">EN</a></nav>
 </div></header>
 <main id="main">
 <section id="news" class="block news-page"><div class="wrap">
@@ -40,7 +40,7 @@
 </main>
 <footer><div class="wrap foot">
   <div class="foot-id"><a href="../index.html" class="brand">Blazhevich</a><p class="foot-name">Владислав Блажевич <span>1881–1942</span></p><p>Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.</p></div>
-  <div class="foot-col" role="navigation" aria-label="Подвал"><h2>Разделы</h2><ul class="foot-secs"><li><a href="../works.html">Труды</a></li><li><a href="../listen.html">Слушать</a></li><li><a href="../biography.html">Биография</a></li><li><a href="../schools.html">Школа и традиция</a></li><li><a href="../about.html">О проекте</a></li></ul></div>
+  <div class="foot-col" role="navigation" aria-label="Подвал"><h2>Разделы</h2><ul class="foot-secs"><li><a href="../works.html">Труды</a></li><li><a href="../listen.html">Слушать</a></li><li><a href="../index.html#biography">Биография</a></li><li><a href="../schools.html">Школа и традиция</a></li><li><a href="../about.html">О проекте</a></li></ul></div>
   <div class="foot-col"><h2>Школы тромбона</h2><ul><li><a href="../moscow.html">Московская тромбоновая школа</a></li><li><a href="../leningrad.html">Ленинградская тромбоновая школа</a></li><li><a href="../us-schools.html">Американские школы</a></li></ul><h2>Язык</h2><ul><li><a href="../en/index.html" hreflang="en" lang="en">English version</a></li></ul></div>
   <p class="foot-fine">Источники и права на изображения указаны в разделе <a href="../about.html">«О проекте»</a>.</p>
 </div></footer>
@@ -118,7 +118,7 @@
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
   if(document.querySelector('.hub-cards')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
-             '#biography':'biography.html','#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};
+             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
   }
 

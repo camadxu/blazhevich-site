@@ -8,20 +8,20 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#e8dbbf">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=cf00f6e6">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=0f0b898b">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Blazhevich">
 <meta property="og:title" content="About the project — Blazhevich">
 <meta property="og:description" content="Sources, image credits and how this project works.">
-<meta property="og:image" content="../assets/og-about.jpg?v=cf00f6e6">
+<meta property="og:image" content="../assets/og-about.jpg?v=0f0b898b">
 <meta property="og:image:alt" content="The Bolshoi Theatre, 1905">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-about.jpg?v=cf00f6e6">
+<meta name="twitter:image" content="../assets/og-about.jpg?v=0f0b898b">
 <meta name="twitter:image:alt" content="The Bolshoi Theatre, 1905">
 <link rel="stylesheet" href="../assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="../assets/main.b3d8cb5d26.css">
+<link rel="stylesheet" href="../assets/main.3f3c3af763.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,7 +33,7 @@
 <main id="main">
 <section id="about" class="block"><div class="wrap">
   <div class="staff" aria-hidden="true"></div>
-  <div class="section-head reveal" data-n="05"><a class="crumb" href="index.html">← Sections</a><h1 class="page-title">About this project</h1><div class="eyebrow">Transparency and sources</div></div>
+  <div class="section-head reveal" data-n="04"><a class="crumb" href="index.html">← Sections</a><h1 class="page-title">About this project</h1><div class="eyebrow">Transparency and sources</div></div>
   <div class="about">
     <div class="reveal">
       <p>An independent project about the life, music and teaching legacy of Vladislav Blazhevich. It does not represent the Moscow Conservatory, the libraries or the performers it links to. This version has no registration, donations or competition entries. The Russian version is the primary one; this English page follows it. Bracketed source numbers here match the English list below, not the Russian one.</p>
@@ -73,11 +73,11 @@
     <p class="note">Bracketed numbers in the text link to this list. Where sources disagree, the Russian version lists the conflicts in full. Independent verification, especially of image rights and of individual score editions, remains a separate task.</p>
   </div>
 </div></section>
-<nav class="pager wrap reveal" aria-label="Section navigation"><a class="pg-way" rel="prev" href="schools.html">← The school and its lineage</a><a class="pg-all" href="index.html">All sections</a></nav>
+<nav class="pager wrap reveal" aria-label="Section navigation"><a class="pg-way" rel="prev" href="index.html#biography">← Biography</a><a class="pg-all" href="index.html">All sections</a><a class="pg-way" rel="next" href="about.html">About →</a></nav>
 </main>
 <footer><div class="wrap foot">
   <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">Vladislav Blazhevich <span>1881–1942</span></p><p>Trombonist, teacher, composer. An independent project about his life, scores and school.</p></div>
-  <div class="foot-col" role="navigation" aria-label="Footer"><h2>Sections</h2><ul class="foot-secs"><li><a href="works.html">Works</a></li><li><a href="listen.html">Listen</a></li><li><a href="biography.html">Biography</a></li><li><a href="schools.html">The school and its lineage</a></li><li><a href="about.html">About</a></li></ul></div>
+  <div class="foot-col" role="navigation" aria-label="Footer"><h2>Sections</h2><ul class="foot-secs"><li><a href="works.html">Works</a></li><li><a href="listen.html">Listen</a></li><li><a href="index.html#biography">Biography</a></li><li><a href="schools.html">The school and its lineage</a></li><li><a href="about.html">About</a></li></ul></div>
   <div class="foot-col"><h2>Trombone schools</h2><ul><li><a href="moscow.html">The Moscow trombone school</a></li><li><a href="leningrad.html">The Leningrad trombone school</a></li><li><a href="us-schools.html">American schools</a></li></ul><h2>Language</h2><ul><li><a href="../index.html" hreflang="ru" lang="ru">Русская версия</a></li></ul></div>
   <p class="foot-fine">Sources and image credits are listed under <a href="about.html">About</a>.</p>
 </div></footer>
@@ -155,7 +155,7 @@
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
   if(document.querySelector('.hub-cards')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
-             '#biography':'biography.html','#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};
+             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
   }
 
