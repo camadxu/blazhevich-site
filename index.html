@@ -24,7 +24,7 @@
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cormorant-garamond-500-normal-latin.woff2" crossorigin>
 <link rel="alternate" type="application/rss+xml" title="Blazhevich — Лента" href="feed.xml">
 <link rel="stylesheet" href="assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="assets/main.1ce00c988e.css">
+<link rel="stylesheet" href="assets/main.cc875c4531.css">
 </head>
 <body>
 <a class="skip" href="#main">Перейти к содержимому</a>
@@ -53,8 +53,7 @@
     <p class="lede-text">Тромбонист Большого театра, профессор Московской консерватории, автор школ и этюдов, по которым до сих пор учатся тромбонисты в России и в США.</p>
     <p class="lede-sub">Здесь собраны его ноты, записи, биография и история двух школ русского тромбона. Факты даны со ссылками на источники, расхождения между ними отмечены.</p></div>
 </div></div>
-<section class="block twin-band" aria-label="Биография и школа"><div class="wrap"><div class="twin-grid">
-  <div class="twin-bio" id="biography">
+<section id="biography" class="block bio-band" aria-label="Биография"><div class="wrap">
 
   <div class="staff" aria-hidden="true"></div>
   <div class="section-head reveal" data-n="03"><h2>Как Блажевич стал Блажевичем</h2><div class="eyebrow">Жизнь в музыке · 1881–1942</div><p>Путь от сироты с бедного смоленского хутора до профессора Московской консерватории, чьи этюды сегодня задают в американских университетах.</p></div>
@@ -197,17 +196,16 @@
       <li><b>Райхман и Блажевич.</b> В английской Википедии сказано, что они занимались вместе «в начале 1940-х». Это расходится с другими данными: по Йео, Райхман работал в Бостоне с 1927 года, а по Харламову, ноты Блажевича он увёз из России в 1926 году.<sup class="ref"><a href="about.html#s2">[2]</a><a href="about.html#s3">[3]</a><a href="about.html#s4">[4]</a></sup></li>
     </ul>
   </details>
-  </div>
-  <aside class="twin-side" aria-label="Школа и традиция">
-    <div class="section-head reveal" data-n="04"><h2>Школа и традиция</h2><div class="eyebrow">Две школы русского тромбона</div><p>Московская и петербургская школы складывались параллельно, а Яков Райхман связал их обе с Америкой. Ниже показано, у кого учились профессора и кого выучили сами. Пробелы в источниках отмечены прямо в тексте.</p></div>
-    <div class="dossiers-strip">
+</div></section>
+<section class="block school-strip" aria-label="Школа и традиция"><div class="wrap">
+  <div class="section-head reveal" data-n="04"><h2>Школа и традиция</h2><div class="eyebrow">Две школы русского тромбона</div><p>Московская и петербургская школы складывались параллельно, а Яков Райхман связал их обе с Америкой. Ниже показано, у кого учились профессора и кого выучили сами. Пробелы в источниках отмечены прямо в тексте.</p></div>
+  <div class="dossiers-strip">
     <a class="dossier-card" href="moscow.html"><span class="eyebrow">Очерк</span><b>Московская школа</b><span>Витнебен и Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь</span><i aria-hidden="true">→</i></a>
     <a class="dossier-card" href="leningrad.html"><span class="eyebrow">Сборник</span><b>Ленинградская школа</b><span>Тюрнер, Волков, Козлов, Венгловский; Квартет тромбонов филармонии</span><i aria-hidden="true">→</i></a>
     <a class="dossier-card" href="us-schools.html"><span class="eyebrow">Досье</span><b>Американская линия</b><span>Райхман, Clef Studies и издания, связавшие русскую школу с США</span><i aria-hidden="true">→</i></a>
-    </div>
-    <a class="twin-more" href="schools.html">Весь раздел «Школа и традиция» <i aria-hidden="true">→</i></a>
-  </aside>
-</div></div></section>
+  </div>
+  <a class="school-more" href="schools.html">Весь раздел «Школа и традиция» <i aria-hidden="true">→</i></a>
+</div></section>
 <section id="news" class="block news-panel" aria-labelledby="news-title"><div class="wrap">
   <div class="section-head reveal"><h2 id="news-title">Лента</h2><div class="eyebrow">Новости медных духовых · выпуск от <time datetime="2026-11-20">20 ноября 2026</time></div><p>Конкурсы, назначения, премьеры и записи: что произошло у тромбонистов, трубачей, валторнистов и тубистов. Каждая заметка ведёт на первоисточник.</p></div>
 <ol class="news-list reveal" data-agent-list data-agent-release="2026-11-20" data-agent-live="news/today.json" data-agent-limit="5"><li class="news-item" data-agent-instruments="brass-band"><p class="news-meta"><span class="news-source">UK Jazz News</span><time datetime="2026-11-18">18 ноября 2026</time></p><h3 lang="en"><a href="https://ukjazznews.com/noel-langley-syzygy/" rel="noopener">Noel Langley – ‘Syzygy’</a></h3><p class="news-tags"><span>брасс-бэнд</span><span>альбом</span></p></li></ol>
@@ -292,7 +290,7 @@
 
   /* Витрина: старые якоря одностраничника (#scores, #concertos, …) ведут на страницы разделов.
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
-  if(document.querySelector('.twin-band')){
+  if(document.querySelector('.school-strip')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
              '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);

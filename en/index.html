@@ -23,7 +23,7 @@
 <link rel="preload" as="image" type="image/avif" imagesrcset="../assets/hero-home-960.avif 960w, ../assets/hero-home-1440.avif 1440w, ../assets/hero-home-2880.avif 2880w" imagesizes="(max-aspect-ratio: 2880/1568) 184vh, 100vw" fetchpriority="high">
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/cormorant-garamond-500-normal-latin.woff2" crossorigin>
 <link rel="stylesheet" href="../assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="../assets/main.1ce00c988e.css">
+<link rel="stylesheet" href="../assets/main.cc875c4531.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -53,8 +53,7 @@
     <p class="lede-sub">This site gathers his scores, recordings, biography and the story of two Russian trombone schools. Facts are given with their sources, and disagreements between sources are marked.</p></div>
 </div></div>
 
-<section class="block twin-band" aria-label="Biography and the school"><div class="wrap"><div class="twin-grid">
-  <div class="twin-bio" id="biography">
+<section id="biography" class="block bio-band" aria-label="Biography"><div class="wrap">
 
   <div class="staff" aria-hidden="true"></div>
   <div class="section-head reveal" data-n="03"><h2>The making of Blazhevich</h2><div class="eyebrow">A life in music · 1881–1942</div><p>From an orphan on a poor Smolensk farm to a professor at the Moscow Conservatory whose etudes are still assigned at American universities.</p></div>
@@ -170,17 +169,16 @@
       <li><b>Raichman and Blazhevich.</b> English Wikipedia says they studied together “in the early 1940s.” This conflicts with other data: according to Yeo, Raichman worked in Boston from 1927, and according to Kharlamov he took Blazhevich’s music out of Russia in 1926.<sup class="ref"><a href="about.html#s2">[2]</a><a href="about.html#s3">[3]</a><a href="about.html#s4">[4]</a></sup></li>
     </ul>
   </details>
-  </div>
-  <aside class="twin-side" aria-label="The school and its lineage">
-    <div class="section-head reveal" data-n="04"><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
-    <div class="dossiers-strip">
+</div></section>
+<section class="block school-strip" aria-label="The school and its lineage"><div class="wrap">
+  <div class="section-head reveal" data-n="04"><h2>Two Russian trombone schools</h2><div class="eyebrow">Teacher → pupil</div><p>The Moscow and St. Petersburg schools developed side by side, and Jacob Raichman linked both of them with America. Below: who studied with whom. Gaps in the sources are marked in the text.</p></div>
+  <div class="dossiers-strip">
     <a class="dossier-card" href="moscow.html"><span class="eyebrow">Essay</span><b>The Moscow school</b><span>Wittneben and Bork, Blazhevich, Shcherbinin and his pupils</span><i aria-hidden="true">→</i></a>
     <a class="dossier-card" href="leningrad.html"><span class="eyebrow">Collection</span><b>The Leningrad school</b><span>Türner, Volkov, Kozlov, Venglovsky; the Philharmonic Trombone Quartet</span><i aria-hidden="true">→</i></a>
     <a class="dossier-card" href="us-schools.html"><span class="eyebrow">Dossier</span><b>The American line</b><span>Raichman, the Clef Studies and the editions that linked the Russian school with the USA</span><i aria-hidden="true">→</i></a>
-    </div>
-    <a class="twin-more" href="schools.html">The full section: the school and its lineage <i aria-hidden="true">→</i></a>
-  </aside>
-</div></div></section>
+  </div>
+  <a class="school-more" href="schools.html">The full section: the school and its lineage <i aria-hidden="true">→</i></a>
+</div></section>
 </main>
 <footer><div class="wrap foot">
   <div class="foot-id"><a href="index.html" class="brand">Blazhevich</a><p class="foot-name">Vladislav Blazhevich <span>1881–1942</span></p><p>Trombonist, teacher, composer. An independent project about his life, scores and school.</p></div>
@@ -260,7 +258,7 @@
 
   /* Витрина: старые якоря одностраничника (#scores, #concertos, …) ведут на страницы разделов.
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
-  if(document.querySelector('.twin-band')){
+  if(document.querySelector('.school-strip')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
              '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
