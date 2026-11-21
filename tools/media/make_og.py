@@ -17,7 +17,6 @@ PAPER = (232, 219, 191)          # --paper:#e8dbbf
 SRC = {
     'works':      ('assets/v-conservatory-portico.webp', 'card', 1.6, 'center', None),
     'listen':     ('assets/v-bolshoi-colonnade.webp', 'card', 1.6, 'center', None),
-    'biography':  ('assets/blazhevich-1903.webp', 'card', 1.0, 'center', None),
     'schools':    ('assets/conservatory-1940s.webp', 'cover', 1.0, 'center', None),
     'about':      ('assets/bolshoi-1905.webp', 'cover', 1.0, 'center', None),
     'moscow':     ('assets/scene-moscow.webp', 'cover', 1.0, 'bottom', (790, 400, 1920, 1150)),

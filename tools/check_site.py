@@ -4,13 +4,13 @@
   python3 tools/check_site.py путь/к/site
 
 Что проверяется:
-  • все страницы на месте: витрина, пять разделов, три досье — на обоих языках;
+  • все страницы на месте: витрина (биография живёт на ней), четыре раздела, три досье — на обоих языках;
   • каждая внутренняя ссылка (href/src/srcset и url() в fonts.css) ведёт на существующий файл,
     а ссылка с #якорем — на существующий id в целевой странице;
   • нет повторяющихся id на странице, у каждой страницы ровно один <h1>;
   • ни одна страница не загружает внешние ресурсы (скрипты, стили, картинки, шрифты с http/https);
-  • витрина: карточки пяти разделов и полоса досье на месте, бокового меню (rail) нет;
-  • переадресации со старых адресов (scores, concertos, usa) ведут на существующие страницы;
+  • витрина: карточки разделов и колонка досье «Школа» на месте, бокового меню (rail) нет;
+  • переадресации со старых адресов (scores, concertos, usa, biography) ведут на существующие страницы;
   • страница 404 собрана и ведёт на разделы;
   • состояние публикации: robots, плашка черновика, canonical, sitemap.xml, robots.txt.
 Внешние ссылки (<a href="https://…">) только перечисляются; их доступность не проверяется.
@@ -20,12 +20,13 @@ import pathlib, re, sys
 from html.parser import HTMLParser
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
-# Сайт — витрина index.html, пять разделов и три досье на каждом языке; старые адреса разделов — переадресации
-HUB = ['works.html', 'listen.html', 'biography.html', 'schools.html', 'about.html']
+# Сайт — витрина index.html (биография на ней), четыре раздела и три досье на каждом языке; старые адреса — переадресации
+HUB = ['works.html', 'listen.html', 'schools.html', 'about.html']
 PAGES = ['index.html', *HUB, 'moscow.html', 'leningrad.html', 'us-schools.html',
          'en/index.html', *[f'en/{p}' for p in HUB], 'en/moscow.html', 'en/leningrad.html', 'en/us-schools.html']
 # старый адрес → (страница, обязательный якорь; '?' = якорь optional, пока глава переносится)
-STUBS = (('scores.html', 'works.html', ''), ('concertos.html', 'works.html', 'concertos'), ('usa.html', 'us-schools.html', '?'))
+STUBS = (('scores.html', 'works.html', ''), ('concertos.html', 'works.html', 'concertos'), ('usa.html', 'us-schools.html', '?'),
+         ('biography.html', 'index.html', 'biography'))
 errors, external = [], set()
 
 class P(HTMLParser):
@@ -79,7 +80,7 @@ for pg, p in list(parsed.items()):
         if frag and target.suffix == '.html' and frag not in ids_of(target):
             errors.append(f'{pg}: нет якоря #{frag} в {target.relative_to(SITE)}')
 
-# витрина: карточки всех пяти разделов и трёх досье; боковое меню одностраничника убрано
+# витрина: карточки разделов и колонка досье; боковое меню одностраничника убрано
 if 'index.html' in parsed:
     s = (SITE / 'index.html').read_text(encoding='utf-8')
     for p_ in HUB + ['moscow.html', 'leningrad.html', 'us-schools.html']:

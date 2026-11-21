@@ -5,10 +5,11 @@
                                                      Open Graph с полными адресами, sitemap.xml, robots.txt
 
 Результат в папке site/: index.html — витрина (первый экран, вступление, карточки пяти разделов,
-полоса досье школ и лента новостей), страницы разделов works.html, listen.html, biography.html,
-schools.html, about.html, досье moscow.html, leningrad.html, us-schools.html и английские зеркала
-всех страниц в en/. Старые адреса разделов (scores.html, en/scores.html, …) остаются короткими
-страницами-переадресациями. Эту папку целиком загружают на хостинг.
+биография целиком рядом с колонкой «Школа и традиция», лента новостей), страницы разделов
+works.html, listen.html, schools.html, about.html, досье moscow.html, leningrad.html,
+us-schools.html и английские зеркала всех страниц в en/. Старые адреса разделов (scores.html,
+en/scores.html, biography.html, …) остаются короткими страницами-переадресациями.
+Эту папку целиком загружают на хостинг.
 Для зеркал (РФ и США) собирайте обе копии с одним --domain — адресом основного сайта.
 С флагом --single-page дополнительно собирается artifact.html — вся русская версия одной
 страницей (нужна только для предпросмотра в Claude, на сервер не загружается; шрифты берёт с Google Fonts).
@@ -76,15 +77,13 @@ def sec(name, lang='ru'):
 # действует временный фолбэк волны: страница клеится из концертов и каталога нот.
 WORKS_SECS = ['works'] if (SRC / 'ru' / 'works.html').exists() else ['concertos', 'scores']
 PAGES = {  # файл: (секции, заголовок, описание)
-    'index.html': (['hero'],
+    'index.html': (['hero', 'biography'],   # секция биографии живёт на витрине — её id-якоря ведут на index.html
                    'Blazhevich — Владислав Блажевич: тромбон, ноты, история',
                    'Владислав Блажевич (1881–1942): ноты, записи, биография, 13 концертов для тромбона, школы тромбона и признание в США.'),
     'works.html': (WORKS_SECS, 'Труды Блажевича — концерты, школы, этюды',
                    '13 концертов для тромбона, «Школа игры», этюды и ансамбли: каталог трудов Владислава Блажевича со ссылками на ноты.'),
     'listen.html': (['listen'], 'Слушать Блажевича — записи и видео',
                     'Аудиозаписи и видео произведений Владислава Блажевича.'),
-    'biography.html': (['biography'], 'Биография — Владислав Блажевич',
-                       'Жизнь тромбониста и педагога: Москва, Большой театр, консерватория.'),
     'schools.html': (['schools'], 'Школа и традиция — две школы русского тромбона',
                      'Московская и ленинградская школы тромбона и их досье: Москва, Петербург, американская линия.'),
     'about.html': (['about'], 'О проекте — Blazhevich',
@@ -104,7 +103,7 @@ HUB_RU = [('works', 'Труды', 'Каталог: 13 концертов, шко
           ('about', 'О проекте', 'Источники, права на изображения и принципы работы')]
 NAV_RU = [(i, t) for i, t, _ in HUB_RU]
 # английские зеркала есть у всех страниц, кроме витрины (у неё — en/index.html)
-EN_TWINS = {'works.html', 'listen.html', 'biography.html', 'schools.html', 'about.html',
+EN_TWINS = {'works.html', 'listen.html', 'schools.html', 'about.html',
             'moscow.html', 'leningrad.html', 'us-schools.html'}
 # досье-подстраницы: крошка ведёт на родительский раздел, в меню подсвечен он же
 PARENT_RU = {f: ('schools', 'Школа и традиция') for f in ('moscow.html', 'leningrad.html', 'us-schools.html')}
@@ -161,8 +160,7 @@ def header(nav_html, lang_link, home, hero_page=False):
 
 # архивная виньетка в шапке раздела: декоративная (alt=""), источники снимков — в «О проекте»
 VIGNETTE = {'works': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
-            'biography': 'conservatory-1940s.webp', 'concertos': 'bolshoi-1905.webp',
-            'schools': 'conservatory-1940s.webp'}
+            'concertos': 'bolshoi-1905.webp', 'schools': 'conservatory-1940s.webp'}
 # виньетки карточек витрины: «Труды» наследуют порттик консерватории, «О проекте» — снимок Большого 1905 года
 HUB_IMG = {'works': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
            'biography': 'conservatory-1940s.webp', 'schools': 'conservatory-1940s.webp', 'about': 'bolshoi-1905.webp'}
@@ -209,7 +207,9 @@ def hub_cards(lang, prefix=''):
     cards = ''
     for n, (i, t, d) in enumerate(hub, 1):
         w, h = VIGNETTE_WH[HUB_IMG[i]]
-        cards += (f'    <a class="hub-card" href="{prefix}{i}.html" data-n="{n:02d}">\n'
+        # href всегда без префикса: биография — якорь этой же витрины, EN-витрина ведёт на свои страницы
+        href = '#biography' if i == 'biography' else f'{i}.html'
+        cards += (f'    <a class="hub-card" href="{href}" data-n="{n:02d}">\n'
                   f'      <span class="hub-fig" aria-hidden="true"><img src="{prefix}assets/{HUB_IMG[i]}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async"></span>\n'
                   f'      <b>{t}</b><span>{d}</span></a>\n')
     return ('<section id="hub" class="block hub" aria-labelledby="hub-title"><div class="wrap">\n'
@@ -224,17 +224,28 @@ DOSSIERS_EN = (('moscow.html', 'The Moscow school', 'Essay', 'Wittneben and Bork
                ('leningrad.html', 'The Leningrad school', 'Collection', 'Türner, Volkov, Kozlov, Venglovsky; the Philharmonic Trombone Quartet'),
                ('us-schools.html', 'The American line', 'Dossier', 'Raichman, the Clef Studies and the editions that linked the Russian school with the USA'))
 
-def dossiers_strip(lang, prefix=''):
-    """Витрина: полоса трёх досье школ — выходы из раздела «Школа и традиция»."""
+def twin_band(lang, bio_html, sch_html):
+    """Витрина: «Биография ∥ Школа» (решение владельца 21.11.2026) — биография целиком слева,
+    «Школа и традиция» колонкой рядом: вводка, три досье и вход в полный раздел."""
     ru = lang == 'ru'
-    T = ('Досье школ', 'Из раздела «Школа и традиция»') if ru else ('School dossiers', 'From “The school and its lineage”')
-    D = DOSSIERS_RU if ru else DOSSIERS_EN
-    cards = ''.join(f'    <a class="dossier-card" href="{prefix}{f}"><span class="eyebrow">{k}</span><b>{t}</b><span>{d}</span><i aria-hidden="true">→</i></a>\n'
-                    for f, t, k, d in D)
-    return ('<section id="dossiers" class="block dossiers" aria-labelledby="dossiers-title"><div class="wrap">\n'
-            f'  <div class="section-head reveal"><h2 id="dossiers-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div></div>\n'
-            f'  <div class="dossiers-strip">\n{cards}  </div>\n'
-            '</div></section>\n')
+    bio = re.sub(r'^\s*<section[^>]*>\s*<div class="wrap">(.*)</div>\s*</section>\s*$', r'\1', bio_html, flags=re.S)
+    bio = bio.replace('<div class="section-head reveal">', '<div class="section-head reveal" data-n="03">', 1)
+    h2, eyebrow, lead = re.search(
+        r'<div class="section-head reveal"><h2>(.*?)</h2><div class="eyebrow">(.*?)</div><p>(.*?)</p>',
+        sch_html, re.S).groups()
+    cards = ''.join(f'    <a class="dossier-card" href="{f}"><span class="eyebrow">{k}</span><b>{t}</b><span>{d}</span><i aria-hidden="true">→</i></a>\n'
+                    for f, t, k, d in (DOSSIERS_RU if ru else DOSSIERS_EN))
+    if ru:
+        sec_label, side_label, more = 'Биография и школа', 'Школа и традиция', 'Весь раздел «Школа и традиция»'
+    else:
+        sec_label, side_label, more = 'Biography and the school', 'The school and its lineage', 'The full section: the school and its lineage'
+    return (f'<section class="block twin-band" aria-label="{sec_label}"><div class="wrap"><div class="twin-grid">\n'
+            f'  <div class="twin-bio" id="biography">\n{bio}  </div>\n'
+            f'  <aside class="twin-side" aria-label="{side_label}">\n'
+            f'    <div class="section-head reveal" data-n="04"><h2>{h2}</h2><div class="eyebrow">{eyebrow}</div><p>{lead}</p></div>\n'
+            f'    <div class="dossiers-strip">\n{cards}    </div>\n'
+            f'    <a class="twin-more" href="schools.html">{more} <i aria-hidden="true">→</i></a>\n'
+            f'  </aside>\n</div></div></section>\n')
 
 def pager(idx, lang, prefix=''):
     """Пейджер разделельной страницы: ← предыдущий · все разделы · следующий → (порядок 01–05)."""
@@ -242,13 +253,14 @@ def pager(idx, lang, prefix=''):
     hub = HUB_RU if ru else EN_HUB
     T = ('Все разделы', 'Переход между разделами') if ru else ('All sections', 'Section navigation')
     links = ''
+    href = {'biography': 'index.html#biography'}   # биография живёт на витрине, у неё нет своей страницы
     if idx > 0:
         p = hub[idx - 1]
-        links += f'<a class="pg-way" rel="prev" href="{prefix}{p[0]}.html">← {p[1]}</a>'
+        links += f'<a class="pg-way" rel="prev" href="{href.get(p[0], prefix + p[0] + ".html")}">← {p[1]}</a>'
     links += f'<a class="pg-all" href="{prefix}index.html">{T[0]}</a>'
     if idx < len(hub) - 1:
         n_ = hub[idx + 1]
-        links += f'<a class="pg-way" rel="next" href="{prefix}{n_[0]}.html">{n_[1]} →</a>'
+        links += f'<a class="pg-way" rel="next" href="{href.get(n_[0], prefix + n_[0] + ".html")}">{n_[1]} →</a>'
     return f'<nav class="pager wrap reveal" aria-label="{T[1]}">{links}</nav>\n'
 
 # ---------------- База файлов (этап 1): реестр трудов и загрузки ----------------
@@ -550,7 +562,6 @@ OG_DEFAULT = ('og-image.jpg', 'Владислав Блажевич с тромб
 OG = {
     'works.html':      ('og-works.jpg', 'Большой зал Московской консерватории, архивная виньетка сайта', 'The Great Hall of the Moscow Conservatory, the site’s archival vignette'),
     'listen.html':     ('og-listen.jpg', 'Колоннада Большого театра, архивная виньетка сайта', 'The colonnade of the Bolshoi Theatre, the site’s archival vignette'),
-    'biography.html':  ('og-biography.jpg', 'Владислав Блажевич, фотография 1903 года с автографом', 'Vladislav Blazhevich, a 1903 signed photograph'),
     'schools.html':    ('og-schools.jpg', 'Московская консерватория, 1940-е годы', 'The Moscow Conservatory in the 1940s'),
     'about.html':      ('og-about.jpg', 'Большой театр, 1905 год', 'The Bolshoi Theatre, 1905'),
     'moscow.html':     ('og-moscow.jpg', 'Большой зал Московской консерватории', 'The Great Hall of the Moscow Conservatory'),
@@ -645,9 +656,9 @@ for f, (ss, _, _) in PAGES.items():
 # старые якоря одностраничника: куда теперь ведёт каждый раздел (ссылки из контента и стабы).
 # «В США» переехала в досье us-schools.html; якорь #usa появляется вместе с главой.
 OLD_RU = {'scores': 'works.html', 'concertos': 'works.html#concertos', 'listen': 'listen.html',
-          'biography': 'biography.html', 'schools': 'schools.html', 'about': 'about.html',
+          'biography': 'index.html#biography', 'schools': 'schools.html', 'about': 'about.html',
           'usa': 'us-schools.html#usa' if 'usa' in id_page else 'us-schools.html'}
-STUB_TITLE_RU = {'scores': 'Ноты', 'concertos': 'Концерты', 'usa': 'В США'}
+STUB_TITLE_RU = {'scores': 'Ноты', 'concertos': 'Концерты', 'usa': 'В США', 'biography': 'Биография'}
 
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t in NAV_RU)
 HUB_N = {f'{i}.html': n for n, (i, _, _) in enumerate(HUB_RU)}   # номер страницы в порядке разделов 01–05
@@ -661,7 +672,7 @@ for f, (ss, title, desc) in PAGES.items():
         hero = hero.replace('<div class="lede">', hdr + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr
         body = ('<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
                 + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
-                + '<main id="main">\n' + hero + hub_cards('ru') + dossiers_strip('ru')
+                + '<main id="main">\n' + hero + hub_cards('ru') + twin_band('ru', sec('biography'), sec('schools'))
                 + (news_panel(NEWS[0]) if NEWS else '') + '</main>\n')
         footer = FOOTER_RU()
     else:
@@ -713,7 +724,6 @@ EN_PAGES = {  # файл en/<имя>: (секции, заголовок, опи�
     'works.html': (EN_WORKS_SECS, 'Works by Vladislav Blazhevich — Blazhevich',
                    'The catalogue: 13 trombone concertos, method books, studies and ensembles — with links to the scores.'),
     'listen.html': (['listen'], 'Listen to Blazhevich — Blazhevich', 'Recordings and video: how his music sounds today.'),
-    'biography.html': (['biography'], 'Vladislav Blazhevich: biography — Blazhevich', 'Moscow, the Bolshoi, the Conservatory — by documents and sources.'),
     'schools.html': (['schools'], 'The Moscow and St Petersburg trombone schools — Blazhevich', 'Two Russian trombone schools and the dossiers: Moscow, St Petersburg, America.'),
     'about.html': (['about'], 'About the project — Blazhevich', 'Sources, image credits and how this project works.'),
 }
@@ -722,8 +732,8 @@ EN_HUB = [('works', 'Works', 'The catalogue: 13 concertos, schools, studies and 
           ('biography', 'Biography', 'Moscow, the Bolshoi, the Conservatory — by documents and sources'),
           ('schools', 'The school and its lineage', 'Two Russian trombone schools and the dossiers: Moscow, St Petersburg, America'),
           ('about', 'About', 'Sources, image credits and how this project works')]
-EN_STUB_TITLE = {'scores': 'Scores', 'concertos': 'Concertos', 'usa': 'In America'}
-need = {s_ for ss, _, _ in EN_PAGES.values() for s_ in ss}
+EN_STUB_TITLE = {'scores': 'Scores', 'concertos': 'Concertos', 'usa': 'In America', 'biography': 'Biography'}
+need = {s_ for ss, _, _ in EN_PAGES.values() for s_ in ss} | {'biography'}   # секция нужна витрине en/
 if need - set(en_secs):
     raise SystemExit(f'В src/en/page.html нет секций: {", ".join(sorted(need - set(en_secs)))}')
 id_page_en = {}
@@ -731,6 +741,8 @@ for f_, (ss_, _, _) in EN_PAGES.items():
     for s_ in ss_:
         for i in ids_in(en_secs[s_]):
             id_page_en[i] = (f_, s_)
+for i in ids_in(en_secs['biography']):   # биография теперь на витрине
+    id_page_en[i] = ('index.html', 'biography')
 for f_ in EN_DOSSIERS:   # идентификаторы досье (m-bork, raichman, …) тоже разводятся по страницам
     for i in ids_in(sec(f_[:-5], 'en')):
         id_page_en.setdefault(i, (f_, f_[:-5]))
@@ -738,7 +750,7 @@ if 'usa' in en_secs:   # глава ждёт переноса в en/us-schools.h
     for i in ids_in(en_secs['usa']):
         id_page_en.setdefault(i, ('us-schools.html', i))
 OLD_EN = {'scores': 'works.html', 'concertos': 'works.html#concertos', 'listen': 'listen.html',
-          'biography': 'biography.html', 'schools': 'schools.html', 'about': 'about.html',
+          'biography': 'index.html#biography', 'schools': 'schools.html', 'about': 'about.html',
           'usa': 'us-schools.html#usa' if 'usa' in id_page_en else 'us-schools.html'}
 nav_en = ''.join(f'<a href="{i}.html">{t}</a>' for i, t, _ in EN_HUB)
 FONTS_EN = f'<link rel="stylesheet" href="../assets/{FONTS_FILE}">'
@@ -747,7 +759,7 @@ hero = en_secs['hero']   # шапка — сразу под первым экр�
 hero = hero.replace('<div class="lede">', hdr_en + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr_en
 body = ('<a class="skip" href="#main">Skip to content</a>\n' + DRAFT
         + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
-        + '<main id="main">\n' + hero + hub_cards('en', '../') + dossiers_strip('en', '../') + '</main>\n')
+        + '<main id="main">\n' + hero + hub_cards('en', '../') + twin_band('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
@@ -787,7 +799,7 @@ if a.release:
 
 # ---------------- Одностраничная версия для предпросмотра на claude.ai ----------------
 one = ''.join(deco(sec(s_), n=i) for i, s_ in enumerate(WORKS_SECS + ['listen', 'biography', 'schools', 'about'], 1))
-nav = ''.join(f'<a href="#{PAGES[f"{i}.html"][0][0]}">{t}</a>' for i, t, _ in HUB_RU)
+nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t, _ in HUB_RU)   # у biography.html страницы больше нет — в предпросмотре просто якоря
 art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
        '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#e8dbbf">\n' + FAVICON + '\n' + FONTS_GOOGLE
        + f'\n<style>\n{CSS}</style>\n\n'
