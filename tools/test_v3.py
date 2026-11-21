@@ -16,14 +16,15 @@ results=[]
 HUB=['works.html','listen.html','schools.html','about.html']  # биография — на витрине (index.html#biography)
 for page in ['index.html','en/index.html']:
  s=(ROOT/'site'/page).read_text()
- # витрина: первый экран, карточки пяти разделов, полоса досье; бокового меню одностраничника больше нет
+ # витрина: первый экран, блок «Биография ∥ Школа» с досье; карточек разделов и бокового меню больше нет
  assert 'hero-home.webp' in s and 'goznak-moscow' not in s
  assert 'class="hero-mark"' in s and 'popovertarget="menu"' in s
- assert 'class="hub-cards"' in s and 'class="dossiers-strip"' in s
+ assert 'class="block twin-band"' in s and 'class="dossiers-strip"' in s
+ assert 'class="hub-cards"' not in s
  assert 'class="rail"' not in s and 'rail-edge' not in s
  # шапка стоит под hero и выезжает по прокрутке (класс on-hero, JS ставит past-hero)
  assert '<header id="top-bar" class="on-hero">' in s
- assert all(f'href="{p}"' in s for p in HUB)
+ assert all(f'href="{p}"' in s for p in HUB)   # меню ведёт на страницы разделов
 for page in [*HUB,'moscow.html','leningrad.html','us-schools.html']:
  for pre in ('','en/'):
   assert (ROOT/'site'/pre/page).exists(),'нет страницы '+pre+page
