@@ -70,7 +70,7 @@
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
   if(document.querySelector('.hub-cards')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
-             '#biography':'biography.html','#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};
+             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
   }
 
