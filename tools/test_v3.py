@@ -16,10 +16,10 @@ results=[]
 HUB=['works.html','listen.html','schools.html','about.html']  # биография — на витрине (index.html#biography)
 for page in ['index.html','en/index.html']:
  s=(ROOT/'site'/page).read_text()
- # витрина: первый экран, блок «Биография ∥ Школа» с досье; карточек разделов и бокового меню больше нет
+ # витрина: первый экран, биография во всю ширину + полоса «Школа и традиция»; карточек разделов и бокового меню больше нет
  assert 'hero-home.webp' in s and 'goznak-moscow' not in s
  assert 'class="hero-mark"' in s and 'popovertarget="menu"' in s
- assert 'class="block twin-band"' in s and 'class="dossiers-strip"' in s
+ assert 'class="block bio-band"' in s and 'class="block school-strip"' in s and 'class="dossiers-strip"' in s
  assert 'class="hub-cards"' not in s
  assert 'class="rail"' not in s and 'rail-edge' not in s
  # шапка стоит под hero и выезжает по прокрутке (класс on-hero, JS ставит past-hero)

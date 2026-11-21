@@ -203,9 +203,9 @@ DOSSIERS_EN = (('moscow.html', 'The Moscow school', 'Essay', 'Wittneben and Bork
                ('leningrad.html', 'The Leningrad school', 'Collection', 'Türner, Volkov, Kozlov, Venglovsky; the Philharmonic Trombone Quartet'),
                ('us-schools.html', 'The American line', 'Dossier', 'Raichman, the Clef Studies and the editions that linked the Russian school with the USA'))
 
-def twin_band(lang, bio_html, sch_html):
-    """Витрина: «Биография ∥ Школа» (решение владельца 21.11.2026) — биография целиком слева,
-    «Школа и традиция» колонкой рядом: вводка, три досье и вход в полный раздел."""
+def bio_school(lang, bio_html, sch_html):
+    """Витрина (решение владельца 22.11.2026): биография во всю ширину листа — как на странице
+    раздела; под ней компактная полоса «Школа и традиция»: вводка, три досье, вход в раздел."""
     ru = lang == 'ru'
     bio = re.sub(r'^\s*<section[^>]*>\s*<div class="wrap">(.*)</div>\s*</section>\s*$', r'\1', bio_html, flags=re.S)
     bio = bio.replace('<div class="section-head reveal">', '<div class="section-head reveal" data-n="03">', 1)
@@ -215,16 +215,16 @@ def twin_band(lang, bio_html, sch_html):
     cards = ''.join(f'    <a class="dossier-card" href="{f}"><span class="eyebrow">{k}</span><b>{t}</b><span>{d}</span><i aria-hidden="true">→</i></a>\n'
                     for f, t, k, d in (DOSSIERS_RU if ru else DOSSIERS_EN))
     if ru:
-        sec_label, side_label, more = 'Биография и школа', 'Школа и традиция', 'Весь раздел «Школа и традиция»'
+        bio_label, sec_label, more = 'Биография', 'Школа и традиция', 'Весь раздел «Школа и традиция»'
     else:
-        sec_label, side_label, more = 'Biography and the school', 'The school and its lineage', 'The full section: the school and its lineage'
-    return (f'<section class="block twin-band" aria-label="{sec_label}"><div class="wrap"><div class="twin-grid">\n'
-            f'  <div class="twin-bio" id="biography">\n{bio}  </div>\n'
-            f'  <aside class="twin-side" aria-label="{side_label}">\n'
-            f'    <div class="section-head reveal" data-n="04"><h2>{h2}</h2><div class="eyebrow">{eyebrow}</div><p>{lead}</p></div>\n'
-            f'    <div class="dossiers-strip">\n{cards}    </div>\n'
-            f'    <a class="twin-more" href="schools.html">{more} <i aria-hidden="true">→</i></a>\n'
-            f'  </aside>\n</div></div></section>\n')
+        bio_label, sec_label, more = 'Biography', 'The school and its lineage', 'The full section: the school and its lineage'
+    return (f'<section id="biography" class="block bio-band" aria-label="{bio_label}"><div class="wrap">\n'
+            f'{bio}</div></section>\n'
+            f'<section class="block school-strip" aria-label="{sec_label}"><div class="wrap">\n'
+            f'  <div class="section-head reveal" data-n="04"><h2>{h2}</h2><div class="eyebrow">{eyebrow}</div><p>{lead}</p></div>\n'
+            f'  <div class="dossiers-strip">\n{cards}  </div>\n'
+            f'  <a class="school-more" href="schools.html">{more} <i aria-hidden="true">→</i></a>\n'
+            f'</div></section>\n')
 
 def pager(idx, lang, prefix=''):
     """Пейджер разделельной страницы: ← предыдущий · все разделы · следующий → (порядок 01–05)."""
@@ -651,7 +651,7 @@ for f, (ss, title, desc) in PAGES.items():
         hero = hero.replace('<div class="lede">', hdr + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr
         body = ('<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
                 + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
-                + '<main id="main">\n' + hero + twin_band('ru', sec('biography'), sec('schools'))
+                + '<main id="main">\n' + hero + bio_school('ru', sec('biography'), sec('schools'))
                 + (news_panel(NEWS[0]) if NEWS else '') + '</main>\n')
         footer = FOOTER_RU()
     else:
@@ -738,7 +738,7 @@ hero = en_secs['hero']   # шапка — сразу под первым экр�
 hero = hero.replace('<div class="lede">', hdr_en + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr_en
 body = ('<a class="skip" href="#main">Skip to content</a>\n' + DRAFT
         + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
-        + '<main id="main">\n' + hero + twin_band('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
+        + '<main id="main">\n' + hero + bio_school('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
