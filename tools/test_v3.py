@@ -43,6 +43,14 @@ assert 'class="pager' in _a and 'href="schools.html"' in _a and 'rel="next"' not
 # блок «Файлы для скачивания» рендерится из реестра data/works.json (засеян партитурой Вальс-концерта)
 assert 'id="files"' in _w and 'blazhevich-valse-de-concert-partitur.pdf' in _w
 assert 'id="files"' in (ROOT/'site'/'en'/'works.html').read_text()
+# происхождение файла (поле origin реестра) показано в карточке, RU и EN
+assert 'Источник файла' in _w and 'File origin' in (ROOT/'site'/'en'/'works.html').read_text()
+# og:image с alt на всех индексируемых страницах; у разделов и досье — своя картинка семейства og-*.jpg
+for pg in ['index.html',*HUB,'moscow.html','leningrad.html','us-schools.html','en/index.html',*['en/'+p for p in HUB],'en/moscow.html','en/leningrad.html','en/us-schools.html']:
+ _s=(ROOT/'site'/pg).read_text()
+ assert 'property="og:image" content=' in _s and 'og:image:alt' in _s,pg
+for pg,img in [('works.html','og-works.jpg'),('moscow.html','og-moscow.jpg'),('us-schools.html','og-us-schools.jpg')]:
+ for pre in ('','en/'):assert img in (ROOT/'site'/pre/pg).read_text(),pre+pg
 # Карточки людей: на русском они повторяли бы московское досье, поэтому остаются только в английских «Трудах».
 s=(ROOT/'site'/'en'/'works.html').read_text()
 assert all('id="person-'+n+'"' in s for n in ['blazhevich','shcherbinin','batashev','turusin','ladilov'])

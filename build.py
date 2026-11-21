@@ -258,6 +258,36 @@ WORKS_REGISTRY = json.loads(WORKS_REGISTRY_PATH.read_text(encoding='utf-8')) if 
 WORK_TYPE = {'concert': ('Концерт', 'Concert'), 'school': ('Школа', 'School'), 'etudes': ('Этюды', 'Studies'),
              'ensemble': ('Ансамбль', 'Ensemble'), 'arrangement': ('Обработка', 'Arrangement')}
 
+def validate_works(registry):
+    """Реестр трудов не молча ломает страницу: битая запись падает сборкой с понятной ошибкой."""
+    seen = set()
+    for w in registry:
+        wid = w.get('id', '')
+        if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', wid):
+            raise SystemExit(f'data/works.json: bad id {wid!r} (нужен латинский slug)')
+        if wid in seen:
+            raise SystemExit(f'data/works.json: дублируется id {wid!r}')
+        seen.add(wid)
+        if not w.get('title'):
+            raise SystemExit(f'data/works.json: у записи {wid!r} нет title')
+        if w.get('type') not in WORK_TYPE:
+            raise SystemExit(f'data/works.json: у записи {wid!r} тип {w.get("type")!r} не из WORK_TYPE')
+        for field in ('notes_url', 'parts_url', 'audio_url'):
+            url = w.get(field)
+            if not url:
+                continue
+            if isinstance(url, list):
+                urls = url
+            else:
+                urls = [url]
+            for u in urls:
+                if not (ROOT / u).exists():
+                    raise SystemExit(f'data/works.json: {wid!r} указывает на {field}={u!r}, файла нет')
+        if any(w.get(f) for f in ('notes_url', 'parts_url', 'audio_url')) and not w.get('origin'):
+            raise SystemExit(f'data/works.json: у записи {wid!r} есть файлы, но нет origin (откуда файл)')
+
+validate_works(WORKS_REGISTRY)
+
 def files_block(lang, prefix=''):
     """Блок «Файлы для скачивания» на странице «Труды»: рендерится из data/works.json."""
     rows = [w for w in WORKS_REGISTRY if w.get('notes_url') or w.get('audio_url')]
@@ -267,15 +297,16 @@ def files_block(lang, prefix=''):
     e = lambda t: html.escape(str(t), quote=True)
     T = (('Файлы для скачивания', 'Локальная база нот и аудио',
           'Файлы хранятся в собственной базе проекта и отдаются напрямую; записи появляются здесь по мере наполнения реестра.',
-          'Партитура (PDF)', 'Аудио') if ru else
+          'Партитура (PDF)', 'Аудио', 'Источник файла') if ru else
          ('Downloads', 'The local score and audio base',
           'The files live in the project’s own base and are served directly; entries appear here as the registry grows.',
-          'Score (PDF)', 'Audio'))
+          'Score (PDF)', 'Audio', 'File origin'))
     items = ''
     for w in rows:
         kind = WORK_TYPE.get(w.get('type'), ('', ''))[0 if ru else 1]
         title = w.get('title') if ru else (w.get('title_en') or w.get('title', ''))
         note = w.get('comment') if ru else (w.get('comment_en') or w.get('comment', ''))
+        origin = w.get('origin') if ru else (w.get('origin_en') or w.get('origin', ''))
         year = f' <span class="tag">{e(w["year"])}</span>' if w.get('year') else ''
         links = ''
         if w.get('notes_url'):
@@ -285,6 +316,7 @@ def files_block(lang, prefix=''):
         items += (f'    <li class="file-row"><p class="file-name"><b>{e(title)}</b>'
                   + (f' <span class="tag">{e(kind)}</span>' if kind else '') + year + '</p>'
                   + (f'<p>{note}</p>' if note else '')
+                  + (f'<p>{T[5]}: {e(origin)}</p>' if origin else '')
                   + (f'<p class="file-links">{links}</p>' if links else '') + '</li>\n')
     return ('<section id="files" class="block files-block" aria-labelledby="files-title"><div class="wrap">\n'
             f'  <div class="section-head reveal"><h2 id="files-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div><p>{T[2]}</p></div>\n'
@@ -511,9 +543,26 @@ def news_feed(issues):
 
 NEWS = load_news()
 
+# OG-картинки под страницы: файл делает tools/media/make_og.py, результат коммитится.
+# Страницы без своей картинки (витрина, лента) и EN-зеркала берут общую или картинку своей RU-страницы.
+OG_DEFAULT = ('og-image.jpg', 'Владислав Блажевич с тромбоном перед Большим залом консерватории и Большим театром',
+              'Vladislav Blazhevich with his trombone in front of the Great Hall of the Moscow Conservatory and the Bolshoi Theatre')
+OG = {
+    'works.html':      ('og-works.jpg', 'Большой зал Московской консерватории, архивная виньетка сайта', 'The Great Hall of the Moscow Conservatory, the site’s archival vignette'),
+    'listen.html':     ('og-listen.jpg', 'Колоннада Большого театра, архивная виньетка сайта', 'The colonnade of the Bolshoi Theatre, the site’s archival vignette'),
+    'biography.html':  ('og-biography.jpg', 'Владислав Блажевич, фотография 1903 года с автографом', 'Vladislav Blazhevich, a 1903 signed photograph'),
+    'schools.html':    ('og-schools.jpg', 'Московская консерватория, 1940-е годы', 'The Moscow Conservatory in the 1940s'),
+    'about.html':      ('og-about.jpg', 'Большой театр, 1905 год', 'The Bolshoi Theatre, 1905'),
+    'moscow.html':     ('og-moscow.jpg', 'Большой зал Московской консерватории', 'The Great Hall of the Moscow Conservatory'),
+    'leningrad.html':  ('og-leningrad.jpg', 'Здание Петербургской консерватории на Театральной площади', 'The St. Petersburg Conservatory on Theatre Square'),
+    'us-schools.html': ('og-us-schools.jpg', 'Истменская школа музыки в Рочестере', 'The Eastman School of Music in Rochester'),
+}
+
 def head(title, desc, path, lang, prefix, fonts):
     url = f'{DOM}/{path}'.replace('/index.html', '/') if DOM else ''
-    img = f'{DOM}/assets/og-image.jpg' if DOM else f'{prefix}assets/og-image.jpg'
+    og_file, alt_ru, alt_en = OG.get(path.removeprefix('en/'), OG_DEFAULT)
+    alt = alt_ru if lang == 'ru' else alt_en
+    img = f'{DOM}/assets/{og_file}' if DOM else f'{prefix}assets/{og_file}'
     m = [f'<title>{title}</title>',
          f'<meta name="description" content="{desc}">',
          f'<meta name="robots" content="{"index,follow" if a.release else "noindex,nofollow"}">',
@@ -525,8 +574,11 @@ def head(title, desc, path, lang, prefix, fonts):
          f'<meta property="og:title" content="{title}">',
          f'<meta property="og:description" content="{desc}">',
          f'<meta property="og:image" content="{img}">',
+         f'<meta property="og:image:alt" content="{alt}">',
          '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
-         '<meta name="twitter:card" content="summary_large_image">']
+         '<meta name="twitter:card" content="summary_large_image">',
+         f'<meta name="twitter:image" content="{img}">',
+         f'<meta name="twitter:image:alt" content="{alt}">']
     if DOM:
         m += [f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">']
         if path in ('index.html', 'en/index.html'):   # языковые пары: общая страница и два досье
