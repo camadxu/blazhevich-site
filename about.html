@@ -28,7 +28,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://blazhevich.tech/about.html#page","url":"https://blazhevich.tech/about.html","name":"О проекте — Blazhevich","description":"Источники, права на изображения и принципы работы сайта.","inLanguage":"ru","isPartOf":{"@id":"https://blazhevich.tech/#website"},"about":{"@id":"https://blazhevich.tech/#blazhevich"}},{"@type":"Person","@id":"https://blazhevich.tech/#blazhevich","name":"Владислав Блажевич","alternateName":["Vladislav Blazhevich","Владислав Михайлович Блажевич"],"birthDate":"1881-08-15","deathDate":"1942-04-10","jobTitle":"Тромбонист, педагог, композитор","sameAs":["https://ru.wikipedia.org/wiki/Блажевич,_Владислав_Михайлович","https://en.wikipedia.org/wiki/Vladislav_Blazhevich","https://imslp.org/wiki/Category:Blazhevich,_Vladislav"]}]}</script>
 <link rel="alternate" type="application/rss+xml" title="Blazhevich — Лента" href="feed.xml">
 <link rel="stylesheet" href="assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="assets/main.3f3c3af763.css">
+<link rel="stylesheet" href="assets/main.1ce00c988e.css">
 </head>
 <body>
 <a class="skip" href="#main">Перейти к содержимому</a>
@@ -159,7 +159,7 @@
 
   /* Витрина: старые якоря одностраничника (#scores, #concertos, …) ведут на страницы разделов.
      Работает и в английской версии — страницы лежат рядом с en/index.html. */
-  if(document.querySelector('.hub-cards')){
+  if(document.querySelector('.twin-band')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
              '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
