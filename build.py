@@ -518,6 +518,7 @@ def head(title, desc, path, lang, prefix, fonts):
          f'<meta name="description" content="{desc}">',
          f'<meta name="robots" content="{"index,follow" if a.release else "noindex,nofollow"}">',
          '<meta name="theme-color" content="#e8dbbf">', FAVICON,
+         f'<link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">',
          '<meta property="og:type" content="website">',
          f'<meta property="og:locale" content="{"ru_RU" if lang == "ru" else "en_US"}">',
          '<meta property="og:site_name" content="Blazhevich">',
@@ -621,9 +622,11 @@ for f, (ss, title, desc) in PAGES.items():
         footer = FOOTER_RU()
     body = relink(body, f, id_page, OLD_RU)
     key = (par[0] if par else f[:-5]) + '.html'   # какой пункт меню подсвечен
+    # точная страница — aria-current="page"; досье подсвечивает свой раздел — aria-current="true"
+    cur = 'aria-current="true"' if par else 'aria-current="page"'
     for pat in (f'<a href="#{key[:-5]}">', f'<a href="{key}">'):
         if pat in body:
-            body = body.replace(pat, pat[:-1] + ' class="active">', 1)
+            body = body.replace(pat, pat[:-1] + f' class="active" {cur}>', 1)
             break
     (OUT / f).write_text(page('ru', title, desc, f, '', body,
                               f'<link rel="stylesheet" href="assets/{FONTS_FILE}">', footer))
@@ -706,14 +709,14 @@ for n_, (f_, (ss_, title, desc)) in enumerate(EN_PAGES.items()):   # стран�
     body = relink(body, f_, id_page_en, OLD_EN)
     for pat in (f'<a href="#{f_[:-5]}">', f'<a href="{f_}">'):
         if pat in body:
-            body = body.replace(pat, pat[:-1] + ' class="active">', 1)
+            body = body.replace(pat, pat[:-1] + ' class="active" aria-current="page">', 1)
             break
     (OUT / 'en' / f_).write_text(page('en', title, desc, f'en/{f_}', '../', en_words(body), FONTS_EN, FOOTER_EN()))
 for k, tgt in OLD_EN.items():   # старые адреса английских разделов
     if f'{k}.html' in EN_PAGES:
         continue
     (OUT / 'en' / f'{k}.html').write_text(stub(tgt, f'{EN_STUB_TITLE[k]} — Blazhevich', 'en'))
-nav_en_dossier = nav_en.replace('<a href="schools.html">', '<a href="schools.html" class="active">', 1)
+nav_en_dossier = nav_en.replace('<a href="schools.html">', '<a href="schools.html" class="active" aria-current="true">', 1)
 for f, (title, desc) in EN_DOSSIERS.items():
     src = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec(f[:-5], 'en'))
     body = (header(nav_en_dossier, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')

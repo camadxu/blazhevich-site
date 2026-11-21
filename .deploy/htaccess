@@ -10,6 +10,20 @@ ErrorDocument 404 /404.html
 RedirectMatch 404 (?i)^/\.git
 RedirectMatch 404 (?i)^/\.github
 
+# ---------- редиректы ----------
+# www → основной домен: один хост — один адрес (canonical уже страховал, 301 — честнее).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.blazhevich\.tech$ [NC]
+  RewriteRule ^(.*)$ https://blazhevich.tech/$1 [R=301,L]
+</IfModule>
+
+# Старые адреса разделов: на хостинге — настоящий 301 вместо HTML-стабов.
+# Стабы в сборке остаются: они работают при локальном предпросмотре без Apache.
+RedirectMatch 301 ^/scores\.html$ /works.html
+RedirectMatch 301 ^/concertos\.html$ /works.html
+RedirectMatch 301 ^/usa\.html$ /us-schools.html
+
 # ---------- кэш ----------
 # LiteSpeed на Hostinger кэширует HTML и после деплоя отдаёт старую страницу
 # (так тест-сайт два дня показывал удалённый раздел). Кэш выключаем здесь,
