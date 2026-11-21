@@ -9,7 +9,7 @@
     а ссылка с #якорем — на существующий id в целевой странице;
   • нет повторяющихся id на странице, у каждой страницы ровно один <h1>;
   • ни одна страница не загружает внешние ресурсы (скрипты, стили, картинки, шрифты с http/https);
-  • витрина: карточки разделов и колонка досье «Школа» на месте, бокового меню (rail) нет;
+  • витрина: блок «Биография ∥ Школа» на месте, меню ведёт на разделы, бокового меню (rail) нет;
   • переадресации со старых адресов (scores, concertos, usa, biography) ведут на существующие страницы;
   • страница 404 собрана и ведёт на разделы;
   • состояние публикации: robots, плашка черновика, canonical, sitemap.xml, robots.txt.
@@ -80,14 +80,15 @@ for pg, p in list(parsed.items()):
         if frag and target.suffix == '.html' and frag not in ids_of(target):
             errors.append(f'{pg}: нет якоря #{frag} в {target.relative_to(SITE)}')
 
-# витрина: карточки разделов и колонка досье; боковое меню одностраничника убрано
+# витрина: блок «Биография ∥ Школа» с досье; меню ведёт на страницы разделов; боковое меню одностраничника убрано
 if 'index.html' in parsed:
     s = (SITE / 'index.html').read_text(encoding='utf-8')
-    for p_ in HUB + ['moscow.html', 'leningrad.html', 'us-schools.html']:
-        if f'href="{p_}"' not in s: errors.append(f'index.html: нет ссылки на {p_}')
+    for p_ in HUB:
+        if f'href="{p_}"' not in s: errors.append(f'index.html: меню не ведёт на {p_}')
+    for p_ in ('moscow.html', 'leningrad.html', 'us-schools.html'):
+        if f'href="{p_}"' not in s: errors.append(f'index.html: нет ссылки на досье {p_}')
     if 'class="rail"' in s or 'rail-edge' in s: errors.append('index.html: осталось боковое меню rail')
-    if 'class="hub-cards"' not in s: errors.append('index.html: нет сетки карточек разделов')
-    if 'class="dossiers-strip"' not in s: errors.append('index.html: нет полосы досье')
+    if 'class="block twin-band"' not in s: errors.append('index.html: нет блока «Биография ∥ Школа»')
 
 # переадресации со старых адресов ведут на существующую страницу (и якорь, если он указан)
 for pre in ('', 'en/'):

@@ -4,7 +4,7 @@
   python3 build.py --release --domain https://site   публичная версия: индексация, canonical,
                                                      Open Graph с полными адресами, sitemap.xml, robots.txt
 
-Результат в папке site/: index.html — витрина (первый экран, вступление, карточки пяти разделов,
+Результат в папке site/: index.html — витрина (первый экран, вступление,
 биография целиком рядом с колонкой «Школа и традиция», лента новостей), страницы разделов
 works.html, listen.html, schools.html, about.html, досье moscow.html, leningrad.html,
 us-schools.html и английские зеркала всех страниц в en/. Старые адреса разделов (scores.html,
@@ -161,9 +161,6 @@ def header(nav_html, lang_link, home, hero_page=False):
 # архивная виньетка в шапке раздела: декоративная (alt=""), источники снимков — в «О проекте»
 VIGNETTE = {'works': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
             'concertos': 'bolshoi-1905.webp', 'schools': 'conservatory-1940s.webp'}
-# виньетки карточек витрины: «Труды» наследуют порттик консерватории, «О проекте» — снимок Большого 1905 года
-HUB_IMG = {'works': 'v-conservatory-portico.webp', 'listen': 'v-bolshoi-colonnade.webp',
-           'biography': 'conservatory-1940s.webp', 'schools': 'conservatory-1940s.webp', 'about': 'bolshoi-1905.webp'}
 # размеры файлов виньеток: с width/height браузер резервирует место до загрузки, вёрстка не прыгает
 VIGNETTE_WH = {'v-conservatory-portico.webp': (420, 490), 'v-bolshoi-colonnade.webp': (470, 460),
                'conservatory-1940s.webp': (960, 600), 'bolshoi-1905.webp': (960, 600)}
@@ -198,24 +195,6 @@ def deco(h, prefix='', n=0):
         return h
     fig = vignette(v, prefix)
     return re.sub(r'(<div class="section-head reveal"[^>]*>)', lambda m: m.group(1) + fig, h, count=1)
-
-def hub_cards(lang, prefix=''):
-    """Витрина: сетка пяти разделов — номер, архивная виньетка, название и строка-описание."""
-    ru = lang == 'ru'
-    hub = HUB_RU if ru else EN_HUB
-    T = ('Разделы', 'Пять глав сайта') if ru else ('Sections', 'The five chapters of the site')
-    cards = ''
-    for n, (i, t, d) in enumerate(hub, 1):
-        w, h = VIGNETTE_WH[HUB_IMG[i]]
-        # href всегда без префикса: биография — якорь этой же витрины, EN-витрина ведёт на свои страницы
-        href = '#biography' if i == 'biography' else f'{i}.html'
-        cards += (f'    <a class="hub-card" href="{href}" data-n="{n:02d}">\n'
-                  f'      <span class="hub-fig" aria-hidden="true"><img src="{prefix}assets/{HUB_IMG[i]}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async"></span>\n'
-                  f'      <b>{t}</b><span>{d}</span></a>\n')
-    return ('<section id="hub" class="block hub" aria-labelledby="hub-title"><div class="wrap">\n'
-            f'  <div class="section-head reveal"><h2 id="hub-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div></div>\n'
-            f'  <div class="hub-cards">\n{cards}  </div>\n'
-            '</div></section>\n')
 
 DOSSIERS_RU = (('moscow.html', 'Московская школа', 'Очерк', 'Витнебен и Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь'),
                ('leningrad.html', 'Ленинградская школа', 'Сборник', 'Тюрнер, Волков, Козлов, Венгловский; Квартет тромбонов филармонии'),
@@ -665,14 +644,14 @@ HUB_N = {f'{i}.html': n for n, (i, _, _) in enumerate(HUB_RU)}   # номер с
 for f, (ss, title, desc) in PAGES.items():
     par = PARENT_RU.get(f)
     en_href = 'en/index.html' if f == 'index.html' else f'en/{f}'
-    if f == 'index.html':   # витрина: первый экран, вступление, карточки разделов, досье, лента
+    if f == 'index.html':   # витрина: первый экран, вступление, «Биография ∥ Школа», лента
         hdr = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html', hero_page=True)
         hero = sec('hero')
         # шапка стоит сразу под первым экраном; с JS выезжает раньше — когда экран пройден (класс past-hero)
         hero = hero.replace('<div class="lede">', hdr + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr
         body = ('<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
                 + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
-                + '<main id="main">\n' + hero + hub_cards('ru') + twin_band('ru', sec('biography'), sec('schools'))
+                + '<main id="main">\n' + hero + twin_band('ru', sec('biography'), sec('schools'))
                 + (news_panel(NEWS[0]) if NEWS else '') + '</main>\n')
         footer = FOOTER_RU()
     else:
@@ -759,7 +738,7 @@ hero = en_secs['hero']   # шапка — сразу под первым экр�
 hero = hero.replace('<div class="lede">', hdr_en + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr_en
 body = ('<a class="skip" href="#main">Skip to content</a>\n' + DRAFT
         + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
-        + '<main id="main">\n' + hero + hub_cards('en', '../') + twin_band('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
+        + '<main id="main">\n' + hero + twin_band('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
