@@ -1,6 +1,8 @@
 'use strict';
 (function(){
   document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   /* Плеер: внешний iframe (Яндекс Музыка) подгружается только по нажатию кнопки */
   document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
     btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
@@ -31,7 +33,8 @@
   if(fab&&menu&&menu.hidePopover){fab.setAttribute('aria-controls','menu');fab.setAttribute('aria-expanded','false');
     menu.addEventListener('toggle',e=>fab.setAttribute('aria-expanded',String(e.newState==='open')))}
 
-  /* «Лента»: фильтр по инструментам для выпуска, запечённого в страницу при сборке. */
+  /* «Лента»: фильтр по инструментам и подтягивание более свежего выпуска с сервера.
+     Без JavaScript остаётся выпуск, запечённый в страницу при сборке. */
   document.querySelectorAll('[data-agent-list]').forEach(list=>{
     const chips=list.parentNode.querySelector('[data-agent-chips]'), limit=+list.dataset.agentLimit||Infinity;
     let filter='';
@@ -46,24 +49,42 @@
     if(chips){chips.hidden=false;chips.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filter=b.dataset.agentFilter;
       chips.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));show()})}
     show();
+    const live=list.dataset.agentLive;if(!live||!window.fetch)return;
+    const MON='января февраля марта апреля мая июня июля августа сентября октября ноября декабря'.split(' ');
+    const date=s=>{const m=/^(\d{4})-(\d\d)-(\d\d)/.exec(s||'');return m?(+m[3])+' '+MON[m[2]-1]+' '+m[1]:''};
+    const web=u=>/^https?:\/\//.test(u||'');
+    const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+    fetch(live,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
+      if(!d||!Array.isArray(d.items)||!(d.release>list.dataset.agentRelease))return;
+      const rows=d.items.filter(i=>i&&i.title&&web(i.url)&&i.published).slice(0,15);if(!rows.length)return;
+      list.replaceChildren(...rows.map(i=>{const li=el('li','news-item');li.dataset.agentInstruments=(i.instruments||[]).join(' ');
+        const meta=el('p','news-meta');meta.append(el('span','news-source',i.source||''));const t=el('time','',date(i.published));t.dateTime=i.published;meta.append(t);
+        const h=el('h3');if(i.lang&&i.lang!=='ru')h.lang=i.lang;const a=el('a','',i.title);a.href=i.url;a.rel='noopener';h.append(a);li.append(meta,h);
+        if(i.summary)li.append(el('p','news-sum',i.summary));return li}));
+      list.dataset.agentRelease=d.release;
+      const tm=list.parentNode.querySelector('.eyebrow time');if(tm){tm.dateTime=d.release;tm.textContent=date(d.release)}
+      show()}).catch(()=>{});
   });
 
   /* Витрина: старые якоря одностраничника (#scores, #concertos, …) ведут на страницы разделов.
-     Биография теперь имеет отдельный адрес; страницы английской версии лежат рядом с en/index.html. */
-  if(document.getElementById('hero')){
+     Работает и в английской версии — страницы лежат рядом с en/index.html. */
+  if(document.querySelector('.school-strip')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
-             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};
+             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
     const to=R[location.hash];if(to)location.replace(to);
   }
 
-  /* Шапка и активный пункт меню */
-  const bar=document.getElementById('top-bar'), hero=document.getElementById('hero');
+  /* Шапка, кнопка «наверх», активный пункт меню */
+  const bar=document.getElementById('top-bar'), totop=document.getElementById('totop'), hero=document.getElementById('hero');
+  if(!totop)return;
+  /* тонкая линия прочитанного вверху витрины */
+  const prog=document.querySelector('.progress');
   /* витрина: кнопка «Меню» и шапка появляются, когда первый экран ушёл вверх */
-  let pastHero=document.documentElement.classList.contains('past-hero');
-  const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);
-    if(hero){const edge=hero.offsetHeight*.6;if(!pastHero&&y>edge+40)pastHero=true;else if(pastHero&&y<edge-40)pastHero=false;
-      document.documentElement.classList.toggle('past-hero',pastHero)}};
+  const onScroll=()=>{const y=scrollY;if(bar)bar.classList.toggle('scrolled',y>10);totop.classList.toggle('show',y>700);
+    if(hero)document.documentElement.classList.toggle('past-hero',y>hero.offsetHeight*.6);
+    if(prog){const max=document.documentElement.scrollHeight-innerHeight;prog.style.setProperty('--p',max>0?Math.min(1,y/max):0)}};
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  totop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});(document.querySelector('h1')||document.querySelector('.brand')).setAttribute('tabindex','-1');(document.querySelector('h1')||document.querySelector('.brand')).focus({preventScroll:true})});
   const links=[...document.querySelectorAll('nav a')];
   if('IntersectionObserver' in window){
     /* Подсветка пункта меню: на многостраничной версии — текущая страница, на одностраничной — раздел в поле зрения */
@@ -72,6 +93,14 @@
     if(pageLink) pageLink.classList.add('active');
     const spy=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>{const h=a.getAttribute('href');if(h.includes('#'))a.classList.toggle('active',h.endsWith('#'+e.target.id))})}}},{rootMargin:'-45% 0px -50% 0px'});
     links.map(a=>a.getAttribute('href').split('#')[1]).filter(Boolean).forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el)});
+
+    /* Плавное появление: прячем только то, что ниже первого экрана */
+    if(!reduce){
+      const els=[...document.querySelectorAll('.reveal')].filter(el=>el.getBoundingClientRect().top>innerHeight);
+      els.forEach(el=>el.classList.add('pre'));
+      const io=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target)}}},{rootMargin:'0px 0px -8% 0px'});
+      els.forEach(el=>io.observe(el));
+    }
   }
 
 })();
