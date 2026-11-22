@@ -7,7 +7,7 @@
 ## A. США — щели
 
 **A1. ITA конкурсы**
-- **[по поиску]** Репертуар конкурсов ITA-2027 объявлен; заявки 12.10–14.12.2026, финалы на ITF 2027 в Bowling Green (OH): [trombone.net/awards-competitions/competitions](https://trombone.net/awards-competitions/competitions). Сниппет связывает «Blazhevich Concerto (D Major)» с репертуаром ITA Solo & Ensemble; Concerto No. 5 «появлялся в требованиях тенор/бас-соло прошлых лет». Страница не открылась (timeout) — точные строки репертуара сверить вручную.
+- **[проверено]** Репертуар конкурсов ITA-2027 объявлен; заявки 12.10–14.12.2026, финалы на ITF 2027 в Bowling Green (OH), 7–10.07.2027 ([trombone.net/?page_id=15085](https://trombone.net/?page_id=15085), открыт tavily-extract'ом). **Gilberto Gagliardi Tenor Trombone Competition (ITA, юниоры до 18): финальный тур — «Vladislav Blazhevich – Trombone Concerto No. 2»** (отбор — David Uber «Romance») — дословно со [страницы конкурса](https://trombone.net/competition/gilberto-gagliardi-tenor-trombone-competition/); сниппетное «Concerto (D Major)» подтверждено (№2 — ре-мажор). Конкурс с 1973 года (список победителей на странице). В правилах: 14 конкурсов/12 категорий; репертуар Wiehe/Roberts в выгрузку не попал — есть ли там Блажевич, не сверено.
 - **[по поиску]** Полный список репертуара ITA-2016 выкладывался на r/Trombone (Reddit) — материал для ретроспективы требований.
 
 **A2. ITA Journal — библиография (вместе с известными Smith 1993 и Kharlamov 2009)**
@@ -24,7 +24,7 @@
 - **[по поиску]** «The Bridge» (изд. Army Field Band) — связи с Блажевичем не найдено.
 
 **A4. Университетские syllabi**
-- **[частично проверено]** **TAMUC** (Texas A&M-Commerce) syllabus: PDF открыт tavily-extract'ом ([inside.tamuc.edu/.../20511.pdf](http://inside.tamuc.edu/academics/cvSyllabi/syllabi/202420/20511.pdf)) — подтверждено: «TROMBONE STUDIO SYLLABUS», Dr. Megan Boutin, adjunct Jimmy Clark / Chris Oliver, PDF датирован Spring 2023. Сниппет поиска видел в списке методов Blazhevich «School for Trombone in Clefs» + Edwards «Before Blazhevich», но extract обрезан до описаний курсов — сам список методов в выгрузке не виден. Для сайта: «студия тромбона TAMUC работает по Школе в ключах с пропедевтикой Edwards» — ставить как [по поиску] или досверить PDF целиком.
+- **[проверено, PDF целиком]** **TAMUC** (Texas A&M-Commerce) студия тромбона (Dr. Megan Boutin, Spring 2023): в **обязательных** методиках — Arban (ред. Alessi/Bowman), Bordogni/Rochut т.1, **Blazhevich «Advanced Musical Etudes»**, Edwards «Lip Slurs»; у бас-тромбона — Grigoriev ред. Ostrander (24) и Vernon «A Singing Approach». В **рекомендуемых** — Blazhevich «School for Trombone in Clefs» и Edwards «Introductory Studies…: Before Blazhevich», Remington, Tyrell, Vining, Voxman ([inside.tamuc.edu/.../20511.pdf](http://inside.tamuc.edu/academics/cvSyllabi/syllabi/202420/20511.pdf)). Уточнение против сниппета: обязательная книга — «Advanced Musical Etudes» (Fink/IMC), «School in Clefs» — рекомендуемая.
 - **[по поиску]** Ещё 3–4 syllabi .edu со «School for Trombone in Clefs» (в т.ч. 2026–27), lessons-syllabus со «Blazhevich Clef Studies», bass-trombone уровни с «Blazhevich/King 70 Studies» — прямые URL скрыты Google-редиректами.
 
 **A5. Аудишн-листы (дополнение к базе: Curtis, Eastman, TMEA 2024–25)**
@@ -38,7 +38,7 @@
 - **[по поиску]** Полной записи всех «70 Studies» или «Clef Studies» не существует: IMSLP — ноль записей; на Reddit игроки просят «posting a video of them playing Blazhevich clef studies». Ближайшее: Houghton Horns (поэтюдные видео, No. 56, 42, 11, 9…), японская серия на YouTube «Blazhevich Etude Series» (туба, игрок «Yasu», №8, №13 — серия в процессе), Jim Wilt «From the Safety of My Practice Room» Ep. 51 = Blazhevich Etude **№58**.
 
 **A7. YouTube-мастер-классы (NO_TRANSCRIPT — скрипты недоступны; только титульные данные)**
-- **[по поиску]** «Why your trombone sound suffers | Joe Alessi Masterclass» — канал Nick's Online Trombone Academy (~2.79K подписчиков, 228 видео); видео завершается исполнением этюда Блажевича (подтверждено сниппетом вторично).
+- **[проверено по описанию канала]** «Why your trombone sound suffers | Joe Alessi Masterclass» — Nick's Online Trombone Academy, премьера 29.03.2024, 23.7K просмотров ([youtu.be/49jCax1C9YU](https://youtu.be/49jCax1C9YU)); описание от канала: «…advice from Joseph Alessi, regarding the philosophy of air control and flow… **Ends with a solid performance of a Blazevich etude**». Клип 1:02 (фрагмент мастер-класса); транскрипт не снят (Piped/innertube блокированы 22.11, webReader транскрипт не отдал) — слов Алесси о Блажевиче в текстовом виде нет, есть факт исполнения этюда.
 - **[по поиску]** SOAxNYPhil Virtual Masterclass 3 (Joseph Alessi) — Shanghai Orchestra Academy × NY Phil, видео на Facebook-странице SOA.
 - **[по поиску]** Houghton Horns, «2020-2021 TMEA… G Minor Lento by Blazhevich» — Марк Хоутона, 20.08.2020, ~7:10, ~127K просмотров, 2.5K лайков (метрика спроса); №86 (2019–20) ~123K; басовые №40/34 ~35K/30K.
 - **[по поиску]** Brian Hecht: записи TMEA-2020–21 басовых этюдов (No. 40, No. 34) на своём Shires; мастер-классы ATW-2015, STS-2024/2025, NEC.
@@ -81,11 +81,21 @@
 14. **[в базе, уточнено]** Warren Deck, Blair Bollinger, Virginia Perry Lamb, Jonathan Feldman, Jörgen van Rijen, Trombone Unit Hannover — подтвердились в листингах каталога Блажевича (artist page Spotify = **131 трек**); **японский альбом Bousfield/Okada с Блажевичем повторно НЕ подтвердился** — нашёлся только Bousfield/Okada «Beethoven & Brahms: Trios & Sonata» (2009) без Блажевича; не публиковать без второго источника. (Азия-агент: связь Bousfield—Camerata Tokyo—Okada подтверждается, но «блажевичевский» альбом с Окадой — нет; см. research/asia.md.)
 15. **[не подтвердилось]** Оркестровый альбом «Belli/SWR/Cambreling/Heras-Casado играет Блажевича»: диск GENUIN GEN 11188 «Frederic Belli: Trombone» (2011) Блажевича **не содержит** (Berio, Rabe, Martin, Rota…), отдельного SWR-альбома концертов Блажевича не существует — кредиты SWR/Cambreling встречаются только в компиляции дуэтов (п. 1). Ложный след «Naxos 8.553831 с Concerto No. 1 (Lindberg)» тоже отброшен: это Classical Trombone Concertos (Albrechtsberger, L. Mozart, Wagenseil, M. Haydn), Блажевича там нет. IDAGIO напрямую не проверен (JS), Presto показывает те же стриминговые релизы.
 
+**Discogs (латиница, WebSearch site:discogs.com):**
+16. **[по поиску]** «The Lyric Trombone» (1975, US vinyl) — Richard L. Cryder & Jane Cryder; на стороне B пьеса Блажевича (5:55) — старейшая западная запись Блажевича из найденных; страницу релиза открыть вручную (в выдаче только метаданные).
+17. **[по поиску]** Страница лейбла [European Gramophone на Discogs](https://www.discogs.com/label/1936217-European-Gramophone): Koch/Hanna «3 Trombone Duets» датированы **2022** — **конфликт дат с файлом (~сент. 2023), не разрешён** (запись июль 2022 бесспорна).
+18. **[по поиску, конфликт]** «Flood» на Discogs приписан Steve Wilson / Richard Harris / Jovan Mays (в файле — «Slide and the Family Bone», Summit DCD 806) — переиздание или ошибка выдачи; **не разрешён**, сверить вручную.
+
+**Discogs (латиница, WebSearch site:discogs.com):**
+16. **[по поиску]** «The Lyric Trombone» (1975, US vinyl) — Richard L. Cryder & Jane Cryder; на стороне B пьеса Блажевича (5:55) — старейшая западная запись Блажевича из найденных; страницу релиза открыть вручную (в выдаче только метаданные).
+17. **[по поиску]** Страница лейбла [European Gramophone на Discogs](https://www.discogs.com/label/1936217-European-Gramophone): Koch/Hanna «3 Trombone Duets» датированы **2022** — **конфликт дат с файлом (~сент. 2023), не разрешён** (запись июль 2022 бесспорна).
+18. **[по поиску, конфликт]** «Flood» на Discogs приписан Steve Wilson / Richard Harris / Jovan Mays (в файле — «Slide and the Family Bone», Summit DCD 806) — переиздание или ошибка выдачи; **не разрешён**, сверить вручную.
+
 **Этюдные записи (демо/учебные, не альбомы):** Steve Wilson (UNT, селектор TMEA 2024–25), Houghton Horns (серия по годам TMEA + Clef Studies), Brian Hecht (№40, №34), John Romero (Met, №57), Jim Wilt (№58), MUC Stephen Lamb (туба), «Yasu» (туба-серия, в процессе).
 
 **Ноты (для контекста изданий):** Presto/Marc Reift — концерты №2 (бас-тромбон), №3 (валторна), №5 (виолончель!), №7 (валторна Es), №8 (тромбон), №9 (бас-тромбон); «Seven Studies in Russian Style»/«7 Russian Etudes» EMR21417 (тромбон/эуфониум); «Low Range Studies» ред. **Charles Vernon** ([Reverb](https://reverb.com/item/89425808-low-range-studies-for-trombone-by-blazhevich-ed-vernon)); «26 Sequences» (Brass Music Online); 70 Studies ред. Robert King (Haggerty, ~$17.99 том).
 
-**«Не нашлось» (списком):** полные записи «70 Studies»/«Clef Studies»; ITA Journal 2023–2025 о Блажевиче; «этюд №21 на ATW-2026»; следы в McGill/Toronto/у Trudel; Мексика/Аргентина; Sydney Con/ANAM/MSO; НЗ; выделенный выпуск Brass Chats; западный винил на Discogs (WebSearch по «Блажевич» + site:discogs.com — пусто; Мелодия-страницы индексируются только по кириллице; латиничные spellings агентом уже проверены); концерты №12–13 (утеряны, per Friedman); транскрипты YouTube (инструменты недоступны). Однофамильцы (Miroslav Blažević и др.) в выдаче не мешали.
+**«Не нашлось» (списком):** полные записи «70 Studies»/«Clef Studies»; ITA Journal 2023–2025 о Блажевиче; «этюд №21 на ATW-2026»; следы в McGill/Toronto/у Trudel; Мексика/Аргентина; Sydney Con/ANAM/MSO; НЗ; выделенный выпуск Brass Chats; Мелодия на Discogs по кириллице — пусто (латиница дала три следа, см. C №16–18); концерты №12–13 (утеряны, per Friedman); транскрипты YouTube (инструменты недоступны). Однофамильцы (Miroslav Blažević и др.) в выдаче не мешали.
 
 ---
 
@@ -108,4 +118,4 @@
 
 **На сайт стоит взять:** Friedman-цитаты и историю изданий в us-schools; карту All-State (айовская туба №14/№30 — новое подтверждение) и UCLA; библиографию ITA Journal; в «Слушать» — European Gramophone 2025, «Three Tenors at Valudden», Koch/Hanna, EP Ridder-2026, Sung Kwan Lee (после сверки лицензий/площадок); в Ленту — ATW-2026 и AMEB-2026; UFBA — в школы мира. Не ставить: ATW №21, Bousfield-Okada «блажевичевский» альбом, «SWR-концерты».
 
-**Дальше ручная сверка:** трек-лист Apple/Spotify дуэт-компиляции (нужен браузер), полный PDF TAMUC (список методов), репертуар ITA-2027 (страница trombone.net по таймауту), PDF второй трубы San Diego.
+**Дальше ручная сверка:** трек-лист Apple/Spotify дуэт-компиляции, дата релиза Koch/Hanna (Discogs: 2022 vs ~сент. 2023 в файле) и персоналии «Flood» на Discogs, страница Discogs «The Lyric Trombone» (1975), PDF второй трубы San Diego, Porcia-2023 (страница 404).
