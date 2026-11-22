@@ -23,8 +23,6 @@ RedirectMatch 404 (?i)^/\.github
 RedirectMatch 301 ^/scores\.html$ /works.html
 RedirectMatch 301 ^/concertos\.html$ /works.html
 RedirectMatch 301 ^/usa\.html$ /us-schools.html
-RedirectMatch 301 ^/biography\.html$ /index.html#biography
-RedirectMatch 301 ^/en/biography\.html$ /en/index.html#biography
 
 # ---------- кэш ----------
 # LiteSpeed на Hostinger кэширует HTML и после деплоя отдаёт старую страницу
@@ -46,6 +44,9 @@ RedirectMatch 301 ^/en/biography\.html$ /en/index.html#biography
   ExpiresByType image/jpeg "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
+  # аудиозаписи: месяц; ссылки получают ?v= при сборке (см. asset_urls в build.py)
+  ExpiresByType audio/ogg "access plus 30 days"
+  ExpiresByType audio/mpeg "access plus 30 days"
   ExpiresByType font/woff2 "access plus 1 years"
   ExpiresByType font/woff "access plus 1 years"
 </IfModule>
