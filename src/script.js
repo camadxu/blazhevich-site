@@ -67,10 +67,10 @@
   });
 
   /* Витрина: старые якоря одностраничника (#scores, #concertos, …) ведут на страницы разделов.
-     Работает и в английской версии — страницы лежат рядом с en/index.html. */
-  if(document.querySelector('.school-strip')){
+     Биография теперь имеет отдельный адрес; страницы английской версии лежат рядом с en/index.html. */
+  if(document.getElementById('hero')){
     const R={'#scores':'works.html','#concertos':'works.html#concertos','#listen':'listen.html',
-             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};  /* #biography — теперь настоящий якорь витрины */
+             '#usa':'us-schools.html#usa','#schools':'schools.html','#about':'about.html'};
     const to=R[location.hash];if(to)location.replace(to);
   }
 
