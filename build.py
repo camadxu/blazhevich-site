@@ -14,7 +14,7 @@ en/scores.html, biography.html, …) остаются короткими стр�
 С флагом --single-page дополнительно собирается artifact.html — вся русская версия одной
 страницей (нужна только для предпросмотра в Claude, на сервер не загружается; шрифты берёт с Google Fonts).
 """
-import argparse, datetime, hashlib, html, json, pathlib, re, shutil, time
+import argparse, atexit, datetime, hashlib, html, json, pathlib, re, shutil, time
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -55,10 +55,17 @@ CSS_FILE = 'main.' + hashlib.sha256(CSS.encode('utf-8')).hexdigest()[:10] + '.cs
 FONTS_CSS = (ROOT / 'assets' / 'fonts.css').read_text()
 FONTS_FILE = 'fonts.' + hashlib.sha256(FONTS_CSS.encode('utf-8')).hexdigest()[:10] + '.css'
 # Картинки кэшируются браузером на 30 дней (см. .deploy/htaccess), а имена у них постоянные.
-# Версия от содержимого каталога assets даёт новый адрес, когда файл меняется.
-_asset_index = sorted((q.relative_to(ROOT / 'assets').as_posix(), q.stat().st_size)
-                      for q in (ROOT / 'assets').rglob('*') if q.is_file())
-ASSET_VER = hashlib.sha256(repr(_asset_index).encode('utf-8')).hexdigest()[:8]
+# Версия от имён и содержимого assets даёт новый адрес при любой замене файла,
+# в том числе когда новый файл имеет тот же размер.
+_asset_hash = hashlib.sha256()
+_assets = sorted(((q.relative_to(ROOT / 'assets').as_posix(), q)
+                  for q in (ROOT / 'assets').rglob('*') if q.is_file()), key=lambda item: item[0])
+for _asset_name, _asset in _assets:
+    _asset_hash.update(_asset_name.encode('utf-8'))
+    _asset_hash.update(b'\0')
+    _asset_hash.update(_asset.read_bytes())
+    _asset_hash.update(b'\0')
+ASSET_VER = _asset_hash.hexdigest()[:8]
 _ASSET_RE = re.compile(r'((?:\.\./)?assets/[A-Za-z0-9_./-]+\.(?:webp|png|jpg|jpeg|svg))(?=["\s,)\\])')
 def asset_urls(html):
     """К адресам картинок добавляется ?v=<версия>, чтобы кэш не показывал старый снимок."""
@@ -152,9 +159,9 @@ def relink(html, page, id_page, old=None):
 
 DRAFT = '' if a.release else '<div class="draft">Предварительный просмотр · не опубликовано</div>\n'
 
-def header(nav_html, lang_link, home, hero_page=False):
+def header(nav_html, lang_link, home, hero_page=False, skip_text='Перейти к содержимому'):
     bar_cls = ' class="on-hero"' if hero_page else ''   # витрина: шапка стоит под первым экраном
-    return (f'<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
+    return (f'<a class="skip" href="#main">{skip_text}</a>\n' + DRAFT
             + f'<header id="top-bar"{bar_cls}><div class="wrap bar">\n  <a href="{home}" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>\n'
             f'  <nav aria-label="Основная навигация">{nav_html}{lang_link}</nav>\n</div></header>\n')
 
@@ -616,8 +623,18 @@ def clean_out(path, tries=5):
     raise SystemExit(f'Не удалось очистить {path}: файлы заняты другим процессом, закройте просмотр и повторите')
 
 
-OUT = ROOT / 'site'
-clean_out(OUT)
+FINAL_OUT = ROOT / 'site'
+STAGE_ROOT = ROOT / 'site.next'
+PREVIOUS_OUT = ROOT / 'site.previous'
+OUT = STAGE_ROOT / 'site'
+
+# Если предыдущий процесс оборвался ровно во время подмены, возвращаем последний
+# рабочий артефакт. В остальных случаях staging и старый backup безопасно убираются.
+if not FINAL_OUT.exists() and PREVIOUS_OUT.exists():
+    PREVIOUS_OUT.replace(FINAL_OUT)
+clean_out(STAGE_ROOT)
+clean_out(PREVIOUS_OUT)
+atexit.register(clean_out, STAGE_ROOT)
 (OUT / 'en').mkdir(parents=True)
 shutil.copytree(ROOT / 'assets', OUT / 'assets')
 (OUT / 'assets' / CSS_FILE).write_text(CSS)
@@ -647,10 +664,8 @@ for f, (ss, title, desc) in PAGES.items():
     if f == 'index.html':   # витрина: первый экран, вступление, «Биография ∥ Школа», лента
         hdr = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html', hero_page=True)
         hero = sec('hero')
-        # шапка стоит сразу под первым экраном; с JS выезжает раньше — когда экран пройден (класс past-hero)
-        hero = hero.replace('<div class="lede">', hdr + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr
-        body = ('<a class="skip" href="#main">Перейти к содержимому</a>\n' + DRAFT
-                + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
+        # Шапка — banner-landmark перед main; CSS оставляет её fixed/sticky и показывает после hero.
+        body = (hdr + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
                 + '<main id="main">\n' + hero + bio_school('ru', sec('biography'), sec('schools'))
                 + (news_panel(NEWS[0]) if NEWS else '') + '</main>\n')
         footer = FOOTER_RU()
@@ -733,18 +748,17 @@ OLD_EN = {'scores': 'works.html', 'concertos': 'works.html#concertos', 'listen':
           'usa': 'us-schools.html#usa' if 'usa' in id_page_en else 'us-schools.html'}
 nav_en = ''.join(f'<a href="{i}.html">{t}</a>' for i, t, _ in EN_HUB)
 FONTS_EN = f'<link rel="stylesheet" href="../assets/{FONTS_FILE}">'
-hdr_en = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html', hero_page=True)
-hero = en_secs['hero']   # шапка — сразу под первым экраном, как в русской витрине
-hero = hero.replace('<div class="lede">', hdr_en + '<div class="lede">', 1) if '<div class="lede">' in hero else hero + hdr_en
-body = ('<a class="skip" href="#main">Skip to content</a>\n' + DRAFT
-        + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
+hdr_en = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html',
+                hero_page=True, skip_text='Skip to content')
+hero = en_secs['hero']
+body = (hdr_en + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
         + '<main id="main">\n' + hero + bio_school('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
     'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en, OLD_EN)), FONTS_EN, FOOTER_EN()))
 for n_, (f_, (ss_, title, desc)) in enumerate(EN_PAGES.items()):   # страницы разделов
-    body = (header(nav_en, f'<a class="lang" href="../{f_}" hreflang="ru" lang="ru">RU</a>', 'index.html')
+    body = (header(nav_en, f'<a class="lang" href="../{f_}" hreflang="ru" lang="ru">RU</a>', 'index.html', skip_text='Skip to content')
             + '<main id="main">\n' + inner(en_secs[ss_[0]], 'Sections', 'index.html', '../', n=n_ + 1)
             + ''.join(en_secs[s_] for s_ in ss_[1:])
             + (files_block('en', '../') if f_ == 'works.html' else '')
@@ -762,7 +776,7 @@ for k, tgt in OLD_EN.items():   # старые адреса английских
 nav_en_dossier = nav_en.replace('<a href="schools.html">', '<a href="schools.html" class="active" aria-current="true">', 1)
 for f, (title, desc) in EN_DOSSIERS.items():
     src = re.sub(r'(src="|srcset="|, )assets/', r'\1../assets/', sec(f[:-5], 'en'))
-    body = (header(nav_en_dossier, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html')
+    body = (header(nav_en_dossier, f'<a class="lang" href="../{f}" hreflang="ru" lang="ru">RU</a>', 'index.html', skip_text='Skip to content')
             + '<main id="main">\n' + inner(src, 'The school and its lineage', 'schools.html', '../') + '</main>\n')
     body = relink(body, f, id_page_en, OLD_EN)
     (OUT / 'en' / f).write_text(page('en', title, desc, f'en/{f}', '../', en_words(body), FONTS_EN, FOOTER_EN()))
@@ -789,13 +803,32 @@ art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" conten
        + f'<script>\n{JS}</script>\n')
 if a.single_page:
     (ROOT / 'artifact.html').write_text(art)
+shutil.copy2(ROOT / '404.html', STAGE_ROOT / '404.html')
 try:
-    from enhancements import apply
+    import enhancements as _enhancements
 except ModuleNotFoundError:
     # Изолированные сборки Python (python313._pth, например встроенный Python в приложениях)
     # не добавляют папку скрипта в sys.path — добавляем её явно и повторяем импорт.
     import sys
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-    from enhancements import apply
-apply()
-print('Собрано в', OUT, ':', 'ПУБЛИЧНАЯ версия для ' + DOM if a.release else 'черновик')
+    import enhancements as _enhancements
+_enhancements_root = _enhancements.ROOT
+try:
+    _enhancements.ROOT = STAGE_ROOT
+    _enhancements.apply()
+finally:
+    _enhancements.ROOT = _enhancements_root
+
+# Подмена начинается только после полной генерации и enhancements.apply(). Если
+# перенос нового каталога не удался, прежний site/ немедленно возвращается на место.
+if FINAL_OUT.exists():
+    FINAL_OUT.replace(PREVIOUS_OUT)
+try:
+    OUT.replace(FINAL_OUT)
+except BaseException:
+    if PREVIOUS_OUT.exists() and not FINAL_OUT.exists():
+        PREVIOUS_OUT.replace(FINAL_OUT)
+    raise
+clean_out(PREVIOUS_OUT)
+clean_out(STAGE_ROOT)
+print('Собрано в site:', 'ПУБЛИЧНАЯ версия для ' + DOM if a.release else 'черновик')
