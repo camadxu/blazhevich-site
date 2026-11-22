@@ -23,8 +23,6 @@ RedirectMatch 404 (?i)^/\.github
 RedirectMatch 301 ^/scores\.html$ /works.html
 RedirectMatch 301 ^/concertos\.html$ /works.html
 RedirectMatch 301 ^/usa\.html$ /us-schools.html
-RedirectMatch 301 ^/biography\.html$ /index.html#biography
-RedirectMatch 301 ^/en/biography\.html$ /en/index.html#biography
 
 # ---------- кэш ----------
 # LiteSpeed на Hostinger кэширует HTML и после деплоя отдаёт старую страницу
