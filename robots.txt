@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Content-Signal: search=yes, ai-train=no
-
-Sitemap: https://blazhevich.tech/sitemap.xml
