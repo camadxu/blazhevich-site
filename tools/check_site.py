@@ -23,11 +23,12 @@ from urllib.parse import unquote, urlsplit
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
 # Сайт — витрина index.html, пять разделов и три досье на каждом языке; старые адреса — переадресации
-HUB = ['works.html', 'listen.html', 'biography.html', 'schools.html', 'about.html']
+HUB = ['works.html', 'listen.html', 'schools.html', 'about.html']
 PAGES = ['index.html', *HUB, 'moscow.html', 'leningrad.html', 'us-schools.html',
          'en/index.html', *[f'en/{p}' for p in HUB], 'en/moscow.html', 'en/leningrad.html', 'en/us-schools.html']
 # старый адрес → (страница, обязательный якорь; '?' = якорь optional, пока глава переносится)
-STUBS = (('scores.html', 'works.html', ''), ('concertos.html', 'works.html', 'concertos'), ('usa.html', 'us-schools.html', '?'))
+STUBS = (('scores.html', 'works.html', ''), ('concertos.html', 'works.html', 'concertos'), ('usa.html', 'us-schools.html', '?'),
+         ('biography.html', 'index.html', 'biography'))
 errors, external = [], set()
 
 class P(HTMLParser):
@@ -138,13 +139,14 @@ if 'index.html' in parsed:
     s = (SITE / 'index.html').read_text(encoding='utf-8')
     for p_ in HUB:
         if f'href="{p_}"' not in s: errors.append(f'index.html: меню не ведёт на {p_}')
+    for p_ in ('moscow.html', 'leningrad.html', 'us-schools.html'):
+        if f'href="{p_}"' not in s: errors.append(f'index.html: нет ссылки на досье {p_}')
     if 'class="rail"' in s or 'rail-edge' in s: errors.append('index.html: осталось боковое меню rail')
-    if any(marker in s for marker in ('class="block bio-band"', 'class="block school-strip"', 'class="dossiers-strip"')):
-        errors.append('index.html: остались прежние блоки биографии или досье')
-    if 'class="block home-sections"' not in s or 'class="section-list"' not in s:
-        errors.append('index.html: нет списка разделов')
-    if 'class="block home-school"' not in s or 'class="school-entry-link"' not in s:
-        errors.append('index.html: нет короткого входа в «Школу»')
+    if 'class="block bio-band"' not in s: errors.append('index.html: нет биографии во всю ширину')
+    if 'class="block school-strip"' not in s: errors.append('index.html: нет полосы «Школа и традиция»')
+    if any(marker in s for marker in ('class="block home-sections"', 'class="section-list"',
+                                     'class="block home-school"', 'class="school-entry-link"')):
+        errors.append('index.html: остались карточки разделов прежней витрины')
 
 # переадресации со старых адресов ведут на существующую страницу (и якорь, если он указан)
 for pre in ('', 'en/'):
