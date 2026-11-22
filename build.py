@@ -66,9 +66,9 @@ for _asset_name, _asset in _assets:
     _asset_hash.update(_asset.read_bytes())
     _asset_hash.update(b'\0')
 ASSET_VER = _asset_hash.hexdigest()[:8]
-_ASSET_RE = re.compile(r'((?:\.\./)?assets/[A-Za-z0-9_./-]+\.(?:webp|png|jpg|jpeg|svg|opus|ogg|mp3|m4a))(?=["\s,)\\])')
+_ASSET_RE = re.compile(r'((?:\.\./)?assets/[A-Za-z0-9_./-]+\.(?:webp|png|jpg|jpeg|svg))(?=["\s,)\\])')
 def asset_urls(html):
-    """К адресам картинок и аудио добавляется ?v=<версия>, чтобы кэш не показывал старый файл."""
+    """К адресам картинок добавляется ?v=<версия>, чтобы кэш не показывал старый снимок."""
     return _ASSET_RE.sub(lambda m: m.group(1) + '?v=' + ASSET_VER, html)
 
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
