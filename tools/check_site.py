@@ -8,6 +8,7 @@
   • каждая внутренняя ссылка (href/src/srcset и url() в fonts.css) ведёт на существующий файл,
     а ссылка с #якорем — на существующий id в целевой странице;
   • нет повторяющихся id на странице, у каждой страницы ровно один <h1>;
+  • JSON-LD на всех HTML-страницах валиден, локальные hreflang-ссылки взаимны;
   • ни одна страница не загружает внешние ресурсы (скрипты, стили, картинки, шрифты с http/https);
   • витрина: биография во всю ширину и полоса «Школа и традиция» на месте, меню ведёт на разделы, бокового меню (rail) нет;
   • переадресации со старых адресов (scores, concertos, usa, biography) ведут на существующие страницы;
@@ -16,8 +17,9 @@
 Внешние ссылки (<a href="https://…">) только перечисляются; их доступность не проверяется.
 Код выхода 1 — если найдены ошибки.
 """
-import pathlib, re, sys
+import json, pathlib, re, sys
 from html.parser import HTMLParser
+from urllib.parse import unquote, urlsplit
 
 SITE = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).resolve().parent.parent / 'site').resolve()
 # Сайт — витрина index.html (биография на ней), четыре раздела и три досье на каждом языке; старые адреса — переадресации
@@ -32,6 +34,7 @@ errors, external = [], set()
 class P(HTMLParser):
     def __init__(self):
         super().__init__(); self.refs = []; self.ids = []; self.h1 = 0; self.res = []
+        self.alternates = []; self.json_ld = []; self._json_ld = None
     def handle_starttag(self, tag, attrs):
         d = dict(attrs)
         if 'id' in d: self.ids.append(d['id'])
@@ -42,6 +45,17 @@ class P(HTMLParser):
         if 'srcset' in d:
             for part in d['srcset'].split(','):
                 self.refs.append((tag, 'srcset', part.strip().split(' ')[0], None))
+        if tag == 'link' and d.get('hreflang') and 'alternate' in (d.get('rel') or '').split():
+            self.alternates.append((d['hreflang'], d.get('href', '')))
+        if tag == 'script' and (d.get('type') or '').lower() == 'application/ld+json':
+            self._json_ld = []
+    def handle_data(self, data):
+        if self._json_ld is not None:
+            self._json_ld.append(data)
+    def handle_endtag(self, tag):
+        if tag == 'script' and self._json_ld is not None:
+            self.json_ld.append(''.join(self._json_ld))
+            self._json_ld = None
 
 parsed = {}
 for pg in PAGES:
@@ -52,6 +66,46 @@ for pg in PAGES:
     dup = {i for i in p.ids if p.ids.count(i) > 1}
     if dup: errors.append(f'{pg}: повторяющиеся id {sorted(dup)}')
     if p.h1 != 1: errors.append(f'{pg}: <h1> встречается {p.h1} раз')
+
+# JSON-LD проверяется у всех HTML-файлов, включая ленту, редиректы и 404.
+for f in sorted(SITE.rglob('*.html')):
+    pg = f.relative_to(SITE).as_posix()
+    p = parsed.get(pg)
+    if p is None:
+        p = P(); p.feed(f.read_text(encoding='utf-8')); parsed[pg] = p
+    for n, payload in enumerate(p.json_ld, 1):
+        try:
+            json.loads(payload)
+        except json.JSONDecodeError as exc:
+            errors.append(f'{pg}: невалидный JSON-LD #{n}: {exc.msg} (строка {exc.lineno}, столбец {exc.colno})')
+
+def local_html(source, href):
+    """Возвращает локальный HTML-путь для absolute/root-relative/relative URL."""
+    u = urlsplit(href)
+    raw = unquote(u.path)
+    if u.scheme or u.netloc or raw.startswith('/'):
+        target = SITE / raw.lstrip('/')
+    else:
+        target = (SITE / source).parent / raw
+    if not raw or raw.endswith('/'):
+        target /= 'index.html'
+    target = target.resolve()
+    try:
+        rel = target.relative_to(SITE).as_posix()
+    except ValueError:
+        return None
+    return rel if target.is_file() and target.suffix.lower() == '.html' else None
+
+# Каждая локальная hreflang-ссылка должна быть взаимной: B ссылается обратно на A.
+alternate_targets = {}
+for pg, p in parsed.items():
+    alternate_targets[pg] = [(lang, href, local_html(pg, href)) for lang, href in p.alternates]
+for pg, links in alternate_targets.items():
+    for lang, href, target in links:
+        if target is None:
+            continue
+        if not any(back == pg for _, _, back in alternate_targets.get(target, [])):
+            errors.append(f'{pg}: hreflang="{lang}" ведёт на {target}, но {target} не ссылается обратно на {pg}')
 
 def ids_of(path):
     rel = path.relative_to(SITE).as_posix()
