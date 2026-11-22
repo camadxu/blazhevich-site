@@ -44,6 +44,9 @@ RedirectMatch 301 ^/usa\.html$ /us-schools.html
   ExpiresByType image/jpeg "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
+  # аудиозаписи: месяц; ссылки получают ?v= при сборке (см. asset_urls в build.py)
+  ExpiresByType audio/ogg "access plus 30 days"
+  ExpiresByType audio/mpeg "access plus 30 days"
   ExpiresByType font/woff2 "access plus 1 years"
   ExpiresByType font/woff "access plus 1 years"
 </IfModule>
