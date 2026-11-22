@@ -180,7 +180,7 @@ def vignette(v, prefix=''):
 # сцена во всю ширину с текстом поверх (assets/scene-*.webp делает tools/scenes/*.py)
 SCENE = {'moscow', 'leningrad'}
 
-def inner(h, crumb, href='index.html', prefix='', n=0):
+def inner(h, crumb, href='index.html', prefix=''):
     """На внутренней странице заголовок секции становится h1 с «хлебной крошкой»."""
     sid = re.match(r'\s*<section id="([\w-]+)"', h)
     v = VIGNETTE.get(sid.group(1)) if sid else None
@@ -189,21 +189,18 @@ def inner(h, crumb, href='index.html', prefix='', n=0):
     # url() во встроенном CSS считается от страницы: из папки en/ картинку сцены даём с префиксом
     sty = (f' style="--scene:url({prefix}assets/scene-{sid.group(1)}.webp);--scene-sm:url({prefix}assets/scene-{sid.group(1)}-960.webp)"'
            if cls and prefix else '')
-    n_attr = f' data-n="{n:02d}"' if n else ''   # номер раздела 01–05 над заголовком
-    h = h.replace('<div class="section-head reveal">',
-                  f'<div class="section-head{cls} reveal"{n_attr}{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
+    h = h.replace('<div class="section-head">',
+                  f'<div class="section-head{cls}"{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
 
-def deco(h, prefix='', n=0):
-    """Раздел на общей странице: заголовок остаётся h2, справа — архивная виньетка, над заголовком — номер раздела."""
-    if n:
-        h = h.replace('<div class="section-head reveal">', f'<div class="section-head reveal" data-n="{n:02d}">', 1)
+def deco(h, prefix=''):
+    """Раздел на общей странице: заголовок остаётся h2, справа — архивная виньетка."""
     sid = re.match(r'\s*<section id="([\w-]+)"', h)
     v = VIGNETTE.get(sid.group(1)) if sid else None
     if not v:
         return h
     fig = vignette(v, prefix)
-    return re.sub(r'(<div class="section-head reveal"[^>]*>)', lambda m: m.group(1) + fig, h, count=1)
+    return re.sub(r'(<div class="section-head"[^>]*>)', lambda m: m.group(1) + fig, h, count=1)
 
 def home_sections(lang):
     """Тихий список разделов и короткий вход в «Школу» на витрине."""
@@ -235,11 +232,11 @@ def home_sections(lang):
     items = ''.join(f'    <li><a href="{href}"><span class="section-name">{title}</span><span class="section-summary">{summary}</span></a></li>\n'
                     for href, title, summary in rows)
     return (f'<section class="block home-sections" aria-labelledby="home-sections-title"><div class="wrap">\n'
-            f'  <div class="section-head reveal"><h2 id="home-sections-title">{heading}</h2></div>\n'
-            f'  <ul class="section-list reveal">\n{items}  </ul>\n'
+            f'  <div class="section-head"><h2 id="home-sections-title">{heading}</h2></div>\n'
+            f'  <ul class="section-list">\n{items}  </ul>\n'
             f'</div></section>\n'
             f'<section class="block home-school" aria-labelledby="home-school-title"><div class="wrap">\n'
-            f'  <div class="section-head reveal"><h2 id="home-school-title">{school_heading}</h2><p>{school_text}</p></div>\n'
+            f'  <div class="section-head"><h2 id="home-school-title">{school_heading}</h2><p>{school_text}</p></div>\n'
             f'  <a class="school-entry-link" href="schools.html">{school_link}</a>\n'
             f'</div></section>\n')
 
@@ -259,7 +256,7 @@ def pager(page_id, lang, prefix=''):
     if idx < len(hub) - 1:
         n_ = hub[idx + 1]
         links += f'<a class="pg-way" rel="next" href="{prefix}{n_[0]}.html">{n_[1]} →</a>'
-    return f'<nav class="pager wrap reveal" aria-label="{T[1]}">{links}</nav>\n'
+    return f'<nav class="pager wrap" aria-label="{T[1]}">{links}</nav>\n'
 
 # ---------------- База файлов (этап 1): реестр трудов и загрузки ----------------
 FILES_BASE = ''   # адрес файлового сервера; пока пусто — пути files/… отдаются как есть
@@ -329,7 +326,7 @@ def files_block(lang, prefix=''):
                   + (f'<p>{T[5]}: {e(origin)}</p>' if origin else '')
                   + (f'<p class="file-links">{links}</p>' if links else '') + '</li>\n')
     return ('<section id="files" class="block files-block" aria-labelledby="files-title"><div class="wrap">\n'
-            f'  <div class="section-head reveal"><h2 id="files-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div><p>{T[2]}</p></div>\n'
+            f'  <div class="section-head"><h2 id="files-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div><p>{T[2]}</p></div>\n'
             f'  <ul class="files-list">\n{items}  </ul>\n'
             '</div></section>\n')
 
@@ -374,8 +371,7 @@ def site_footer(lang):
             f'  <div class="foot-col"><h2>{T["d"]}</h2><ul><li><a href="moscow.html">{T["m"]}</a></li><li><a href="leningrad.html">{T["l"]}</a></li><li><a href="us-schools.html">{T["u"]}</a></li></ul>'
             f'<h2>{T["o"]}</h2><ul><li>{T["other"]}</li></ul></div>\n'
             f'  <p class="foot-fine">{T["fine"]}</p>\n'
-            '</div></footer>\n'
-            f'<button class="totop" id="totop" type="button" aria-label="{T["top"]}">↑</button>\n')
+            '</div></footer>\n')
 
 # ---- типографика русских страниц ----
 _NB = ' '
@@ -511,13 +507,13 @@ def news_chips(items):
 def news_panel(issue):
     """Панель на главной: первые пять позиций свежего выпуска (остальные в разметке, скрыты — для фильтра)."""
     return ('<section id="news" class="block news-panel" aria-labelledby="news-title"><div class="wrap">\n'
-            '  <div class="section-head reveal"><h2 id="news-title">Лента</h2>'
+            '  <div class="section-head"><h2 id="news-title">Лента</h2>'
             f'<div class="eyebrow">Новости медных духовых · выпуск от <time datetime="{issue["release"]}">{ru_date(issue["release"])}</time></div>'
             '<p>Конкурсы, назначения, премьеры и записи: что произошло у тромбонистов, трубачей, валторнистов и тубистов. Каждая заметка ведёт на первоисточник.</p></div>\n'
             + news_chips(issue['items'])
-            + f'<ol class="news-list reveal" data-agent-list data-agent-release="{issue["release"]}" data-agent-live="news/today.json" data-agent-limit="{NEWS_PANEL}">'
+            + f'<ol class="news-list" data-agent-list data-agent-release="{issue["release"]}" data-agent-limit="{NEWS_PANEL}">'
             + ''.join(news_card(i) for i in issue['items']) + '</ol>\n'
-            '  <p class="news-foot reveal"><a class="btn btn-ghost" href="news/">Весь выпуск и архив</a><a href="feed.xml">RSS</a></p>\n'
+            '  <p class="news-foot"><a class="btn btn-ghost" href="news/">Весь выпуск и архив</a><a href="feed.xml">RSS</a></p>\n'
             '</div></section>\n')
 
 def news_page(issue, issues, permalink):
@@ -526,12 +522,12 @@ def news_page(issue, issues, permalink):
     arch = ''.join(f'<li><a href="{i["release"]}.html"{cur if permalink and i is issue else ""}>'
                    f'<time datetime="{i["release"]}">{ru_date(i["release"])}</time></a><span>{len(i["items"])}</span></li>' for i in issues)
     return ('<section id="news" class="block news-page"><div class="wrap">\n'
-            '  <div class="section-head reveal"><a class="crumb" href="../index.html">← Главная</a>'
+            '  <div class="section-head"><a class="crumb" href="../index.html">← Главная</a>'
             f'<h1 class="page-title">Лента</h1><div class="eyebrow">Выпуск от <time datetime="{issue["release"]}">{ru_date(issue["release"])}</time></div>'
             '<p>Ежедневный дайджест новостей медных духовых. Заметки ведут на первоисточники; пересказ не заменяет оригинал.</p></div>\n'
             + news_chips(issue['items'])
-            + f'<ol class="news-list reveal" data-agent-list data-agent-release="{issue["release"]}">' + ''.join(news_card(i) for i in issue['items']) + '</ol>\n'
-            + f'  <div class="news-archive reveal"><h2>Архив по дням</h2><ol>{arch}</ol><p class="note"><a href="../feed.xml">RSS-лента</a></p></div>\n'
+            + f'<ol class="news-list" data-agent-list data-agent-release="{issue["release"]}">' + ''.join(news_card(i) for i in issue['items']) + '</ol>\n'
+            + f'  <div class="news-archive"><h2>Архив по дням</h2><ol>{arch}</ol><p class="note"><a href="../feed.xml">RSS-лента</a></p></div>\n'
             '</div></section>\n')
 
 def news_feed(issues):
@@ -691,15 +687,14 @@ for f, (ss, title, desc) in PAGES.items():
         hdr = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html', hero_page=True)
         hero = sec('hero')
         # Шапка — banner-landmark перед main; CSS оставляет её fixed/sticky и показывает после hero.
-        body = (hdr + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
+        body = (hdr + '<button class="fab" type="button" popovertarget="menu">Меню</button>\n'
                 + '<main id="main">\n' + hero + home_sections('ru')
                 + (news_panel(NEWS[0]) if NEWS else '') + '</main>\n')
         footer = FOOTER_RU()
     else:
-        n_ = 0 if par else HUB_N[f] + 1   # досье без номера, разделы нумеруются 01–05
         crumb = (par[1], f'{par[0]}.html') if par else ('Разделы', 'index.html')
         body = header(nav, f'<a class="lang" href="{en_href}" hreflang="en" lang="en">EN</a>', 'index.html') \
-            + '<main id="main">\n' + inner(sec(ss[0]), crumb[0], crumb[1], n=n_) + ''.join(sec(s_) for s_ in ss[1:]) \
+            + '<main id="main">\n' + inner(sec(ss[0]), crumb[0], crumb[1]) + ''.join(sec(s_) for s_ in ss[1:]) \
             + (files_block('ru') if f == 'works.html' else '') \
             + (pager(f[:-5], 'ru') if f in HUB_N else '') + '</main>\n'
         footer = FOOTER_RU()
@@ -777,15 +772,15 @@ FONTS_EN = f'<link rel="stylesheet" href="../assets/{FONTS_FILE}">'
 hdr_en = header(nav_en, '<a class="lang" href="../index.html" hreflang="ru" lang="ru">RU</a>', 'index.html',
                 hero_page=True, skip_text='Skip to content')
 hero = en_secs['hero']
-body = (hdr_en + '<div class="progress" aria-hidden="true"></div>\n<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
+body = (hdr_en + '<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
         + '<main id="main">\n' + hero + home_sections('en') + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
     'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
     'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en, OLD_EN)), FONTS_EN, FOOTER_EN()))
-for n_, (f_, (ss_, title, desc)) in enumerate(EN_PAGES.items()):   # страницы разделов
+for f_, (ss_, title, desc) in EN_PAGES.items():   # страницы разделов
     body = (header(nav_en, f'<a class="lang" href="../{f_}" hreflang="ru" lang="ru">RU</a>', 'index.html', skip_text='Skip to content')
-            + '<main id="main">\n' + inner(en_secs[ss_[0]], 'Sections', 'index.html', '../', n=n_ + 1)
+            + '<main id="main">\n' + inner(en_secs[ss_[0]], 'Sections', 'index.html', '../')
             + ''.join(en_secs[s_] for s_ in ss_[1:])
             + (files_block('en', '../') if f_ == 'works.html' else '')
             + pager(f_[:-5], 'en') + '</main>\n')
@@ -817,7 +812,7 @@ if a.release:
     (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nContent-Signal: search=yes, ai-train=no\n\nSitemap: {DOM}/sitemap.xml\n')
 
 # ---------------- Одностраничная версия для предпросмотра на claude.ai ----------------
-one = ''.join(deco(sec(s_), n=i) for i, s_ in enumerate(WORKS_SECS + ['listen', 'biography', 'schools', 'about'], 1))
+one = ''.join(deco(sec(s_)) for s_ in WORKS_SECS + ['listen', 'biography', 'schools', 'about'])
 nav = ''.join(f'<a href="#{i}">{t}</a>' for i, t, _ in HUB_RU)
 art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n'
        '<meta name="robots" content="noindex,nofollow">\n<meta name="theme-color" content="#e8dbbf">\n' + FAVICON + '\n' + FONTS_GOOGLE
@@ -825,7 +820,6 @@ art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" conten
        + header(nav, '', f'#{PAGES["works.html"][0][0]}')
        + f'<main id="main">\n{one}</main>\n'
        + '<footer><div class="wrap foot"><a href="#scores" class="brand">Blazhevich</a><span>Владислав Блажевич · Vladislav Blazhevich</span></div></footer>\n'
-       + '<button class="totop" id="totop" type="button" aria-label="Наверх">↑</button>\n'
        + f'<script>\n{JS}</script>\n')
 if a.single_page:
     (ROOT / 'artifact.html').write_text(art)

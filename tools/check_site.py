@@ -141,7 +141,7 @@ if 'index.html' in parsed:
     if 'class="rail"' in s or 'rail-edge' in s: errors.append('index.html: осталось боковое меню rail')
     if any(marker in s for marker in ('class="block bio-band"', 'class="block school-strip"', 'class="dossiers-strip"')):
         errors.append('index.html: остались прежние блоки биографии или досье')
-    if 'class="block home-sections"' not in s or 'class="section-list reveal"' not in s:
+    if 'class="block home-sections"' not in s or 'class="section-list"' not in s:
         errors.append('index.html: нет списка разделов')
     if 'class="block home-school"' not in s or 'class="school-entry-link"' not in s:
         errors.append('index.html: нет короткого входа в «Школу»')

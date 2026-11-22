@@ -20,7 +20,7 @@ for page in ['index.html','en/index.html']:
  assert 'hero-home.webp' in s and 'goznak-moscow' not in s
  assert 'class="hero-mark"' in s and 'popovertarget="menu"' in s
  assert 'class="block bio-band"' not in s and 'class="block school-strip"' not in s and 'class="dossiers-strip"' not in s
- assert 'class="block home-sections"' in s and 'class="section-list reveal"' in s
+ assert 'class="block home-sections"' in s and 'class="section-list"' in s
  assert 'class="block home-school"' in s and 'class="school-entry-link"' in s
  assert 'class="hub-cards"' not in s
  assert 'class="rail"' not in s and 'rail-edge' not in s
@@ -32,8 +32,8 @@ for page in [*HUB,'moscow.html','leningrad.html','us-schools.html']:
   assert (ROOT/'site'/pre/page).exists(),'нет страницы '+pre+page
 # биография стала полноценной парой страниц: факты и полный биографический текст сохранены
 _br=(ROOT/'site'/'biography.html').read_text();_be=(ROOT/'site'/'en'/'biography.html').read_text()
-assert 'class="facts reveal"' in _br and 'id="ch-army"' in _br
-assert 'class="facts reveal"' in _be and 'State Wind Orchestra of the USSR' in _be
+assert 'class="facts"' in _br and 'id="ch-army"' in _br
+assert 'class="facts"' in _be and 'State Wind Orchestra of the USSR' in _be
 # каталог живёт на «Трудах»: карточки без панели поиска и фильтров (убрана по просьбе владельца 13.11.2026)
 for page in ['works.html','en/works.html']:
  s=(ROOT/'site'/page).read_text()
