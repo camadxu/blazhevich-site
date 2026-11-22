@@ -492,20 +492,24 @@ html:not(.js) #top-bar.on-hero{position:sticky;top:0}
   .fab{display:inline-flex;align-items:center}
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
-/* ---------- Витрина: спокойный список разделов и короткий вход в «Школу» ---------- */
-.home-sections .section-head,.home-school .section-head{margin-bottom:var(--s-5)}
-.section-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);max-width:var(--measure)}
-.section-list li{border-bottom:1px solid var(--line)}
-.section-list a{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(0,1fr);gap:var(--s-4);align-items:baseline;
-  padding:var(--s-4) 0;color:var(--ink);text-decoration:none}
-.section-name{font:500 clamp(23px,2.5vw,30px)/1.15 var(--display)}
-.section-summary{color:var(--muted);line-height:1.5}
-.section-list a:hover .section-name{color:var(--accent)}
-.section-list a:focus-visible,.school-entry-link:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.school-entry-link{display:inline-flex;padding-bottom:var(--s-1);border-bottom:1px solid var(--rule);
-  font:500 19px/1.3 var(--display);color:var(--ink);text-decoration:none}
-.school-entry-link:hover{color:var(--accent);border-color:var(--accent)}
-@media(max-width:620px){.section-list a{grid-template-columns:minmax(0,1fr);gap:var(--s-1)}}
+/* ---------- Витрина (21–22.11.2026): биография во всю ширину листа — как на странице раздела;
+   под ней полоса «Школа и традиция»: вводка, три досье, вход в раздел ---------- */
+.dossiers-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-4)}
+.dossier-card{position:relative;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-6);border:1px solid var(--line);
+  border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:color-mix(in srgb,var(--surface) 60%,transparent) var(--grain);text-decoration:none;color:var(--muted)}
+.dossier-card .eyebrow{margin:0}
+.dossier-card b{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15;color:var(--ink)}
+.dossier-card > span:not(.eyebrow){font-size:15px;line-height:1.5}
+.dossier-card i{position:absolute;right:var(--s-5);bottom:var(--s-5);font-style:normal;color:var(--gold);opacity:0;transition:opacity .2s}
+.dossier-card:hover b{color:var(--accent)}
+.dossier-card:hover i,.dossier-card:focus-visible i{opacity:1}
+.dossier-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.school-strip .dossiers-strip{margin-bottom:var(--s-6)}
+.school-more{display:inline-flex;gap:var(--s-2);align-items:baseline;padding-bottom:var(--s-1);margin-top:var(--s-6);border-bottom:1px solid var(--rule);font:500 18px/1.3 var(--display);color:var(--ink);text-decoration:none}
+.school-more i{font-style:normal;color:var(--gold)}
+.school-more:hover{color:var(--accent);border-color:var(--accent)}
+.school-more:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ---------- Пейджер разделов: ← пред · все разделы · след → ---------- */
 .pager{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s-3) var(--s-5);
@@ -793,7 +797,7 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
 /* без :has() рамка карточки не рисуется — ссылка обязана остаться видимой */
 @supports not selector(:has(a)){.card a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}}
 /* нажатие должно подтверждаться и на тач-экране, где :hover залипает */
-.toc a:active,.card a:active,.section-list a:active,.foot ul a:active,.record-links a:active,
+.toc a:active,.card a:active,.dossier-card:active,.foot ul a:active,.record-links a:active,
 .hero-btn:active,.hero-menu a:active,.fab:active{translate:0 1px}
 /* на снимке первого экрана рамка светлая: тёмная умбра на фасаде не читается */
 .hero-lang:focus-visible{outline-color:var(--over-ink-hi)}
