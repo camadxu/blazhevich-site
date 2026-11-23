@@ -62,4 +62,6 @@ def apply():
  # Standalone error page; activation on hosting requires verified server config.
  # Разметка живёт в 404.html в корне репозитория, здесь только копирование в сборку.
  (out/'404.html').write_text((ROOT/'404.html').read_text(encoding='utf-8'))
+  # Заглушка «сайт временно закрыт» (включается 503-правилом в .deploy/htaccess).
+ (out/'maintenance.html').write_text((ROOT/'maintenance.html').read_text(encoding='utf-8'))
 if __name__=='__main__':apply()

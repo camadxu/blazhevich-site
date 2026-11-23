@@ -812,6 +812,9 @@ art = ('<title>Blazhevich</title>\n<meta name="claude:viewport-fit-sides" conten
 if a.single_page:
     (ROOT / 'artifact.html').write_text(art)
 shutil.copy2(ROOT / '404.html', STAGE_ROOT / '404.html')
+# Заглушка «сайт временно закрыт»: включается правилом в .deploy/htaccess (503 на всё),
+# поэтому файл должен быть в каждой сборке. Содержимое правится в maintenance.html в корне.
+shutil.copy2(ROOT / 'maintenance.html', STAGE_ROOT / 'maintenance.html')
 try:
     import enhancements as _enhancements
 except ModuleNotFoundError:

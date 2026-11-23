@@ -10,6 +10,20 @@ ErrorDocument 404 /404.html
 RedirectMatch 404 (?i)^/\.git
 RedirectMatch 404 (?i)^/\.github
 
+# ---------- режим «сайт временно закрыт» ----------
+# Все запросы получают 503 и заглушку maintenance.html (файл кладёт build.py из корня репо).
+# 503 + Retry-After: поисковики не выкидывают страницы из индекса и возвращаются позже.
+# Открыть сайт: удалить этот блок и переопубликовать ветку.
+ErrorDocument 503 /maintenance.html
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/maintenance\.html$ [NC]
+  RewriteRule .* - [R=503,L]
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set Retry-After "3600"
+</IfModule>
+
 # ---------- редиректы ----------
 # www → основной домен: один хост — один адрес (canonical уже страховал, 301 — честнее).
 <IfModule mod_rewrite.c>
