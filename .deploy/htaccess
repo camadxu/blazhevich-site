@@ -11,23 +11,29 @@ RedirectMatch 404 (?i)^/\.git
 RedirectMatch 404 (?i)^/\.github
 
 # ---------- режим «сайт временно закрыт» ----------
-# Все запросы получают 503 и заглушку maintenance.html (файл кладёт build.py из корня репо).
+# Только основной домен и www получают 503; test.blazhevich.tech остаётся открыт.
 # 503 + Retry-After: поисковики не выкидывают страницы из индекса и возвращаются позже.
-# Открыть сайт: удалить этот блок и переопубликовать ветку.
+# Открыть основной сайт: удалить этот блок и переопубликовать прод владельцем.
 ErrorDocument 503 /maintenance.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^(www\.)?blazhevich\.tech(:[0-9]+)?$ [NC]
   RewriteCond %{REQUEST_URI} !^/maintenance\.html$ [NC]
   RewriteRule .* - [R=503,L]
 </IfModule>
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase Host ^(www\.)?blazhevich\.tech(:[0-9]+)?$ blz_maintenance
+</IfModule>
 <IfModule mod_headers.c>
-  Header always set Retry-After "3600"
+  Header always set Retry-After "3600" env=blz_maintenance
 </IfModule>
 
 # ---------- редиректы ----------
 # www → основной домен: один хост — один адрес (canonical уже страховал, 301 — честнее).
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Не превращать внутреннюю страницу ошибки 503 в редирект с кодом 301.
+  RewriteCond %{ENV:REDIRECT_STATUS} !^503$
   RewriteCond %{HTTP_HOST} ^www\.blazhevich\.tech$ [NC]
   RewriteRule ^(.*)$ https://blazhevich.tech/$1 [R=301,L]
 </IfModule>

@@ -43,6 +43,28 @@ for page in ['works.html','en/works.html']:
  assert 'data-catalog-filter' not in s and 'id="search"' not in s and 'id="count"' not in s
  assert 'id="concertos"' in s
  results.append({'page':page,'catalog_cards':len(p.cards),'filters':'removed'})
+# Своя запись: оба языка, native fallback, отсутствие автозагрузки и сохранность старых записей.
+class Audio(HTMLParser):
+ def __init__(self):super().__init__();self.audio=[];self.labels=set();self.ranges=[]
+ def handle_starttag(self,tag,attrs):
+  d=dict(attrs)
+  if tag=='audio':self.audio.append(d)
+  if tag=='label' and 'for' in d:self.labels.add(d['for'])
+  if tag=='input' and d.get('type')=='range' and d.get('class')=='audio-seek':self.ranges.append(d)
+audio_file='viktor-batashev-rimsky-korsakov-concerto.mp3'
+for pg,pre,title,artist in [('listen.html','','Концерт Римского Корсакова','Виктор Баташев'),
+                          ('en/listen.html','../','Rimsky-Korsakov: Concerto','Viktor Batashev')]:
+ s=(ROOT/'site'/pg).read_text();p=Audio();p.feed(s)
+ assert len(p.audio)==1 and len(p.ranges)==1,pg
+ a=p.audio[0]
+ assert 'controls' in a and 'hidden' not in a and 'autoplay' not in a,pg
+ assert a.get('preload')=='none' and a.get('src')==pre+'files/'+audio_file,pg
+ assert p.ranges[0].get('id') in p.labels and 'class="audio-custom" hidden' in s,pg
+ assert f'data-title="{title}"' in s and f'data-artist="{artist}"' in s,pg
+ assert 'https://music.yandex.ru/iframe/album/42318197' in s,pg
+ assert 'https://www.caleblambertlowbrass.com/blazhevich-recording-project' in s,pg
+assert (ROOT/'files'/audio_file).read_bytes()==(ROOT/'site'/'files'/audio_file).read_bytes()
+results.append({'audio_pages':2,'native_fallback':True,'preload':'none','audio_copy_identical':True})
 # пейджер разделов: порядок пяти реальных страниц, без самоссылок
 _w=(ROOT/'site'/'works.html').read_text();_a=(ROOT/'site'/'about.html').read_text()
 assert 'class="pager' in _w and 'href="listen.html"' in _w and 'rel="prev"' not in _w
