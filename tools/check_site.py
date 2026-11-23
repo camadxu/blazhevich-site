@@ -5,7 +5,7 @@
 
 Что проверяется:
   • все страницы на месте: витрина, пять разделов, три досье — на обоих языках;
-  • каждая внутренняя ссылка (href/src/srcset и url() в fonts.css) ведёт на существующий файл,
+  • каждая внутренняя ссылка (href/src/srcset и url() во внешних CSS) ведёт на существующий файл,
     а ссылка с #якорем — на существующий id в целевой странице;
   • нет повторяющихся id на странице, у каждой страницы ровно один <h1>;
   • JSON-LD на всех HTML-страницах валиден, локальные hreflang-ссылки взаимны;
@@ -182,13 +182,22 @@ if sm.exists():
         if f.exists() and 'noindex' in f.read_text(encoding='utf-8')[:600]:
             errors.append(f'sitemap.xml: в списке переадресация {loc}')
 
-css = SITE / 'assets' / 'fonts.css'
-if css.exists():
-    for u in re.findall(r'url\(([^)]+)\)', css.read_text()):
-        checked += 1
-        if not (css.parent / u.strip('\'"')).exists(): errors.append(f'fonts.css: нет файла {u}')
-else:
+if not (SITE / 'assets' / 'fonts.css').is_file():
     errors.append('нет assets/fonts.css')
+# Кавычки поглощают весь data: SVG, включая вложенные url(%23id).
+css_urls = re.compile(r'''url\(\s*(?:"([^"]*)"|'([^']*)'|([^\s)]+))\s*\)''', re.I)
+for css in sorted(SITE.rglob('*.css')):
+    for match in css_urls.finditer(css.read_text(encoding='utf-8')):
+        url = next(value for value in match.groups() if value is not None).strip()
+        if not url or url.startswith('#') or url.lower().startswith('data:'): continue
+        u = urlsplit(url)
+        if u.scheme or u.netloc:
+            errors.append(f'{css.relative_to(SITE)}: внешний ресурс {url}'); continue
+        # Внешний CSS разрешает относительные URL от своей папки, не от HTML.
+        path = unquote(u.path)
+        target = SITE / path.lstrip('/') if path.startswith('/') else css.parent / path
+        checked += 1
+        if not target.is_file(): errors.append(f'{css.relative_to(SITE)}: нет файла {url}')
 
 idx = (SITE / 'index.html').read_text(encoding='utf-8') if (SITE / 'index.html').exists() else ''
 robots = re.search(r'<meta name="robots" content="([^"]+)"', idx)
