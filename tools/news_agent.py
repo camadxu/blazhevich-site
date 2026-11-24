@@ -8,7 +8,7 @@
     python tools/news_agent.py --date 2026-11-17
     python tools/news_agent.py --feeds-dir ПАПКА   # без сети: фиды из файлов <имя источника>.xml (для проверки)
 
-Что делает (PLAN.md, этап «Лента», шаги fetch / dedupe / score / cluster / emit):
+Что делает (docs/PLAN.md, этап «Лента», шаги fetch / dedupe / score / cluster / emit):
   1. читает источники из data/news/sources.json (только type=rss);
   2. отбрасывает уже виденное за 45 дней (data/news/seen.json) — по адресу и по заголовку;
   3. оценивает правилами, без языковой модели: инструмент x тип события x свежесть x вес источника;

@@ -444,7 +444,7 @@ def jsonld(path, lang, url, title, desc):
     data = json.dumps({'@context': 'https://schema.org', '@graph': g}, ensure_ascii=False, separators=(',', ':'))
     return '<script type="application/ld+json">' + data.replace('</', '<\\/') + '</script>'
 
-# ---------------- «Лента»: ежедневный дайджест новостей медных (PLAN.md, этап «Лента») ----------------
+# ---------------- «Лента»: ежедневный дайджест новостей медных (docs/PLAN.md, этап «Лента») ----------------
 # Выпуски лежат в data/news/ГГГГ-ММ-ДД.json, их пишет tools/news_agent.py. Пока выпусков нет,
 # сборка ничего не добавляет: ни панели на главной, ни /news/, ни feed.xml.
 NEWS_DIR = pathlib.Path(a.news_dir) if a.news_dir else ROOT / 'data' / 'news'

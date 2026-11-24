@@ -1,5 +1,5 @@
 {
-  "_comment": "Источники ленты. Основание: BRASS-NEWS-SOURCES.md (ресёрч 16.11.2026), раздел B. Здесь только проверенные RSS; источники без RSS (ITG, Музыкальное обозрение, dukhovik.ru, DownBeat, ITEA) подключаются отдельным шагом через скрапинг.",
+  "_comment": "Источники ленты. Основание: docs/research/brass-news-sources.md (ресёрч 16.11.2026), раздел B. Здесь только проверенные RSS; источники без RSS (ITG, Музыкальное обозрение, dukhovik.ru, DownBeat, ITEA) подключаются отдельным шагом через скрапинг.",
   "max_items": 15,
   "dedupe_window_days": 45,
   "domain_moves": {
