@@ -10,23 +10,10 @@ ErrorDocument 404 /404.html
 RedirectMatch 404 (?i)^/\.git
 RedirectMatch 404 (?i)^/\.github
 
-# ---------- режим «сайт временно закрыт» ----------
-# Только основной домен и www получают 503; test.blazhevich.tech остаётся открыт.
-# 503 + Retry-After: поисковики не выкидывают страницы из индекса и возвращаются позже.
-# Открыть основной сайт: удалить этот блок и переопубликовать прод владельцем.
-ErrorDocument 503 /maintenance.html
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTP_HOST} ^(www\.)?blazhevich\.tech(:[0-9]+)?$ [NC]
-  RewriteCond %{REQUEST_URI} !^/maintenance\.html$ [NC]
-  RewriteRule .* - [R=503,L]
-</IfModule>
-<IfModule mod_setenvif.c>
-  SetEnvIfNoCase Host ^(www\.)?blazhevich\.tech(:[0-9]+)?$ blz_maintenance
-</IfModule>
-<IfModule mod_headers.c>
-  Header always set Retry-After "3600" env=blz_maintenance
-</IfModule>
+# Режим «сайт временно закрыт» (503) снят 24.11.2026, сайт снова открыт.
+# Включить обратно: вернуть блок ErrorDocument 503 /maintenance.html + RewriteRule R=503
+# (см. историю git, коммит «Режим «сайт временно закрыт»» от 23.11) и переопубликовать прод.
+# maintenance.html в сборке остаётся — страница понадобится, если режим включат снова.
 
 # ---------- редиректы ----------
 # www → основной домен: один хост — один адрес (canonical уже страховал, 301 — честнее).
