@@ -107,7 +107,7 @@ for pre in ('','en/'):
 # EN-досье: кнопка RU парной версии на месте; автограф — только в московском
 assert all('hreflang="ru"' in (ROOT/'site'/pg).read_text() for pg in ['en/moscow.html','en/leningrad.html'])
 assert 'autograph-1903' in (ROOT/'site'/'en'/'moscow.html').read_text() and 'autograph-1903' not in (ROOT/'site'/'en'/'leningrad.html').read_text()
-# п. 5.0 и 5.2–5.3 PLAN.md: контейнеры страниц сбалансированы; JSON-LD и x-default есть на индексируемых страницах публичной сборки
+# п. 5.0 и 5.2–5.3 docs/PLAN.md: контейнеры страниц сбалансированы; JSON-LD и x-default есть на индексируемых страницах публичной сборки
 for pg in ['index.html',*HUB,'moscow.html','leningrad.html','us-schools.html','en/index.html',*['en/'+p for p in HUB],'en/moscow.html','en/leningrad.html','en/us-schools.html']:
  s=(ROOT/'site'/pg).read_text();assert s.count('<div')==s.count('</div>'),pg
  if 'rel="canonical"' in s:assert 'application/ld+json' in s and 'hreflang="x-default"' in s,pg

@@ -1,5 +1,5 @@
 # Служебный .htaccess для деплой-веток (deploy/test, deploy/prod).
-# CI кладёт этот файл в корень артефакт-ветки при публикации (см. DEPLOY.md).
+# CI кладёт этот файл в корень артефакт-ветки при публикации (см. docs/DEPLOY.md).
 # Все директивы — внутри <IfModule>: если модуль на хостинге выключен, строка просто пропускается,
 # а не роняет сайт в 500.
 
@@ -49,7 +49,7 @@ RedirectMatch 301 ^/en/biography\.html$ /en/index.html#biography
 # ---------- кэш ----------
 # LiteSpeed на Hostinger кэширует HTML и после деплоя отдаёт старую страницу
 # (так тест-сайт два дня показывал удалённый раздел). Кэш выключаем здесь,
-# а раздачу с края делает Cloudflare — правила в DEPLOY.md.
+# а раздачу с края делает Cloudflare — правила в docs/DEPLOY.md.
 <IfModule LiteSpeed>
   CacheLookup off
 </IfModule>
