@@ -1,5 +1,5 @@
 # Служебный .htaccess для деплой-веток (deploy/test, deploy/prod).
-# CI кладёт этот файл в корень артефакт-ветки при публикации (см. DEPLOY.md).
+# CI кладёт этот файл в корень артефакт-ветки при публикации (см. docs/DEPLOY.md).
 # Все директивы — внутри <IfModule>: если модуль на хостинге выключен, строка просто пропускается,
 # а не роняет сайт в 500.
 
@@ -10,10 +10,17 @@ ErrorDocument 404 /404.html
 RedirectMatch 404 (?i)^/\.git
 RedirectMatch 404 (?i)^/\.github
 
+# Режим «сайт временно закрыт» (503) снят 24.11.2026, сайт снова открыт.
+# Включить обратно: вернуть блок ErrorDocument 503 /maintenance.html + RewriteRule R=503
+# (см. историю git, коммит «Режим «сайт временно закрыт»» от 23.11) и переопубликовать прод.
+# maintenance.html в сборке остаётся — страница понадобится, если режим включат снова.
+
 # ---------- редиректы ----------
 # www → основной домен: один хост — один адрес (canonical уже страховал, 301 — честнее).
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Не превращать внутреннюю страницу ошибки 503 в редирект с кодом 301.
+  RewriteCond %{ENV:REDIRECT_STATUS} !^503$
   RewriteCond %{HTTP_HOST} ^www\.blazhevich\.tech$ [NC]
   RewriteRule ^(.*)$ https://blazhevich.tech/$1 [R=301,L]
 </IfModule>
@@ -23,11 +30,13 @@ RedirectMatch 404 (?i)^/\.github
 RedirectMatch 301 ^/scores\.html$ /works.html
 RedirectMatch 301 ^/concertos\.html$ /works.html
 RedirectMatch 301 ^/usa\.html$ /us-schools.html
+RedirectMatch 301 ^/biography\.html$ /index.html#biography
+RedirectMatch 301 ^/en/biography\.html$ /en/index.html#biography
 
 # ---------- кэш ----------
 # LiteSpeed на Hostinger кэширует HTML и после деплоя отдаёт старую страницу
 # (так тест-сайт два дня показывал удалённый раздел). Кэш выключаем здесь,
-# а раздачу с края делает Cloudflare — правила в DEPLOY.md.
+# а раздачу с края делает Cloudflare — правила в docs/DEPLOY.md.
 <IfModule LiteSpeed>
   CacheLookup off
 </IfModule>

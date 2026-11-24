@@ -465,13 +465,13 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .section-head.scene > *{max-width:var(--measure)}
 .section-head.scene .page-title{max-width:none}
 .section-head.scene p{color:var(--ink)}
-.scene-moscow{--scene:url(assets/scene-moscow.webp)}
-.scene-leningrad{--scene:url(assets/scene-leningrad.webp)}
+.scene-moscow{--scene:url(scene-moscow.webp)}
+.scene-leningrad{--scene:url(scene-leningrad.webp)}
 @media(max-width:1100px){
   .section-head.scene{min-height:0;margin-top:calc(-1 * var(--s-8));padding-top:52.5vw;
     background:linear-gradient(to bottom,transparent calc(52.5vw - 60px),var(--paper) 52.5vw),var(--paper) var(--scene-sm,var(--scene)) center top/100% auto no-repeat}
-  .scene-moscow{--scene-sm:url(assets/scene-moscow-960.webp)}
-  .scene-leningrad{--scene-sm:url(assets/scene-leningrad-960.webp)}
+  .scene-moscow{--scene-sm:url(scene-moscow-960.webp)}
+  .scene-leningrad{--scene-sm:url(scene-leningrad-960.webp)}
 }
 
 /* ---------- Витрина: шапка под первым экраном и кнопка «Меню» (телефон, планшет) ----------
@@ -492,20 +492,24 @@ html:not(.js) #top-bar.on-hero{position:sticky;top:0}
   .fab{display:inline-flex;align-items:center}
   .past-hero .fab{opacity:1;pointer-events:auto}
 }
-/* ---------- Витрина: спокойный список разделов и короткий вход в «Школу» ---------- */
-.home-sections .section-head,.home-school .section-head{margin-bottom:var(--s-5)}
-.section-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);max-width:var(--measure)}
-.section-list li{border-bottom:1px solid var(--line)}
-.section-list a{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(0,1fr);gap:var(--s-4);align-items:baseline;
-  padding:var(--s-4) 0;color:var(--ink);text-decoration:none}
-.section-name{font:500 clamp(23px,2.5vw,30px)/1.15 var(--display)}
-.section-summary{color:var(--muted);line-height:1.5}
-.section-list a:hover .section-name{color:var(--accent)}
-.section-list a:focus-visible,.school-entry-link:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.school-entry-link{display:inline-flex;padding-bottom:var(--s-1);border-bottom:1px solid var(--rule);
-  font:500 19px/1.3 var(--display);color:var(--ink);text-decoration:none}
-.school-entry-link:hover{color:var(--accent);border-color:var(--accent)}
-@media(max-width:620px){.section-list a{grid-template-columns:minmax(0,1fr);gap:var(--s-1)}}
+/* ---------- Витрина (21–22.11.2026): биография во всю ширину листа — как на странице раздела;
+   под ней полоса «Школа и традиция»: вводка, три досье, вход в раздел ---------- */
+.dossiers-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-4)}
+.dossier-card{position:relative;display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-5) var(--s-6);border:1px solid var(--line);
+  border-left:3px solid var(--rule);border-radius:var(--radius);
+  background:color-mix(in srgb,var(--surface) 60%,transparent) var(--grain);text-decoration:none;color:var(--muted)}
+.dossier-card .eyebrow{margin:0}
+.dossier-card b{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15;color:var(--ink)}
+.dossier-card > span:not(.eyebrow){font-size:15px;line-height:1.5}
+.dossier-card i{position:absolute;right:var(--s-5);bottom:var(--s-5);font-style:normal;color:var(--gold);opacity:0;transition:opacity .2s}
+.dossier-card:hover b{color:var(--accent)}
+.dossier-card:hover i,.dossier-card:focus-visible i{opacity:1}
+.dossier-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.school-strip .dossiers-strip{margin-bottom:var(--s-6)}
+.school-more{display:inline-flex;gap:var(--s-2);align-items:baseline;padding-bottom:var(--s-1);margin-top:var(--s-6);border-bottom:1px solid var(--rule);font:500 18px/1.3 var(--display);color:var(--ink);text-decoration:none}
+.school-more i{font-style:normal;color:var(--gold)}
+.school-more:hover{color:var(--accent);border-color:var(--accent)}
+.school-more:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ---------- Пейджер разделов: ← пред · все разделы · след → ---------- */
 .pager{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s-3) var(--s-5);
@@ -793,7 +797,7 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
 /* без :has() рамка карточки не рисуется — ссылка обязана остаться видимой */
 @supports not selector(:has(a)){.card a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}}
 /* нажатие должно подтверждаться и на тач-экране, где :hover залипает */
-.toc a:active,.card a:active,.section-list a:active,.foot ul a:active,.record-links a:active,
+.toc a:active,.card a:active,.dossier-card:active,.foot ul a:active,.record-links a:active,
 .hero-btn:active,.hero-menu a:active,.fab:active{translate:0 1px}
 /* на снимке первого экрана рамка светлая: тёмная умбра на фасаде не читается */
 .hero-lang:focus-visible{outline-color:var(--over-ink-hi)}
@@ -890,6 +894,19 @@ main > section#listen::after{content:"";position:absolute;left:0;right:0;top:var
 .record .player iframe{max-width:none}
 .record audio,.record video,.videos video{display:block;width:100%;border-radius:var(--radius)}
 .record video,.videos video{border:1px solid var(--rule);background:var(--band)}
+.audio-player{padding:var(--s-4);border:1px solid var(--rule);border-radius:var(--radius);background:var(--band)}
+.audio-controls{display:flex;align-items:center;gap:var(--s-4)}
+.audio-play{flex:none;width:48px;height:48px;border:1px solid var(--gold);border-radius:50%;background:var(--ink);color:var(--paper);font-size:20px;cursor:pointer}
+.audio-progress{flex:1;min-width:0}
+.audio-player label,.audio-time,.audio-status{font-size:var(--t-small)}
+.audio-player input[type=range]{display:block;width:100%;min-height:32px;margin:0;accent-color:var(--gold);cursor:pointer}
+.audio-time{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.audio-bottom{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);margin-block:var(--s-3)}
+.audio-status{min-height:1.5em}
+.audio-volume{display:flex;align-items:center;gap:var(--s-2)}
+.audio-volume input[type=range]{width:90px}
+.audio-player :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-width:480px){.audio-player{padding:var(--s-3)}.audio-controls{gap:var(--s-3)}.audio-bottom{align-items:flex-start;flex-direction:column}}
 @media(max-width:820px){.record{grid-template-columns:minmax(0,1fr);padding-block:var(--s-5)}.record h4{font-size:26px}.records,.videos{padding-inline:var(--s-3)}}
 /* файл из своей базы в карточке нот: первая строка низа карточки, внешний источник — второй строкой */
 .card a.card-file{font-weight:600}

@@ -27,13 +27,13 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://blazhevich.tech/news/#page","url":"https://blazhevich.tech/news/","name":"Лента — новости медных инструментов — Blazhevich","description":"Новости медных духовых, выпуск от 20 ноября 2026: Noel Langley – ‘Syzygy’","inLanguage":"ru","isPartOf":{"@id":"https://blazhevich.tech/#website"}}]}</script>
 <link rel="alternate" type="application/rss+xml" title="Blazhevich — Лента" href="../feed.xml">
 <link rel="stylesheet" href="../assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="../assets/main.9a66a67e8f.css">
+<link rel="stylesheet" href="../assets/main.7af4d7e4ec.css">
 </head>
 <body>
 <a class="skip" href="#main">Перейти к содержимому</a>
 <header id="top-bar"><div class="wrap bar">
   <a href="../index.html" class="brand" aria-label="Blazhevich — на главную">Blazhevich</a>
-  <nav aria-label="Основная навигация"><a href="../works.html">Труды</a><a href="../listen.html">Слушать</a><a href="../biography.html">Биография</a><a href="../schools.html">Школа и традиция</a><a href="../about.html">О проекте</a><a href="index.html" class="active">Лента</a><a class="lang" href="../en/index.html" hreflang="en" lang="en">EN</a></nav>
+  <nav aria-label="Основная навигация"><a href="../works.html">Труды</a><a href="../listen.html">Слушать</a><a href="../index.html#biography">Биография</a><a href="../schools.html">Школа и традиция</a><a href="../about.html">О проекте</a><a href="index.html" class="active">Лента</a><a class="lang" href="../en/index.html" hreflang="en" lang="en">EN</a></nav>
 </div></header>
 <main id="main">
 <section id="news" class="block news-page"><div class="wrap">
@@ -44,7 +44,7 @@
 </main>
 <footer><div class="wrap foot">
   <div class="foot-id"><a href="../index.html" class="brand">Blazhevich</a><p class="foot-name">Владислав Блажевич <span>1881–1942</span></p><p>Тромбонист, педагог, композитор. Независимый проект о его жизни, нотах и школе.</p></div>
-  <div class="foot-col" role="navigation" aria-label="Подвал"><h2>Разделы</h2><ul class="foot-secs"><li><a href="../works.html">Труды</a></li><li><a href="../listen.html">Слушать</a></li><li><a href="../biography.html">Биография</a></li><li><a href="../schools.html">Школа и традиция</a></li><li><a href="../about.html">О проекте</a></li></ul></div>
+  <div class="foot-col" role="navigation" aria-label="Подвал"><h2>Разделы</h2><ul class="foot-secs"><li><a href="../works.html">Труды</a></li><li><a href="../listen.html">Слушать</a></li><li><a href="../index.html#biography">Биография</a></li><li><a href="../schools.html">Школа и традиция</a></li><li><a href="../about.html">О проекте</a></li></ul></div>
   <div class="foot-col"><h2>Школы тромбона</h2><ul><li><a href="../moscow.html">Московская тромбоновая школа</a></li><li><a href="../leningrad.html">Ленинградская тромбоновая школа</a></li><li><a href="../us-schools.html">Американские школы</a></li></ul><h2>Язык</h2><ul><li><a href="../en/index.html" hreflang="en" lang="en">English version</a></li></ul></div>
   <p class="foot-fine">Источники и права на изображения указаны в разделе <a href="../about.html">«О проекте»</a>.</p>
 </div></footer>
@@ -52,6 +52,44 @@
 'use strict';
 (function(){
   document.documentElement.classList.add('js');
+  /* Своя запись: native controls остаются доступны без JavaScript. */
+  document.querySelectorAll('.audio-player').forEach(box=>{
+    const audio=box.querySelector('audio'),custom=box.querySelector('.audio-custom'),
+      play=box.querySelector('.audio-play'),seek=box.querySelector('.audio-seek'),
+      volume=box.querySelector('.audio-volume input'),status=box.querySelector('.audio-status');
+    const en=document.documentElement.lang==='en';
+    const text=en?{play:'Play',pause:'Pause',loading:'Loading…',playing:'Playing',ended:'Recording ended',error:'Unable to play. Try again or open the audio file.'}
+      :{play:'Воспроизвести',pause:'Пауза',loading:'Загрузка…',playing:'Воспроизведение',ended:'Запись окончена',error:'Не удалось воспроизвести. Повторите или откройте аудиофайл.'};
+    const fmt=n=>{n=Number.isFinite(n)?Math.max(0,Math.floor(n)):0;return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`};
+    const update=()=>{
+      const finite=Number.isFinite(audio.duration);
+      seek.disabled=!finite;
+      if(finite){seek.max=audio.duration;box.querySelector('.audio-duration').textContent=fmt(audio.duration)}
+      seek.value=audio.currentTime;seek.setAttribute('aria-valuetext',fmt(audio.currentTime));
+      box.querySelector('.audio-elapsed').textContent=fmt(audio.currentTime);
+      play.textContent=audio.paused?'▶':'Ⅱ';play.setAttribute('aria-label',audio.paused?text.play:text.pause);
+      play.setAttribute('aria-pressed',String(!audio.paused));volume.value=audio.volume;
+    };
+    const start=async()=>{status.textContent=text.loading;try{await audio.play()}catch(e){status.textContent=text.error}};
+    play.addEventListener('click',()=>{if(audio.paused)start();else audio.pause()});
+    seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration))audio.currentTime=Math.max(0,Math.min(audio.duration,Number(seek.value)));update()});
+    volume.addEventListener('input',()=>{audio.volume=Number(volume.value)});
+    ['loadedmetadata','durationchange','timeupdate','play','pause','ended','volumechange'].forEach(e=>audio.addEventListener(e,update));
+    audio.addEventListener('waiting',()=>status.textContent=text.loading);
+    audio.addEventListener('playing',()=>status.textContent=text.playing);
+    audio.addEventListener('pause',()=>status.textContent=audio.error?text.error:audio.ended?text.ended:text.pause);
+    audio.addEventListener('ended',()=>status.textContent=text.ended);
+    audio.addEventListener('error',()=>status.textContent=text.error);
+    if('mediaSession' in navigator&&typeof MediaMetadata==='function'){
+      audio.addEventListener('play',()=>{
+        navigator.mediaSession.metadata=new MediaMetadata({title:box.dataset.title,artist:box.dataset.artist});
+        for(const [name,handler] of [['play',start],['pause',()=>audio.pause()],['seekto',e=>{
+          if(Number.isFinite(audio.duration)&&Number.isFinite(e.seekTime))audio.currentTime=Math.max(0,Math.min(audio.duration,e.seekTime));
+        }]]){try{navigator.mediaSession.setActionHandler(name,handler)}catch(e){}}
+      });
+    }
+    update();custom.hidden=false;audio.hidden=true;audio.controls=false;
+  });
   /* Плеер: внешний iframe (Яндекс Музыка) подгружается только по нажатию кнопки */
   document.querySelectorAll('.player').forEach(box=>{const btn=box.querySelector('button');
     btn.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=box.dataset.src;f.title=box.dataset.title;f.loading='lazy';f.allow='clipboard-write';box.replaceChildren(f)})});
