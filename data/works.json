@@ -15,8 +15,8 @@
     "origin_en": "File provided by the project owner, 2026-11-18",
     "source_title": "Архив проекта",
     "source_url": "",
-    "comment": "Партитура из локальной базы проекта; первая запись реестра трудов.",
-    "comment_en": "The score from the project’s local base; the first entry in the works registry."
+    "comment": "Партитура из локальной базы проекта; первая запись реестра трудов. Оставлена по решению владельца 27.11.2026.",
+    "comment_en": "The score from the project’s local base; the first entry in the works registry. Kept by the owner’s decision of 2026-11-27."
   },
   {
     "id": "concerto-2",
@@ -92,7 +92,7 @@
     "origin_en": "Scan without a title page (opens with a preface in Russian and German); on the site since 2026-11-24 (PR #28)",
     "source_title": "Архив проекта",
     "source_url": "",
-    "comment": "Издание и год не установлены: в открытом доступе этот скан не найден. Показан как есть, из архива проекта, до сверки издания.",
-    "comment_en": "Edition and year not established: this scan was not found in open access. Shown as is, from the project archive, until the edition is verified."
+    "comment": "Выходные данные на скане не указаны, в открытых каталогах его нет. Издание подтверждено владельцем проекта 27.11.2026; файл остаётся.",
+    "comment_en": "The scan carries no publisher data and is not found in open catalogues. The edition was confirmed by the project owner on 2026-11-27; the file stays."
   }
 ]
