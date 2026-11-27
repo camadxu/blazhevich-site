@@ -416,7 +416,7 @@ def shelf_page(lang, prefix=''):
         own, own_rights, ext, label = 'Files on this site', 'File on this site, public domain', 'By link', 'Open PDF'
 
     def table(rows):
-        return ('<div class="table-scroll" tabindex="0" role="region" aria-label="' + e(title) + '"><table class="conc shelf-table">\n'
+        return ('<div class="table-scroll" tabindex="0" role="region" aria-label="' + e(title) + '"><table class="shelf-table">\n'
                 '  <thead><tr>' + ''.join(f'<th scope="col">{e(x)}</th>' for x in heads) + '</tr></thead>\n  <tbody>\n'
                 + rows + '  </tbody>\n</table></div>\n')
 
