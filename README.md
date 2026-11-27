@@ -24,8 +24,8 @@ blazhevich-site/
 │   │                    досье moscow, leningrad, us-schools
 │   └── en/*.html        английские: page.html (каркас витрин), досье moscow, leningrad, us-schools
 ├── assets/              изображения, шрифты (woff2), fonts.css, og-*.jpg
-├── data/                реестр трудов works.json; выпуски «Ленты» data/news/
-├── files/               статические файлы прямых ссылок: ноты (PDF), записи (MP3)
+├── data/                реестр трудов works.json и «Полка» shelf.json (схема — works.md); выпуски «Ленты» data/news/
+├── files/               ноты (PDF) прямых ссылок — только файлы из реестра
 ├── tools/               проверки (check_site, test_v3, test_maintenance), генераторы
 │                        изображений (scenes/, media/, photo_tone), news_agent.py
 ├── docs/                документация и исследования: DEPLOY, PLAN, LIBRARY, TROMBONIST-PHOTOS,
