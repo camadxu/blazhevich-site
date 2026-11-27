@@ -261,10 +261,6 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .timeline-wrap > h3{font-size:var(--t-title-m)}
 .timeline-wrap .timeline{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:var(--s-5) var(--s-6);border-left:0}
 .timeline-wrap .timeline li{border-left:1px solid var(--rule)}
-.conflicts{border:1px solid var(--field);padding:0 var(--s-5);background:var(--surface)}
-.conflicts summary{cursor:pointer;padding-block:var(--s-4);font-weight:600;color:var(--ink)}
-.conflicts ul{margin:0 0 var(--s-5);padding-left:var(--s-5);display:grid;gap:var(--s-3);color:var(--muted);font-size:16px}
-.conflicts b{color:var(--ink)}
 
 /* ---------- America ---------- */
 .usa-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--s-7);align-items:start}
@@ -850,7 +846,7 @@ main > section#usa,main > section#concertos{background:radial-gradient(70% 40rem
   background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 70%,transparent) 55%,var(--paper))}
 
 /* ---------- приподнятые листы: всё, что лежит на бумаге, отбрасывает мягкую тёплую тень ---------- */
-.table-scroll,.dossier-tree,.person,.person-v3,.conflicts,.node-pair > div,.lineage-v3 li
+.table-scroll,.dossier-tree,.person,.person-v3,.node-pair > div,.lineage-v3 li
 .table-scroll{border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-2);
   background:linear-gradient(160deg,var(--glow),transparent 40%),var(--surface)}
 .facts,.raichman{background:linear-gradient(to bottom,var(--tint),transparent 30%,transparent 70%,var(--tint))}
