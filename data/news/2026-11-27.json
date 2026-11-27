@@ -1,0 +1,57 @@
+{
+ "release": "2026-11-27",
+ "generated_at": "2026-11-27T17:23:47Z",
+ "counts": {
+  "fetched": 174,
+  "kept": 3,
+  "dropped_dupes": 0
+ },
+ "items": [
+  {
+   "title": "Transcend by Dave Douglas",
+   "url": "https://www.lastrowmusic.com/transcend-by-dave-douglas/",
+   "source": "Last Row Music",
+   "source_weight": 3,
+   "lang": "en",
+   "published": "2026-11-25",
+   "summary": "",
+   "instruments": [],
+   "kinds": [],
+   "score": 2.57,
+   "cluster": [],
+   "id": "2026-11-27-01"
+  },
+  {
+   "title": "Two Piston Valve Singles",
+   "url": "https://www.hornmatters.com/2026/11/two-piston-valve-singles/",
+   "source": "HornMatters",
+   "source_weight": 2,
+   "lang": "en",
+   "published": "2026-11-26",
+   "summary": "",
+   "instruments": [
+    "horn"
+   ],
+   "kinds": [],
+   "score": 2.06,
+   "cluster": [],
+   "id": "2026-11-27-02"
+  },
+  {
+   "title": "Aubrey Foard Joins Rice University Brass Faculty",
+   "url": "https://www.lastrowmusic.com/aubrey-foard-joins-rice-university-brass-faculty/",
+   "source": "Last Row Music",
+   "source_weight": 3,
+   "lang": "en",
+   "published": "2026-11-24",
+   "summary": "",
+   "instruments": [
+    "brass-band"
+   ],
+   "kinds": [],
+   "score": 2.06,
+   "cluster": [],
+   "id": "2026-11-27-03"
+  }
+ ]
+}
