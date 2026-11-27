@@ -47,28 +47,13 @@ for page in ['works.html','en/works.html']:
  cards[page]=len(p.cards)
  results.append({'page':page,'catalog_cards':len(p.cards),'filters':'removed'})
 assert cards['works.html']==cards['en/works.html'],'RU и EN каталог расходятся по числу карточек'
-# Своя запись: оба языка, native fallback, отсутствие автозагрузки и сохранность старых записей.
-class Audio(HTMLParser):
- def __init__(self):super().__init__();self.audio=[];self.labels=set();self.ranges=[]
- def handle_starttag(self,tag,attrs):
-  d=dict(attrs)
-  if tag=='audio':self.audio.append(d)
-  if tag=='label' and 'for' in d:self.labels.add(d['for'])
-  if tag=='input' and d.get('type')=='range' and d.get('class')=='audio-seek':self.ranges.append(d)
-audio_file='viktor-batashev-rimsky-korsakov-concerto.mp3'
-for pg,pre,title,artist in [('listen.html','','Концерт Римского Корсакова','Виктор Баташев'),
-                          ('en/listen.html','../','Rimsky-Korsakov: Concerto','Viktor Batashev')]:
- s=(ROOT/'site'/pg).read_text();p=Audio();p.feed(s)
- assert len(p.audio)==1 and len(p.ranges)==1,pg
- a=p.audio[0]
- assert 'controls' in a and 'hidden' not in a and 'autoplay' not in a,pg
- assert a.get('preload')=='none' and a.get('src')==pre+'files/'+audio_file,pg
- assert p.ranges[0].get('id') in p.labels and 'class="audio-custom" hidden' in s,pg
- assert f'data-title="{title}"' in s and f'data-artist="{artist}"' in s,pg
- assert 'https://music.yandex.ru/iframe/album/42318197' in s,pg
- assert 'https://www.caleblambertlowbrass.com/blazhevich-recording-project' in s,pg
-assert (ROOT/'files'/audio_file).read_bytes()==(ROOT/'site'/'files'/audio_file).read_bytes()
-results.append({'audio_pages':2,'native_fallback':True,'preload':'none','audio_copy_identical':True})
+# Своя запись снята из доступа (решение владельца 27.11.2026): плеера и файла в сборке нет.
+for pg in ['listen.html','en/listen.html']:
+ s=(ROOT/'site'/pg).read_text();assert '<audio' not in s and 'viktor-batashev-rimsky' not in s,pg
+assert not list((ROOT/'files').glob('*.mp3')) and not list((ROOT/'site'/'files').glob('*.mp3'))
+assert 'https://music.yandex.ru/iframe/album/42318197' in (ROOT/'site'/'listen.html').read_text()
+assert 'https://www.caleblambertlowbrass.com/blazhevich-recording-project' in (ROOT/'site'/'en'/'listen.html').read_text()
+results.append({'own_audio':'removed by owner decision 2026-11-27'})
 # пейджер разделов: порядок пяти реальных страниц, без самоссылок
 _w=(ROOT/'site'/'works.html').read_text();_a=(ROOT/'site'/'about.html').read_text()
 assert 'class="pager' in _w and 'href="listen.html"' in _w and 'rel="prev"' not in _w
@@ -79,22 +64,51 @@ assert 'href="index.html#biography"' in (ROOT/'site'/'schools.html').read_text()
 _es=(ROOT/'site'/'en'/'schools.html').read_text();_ea=(ROOT/'site'/'en'/'about.html').read_text()
 assert 'rel="next" href="about.html"' in _es and 'rel="next" href="schools.html"' not in _es
 assert 'rel="prev" href="schools.html"' in _ea and 'rel="next"' not in _ea
-# блок «Файлы для скачивания» рендерится из реестра data/works.json (засеян партитурой Вальс-концерта)
-assert 'id="files"' in _w and 'blazhevich-valse-de-concert-partitur.pdf' in _w
-assert 'id="files"' in (ROOT/'site'/'en'/'works.html').read_text()
-# происхождение файла (поле origin реестра) показано в карточке, RU и EN
-assert 'Источник файла' in _w and 'File origin' in (ROOT/'site'/'en'/'works.html').read_text()
+# База = реестр data/works.json: в files/ лежат только файлы реестра, у каждого файла назван источник.
+_wreg=json.loads((ROOT/'data'/'works.json').read_text(encoding='utf-8'))
+_owned=set()
+for w in _wreg:
+ urls=[u for f in ('notes_url','parts_url','audio_url') for u in (w.get(f) if isinstance(w.get(f),list) else [w.get(f)]) if u]
+ _owned|={u.removeprefix('files/') for u in urls if u.startswith('files/')}
+ if urls:
+  assert w.get('source_url')=='' or w['source_url'].startswith('http'),w['id']
+  assert w.get('source_title'),(w['id'],'нет источника')
+assert {p.name for p in (ROOT/'files').iterdir() if p.is_file()}==_owned,'в files/ есть файл вне реестра'
+assert {p.name for p in (ROOT/'site'/'files').iterdir()}==_owned
+assert 'blazhevich-valse-de-concert-partitur.pdf' in _owned   # первая запись реестра остаётся
+# ручные списки «Скачать ноты» и «Другие ноты» убраны: файлы показываются блоком реестра
+for pg in ['works.html','en/works.html']:
+ s=(ROOT/'site'/pg).read_text()
+ assert 'id="files"' in s and 'id="catalog"' in s and 'id="concertos"' in s,pg
+assert not any(t in _w for t in ('Скачать ноты','Другие ноты')) and not any(t in (ROOT/'site'/'en'/'works.html').read_text() for t in ('Download scores','More scores'))
+# источник файла — строкой со ссылкой, RU и EN
+assert 'Источник файла' in _w and 'href="https://imslp.org/' in _w and 'File origin' in (ROOT/'site'/'en'/'works.html').read_text()
+# ссылки на свои PDF стоят в строках концертов № 2 и № 5 таблицы
+for n,fn in ((2,'blazhevich-concerto-2-piano-1933.pdf'),(5,'blazhevich-concerto-5-piano-1930.pdf')):
+ row=re.search(r'<tr><td>%d</td>.*?</tr>'%n,_w,re.S).group(0);assert 'files/'+fn in row,('концерт',n)
+# «Полка тромбониста»: страница из data/shelf.json на обоих языках, вход с «Трудов», в sitemap
+_shelf=json.loads((ROOT/'data'/'shelf.json').read_text(encoding='utf-8'))
+for pg,label in (('shelf.html','Полка тромбониста'),('en/shelf.html','Trombonist’s shelf')):
+ s=(ROOT/'site'/pg).read_text()
+ assert label in s and 'rel="canonical"' in s and 'hreflang="en"' in s,pg
+ for it in _shelf:
+  if it.get('url') or it.get('file'):   # карточка без издания и ссылки на «Полке» не показывается
+   assert ('shelf-'+it['id']) in s,pg+' нет записи '+it['id']
+assert 'href="shelf.html"' in _w and 'href="shelf.html"' in (ROOT/'site'/'en'/'works.html').read_text()
+# чужие файлы — только ссылками: их адреса есть на «Полке», файлов в сборке нет
+for u in ('https://imslp.org/wiki/70_Tuba_Studies_(Blazhevich,_Vladislav)','https://imslp.org/wiki/Concert_Duets_for_Trombone_(Blazhevich,_Vladislav)','https://imslp.org/wiki/Concert_Sketch_No.5_(Blazhevich,_Vladislav)'):
+ assert u in (ROOT/'site'/'shelf.html').read_text(),u
 # og:image с alt на всех индексируемых страницах; у разделов и досье — своя картинка семейства og-*.jpg
 for pg in ['index.html',*HUB,'moscow.html','leningrad.html','us-schools.html','en/index.html',*['en/'+p for p in HUB],'en/moscow.html','en/leningrad.html','en/us-schools.html']:
  _s=(ROOT/'site'/pg).read_text()
  assert 'property="og:image" content=' in _s and 'og:image:alt' in _s,pg
 for pg,img in [('works.html','og-works.jpg'),('moscow.html','og-moscow.jpg'),('us-schools.html','og-us-schools.jpg')]:
  for pre in ('','en/'):assert img in (ROOT/'site'/pre/pg).read_text(),pre+pg
-# sitemap: адреса считаются, а не зашиты — 16 основных страниц, индекс ленты и по адресу на выпуск
+# sitemap: адреса считаются, а не зашиты — 18 основных страниц (вместе с «Полкой»), индекс ленты и по адресу на выпуск
 _sm=(ROOT/'site'/'sitemap.xml').read_text()
 _urls=re.findall(r'<loc>([^<]+)</loc>',_sm)
 _news=[p for p in (ROOT/'data'/'news').glob('*.json') if p.stem[:4].isdigit()]
-assert len(_urls)==16+(1 if _news else 0)+len(_news) and len(set(_urls))==len(_urls),f'sitemap: {len(_urls)} адресов'
+assert len(_urls)==18+(1 if _news else 0)+len(_news) and len(set(_urls))==len(_urls),f'sitemap: {len(_urls)} адресов'
 assert 'biography.html' not in _sm
 # hreflang в sitemap повторяет языковые пары из <head> тех же страниц (ru, en, x-default)
 _dom=os.environ.get('BLZ_DOMAIN','https://blazhevich.tech').rstrip('/')

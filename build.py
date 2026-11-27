@@ -99,6 +99,8 @@ PAGES = {  # файл: (секции, заголовок, описание)
                     'Московская школа тромбона: Витнебен, Борк, Блажевич, Щербинин и его ученики, гнесинская ветвь, ноты и записи.'),
     'leningrad.html': (['leningrad'], 'Ленинградская тромбоновая школа — Blazhevich',
                        'Петербургско-ленинградская школа тромбона: Тюрнер, Волков, Козлов, Венгловский, Квартет тромбонов филармонии, дискография.'),
+    'shelf.html': (['shelf'], 'Полка тромбониста — Blazhevich',
+                   'Что издано у Блажевича, где лежат ноты в открытом доступе и что охраняется: свои PDF с источником и ссылки на библиотеки.'),
     'us-schools.html': (['us-schools'], 'Американские школы тромбона — Blazhevich',
                         'Истмен и Ремингтон, Чикаго и Джейкобс, Curtis и Алесси, Northwestern: как устроены американские тромбоновые школы и чем они похожи на московскую и ленинградскую.'),
 }
@@ -110,10 +112,11 @@ HUB_RU = [('works', 'Труды', 'Каталог: 13 концертов, шко
           ('about', 'О проекте', 'Источники, права на изображения и принципы работы')]
 NAV_RU = [(i, t) for i, t, _ in HUB_RU]
 # английские зеркала есть у всех страниц, кроме витрины (у неё — en/index.html)
-EN_TWINS = {'works.html', 'listen.html', 'schools.html', 'about.html',
+EN_TWINS = {'works.html', 'listen.html', 'schools.html', 'about.html', 'shelf.html',
             'moscow.html', 'leningrad.html', 'us-schools.html'}
 # досье-подстраницы: крошка ведёт на родительский раздел, в меню подсвечен он же
 PARENT_RU = {f: ('schools', 'Школа и традиция') for f in ('moscow.html', 'leningrad.html', 'us-schools.html')}
+PARENT_RU['shelf.html'] = ('works', 'Труды')   # «Полка» — вход с «Трудов», в меню её нет
 # английские досье: src/en/<имя>.html → en/<имя>.html (заголовок, описание)
 EN_DOSSIERS = {
     'moscow.html': ('The Moscow trombone school — Blazhevich',
@@ -282,6 +285,38 @@ def validate_works(registry):
                     raise SystemExit(f'data/works.json: {wid!r} указывает на {field}={u!r}, файла нет')
         if any(w.get(f) for f in ('notes_url', 'parts_url', 'audio_url')) and not w.get('origin'):
             raise SystemExit(f'data/works.json: у записи {wid!r} есть файлы, но нет origin (откуда файл)')
+        if w.get('notes_url'):   # источник файла назван всегда: «что в открытом доступе — публикуй, с указанием источника»
+            if not w.get('source_title'):
+                raise SystemExit(f'data/works.json: у записи {wid!r} есть файл, но нет source_title (источник)')
+            if w.get('source_url') and not w['source_url'].startswith('https://'):
+                raise SystemExit(f'data/works.json: {wid!r}: source_url должен начинаться с https://')
+            digest = hashlib.sha256((ROOT / w['notes_url']).read_bytes()).hexdigest()
+            if w.get('sha256') != digest:
+                raise SystemExit(f'data/works.json: {wid!r}: sha256 не совпадает с файлом {w["notes_url"]}')
+
+SHELF_PATH = ROOT / 'data' / 'shelf.json'
+SHELF = json.loads(SHELF_PATH.read_text(encoding='utf-8')) if SHELF_PATH.exists() else []   # внешнее: ссылками, без файла
+SHELF_ORDER = {'schools': ('Школы', 'Schools', 'shelf-1'), 'etudes': ('Этюды и упражнения', 'Studies and exercises', 'shelf-2'),
+               'ensembles': ('Ансамбли', 'Ensembles', 'shelf-3'), 'studies': ('Исследования', 'Research', 'shelf-2')}
+WORKS_BY_ID = {w['id']: w for w in WORKS_REGISTRY}
+
+
+def validate_shelf(items):
+    seen = set()
+    for it in items:
+        iid = it.get('id', '')
+        if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', iid) or iid in seen or iid in WORKS_BY_ID:
+            raise SystemExit(f'data/shelf.json: плохой или повторный id {iid!r}')
+        seen.add(iid)
+        if it.get('shelf') not in SHELF_ORDER or not it.get('title') or not it.get('title_en'):
+            raise SystemExit(f'data/shelf.json: у записи {iid!r} нет shelf/title/title_en')
+        if it.get('url') and not it['url'].startswith('https://'):
+            raise SystemExit(f'data/shelf.json: {iid!r}: ссылка url должна начинаться с https://')
+        if it.get('file') and it['file'] not in WORKS_BY_ID:
+            raise SystemExit(f'data/shelf.json: {iid!r}: file={it["file"]!r} — такой записи в works.json нет')
+
+
+validate_shelf(SHELF)
 
 validate_works(WORKS_REGISTRY)
 
@@ -294,16 +329,20 @@ def files_block(lang, prefix=''):
     e = lambda t: html.escape(str(t), quote=True)
     T = (('Файлы для скачивания', 'Локальная база нот и аудио',
           'Файлы хранятся в собственной базе проекта и отдаются напрямую; записи появляются здесь по мере наполнения реестра.',
-          'Партитура (PDF)', 'Аудио', 'Источник файла') if ru else
+          'Партитура (PDF)', 'Аудио', 'Источник файла', 'Источник') if ru else
          ('Downloads', 'The local score and audio base',
           'The files live in the project’s own base and are served directly; entries appear here as the registry grows.',
-          'Score (PDF)', 'Audio', 'File origin'))
+          'Score (PDF)', 'Audio', 'File origin', 'Source'))
     items = ''
     for w in rows:
         kind = WORK_TYPE.get(w.get('type'), ('', ''))[0 if ru else 1]
         title = w.get('title') if ru else (w.get('title_en') or w.get('title', ''))
         note = w.get('comment') if ru else (w.get('comment_en') or w.get('comment', ''))
         origin = w.get('origin') if ru else (w.get('origin_en') or w.get('origin', ''))
+        edition = w.get('edition') if ru else (w.get('edition_en') or w.get('edition', ''))
+        source = w.get('source_title')
+        source_html = (f'<a href="{e(w["source_url"])}">{e(source)}</a>' if w.get('source_url') else e(source)) if source else ''
+        facts = ' · '.join(x for x in (edition, f'{w["pages"]} {"стр." if ru else "pp."}' if w.get('pages') else '') if x)
         year = f' <span class="tag">{e(w["year"])}</span>' if w.get('year') else ''
         links = ''
         if w.get('notes_url'):
@@ -313,12 +352,93 @@ def files_block(lang, prefix=''):
         items += (f'    <li class="file-row"><p class="file-name"><b>{e(title)}</b>'
                   + (f' <span class="tag">{e(kind)}</span>' if kind else '') + year + '</p>'
                   + (f'<p>{note}</p>' if note else '')
+                  + (f'<p>{facts}</p>' if facts else '')
+                  + (f'<p>{T[6]}: {source_html}</p>' if source_html else '')
                   + (f'<p>{T[5]}: {e(origin)}</p>' if origin else '')
                   + (f'<p class="file-links">{links}</p>' if links else '') + '</li>\n')
     return ('<section id="files" class="block files-block" aria-labelledby="files-title"><div class="wrap">\n'
             f'  <div class="section-head"><h2 id="files-title">{T[0]}</h2><div class="eyebrow">{T[1]}</div><p>{T[2]}</p></div>\n'
             f'  <ul class="files-list">\n{items}  </ul>\n'
             '</div></section>\n')
+
+def shelves_block(lang, prefix=''):
+    """Полки каталога на «Трудах»: карточки из data/shelf.json (внешнее — ссылкой, свои записи реестра — файлом)."""
+    ru = lang == 'ru'
+    e = lambda x: html.escape(str(x), quote=True)
+    pick = lambda it, k: it[k] if ru else (it.get(k + '_en') or it[k])
+    out = '<div class="shelves" id="catalog">\n'
+    for shelf, (t_ru, t_en, cls) in SHELF_ORDER.items():
+        cards = ''
+        for it in SHELF:
+            if it['shelf'] != shelf:
+                continue
+            w = WORKS_BY_ID.get(it.get('file'))
+            url = prefix + w['notes_url'] if w else it['url']
+            cards += (f'        <article class="card" data-instrument="{e(pick(it, "instrument"))}" id="shelf-{it["id"]}">'
+                      f'<h4>{e(pick(it, "title"))}</h4><div class="tag">{e(pick(it, "tag"))}</div><p>{e(pick(it, "description"))}</p>'
+                      + (f'<a href="{e(url)}">{e(pick(it, "url_title"))}</a>' if url else '') + '</article>\n')
+        if cards:
+            out += (f'    <div class="shelf {cls}" id="shelf-cat-{shelf}"><h3 class="shelf-title">{t_ru if ru else t_en}</h3>\n'
+                    f'      <div class="grid">\n{cards}      </div>\n    </div>\n')
+    return out + '  </div>'
+
+def link_concertos(h, lang, prefix=''):
+    """В строку концерта таблицы ставится ссылка на свой PDF, если он есть в реестре."""
+    for w in WORKS_REGISTRY:
+        if w.get('number') and w.get('notes_url'):
+            cell = re.compile(r'(<tr><td>%d</td>.*?)(</td></tr>)' % w['number'], re.S)
+            label = f'PDF, {w["pages"]} стр.' if lang == 'ru' else f'PDF, {w["pages"]} pp.'
+            h, n = cell.subn(lambda m: m.group(1) + f'<span class="chip"><a href="{prefix}{w["notes_url"]}">{label}</a></span>'
+                             + m.group(2), h, count=1)
+            if n != 1:
+                raise SystemExit(f'works: в таблице концертов нет строки № {w["number"]} ({w["id"]})')
+    return h
+
+def work_render(h, lang, prefix=''):
+    return link_concertos(h.replace('<!--catalog-->', shelves_block(lang, prefix)), lang, prefix)
+
+def shelf_page(lang, prefix=''):
+    """«Полка тромбониста»: что издано, где лежит файл, каков статус прав — таблицей из реестра и shelf.json."""
+    ru = lang == 'ru'
+    e = lambda x: html.escape(str(x), quote=True)
+    pick = lambda it, k: it[k] if ru else (it.get(k + '_en') or it[k])
+    if ru:
+        title, eye = 'Полка тромбониста', 'Что издано и где лежит'
+        lead = ('Блажевич умер в 1942 году, его музыка — общественное достояние. Свои файлы лежат на сайте, '
+                'для каждого назван источник; остальное — ссылками на библиотеки и издателей.')
+        heads = ('Что', 'Издание', 'Статус', 'Где взять')
+        own, own_rights, ext, label = 'Файлы на сайте', 'Файл на сайте, общественное достояние', 'По ссылкам', 'Открыть PDF'
+    else:
+        title, eye = 'Trombonist’s shelf', 'What was published and where it lives'
+        lead = ('Blazhevich died in 1942 and his music is in the public domain. Our own files are hosted here, '
+                'each with its source named; everything else is given as links to libraries and publishers.')
+        heads = ('What', 'Edition', 'Status', 'Where to get it')
+        own, own_rights, ext, label = 'Files on this site', 'File on this site, public domain', 'By link', 'Open PDF'
+
+    def table(rows):
+        return ('<div class="table-scroll" tabindex="0" role="region" aria-label="' + e(title) + '"><table class="conc shelf-table">\n'
+                '  <thead><tr>' + ''.join(f'<th scope="col">{e(x)}</th>' for x in heads) + '</tr></thead>\n  <tbody>\n'
+                + rows + '  </tbody>\n</table></div>\n')
+
+    rows = ''
+    for w in WORKS_REGISTRY:
+        if not w.get('notes_url'):
+            continue
+        src = (f'<a href="{e(w["source_url"])}">{e(w.get("source_title"))}</a>' if w.get('source_url')
+               else e(w.get('source_title')))
+        rows += (f'    <tr id="shelf-{w["id"]}"><td><b>{e(pick(w, "title"))}</b></td><td>{e(pick(w, "edition"))}</td>'
+                 f'<td>{own_rights}</td><td><a href="{prefix}{w["notes_url"]}">{label}</a> · {src}</td></tr>\n')
+    xrows = ''
+    for it in SHELF:
+        if not it.get('url') and not it.get('file'):   # карточка без издания и ссылки — на «Полке» не о чём сказать
+            continue
+        link = (f'<a href="{prefix}{WORKS_BY_ID[it["file"]]["notes_url"]}">{label}</a>' if it.get('file')
+                else f'<a href="{e(it["url"])}">{e(pick(it, "url_title"))}</a>')
+        xrows += (f'    <tr id="shelf-{it["id"]}"><td><b>{e(pick(it, "title"))}</b><br>{e(pick(it, "description"))}</td>'
+                  f'<td>{e(pick(it, "edition"))}</td><td>{e(pick(it, "rights"))}</td><td>{link}</td></tr>\n')
+    return ('<section id="shelf" class="chapter"><div class="wrap">\n  <div class="staff" aria-hidden="true"></div>\n'
+            f'  <div class="section-head"><h2>{title}</h2><div class="eyebrow">{eye}</div><p>{lead}</p></div>\n'
+            f'  <h3>{own}</h3>\n' + table(rows) + f'  <h3>{ext}</h3>\n' + table(xrows) + '</div></section>\n')
 
 def stub(target, title, lang):
     """Старый адрес раздела → раздел общей страницы."""
@@ -548,6 +668,7 @@ OG = {
     'listen.html':     ('og-listen.jpg', 'Колоннада Большого театра, архивная виньетка сайта', 'The colonnade of the Bolshoi Theatre, the site’s archival vignette'),
     'schools.html':    ('og-schools.jpg', 'Московская консерватория, 1940-е годы', 'The Moscow Conservatory in the 1940s'),
     'about.html':      ('og-about.jpg', 'Большой театр, 1905 год', 'The Bolshoi Theatre, 1905'),
+    'shelf.html':      ('og-works.jpg', 'Большой зал Московской консерватории, архивная виньетка сайта', 'The Great Hall of the Moscow Conservatory, the site’s archival vignette'),
     'moscow.html':     ('og-moscow.jpg', 'Большой зал Московской консерватории', 'The Great Hall of the Moscow Conservatory'),
     'leningrad.html':  ('og-leningrad.jpg', 'Здание Петербургской консерватории на Театральной площади', 'The St. Petersburg Conservatory on Theatre Square'),
     'us-schools.html': ('og-us-schools.jpg', 'Истменская школа музыки в Рочестере', 'The Eastman School of Music in Rochester'),
@@ -658,7 +779,7 @@ if (ROOT / 'files').is_dir():
 # карта «id → (страница, главная секция страницы)»
 id_page = {}
 for f, (ss, _, _) in PAGES.items():
-    for s_ in ss:
+    for s_ in ([] if f == 'shelf.html' else ss):   # «Полка» собирается из данных, у неё нет исходника в src/
         for i in ids_in(sec(s_)):
             id_page[i] = (f, s_)
 # старые якоря одностраничника: куда теперь ведёт каждый раздел (ссылки из контента и стабы).
@@ -672,6 +793,8 @@ nav = ''.join(f'<a href="{"index.html#biography" if i == "biography" else i + ".
 HUB_N = {f'{i}.html': n for n, (i, _, _) in enumerate(HUB_RU)}   # номер страницы в порядке разделов 01–05
 for f, (ss, title, desc) in PAGES.items():
     par = PARENT_RU.get(f)
+    parts = ([] if f == 'shelf.html' else   # «Полка» собирается из данных, у неё нет исходника в src/
+             [work_render(sec(s_), 'ru') if f == 'works.html' else sec(s_) for s_ in ss])
     en_href = 'en/index.html' if f == 'index.html' else f'en/{f}'
     if f == 'index.html':   # витрина: первый экран, вступление, биография + полоса «Школы», лента
         hdr = header(nav, '<a class="lang" href="en/index.html" hreflang="en" lang="en">EN</a>', 'index.html', hero_page=True)
@@ -684,7 +807,8 @@ for f, (ss, title, desc) in PAGES.items():
     else:
         crumb = (par[1], f'{par[0]}.html') if par else ('Разделы', 'index.html')
         body = header(nav, f'<a class="lang" href="{en_href}" hreflang="en" lang="en">EN</a>', 'index.html') \
-            + '<main id="main">\n' + inner(sec(ss[0]), crumb[0], crumb[1]) + ''.join(sec(s_) for s_ in ss[1:]) \
+            + '<main id="main">\n' + (inner(shelf_page('ru'), crumb[0], crumb[1]) if f == 'shelf.html'
+                                         else inner(parts[0], crumb[0], crumb[1]) + ''.join(parts[1:])) \
             + (files_block('ru') if f == 'works.html' else '') \
             + (pager(f[:-5], 'ru') if f in HUB_N else '') + '</main>\n'
         footer = FOOTER_RU()
@@ -741,6 +865,8 @@ EN_STUB_TITLE = {'scores': 'Scores', 'concertos': 'Concertos', 'usa': 'In Americ
 need = {s_ for ss, _, _ in EN_PAGES.values() for s_ in ss} | {'biography'}   # секция нужна витрине en/
 if need - set(en_secs):
     raise SystemExit(f'В src/en/page.html нет секций: {", ".join(sorted(need - set(en_secs)))}')
+if 'works' in en_secs:
+    en_secs['works'] = work_render(en_secs['works'], 'en', '../')
 id_page_en = {}
 for f_, (ss_, _, _) in EN_PAGES.items():
     for s_ in ss_:
@@ -778,6 +904,12 @@ for f_, (ss_, title, desc) in EN_PAGES.items():   # страницы разде�
             body = body.replace(pat, pat[:-1] + ' class="active" aria-current="page">', 1)
             break
     (OUT / 'en' / f_).write_text(page('en', title, desc, f'en/{f_}', '../', en_words(body), FONTS_EN, FOOTER_EN()))
+body = (header(nav_en.replace('<a href="works.html">', '<a href="works.html" class="active" aria-current="true">', 1),
+               '<a class="lang" href="../shelf.html" hreflang="ru" lang="ru">RU</a>', 'index.html', skip_text='Skip to content')
+        + '<main id="main">\n' + inner(shelf_page('en', '../'), 'Works', 'works.html', '../') + '</main>\n')
+(OUT / 'en' / 'shelf.html').write_text(page('en', 'Trombonist’s shelf — Blazhevich',
+    'What Blazhevich published, where the scores are in open access and what is protected: our own PDFs with their sources and links to libraries.',
+    'en/shelf.html', '../', en_words(body), FONTS_EN, FOOTER_EN()))
 for k, tgt in OLD_EN.items():   # старые адреса английских разделов
     if f'{k}.html' in EN_PAGES:
         continue
@@ -792,7 +924,7 @@ for f, (title, desc) in EN_DOSSIERS.items():
 
 if a.release:
     today = datetime.date.fromisoformat(a.lastmod).isoformat() if a.lastmod else datetime.date.today().isoformat()
-    urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/'] + [f'en/{f}' for f in (*EN_PAGES, *EN_DOSSIERS)]
+    urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/', 'en/shelf.html'] + [f'en/{f}' for f in (*EN_PAGES, *EN_DOSSIERS)]
     def sitemap_url(u, lastmod):
         """Адрес + языковые пары (hreflang), те же, что в <head> страницы; для поисковиков без обхода HTML."""
         row = f'  <url><loc>{DOM}/{u}</loc><lastmod>{lastmod}</lastmod>'
