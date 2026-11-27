@@ -7,21 +7,21 @@
 <meta name="description" content="Sources, image credits and how this project works.">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#e8dbbf">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=7d9473cb">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=9f25dcee">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Blazhevich">
 <meta property="og:title" content="About the project — Blazhevich">
 <meta property="og:description" content="Sources, image credits and how this project works.">
-<meta property="og:image" content="../assets/og-about.jpg?v=7d9473cb">
+<meta property="og:image" content="../assets/og-about.jpg?v=9f25dcee">
 <meta property="og:image:alt" content="The Bolshoi Theatre, 1905">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="../assets/og-about.jpg?v=7d9473cb">
+<meta name="twitter:image" content="../assets/og-about.jpg?v=9f25dcee">
 <meta name="twitter:image:alt" content="The Bolshoi Theatre, 1905">
 <link rel="stylesheet" href="../assets/fonts.ce94684029.css">
-<link rel="stylesheet" href="../assets/main.7af4d7e4ec.css">
+<link rel="stylesheet" href="../assets/main.d1768141d7.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -130,9 +130,14 @@
   /* Снимок в статье: клик открывает крупный просмотр. Без JS ссылка ведёт на сам файл */
   const zooms=[...document.querySelectorAll('.plate-zoom')];
   if(zooms.length&&typeof HTMLDialogElement==='function'&&HTMLDialogElement.prototype.showModal){
-    const dlg=document.createElement('dialog');dlg.className='plate-view';dlg.setAttribute('aria-label','Просмотр снимка');
+    const isEnglish=document.documentElement.lang==='en';
+    const dlg=document.createElement('dialog');dlg.className='plate-view';
+    dlg.setAttribute('aria-label',isEnglish?'Image viewer':'Просмотр снимка');
+    const close=document.createElement('button');close.className='plate-close';close.type='button';
+    close.textContent=isEnglish?'Close image':'Закрыть снимок';
+    close.addEventListener('click',()=>dlg.close());
     const view=document.createElement('figure'),pic=document.createElement('img'),cap=document.createElement('figcaption');
-    view.append(pic,cap);dlg.append(view);document.body.append(dlg);
+    view.append(close,pic,cap);dlg.append(view);document.body.append(dlg);
     let opener=null;
     zooms.forEach(a=>a.addEventListener('click',e=>{
       if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
