@@ -80,7 +80,7 @@
   --gutter-r:max(var(--s-4),env(safe-area-inset-right,0px));
   --ease:cubic-bezier(.2,.7,.2,1);
   /* бумажное зерно: едва заметный шум поверх кремового фона, как на старом листе */
-  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ---------- Base ---------- */
@@ -223,13 +223,13 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .ch-years{font-family:var(--display);font-size:32px;font-weight:600;line-height:1.05;color:var(--gold);font-variant-numeric:lining-nums tabular-nums}
 .ch-place{font-size:15px;color:var(--muted)}
 .ch-photo{margin:var(--s-4) 0 0;display:grid;gap:var(--s-2);width:100%}
-/* единая плашка для всех архивных снимков: бумажное поле, линейка по внутреннему краю, мягкая тень */
+/* Архивный снимок: спокойное паспарту и один контур, без двойной обводки. */
 .ch-photo .mat,.ch-plate,.us-plate,.face,.r-plates .ch-plate{background:var(--surface);padding:var(--s-3);
-  border:1px solid var(--line);outline:1px solid var(--rule);outline-offset:calc(var(--s-1) * -1);
-  box-shadow:0 14px 30px -18px var(--shadow)}
+  border:1px solid var(--line);
+  box-shadow:0 6px 14px -10px var(--shadow)}
 .ch-photo img{display:block;width:100%;height:auto}
 .ch-photo figcaption{font-size:14px;line-height:1.45;color:var(--muted)}
-.ch-body{display:grid;gap:var(--s-4);align-content:start;max-width:var(--measure);min-width:0}
+.ch-body{display:grid;gap:var(--s-5);align-content:start;max-width:var(--measure);min-width:0}
 .ch-body h3{font-size:var(--t-title-m)}
 /* «Редакционный вывод»: плашка с двойной линейкой сверху, шапка слева, тезисы газетной колонкой */
 .insight{position:relative;display:block;
@@ -261,10 +261,6 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 .timeline-wrap > h3{font-size:var(--t-title-m)}
 .timeline-wrap .timeline{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:var(--s-5) var(--s-6);border-left:0}
 .timeline-wrap .timeline li{border-left:1px solid var(--rule)}
-.conflicts{border:1px solid var(--field);padding:0 var(--s-5);background:var(--surface)}
-.conflicts summary{cursor:pointer;padding-block:var(--s-4);font-weight:600;color:var(--ink)}
-.conflicts ul{margin:0 0 var(--s-5);padding-left:var(--s-5);display:grid;gap:var(--s-3);color:var(--muted);font-size:16px}
-.conflicts b{color:var(--ink)}
 
 /* ---------- America ---------- */
 .usa-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--s-7);align-items:start}
@@ -450,6 +446,9 @@ input:disabled,select:disabled{opacity:.6;cursor:not-allowed}
 @media(min-width:1101px){
   /* ширина = остаток контейнера справа от заголовка (с запасом на полосу прокрутки), не больше 420px */
   section.block > .wrap{container-type:inline-size}
+  /* «Труды» — не глава биографии: сетка .chapter (200px + 1fr) зажимала весь раздел в узкую колонку слева */
+  #works{display:block}
+  #works > .wrap{container-type:inline-size}
   /* справа от заголовка до края колонки (cqw — ширина колонки), не выше самой шапки */
   .head-vignette{position:absolute;top:0;bottom:0;left:calc(100% + var(--s-7));width:min(420px,calc(100cqw - 100% - var(--s-7)));opacity:.9}
 }
@@ -759,7 +758,7 @@ body > footer{margin-top:var(--s-8);border-top:3px double var(--rule);background
 .ch-plate img{display:block;width:100%;height:auto}
 .ch-plate figcaption{font-size:14px;line-height:1.5;color:var(--muted);max-width:62ch}
 /* источник снимка — отдельной строкой, как нижняя строка музейной этикетки */
-figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;letter-spacing:.01em;color:var(--muted);opacity:.85}
+figcaption .src{display:block;margin-top:.5em;font-size:14px;line-height:1.55;letter-spacing:.01em;color:var(--muted)}
 /* крупный просмотр снимка: <dialog>, без библиотек; без JS ссылка открывает файл */
 .plate-zoom{display:block;line-height:0}
 .plate-zoom:focus-visible{outline:2px solid var(--accent);outline-offset:var(--s-1)}
@@ -767,9 +766,13 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
 .plate-view::backdrop{background:rgb(46 29 11/.9)}
 .plate-view figure{margin:0;display:grid;gap:var(--s-3);justify-items:center}
 .plate-view img{display:block;width:auto;height:auto;max-width:94vw;max-height:74vh;mix-blend-mode:normal;
-  background:var(--surface);padding:var(--s-3);border:1px solid var(--line);outline:1px solid var(--rule);outline-offset:calc(var(--s-1) * -1)}
+  background:var(--surface);padding:var(--s-3);border:1px solid var(--line)}
 .plate-view figcaption{max-width:64ch;font-size:14px;line-height:1.5;text-align:center;opacity:.95}
-.plate-view .src{display:block;margin-top:.35em;font-size:12px;opacity:.8}
+.plate-view .src{display:block;margin-top:.5em;font-size:14px;line-height:1.55;color:var(--paper)}
+.plate-close{justify-self:end;min-height:44px;padding:0 var(--s-4);border:1px solid var(--deep-rule);border-radius:var(--radius);
+  background:var(--deep-paper);color:var(--deep-ink);font:600 15px/1 var(--body);cursor:pointer}
+.plate-close:hover{background:var(--deep-surface)}
+.plate-close:focus-visible{outline:2px solid var(--deep-accent);outline-offset:2px}
 /* фото на странице «Американские школы тромбона»: та же плашка без отрицательного отступа */
 .us-plate{margin:var(--s-6) 0;display:grid;gap:var(--s-3);max-width:760px}
 .us-plate img{display:block;width:100%;height:auto}
@@ -781,7 +784,8 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
 .face img{display:block;width:100%;height:auto}
 .face figcaption{font-size:14px;line-height:1.5;color:var(--muted)}
 @media(min-width:1021px){
-  .chapter{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
+  /* Без портрета не резервируем пустую колонку; длину строки держит --measure. */
+  .chapter{grid-template-columns:200px minmax(0,1fr)}
   .chapter.has-photo{grid-template-columns:200px minmax(0,1fr) minmax(240px,320px)}
   .ch-mark{grid-column:1;grid-row:1}
   .ch-body{grid-column:2;grid-row:1}
@@ -789,6 +793,14 @@ figcaption .src{display:block;margin-top:.35em;font-size:12px;line-height:1.45;l
   .chapter > .ch-plate{grid-column:2 / -1;grid-row:2}
 }
 @media(min-width:821px) and (max-width:1020px){.chapter > .ch-plate{grid-column:2}}
+/* Если у очерка нет датировки, текст начинается с левого края. */
+.chapter:not(:has(> .ch-mark)) > .ch-body{grid-column:1 / -1}
+/* Вложенный очерк уже находится в читательской колонке: не сжимаем её повторно. */
+.ch-body .chapters{min-width:0;margin-bottom:0}
+.ch-body .chapter{grid-template-columns:minmax(0,1fr);gap:var(--s-3)}
+.ch-body .chapter > .ch-mark,.ch-body .chapter > .ch-body,.ch-body .chapter > .ch-photo{grid-column:1;grid-row:auto}
+.ch-body .chapter > .ch-mark{position:static;display:flex;gap:var(--s-3);align-items:baseline;flex-wrap:wrap}
+.ch-body .chapter > .ch-photo{width:min(100%,320px)}
 
 /* ---------- Клавиатура (15.11.2026): фокус виден на всём, что нажимается ---------- */
 /* вся карточка нот — одна ссылка, поэтому рамка фокуса обводит карточку целиком */
@@ -834,7 +846,7 @@ main > section#usa,main > section#concertos{background:radial-gradient(70% 40rem
   background:linear-gradient(transparent,color-mix(in srgb,var(--paper) 70%,transparent) 55%,var(--paper))}
 
 /* ---------- приподнятые листы: всё, что лежит на бумаге, отбрасывает мягкую тёплую тень ---------- */
-.table-scroll,.dossier-tree,.person,.person-v3,.conflicts,.node-pair > div,.lineage-v3 li
+.table-scroll,.dossier-tree,.person,.person-v3,.node-pair > div,.lineage-v3 li
 .table-scroll{border:1px solid var(--line);border-top:3px double var(--rule);box-shadow:var(--lift-2);
   background:linear-gradient(160deg,var(--glow),transparent 40%),var(--surface)}
 .facts,.raichman{background:linear-gradient(to bottom,var(--tint),transparent 30%,transparent 70%,var(--tint))}
@@ -988,3 +1000,25 @@ body > footer{position:relative;margin-top:0;border-top:0;padding-top:calc(var(-
   .news-item .news-meta{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-3);align-items:baseline}
 }
 @media print{.news-chips,.news-foot{display:none}.news-list{border:1px solid #c8b48d;border-image:none;box-shadow:none;background:none}.news-panel .news-item:nth-child(n+6){display:grid}}
+
+/* База из реестра: вход на «Полку» внизу «Трудов» и ссылка на свой PDF в таблице концертов */
+.shelf-entry{display:flex;flex-wrap:wrap;gap:var(--s-4);align-items:center;justify-content:space-between;margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--line)}
+.shelf-entry p{margin:0;max-width:var(--measure);color:var(--muted)}
+.conc .chip a{color:inherit;text-decoration:none}
+.conc .chip a:hover{text-decoration:underline}
+.shelf-table{width:100%;min-width:640px;border-collapse:collapse;font-size:16px}
+.shelf-table th{text-align:left;font-size:var(--t-small);color:var(--muted);font-weight:600;padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line)}
+.shelf-table td{padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+.shelf-table tbody tr:last-child td{border-bottom:0}
+.shelf-table tbody tr:hover td{background:var(--tint)}
+.shelf-table td:first-child{width:34%;color:var(--ink)}
+.shelf-table td b{font-weight:600;color:var(--ink)}
+.shelf-table a{color:var(--ink);font-weight:600;text-underline-offset:.15em}
+@media(max-width:820px){
+  .shelf-table{min-width:0;display:block}
+  .shelf-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .shelf-table tbody{display:grid}
+  .shelf-table tr{display:grid;gap:var(--s-2);padding:var(--s-4) 0;border-bottom:1px solid var(--line)}
+  .shelf-table tr:last-child{border-bottom:0}
+  .shelf-table td{display:block;width:auto;padding:0;border:0}
+}
