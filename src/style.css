@@ -988,3 +988,11 @@ body > footer{position:relative;margin-top:0;border-top:0;padding-top:calc(var(-
   .news-item .news-meta{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-3);align-items:baseline}
 }
 @media print{.news-chips,.news-foot{display:none}.news-list{border:1px solid #c8b48d;border-image:none;box-shadow:none;background:none}.news-panel .news-item:nth-child(n+6){display:grid}}
+
+/* База из реестра: вход на «Полку» внизу «Трудов» и ссылка на свой PDF в таблице концертов */
+.shelf-entry{display:flex;flex-wrap:wrap;gap:var(--s-4);align-items:center;justify-content:space-between;margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--line)}
+.shelf-entry p{margin:0;max-width:var(--measure);color:var(--muted)}
+.conc .chip a{color:inherit;text-decoration:none}
+.conc .chip a:hover{text-decoration:underline}
+.shelf-table td{vertical-align:top}
+.shelf-table a{font-weight:600;text-underline-offset:.15em}
