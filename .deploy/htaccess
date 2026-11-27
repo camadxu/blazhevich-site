@@ -30,6 +30,9 @@ RedirectMatch 404 (?i)^/\.github
 RedirectMatch 301 ^/scores\.html$ /works.html
 RedirectMatch 301 ^/concertos\.html$ /works.html
 RedirectMatch 301 ^/usa\.html$ /us-schools.html
+RedirectMatch 301 ^/en/scores\.html$ /en/works.html
+RedirectMatch 301 ^/en/concertos\.html$ /en/works.html#concertos
+RedirectMatch 301 ^/en/usa\.html$ /en/us-schools.html
 RedirectMatch 301 ^/biography\.html$ /index.html#biography
 RedirectMatch 301 ^/en/biography\.html$ /en/index.html#biography
 

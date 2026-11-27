@@ -3,7 +3,11 @@ from pathlib import Path
 import re
 
 text = (Path(__file__).resolve().parents[1] / '.deploy/htaccess').read_text(encoding='utf-8')
-block = text.split('# ---------- режим «сайт временно закрыт» ----------', 1)[1].split(
+MARKER = '# ---------- режим «сайт временно закрыт» ----------'
+if MARKER not in text:   # режим снят 24.11.2026: регрессия проверяется, только когда блок есть
+    print('maintenance host/path regression: SKIPPED (блок 503 не включён в .deploy/htaccess)')
+    raise SystemExit(0)
+block = text.split(MARKER, 1)[1].split(
     '# ---------- редиректы ----------', 1)[0]
 host_match = re.search(r'^  RewriteCond %\{HTTP_HOST\} (\S+) \[NC\]$', block, re.M)
 uri_match = re.search(r'^  RewriteCond %\{REQUEST_URI\} !(\S+) \[NC\]$', block, re.M)
