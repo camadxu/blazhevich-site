@@ -4,11 +4,11 @@
   python3 build.py --release --domain https://site   публичная версия: индексация, canonical,
                                                      Open Graph с полными адресами, sitemap.xml, robots.txt
 
-Результат в папке site/: index.html — витрина (первый экран, вступление, разделы,
-короткий вход в «Школу и традицию», лента новостей), страницы разделов works.html,
-listen.html, biography.html, schools.html, about.html, досье moscow.html, leningrad.html,
+Результат в папке site/: index.html — витрина (первый экран, вступление, биография полосой,
+полоса «Школа и традиция», лента новостей), страницы разделов works.html,
+listen.html, schools.html, about.html, досье moscow.html, leningrad.html,
 us-schools.html и английские зеркала всех страниц в en/. Старые адреса разделов
-(scores.html, en/scores.html, concertos.html, usa.html) остаются страницами-переадресациями.
+(scores.html, concertos.html, usa.html, biography.html) остаются страницами-переадресациями.
 Эту папку целиком загружают на хостинг.
 Для зеркал (РФ и США) собирайте обе копии с одним --domain — адресом основного сайта.
 С флагом --single-page дополнительно собирается artifact.html — вся русская версия одной
@@ -74,7 +74,7 @@ def asset_urls(html):
 FONTS_GOOGLE = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
                 '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;600&display=swap">')
-FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
+FAVICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect width='64' height='64' rx='14' fill='%23e8dbbf'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-weight='600' font-size='40' fill='%232a2118'%3EB%3C/text%3E%3C/svg%3E\">")
 
 def sec(name, lang='ru'):
     return (SRC / lang / f'{name}.html').read_text()
@@ -763,7 +763,7 @@ hero = en_secs['hero']
 body = (hdr_en + '<button class="fab" type="button" popovertarget="menu">Menu</button>\n'
         + '<main id="main">\n' + hero + bio_school('en', en_secs['biography'], en_secs['schools']) + '</main>\n')
 (OUT / 'en' / 'index.html').write_text(page(
-    'en', 'Vladislav Blazhevich — trombone: life, concertos, Clef Studies',
+    'en', 'Vladislav Blazhevich — trombone',
     'Vladislav Blazhevich (1881–1942): biography, the 13 trombone concertos, Clef Studies and other method books, how his music reached America.',
     'en/index.html', '../', en_words(relink(body, 'index.html', id_page_en, OLD_EN)), FONTS_EN, FOOTER_EN()))
 for f_, (ss_, title, desc) in EN_PAGES.items():   # страницы разделов
@@ -793,10 +793,21 @@ for f, (title, desc) in EN_DOSSIERS.items():
 if a.release:
     today = datetime.date.fromisoformat(a.lastmod).isoformat() if a.lastmod else datetime.date.today().isoformat()
     urls = [''] + [f for f in PAGES if f != 'index.html'] + ['en/'] + [f'en/{f}' for f in (*EN_PAGES, *EN_DOSSIERS)]
-    (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + ''.join(f'  <url><loc>{DOM}/{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls)
-        + (f'  <url><loc>{DOM}/news/</loc><lastmod>{NEWS[0]["release"]}</lastmod></url>\n' if NEWS else '')
-        + ''.join(f'  <url><loc>{DOM}/news/{i["release"]}.html</loc><lastmod>{i["release"]}</lastmod></url>\n' for i in NEWS) + '</urlset>\n')
+    def sitemap_url(u, lastmod):
+        """Адрес + языковые пары (hreflang), те же, что в <head> страницы; для поисковиков без обхода HTML."""
+        row = f'  <url><loc>{DOM}/{u}</loc><lastmod>{lastmod}</lastmod>'
+        twin = '' if u in ('', 'en/') else u.removeprefix('en/')
+        if twin == '' or twin in EN_TWINS:
+            pair = ['', 'en/'] if twin == '' else [twin, f'en/{twin}']
+            row += ''.join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{DOM}/{p}"/>' for h, p in zip(('ru', 'en', 'x-default'), (*pair, pair[0])))
+        else:   # страница только по-русски (лента): ссылка на себя
+            row += ''.join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{DOM}/{u}"/>' for h in ('ru', 'x-default'))
+        return row + '</url>\n'
+    (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+        '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        + ''.join(sitemap_url(u, today) for u in urls)
+        + (sitemap_url('news/', NEWS[0]["release"]) if NEWS else '')
+        + ''.join(sitemap_url(f'news/{i["release"]}.html', i["release"]) for i in NEWS) + '</urlset>\n')
     (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nContent-Signal: search=yes, ai-train=no\n\nSitemap: {DOM}/sitemap.xml\n')
 
 # ---------------- Одностраничная версия для предпросмотра на claude.ai ----------------

@@ -35,14 +35,18 @@ _ix=(ROOT/'site'/'index.html').read_text();_ie=(ROOT/'site'/'en'/'index.html').r
 assert 'class="facts"' in _ix and 'id="ch-army"' in _ix and 'class="block bio-band"' in _ix
 assert 'class="facts"' in _ie and 'State Wind Orchestra of the USSR' in _ie
 # каталог живёт на «Трудах»: карточки без панели поиска и фильтров (убрана по просьбе владельца 13.11.2026)
+# число карточек не зашито: каталог строится из данных; карточка без названия или подписи — брак
+cards={}
 for page in ['works.html','en/works.html']:
  s=(ROOT/'site'/page).read_text()
  p=Cards();p.feed(s)
  # полка «Концерты» старого каталога вливается в блок концертов — карточек 9 или 10
- assert 9<=len(p.cards)<=10,page+': карточек '+str(len(p.cards))
+ assert p.cards and all(c['textContent'].strip() for c in p.cards),page+': пустая карточка'
  assert 'data-catalog-filter' not in s and 'id="search"' not in s and 'id="count"' not in s
  assert 'id="concertos"' in s
+ cards[page]=len(p.cards)
  results.append({'page':page,'catalog_cards':len(p.cards),'filters':'removed'})
+assert cards['works.html']==cards['en/works.html'],'RU и EN каталог расходятся по числу карточек'
 # Своя запись: оба языка, native fallback, отсутствие автозагрузки и сохранность старых записей.
 class Audio(HTMLParser):
  def __init__(self):super().__init__();self.audio=[];self.labels=set();self.ranges=[]
@@ -86,9 +90,22 @@ for pg in ['index.html',*HUB,'moscow.html','leningrad.html','us-schools.html','e
  assert 'property="og:image" content=' in _s and 'og:image:alt' in _s,pg
 for pg,img in [('works.html','og-works.jpg'),('moscow.html','og-moscow.jpg'),('us-schools.html','og-us-schools.jpg')]:
  for pre in ('','en/'):assert img in (ROOT/'site'/pre/pg).read_text(),pre+pg
-# sitemap: 16 основных страниц + индекс и выпуск ленты; биографии-страницы в sitemap нет
+# sitemap: адреса считаются, а не зашиты — 16 основных страниц, индекс ленты и по адресу на выпуск
 _sm=(ROOT/'site'/'sitemap.xml').read_text()
-assert _sm.count('<url>')==18 and 'biography.html' not in _sm
+_urls=re.findall(r'<loc>([^<]+)</loc>',_sm)
+_news=[p for p in (ROOT/'data'/'news').glob('*.json') if p.stem[:4].isdigit()]
+assert len(_urls)==16+(1 if _news else 0)+len(_news) and len(set(_urls))==len(_urls),f'sitemap: {len(_urls)} адресов'
+assert 'biography.html' not in _sm
+# hreflang в sitemap повторяет языковые пары из <head> тех же страниц (ru, en, x-default)
+_dom=os.environ.get('BLZ_DOMAIN','https://blazhevich.tech').rstrip('/')
+_blocks=dict(zip(_urls,[b for b in _sm.split('<url>')[1:]]))   # _sm делится перед каждым <url>
+for _u in _urls:
+ _rel=_u[len(_dom):].lstrip('/')
+ _head=(ROOT/'site'/(_rel+'index.html' if _rel.endswith('/') else _rel or 'index.html')).read_text()
+ _alt=dict(re.findall(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"',_head))
+ _smalt=dict(re.findall(r'<xhtml:link rel="alternate" hreflang="([^"]+)" href="([^"]+)"',_blocks[_u]))
+ assert _smalt==_alt,(_u,_smalt,_alt)
+assert 'xmlns:xhtml="http://www.w3.org/1999/xhtml"' in _sm.split('<url>')[0]
 # Карточки людей: на русском они повторяли бы московское досье, поэтому остаются только в английских «Трудах».
 s=(ROOT/'site'/'en'/'works.html').read_text()
 assert all('id="person-'+n+'"' in s for n in ['blazhevich','shcherbinin','batashev','turusin','ladilov'])

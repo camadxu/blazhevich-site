@@ -20,7 +20,7 @@ blazhevich-site/
 ├── src/                 исходники страниц и стилей
 │   ├── style.css        все стили сайта
 │   ├── script.js        весь скрипт сайта
-│   ├── ru/*.html        русские страницы: hero, works, listen, biography, schools, about,
+│   ├── ru/*.html        русские страницы: hero, biography, works, listen, schools, about,
 │   │                    досье moscow, leningrad, us-schools
 │   └── en/*.html        английские: page.html (каркас витрин), досье moscow, leningrad, us-schools
 ├── assets/              изображения, шрифты (woff2), fonts.css, og-*.jpg
@@ -36,11 +36,12 @@ blazhevich-site/
 └── site/                результат сборки (в репозитории не хранится)
 ```
 
-Страницы: `index.html` — витрина (первый экран, вступление, разделы, лента);
-`works.html`, `listen.html`, `biography.html`, `schools.html`, `about.html` — разделы;
+Страницы: `index.html` — витрина (первый экран, вступление, биография полосой,
+полоса «Школа и традиция», лента);
+`works.html`, `listen.html`, `schools.html`, `about.html` — разделы;
 `moscow.html`, `leningrad.html`, `us-schools.html` — досье «Школа и традиция».
 Английские зеркала — `en/…`. Старые адреса (`scores.html`, `concertos.html`, `usa.html`,
-`biography.html`) — переадресации на новые страницы.
+`biography.html`, а также `en/scores`, `en/concertos`, `en/usa`) — переадресации.
 
 ## Сборка
 

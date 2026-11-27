@@ -79,7 +79,6 @@ JOBS = [
     ('wiki/orchestra-hall.webp', 'us-schools/orchestra-hall.webp', PLATE, 0.50, 'crop', 0.50),
     ('wiki/curtis.webp', 'us-schools/curtis.webp', PLATE, 0.50, 'crop', 0.50),
     ('wiki/juilliard.webp', 'us-schools/juilliard.webp', PLATE, 0.50, 'crop', 0.50),
-    ('wiki/kilbourn-hall.webp', 'us-schools/kilbourn-hall.webp', PLATE, 0.50, 'crop', 0.50),
     ('wiki/alessi.webp', 'us-schools/alessi.webp', PORTRAIT, 0.40, 'crop', 0.50),
     ('mail/trombone-trio.webp', 'us-schools/trombone-trio.webp', PLATE, 0.50, 'crop', 0.50),
     ('mail/eastman.webp', 'us-schools/eastman-choir.webp', (480, 480), 0.50, 'fit', 0.50),
