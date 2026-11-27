@@ -46,9 +46,14 @@
   /* Снимок в статье: клик открывает крупный просмотр. Без JS ссылка ведёт на сам файл */
   const zooms=[...document.querySelectorAll('.plate-zoom')];
   if(zooms.length&&typeof HTMLDialogElement==='function'&&HTMLDialogElement.prototype.showModal){
-    const dlg=document.createElement('dialog');dlg.className='plate-view';dlg.setAttribute('aria-label','Просмотр снимка');
+    const isEnglish=document.documentElement.lang==='en';
+    const dlg=document.createElement('dialog');dlg.className='plate-view';
+    dlg.setAttribute('aria-label',isEnglish?'Image viewer':'Просмотр снимка');
+    const close=document.createElement('button');close.className='plate-close';close.type='button';
+    close.textContent=isEnglish?'Close image':'Закрыть снимок';
+    close.addEventListener('click',()=>dlg.close());
     const view=document.createElement('figure'),pic=document.createElement('img'),cap=document.createElement('figcaption');
-    view.append(pic,cap);dlg.append(view);document.body.append(dlg);
+    view.append(close,pic,cap);dlg.append(view);document.body.append(dlg);
     let opener=null;
     zooms.forEach(a=>a.addEventListener('click',e=>{
       if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;

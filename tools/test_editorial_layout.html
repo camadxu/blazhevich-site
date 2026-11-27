@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editorial layout regression checks</title>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../src/style.css">
+</head>
+<body>
+<main class="wrap">
+<h1>Editorial layout regression checks</h1>
+<p>Serve the repository root and open this file at desktop and mobile widths. Run <code>await runEditorialTests()</code> after resizing.</p>
+<pre id="test-results" aria-live="polite"></pre>
+<div class="chapters">
+  <article class="chapter" id="unmarked-chapter"><div class="ch-body"><h3>Очерк без отдельной датировки</h3><p>Вариант английского раздела школы: нет пустой колонки под отсутствующую дату.</p></div></article>
+  <article class="chapter" id="plain-chapter">
+    <div class="ch-mark"><span class="ch-years">1900–1905</span><span class="ch-place">Москва</span></div>
+    <div class="ch-body"><h3>Глава без бокового портрета</h3><p>Проверка ширины читательской колонки без пустого места под отсутствующую фотографию. Текст должен использовать доступную область, сохраняя ограничитель длины строки.</p><p>Следующий абзац проверяет спокойный вертикальный ритм повествования.</p></div>
+  </article>
+  <article class="chapter has-photo" id="photo-chapter">
+    <div class="ch-mark"><span class="ch-years">1903</span><span class="ch-place">Москва</span></div>
+    <div class="ch-body"><h3>Глава с портретом</h3><p>Фотография остаётся отдельной колонкой на широком экране и следует за текстом на телефоне.</p></div>
+    <figure class="ch-photo"><div class="mat"><img src="../assets/blazhevich-1903-560.webp" width="560" height="826" alt="Портрет Блажевича с автографом"></div><figcaption>Документальный портрет. <span class="src">Источник: Wikimedia Commons.</span></figcaption></figure>
+  </article>
+  <article class="chapter" id="outer-chapter">
+    <div class="ch-mark"><span class="ch-years">XX век</span><span class="ch-place">Школа</span></div>
+    <div class="ch-body"><h3>Очерк с вложенной главой</h3><p>Вложенный материал не должен повторно сжимать читательскую колонку.</p>
+      <div class="chapters"><article class="chapter" id="nested-chapter"><div class="ch-mark"><span class="ch-years">2025</span><span class="ch-place">Волгоград</span></div><div class="ch-body"><h3>Вложенный очерк</h3><p>Проверка вложенной структуры, используемой в разделе школы и традиции.</p></div></article></div>
+    </div>
+  </article>
+</div>
+<figure class="ch-plate" id="archive-photo"><img src="../assets/bolshoi-1905.webp" width="960" height="600" alt="Большой театр"><figcaption>Большой театр. <span class="src">Источник: Wikimedia Commons.</span></figcaption></figure>
+</main>
+<dialog class="plate-view"><figure><img src="../assets/bolshoi-1905.webp" width="960" height="600" alt="Увеличенный архивный снимок"><figcaption>Полный кадр.<span class="src">Источник: Wikimedia Commons.</span></figcaption></figure></dialog>
+<script>
+window.runEditorialTests = async function () {
+  await document.fonts.ready;
+  const results = [];
+  const rect = selector => document.querySelector(selector).getBoundingClientRect();
+  const check = (name, pass, detail) => results.push({name, pass: Boolean(pass), detail});
+  if (innerWidth >= 1021) {
+    const chapter = rect('#plain-chapter');
+    const body = rect('#plain-chapter > .ch-body');
+    const measure = parseFloat(getComputedStyle(document.querySelector('#plain-chapter > .ch-body')).maxWidth);
+    const expected = Math.min(chapter.right - body.left, measure);
+    check('plain chapter uses available reading measure', body.width >= expected - 1, {actual: body.width, expected});
+    const photoBody = rect('#photo-chapter > .ch-body');
+    const photo = rect('#photo-chapter > .ch-photo');
+    check('portrait retains a separate desktop column', photo.left >= photoBody.right + 20 && photoBody.width > 150, {bodyRight: photoBody.right, photoLeft: photo.left, bodyWidth: photoBody.width});
+  } else {
+    const photoBody = rect('#photo-chapter > .ch-body');
+    const photo = rect('#photo-chapter > .ch-photo');
+    check('portrait follows text on narrow screens', photo.top >= photoBody.bottom - 1, {bodyBottom: photoBody.bottom, photoTop: photo.top});
+  }
+  const paragraphs = [...document.querySelectorAll('#plain-chapter > .ch-body > p')].map(e => e.getBoundingClientRect());
+  check('chapter without dateline starts at the reading edge', Math.abs(rect('#unmarked-chapter > .ch-body').left - rect('#unmarked-chapter').left) <= 1, {bodyLeft: rect('#unmarked-chapter > .ch-body').left, chapterLeft: rect('#unmarked-chapter').left});
+  check('paragraph rhythm separates reading blocks', paragraphs[1].top - paragraphs[0].bottom >= 23, {gap: paragraphs[1].top - paragraphs[0].bottom});
+  const nested = rect('#nested-chapter > .ch-body');
+  const parent = rect('#outer-chapter > .ch-body');
+  check('nested chapter retains the parent reading width', nested.width >= parent.width - 1, {actual: nested.width, expected: parent.width});
+  const sources = [...document.querySelectorAll('figcaption .src')];
+  check('photo source captions remain legible', sources.every(e => {
+    const style = getComputedStyle(e);
+    return parseFloat(style.fontSize) >= 14 && Number(style.opacity) === 1;
+  }), sources.map(e => ({size: getComputedStyle(e).fontSize, opacity: getComputedStyle(e).opacity})));
+  const frames = [...document.querySelectorAll('.mat, #archive-photo, .plate-view img')];
+  check('documentary photo frames use one border', frames.every(e => {
+    const style = getComputedStyle(e);
+    return style.outlineStyle === 'none' && parseFloat(style.borderTopWidth) === 1;
+  }), frames.map(e => ({outline: getComputedStyle(e).outlineStyle, border: getComputedStyle(e).borderTopWidth})));
+  check('page has no horizontal overflow', document.documentElement.scrollWidth <= innerWidth, {viewport: innerWidth, content: document.documentElement.scrollWidth});
+  window.editorialTestResults = {width: innerWidth, passed: results.every(r => r.pass), results};
+  document.querySelector('#test-results').textContent = JSON.stringify(window.editorialTestResults, null, 2);
+  document.documentElement.dataset.tests = window.editorialTestResults.passed ? 'pass' : 'fail';
+  return window.editorialTestResults;
+};
+window.addEventListener('load', () => window.runEditorialTests());
+</script>
+</body>
+</html>
