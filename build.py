@@ -187,9 +187,11 @@ def inner(h, crumb, href='index.html', prefix=''):
     v = VIGNETTE.get(sid.group(1)) if sid else None
     fig = vignette(v, prefix) if v else ''
     cls = f' scene scene-{sid.group(1)}' if sid and sid.group(1) in SCENE else ''
-    # url() во встроенном CSS считается от страницы: из папки en/ картинку сцены даём с префиксом
-    sty = (f' style="--scene:url({prefix}assets/scene-{sid.group(1)}.webp);--scene-sm:url({prefix}assets/scene-{sid.group(1)}-960.webp)"'
-           if cls and prefix else '')
+    # url() во встроенном CSS считается от страницы, поэтому префикс нужен и в en/, и на корне;
+    # ?v= — тот же кэш-ключ, что у всех картинок сайта (ASSET_VER), иначе сцена не обновится в кэше
+    sty = (f' style="--scene:url({prefix}assets/scene-{sid.group(1)}.webp?v={ASSET_VER});'
+           f'--scene-sm:url({prefix}assets/scene-{sid.group(1)}-960.webp?v={ASSET_VER})"'
+           if cls else '')
     h = h.replace('<div class="section-head">',
                   f'<div class="section-head{cls}"{sty}><a class="crumb" href="{href}">← {crumb}</a>{fig}', 1)
     return re.sub(r'<h2>(.*?)</h2>', r'<h1 class="page-title">\1</h1>', h, count=1)
